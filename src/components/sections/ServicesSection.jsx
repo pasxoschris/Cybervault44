@@ -1,4 +1,4 @@
-import { Wrench, Camera, Wifi, BarChart3, Shield, Network, ExternalLink } from 'lucide-react';
+import { Wrench, Camera, Wifi, BarChart3, Shield, Network } from 'lucide-react';
 
 const services = [
   {
@@ -7,7 +7,6 @@ const services = [
     code: 'SVC-001',
     subtitle: 'Επίσημοι συνεργάτες OXINUS HELLAS',
     description: 'Εξειδικευμένη υποστήριξη για επιχειρήσεις εστίασης και καφέ.',
-    link: 'https://www.spotlightpos.com/',
     bullets: [
       'Εγκατάσταση νέου εξοπλισμού',
       'On-site υποστήριξη',
@@ -139,19 +138,6 @@ export default function ServicesSection() {
                     </li>
                   ))}
                 </ul>
-
-                {/* Link */}
-                {service.link && (
-                  <a
-                    href={service.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-1.5 font-mono-cyber text-[10px] text-[#00D4FF]/60 hover:text-[#00D4FF] tracking-widest transition-colors"
-                  >
-                    <ExternalLink className="w-3 h-3" />
-                    spotlightpos.com
-                  </a>
-                )}
 
                 {/* Corner accents */}
                 <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-[#00D4FF]/30 group-hover:border-[#00D4FF]/60 transition-colors" />
