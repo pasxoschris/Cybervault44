@@ -17,7 +17,7 @@ export default function Footer() {
 
           {/* Links */}
           <div className="flex items-center gap-6">
-            {['Privacy Policy', 'Security Policy', 'Terms of Service'].map((link) => (
+            {['Πολιτική Απορρήτου', 'Πολιτική Ασφάλειας', 'Όροι Χρήσης'].map((link) => (
               <span key={link} className="font-mono-cyber text-[10px] text-white/25 hover:text-[#00D4FF]/60 tracking-widest uppercase cursor-pointer transition-colors">
                 {link}
               </span>
@@ -26,17 +26,17 @@ export default function Footer() {
 
           {/* Copyright */}
           <div className="font-mono-cyber text-[10px] text-white/25 tracking-widest">
-            © {year} CYBERVAULT. ALL RIGHTS RESERVED.
+            © {year} CYBERVAULT. ΟΛΑ ΤΑ ΔΙΚΑΙΩΜΑΤΑ ΔΙΑΤΗΡΟΥΝΤΑΙ.
           </div>
         </div>
 
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t border-[#00D4FF]/5 flex flex-col md:flex-row items-center justify-between gap-3">
           <div className="font-mono-cyber text-[10px] text-[#00D4FF]/25 tracking-widest">
-            +30 210 XXX XXXX &nbsp;|&nbsp; www.cybervault.gr
+            (+30) 210 4449 000 &nbsp;|&nbsp; cyber-vault.gr &nbsp;|&nbsp; info@cyber-vault.gr
           </div>
           <div className="flex gap-4">
-            {['**SECURITY POLICY', '**REPORT BREACH', '**SYSTEM STATUS'].map((item) => (
+            {['**ΠΟΛΙΤΙΚΗ ΑΣΦΑΛΕΙΑΣ', '**ΑΝΑΦΟΡΑ ΠΑΡΑΒΙΑΣΗΣ', '**ΚΑΤΑΣΤΑΣΗ ΣΥΣΤΗΜΑΤΟΣ'].map((item) => (
               <span key={item} className="font-mono-cyber text-[10px] text-white/20 hover:text-[#00D4FF]/40 cursor-pointer transition-colors tracking-wider">
                 {item}
               </span>

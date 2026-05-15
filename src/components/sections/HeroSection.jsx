@@ -43,7 +43,7 @@ function MatrixRain({ canvasRef }) {
 export default function HeroSection() {
   const canvasRef = useRef(null);
   const [typed, setTyped] = useState('');
-  const fullText = 'SECURING NETWORK INFRASTRUCTURE';
+  const fullText = 'ΠΡΟΣΤΑΣΙΑ ΔΙΚΤΥΑΚΗΣ ΥΠΟΔΟΜΗΣ';
 
   useEffect(() => {
     let i = 0;
@@ -81,7 +81,7 @@ export default function HeroSection() {
         {/* Status badge */}
         <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 border border-[#00D4FF]/30 bg-[#00D4FF]/5 font-mono-cyber text-xs text-[#00D4FF] tracking-widest">
           <Activity className="w-3 h-3 animate-pulse" />
-          <span>SYSTEM ONLINE — ALL NETWORKS SECURE</span>
+          <span>ΣΥΣΤΗΜΑ ΕΝΕΡΓΟ — ΟΛΑ ΤΑ ΔΙΚΤΥΑ ΑΣΦΑΛΗ</span>
           <span className="w-2 h-2 rounded-full bg-[#00D4FF] animate-pulse" />
         </div>
 
@@ -97,8 +97,8 @@ export default function HeroSection() {
         </div>
 
         <p className="font-rajdhani text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed">
-          Advanced network security solutions for enterprises. Protecting your digital perimeter 
-          with next-generation threat intelligence and real-time monitoring.
+          Προηγμένες λύσεις ασφάλειας δικτύων για επιχειρήσεις. Προστατεύουμε την ψηφιακή σας περίμετρο 
+          με τεχνολογία νέας γενιάς, ευφυΐα απειλών και παρακολούθηση σε πραγματικό χρόνο.
         </p>
 
         {/* CTAs */}
@@ -107,22 +107,22 @@ export default function HeroSection() {
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             className="cyber-btn"
           >
-            Request Quote
+            Αίτημα Προσφοράς
           </button>
           <button
             onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
             className="font-orbitron text-xs font-700 tracking-widest text-white/60 hover:text-[#00D4FF] transition-colors uppercase border border-white/10 px-8 py-3.5 hover:border-[#00D4FF]/30"
           >
-            View Services →
+            Οι Υπηρεσίες μας →
           </button>
         </div>
 
         {/* Stats row */}
         <div className="mt-20 grid grid-cols-3 gap-8 max-w-xl mx-auto border-t border-[#00D4FF]/10 pt-10">
           {[
-            { value: '500+', label: 'Networks Protected' },
+            { value: '500+', label: 'Δίκτυα Προστατευμένα' },
             { value: '99.9%', label: 'Uptime SLA' },
-            { value: '24/7', label: 'Monitoring' },
+            { value: '24/7', label: 'Παρακολούθηση' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="font-orbitron text-2xl md:text-3xl font-bold text-[#00D4FF] glow-cyan">{stat.value}</div>

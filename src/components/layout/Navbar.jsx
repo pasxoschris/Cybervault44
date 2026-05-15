@@ -14,11 +14,11 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: 'Home', href: '#home' },
-    { label: 'Services', href: '#services' },
-    { label: 'About', href: '#about' },
-    { label: 'Clients', href: '#clients' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Αρχική', href: '#home' },
+    { label: 'Υπηρεσίες', href: '#services' },
+    { label: 'Σχετικά', href: '#about' },
+    { label: 'Πελάτες', href: '#clients' },
+    { label: 'Επικοινωνία', href: '#contact' },
   ];
 
   const scrollTo = (href) => {
@@ -62,7 +62,7 @@ export default function Navbar() {
             onClick={() => scrollTo('#contact')}
             className="cyber-btn text-xs py-2.5 px-5"
           >
-            Get Quote
+            Αίτημα Προσφοράς
           </button>
         </div>
 
@@ -88,7 +88,7 @@ export default function Navbar() {
             </button>
           ))}
           <button onClick={() => scrollTo('#contact')} className="cyber-btn text-xs py-3 mt-2">
-            Get Quote
+            Αίτημα Προσφοράς
           </button>
         </div>
       )}

@@ -12,7 +12,7 @@ export default function ContactSection() {
     e.preventDefault();
     setStatus('loading');
     await base44.integrations.Core.SendEmail({
-      to: 'info@cybervault.gr',
+      to: 'info@cyber-vault.gr',
       subject: `Quote Request from ${form.name} — ${form.company}`,
       body: `Name: ${form.name}\nCompany: ${form.company}\nEmail: ${form.email}\nPhone: ${form.phone}\nService: ${form.service}\n\nMessage:\n${form.message}`,
     });
@@ -29,10 +29,10 @@ export default function ContactSection() {
         {/* Header */}
         <div className="mb-16 text-center">
           <div className="font-mono-cyber text-xs text-[#00D4FF]/60 tracking-[0.4em] uppercase mb-4">
-            // INITIATE.CONTACT //
+            // ΕΚΚΙΝΗΣΗ.ΕΠΙΚΟΙΝΩΝΙΑΣ //
           </div>
           <h2 className="font-orbitron font-bold text-3xl md:text-5xl text-white tracking-tight mb-4">
-            REQUEST A <span className="text-[#00D4FF] glow-cyan">SECURITY QUOTE</span>
+            ΑΙΤΗΣΤΕ <span className="text-[#00D4FF] glow-cyan">ΠΡΟΣΦΟΡΑ ΑΣΦΑΛΕΙΑΣ</span>
           </h2>
           <div className="w-32 h-px bg-gradient-to-r from-transparent via-[#00D4FF] to-transparent mx-auto" />
         </div>
@@ -41,12 +41,13 @@ export default function ContactSection() {
           {/* Left: info */}
           <div className="flex flex-col gap-8">
             <div>
-              <div className="font-orbitron text-xs text-white/40 tracking-widest uppercase mb-6">Contact Channels</div>
+              <div className="font-orbitron text-xs text-white/40 tracking-widest uppercase mb-6">Κανάλια Επικοινωνίας</div>
               <div className="flex flex-col gap-5">
                 {[
-                  { icon: Phone, label: '+30 210 XXX XXXX', sublabel: 'Mon–Fri, 09:00–18:00 EET' },
-                  { icon: Mail, label: 'info@cybervault.gr', sublabel: 'Response within 4 hours' },
-                  { icon: MapPin, label: 'Athens, Greece', sublabel: 'Serving clients across the EU' },
+                  { icon: Phone, label: '(+30) 693 1326 616', sublabel: 'Κινητό — πάντα διαθέσιμο' },
+                  { icon: Phone, label: '(+30) 210 4449 000', sublabel: 'Δευ–Παρ, 09:00–18:00' },
+                  { icon: Mail, label: 'info@cyber-vault.gr', sublabel: 'Απόκριση εντός 4 ωρών' },
+                  { icon: MapPin, label: '64 Πανεπιστημίου, 105 64 Αθήνα', sublabel: 'Εξυπηρέτηση πελατών σε ΕΕ' },
                 ].map(({ icon: Icon, label, sublabel }) => (
                   <div key={label} className="flex items-start gap-4 group">
                     <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center border border-[#00D4FF]/20 bg-[#00D4FF]/5 mt-0.5">
@@ -63,11 +64,11 @@ export default function ContactSection() {
 
             {/* Response SLA */}
             <div className="border border-[#00D4FF]/20 bg-[#0D1526]/60 p-5">
-              <div className="font-mono-cyber text-[10px] text-[#00D4FF]/40 tracking-widest uppercase mb-3">Response SLA</div>
+              <div className="font-mono-cyber text-[10px] text-[#00D4FF]/40 tracking-widest uppercase mb-3">SLA Απόκρισης</div>
               {[
-                { label: 'Critical Incidents', value: '< 1 hour' },
-                { label: 'General Inquiries', value: '< 4 hours' },
-                { label: 'Quote Requests', value: '< 24 hours' },
+                { label: 'Κρίσιμα Περιστατικά', value: '< 1 ώρα' },
+                { label: 'Γενικές Ερωτήσεις', value: '< 4 ώρες' },
+                { label: 'Αιτήματα Προσφοράς', value: '< 24 ώρες' },
               ].map(({ label, value }) => (
                 <div key={label} className="flex justify-between items-center py-2 border-b border-[#00D4FF]/10 last:border-0">
                   <span className="font-rajdhani text-xs text-white/45">{label}</span>
@@ -82,12 +83,12 @@ export default function ContactSection() {
             {status === 'success' ? (
               <div className="border border-[#00D4FF]/30 bg-[#0D1526]/80 p-12 flex flex-col items-center justify-center text-center h-full gap-5">
                 <CheckCircle className="w-12 h-12 text-[#00D4FF] animate-pulse-glow" strokeWidth={1.5} />
-                <div className="font-orbitron text-sm font-bold text-[#00D4FF] tracking-widest">TRANSMISSION SUCCESSFUL</div>
+                <div className="font-orbitron text-sm font-bold text-[#00D4FF] tracking-widest">ΜΕΤΑΔΟΣΗ ΕΠΙΤΥΧΗΣ</div>
                 <div className="font-rajdhani text-base text-white/55">
-                  Your request has been received. A security advisor will contact you within 24 hours.
+                  Το αίτημά σας ελήφθη. Ένας σύμβουλος ασφάλειας θα επικοινωνήσει μαζί σας εντός 24 ωρών.
                 </div>
                 <button onClick={() => setStatus('idle')} className="cyber-btn mt-4 text-xs py-3 px-6">
-                  Send Another
+                  Νέο Αίτημα
                 </button>
               </div>
             ) : (
@@ -98,10 +99,10 @@ export default function ContactSection() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
                   {[
-                    { name: 'name', placeholder: 'Full Name *', required: true },
-                    { name: 'company', placeholder: 'Company Name *', required: true },
-                    { name: 'email', placeholder: 'Business Email *', required: true, type: 'email' },
-                    { name: 'phone', placeholder: 'Phone Number', required: false },
+                    { name: 'name', placeholder: 'Ονοματεπώνυμο *', required: true },
+                    { name: 'company', placeholder: 'Επωνυμία Εταιρείας *', required: true },
+                    { name: 'email', placeholder: 'Εταιρικό Email *', required: true, type: 'email' },
+                    { name: 'phone', placeholder: 'Τηλέφωνο Επικοινωνίας', required: false },
                   ].map((field) => (
                     <div key={field.name}>
                       <input
@@ -125,14 +126,14 @@ export default function ContactSection() {
                     className="cyber-input"
                     required
                   >
-                    <option value="" disabled>Select Service *</option>
-                    <option value="network-defense">Network Defense</option>
-                    <option value="threat-intelligence">Threat Intelligence</option>
-                    <option value="zero-trust">Zero Trust Security</option>
-                    <option value="incident-response">Incident Response</option>
-                    <option value="infrastructure-hardening">Infrastructure Hardening</option>
-                    <option value="compliance">Compliance & Audit</option>
-                    <option value="other">Other / General Inquiry</option>
+                    <option value="" disabled>Επιλογή Υπηρεσίας *</option>
+                    <option value="network-defense">Άμυνα Δικτύου</option>
+                    <option value="threat-intelligence">Πληροφορίες Απειλών</option>
+                    <option value="zero-trust">Zero Trust Ασφάλεια</option>
+                    <option value="incident-response">Αντιμετώπιση Περιστατικών</option>
+                    <option value="infrastructure-hardening">Ενίσχυση Υποδομής</option>
+                    <option value="compliance">Συμμόρφωση & Έλεγχος</option>
+                    <option value="other">Άλλο / Γενική Ερώτηση</option>
                   </select>
                 </div>
 
@@ -141,7 +142,7 @@ export default function ContactSection() {
                     name="message"
                     required
                     rows={5}
-                    placeholder="Describe your security needs or current challenges... *"
+                    placeholder="Περιγράψτε τις ανάγκες ασφάλειας ή τις τρέχουσες προκλήσεις σας... *"
                     value={form.message}
                     onChange={handleChange}
                     className="cyber-input resize-none"
@@ -156,12 +157,12 @@ export default function ContactSection() {
                   {status === 'loading' ? (
                     <>
                       <span className="w-4 h-4 border-2 border-[#00D4FF]/30 border-t-[#00D4FF] rounded-full animate-spin" />
-                      TRANSMITTING...
+                      ΑΠΟΣΤΟΛΗ...
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      SEND SECURE REQUEST
+                      ΑΠΟΣΤΟΛΗ ΑΣΦΑΛΟΥΣ ΑΙΤΗΜΑΤΟΣ
                     </>
                   )}
                 </button>

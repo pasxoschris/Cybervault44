@@ -2,32 +2,32 @@ import { ShieldCheck } from 'lucide-react';
 
 const testimonials = [
   {
-    quote: "CyberVault redesigned our entire network security architecture. Zero incidents in 3 years since deployment.",
-    name: "Nikolaos P.",
-    title: "CTO, National Logistics Group",
+    quote: "Η CyberVault αναδιάρθρωσε ολόκληρη την αρχιτεκτονική ασφάλειας δικτύου μας. Μηδέν περιστατικά σε 3 χρόνια από την εγκατάσταση.",
+    name: "Νικόλαος Π.",
+    title: "CTO, Εθνικός Όμιλος Logistics",
     sector: "Logistics",
   },
   {
-    quote: "Their threat intelligence feeds have blocked over 2,000 intrusion attempts this year alone. Exceptional service.",
-    name: "Maria K.",
-    title: "CISO, Hellenic Financial Services",
-    sector: "Finance",
+    quote: "Οι ροές πληροφοριών απειλών τους έχουν αποκλείσει πάνω από 2.000 απόπειρες εισβολής μόνο φέτος. Εξαιρετική υπηρεσία.",
+    name: "Μαρία Κ.",
+    title: "CISO, Ελληνικές Χρηματοοικονομικές Υπηρεσίες",
+    sector: "Χρηματοοικονομικά",
   },
   {
-    quote: "The 24/7 incident response team is unparalleled. They contained a ransomware attack in under 45 minutes.",
-    name: "Andreas M.",
+    quote: "Η ομάδα αντιμετώπισης περιστατικών 24/7 είναι απαράμιλλη. Περιόρισαν επίθεση ransomware σε λιγότερο από 45 λεπτά.",
+    name: "Ανδρέας Μ.",
     title: "IT Director, Aegean Healthcare",
-    sector: "Healthcare",
+    sector: "Υγεία",
   },
 ];
 
 const clientSectors = [
-  'BANKING & FINANCE',
-  'HEALTHCARE',
+  'ΤΡΑΠΕΖΙΚΟΣ & ΧΡΗΜΑΤΟΟΙΚΟΝΟΜΙΚΟΣ ΤΟΜΕΑΣ',
+  'ΥΓΕΙΑ',
   'LOGISTICS',
-  'GOVERNMENT',
-  'TELECOMMUNICATIONS',
-  'ENERGY',
+  'ΔΗΜΟΣΙΟΣ ΤΟΜΕΑΣ',
+  'ΤΗΛΕΠΙΚΟΙΝΩΝΙΕΣ',
+  'ΕΝΕΡΓΕΙΑ',
 ];
 
 export default function ClientsSection() {
@@ -40,10 +40,10 @@ export default function ClientsSection() {
         {/* Header */}
         <div className="mb-16 text-center">
           <div className="font-mono-cyber text-xs text-[#00D4FF]/60 tracking-[0.4em] uppercase mb-4">
-            // CLIENT.NETWORK //
+            // ΔΙΚΤΥΟ.ΠΕΛΑΤΩΝ //
           </div>
           <h2 className="font-orbitron font-bold text-3xl md:text-5xl text-white tracking-tight mb-4">
-            TRUSTED BY <span className="text-[#00D4FF] glow-cyan">INDUSTRY LEADERS</span>
+            ΕΜΠΙΣΤΕΥΟΝΤΑΙ <span className="text-[#00D4FF] glow-cyan">ΗΓΕΤΕΣ ΑΓΟΡΑΣ</span>
           </h2>
           <div className="w-32 h-px bg-gradient-to-r from-transparent via-[#00D4FF] to-transparent mx-auto" />
         </div>
