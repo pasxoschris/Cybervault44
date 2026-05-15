@@ -2,6 +2,18 @@ import { Wrench, Camera, Wifi, BarChart3, Shield, Network } from 'lucide-react';
 
 const services = [
   {
+    icon: BarChart3,
+    title: 'Δικτύωση & WiFi Υποδομές',
+    code: 'SVC-004',
+    subtitle: 'Σταθερά δίκτυα, σωστή κάλυψη και διαχωρισμός κατηγοριών χρηστών.',
+    description: '',
+    bullets: [
+      'VLAN και QoS για: προσωπικό / πελάτες / συστήματα',
+      'Access Points και extender για ομοιόμορφη κάλυψη',
+      'Έλεγχος & βελτιστοποίηση ασύρματου δικτύου με WiFi 6e & 7 εξοπλισμό',
+    ],
+  },
+  {
     icon: Wrench,
     title: 'Official SpotlightPOS Support',
     code: 'SVC-001',
@@ -37,18 +49,6 @@ const services = [
       'Εγκατάσταση Starlink',
       'Εγκατάσταση 4G/5G modem routers (κύρια ή εφεδρική σύνδεση)',
       'Αυτόματη εναλλαγή γραμμών (failover) με multi-WAN router',
-    ],
-  },
-  {
-    icon: BarChart3,
-    title: 'Δικτύωση & WiFi Υποδομές',
-    code: 'SVC-004',
-    subtitle: 'Σταθερά δίκτυα, σωστή κάλυψη και διαχωρισμός κατηγοριών χρηστών.',
-    description: '',
-    bullets: [
-      'VLAN και QoS για: προσωπικό / πελάτες / συστήματα',
-      'Access Points και extender για ομοιόμορφη κάλυψη',
-      'Έλεγχος & βελτιστοποίηση ασύρματου δικτύου με WiFi 6e & 7 εξοπλισμό',
     ],
   },
   {
