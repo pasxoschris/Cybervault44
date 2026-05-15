@@ -32,7 +32,7 @@ export default function ContactSection() {
             // ΕΚΚΙΝΗΣΗ.ΕΠΙΚΟΙΝΩΝΙΑΣ //
           </div>
           <h2 className="font-orbitron font-bold text-3xl md:text-5xl text-white tracking-tight mb-4">
-            ΑΙΤΗΣΤΕ <span className="text-[#00D4FF] glow-cyan">ΠΡΟΣΦΟΡΑ ΑΣΦΑΛΕΙΑΣ</span>
+            ΦΟΡΜΑ <span className="text-[#00D4FF] glow-cyan">ΕΠΙΚΟΙΝΩΝΙΑΣ</span>
           </h2>
           <div className="w-32 h-px bg-gradient-to-r from-transparent via-[#00D4FF] to-transparent mx-auto" />
         </div>
