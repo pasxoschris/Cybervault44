@@ -6,43 +6,43 @@
 
 @layer base {
   :root {
-    --background: 222 47% 5%;
-    --foreground: 180 100% 90%;
-    --card: 220 40% 8%;
-    --card-foreground: 180 100% 90%;
-    --popover: 220 40% 8%;
-    --popover-foreground: 180 100% 90%;
-    --primary: 187 100% 50%;
-    --primary-foreground: 222 47% 5%;
-    --secondary: 220 40% 12%;
-    --secondary-foreground: 180 60% 80%;
-    --muted: 220 40% 10%;
-    --muted-foreground: 200 30% 50%;
-    --accent: 187 100% 50%;
-    --accent-foreground: 222 47% 5%;
+    --background: 234 52% 10%;
+    --foreground: 210 100% 92%;
+    --card: 233 50% 13%;
+    --card-foreground: 210 100% 92%;
+    --popover: 233 50% 13%;
+    --popover-foreground: 210 100% 92%;
+    --primary: 196 100% 55%;
+    --primary-foreground: 234 52% 10%;
+    --secondary: 233 45% 18%;
+    --secondary-foreground: 210 80% 85%;
+    --muted: 233 45% 15%;
+    --muted-foreground: 220 30% 55%;
+    --accent: 196 100% 55%;
+    --accent-foreground: 234 52% 10%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 187 60% 20%;
-    --input: 220 40% 12%;
-    --ring: 187 100% 50%;
-    --chart-1: 187 100% 50%;
+    --border: 225 55% 28%;
+    --input: 233 45% 18%;
+    --ring: 196 100% 55%;
+    --chart-1: 196 100% 55%;
     --chart-2: 210 80% 60%;
     --chart-3: 160 70% 50%;
     --chart-4: 280 70% 60%;
     --chart-5: 30 80% 55%;
     --radius: 0.25rem;
-    --sidebar-background: 220 40% 6%;
-    --sidebar-foreground: 180 60% 80%;
-    --sidebar-primary: 187 100% 50%;
-    --sidebar-primary-foreground: 222 47% 5%;
-    --sidebar-accent: 220 40% 12%;
-    --sidebar-accent-foreground: 180 60% 80%;
-    --sidebar-border: 187 60% 20%;
-    --sidebar-ring: 187 100% 50%;
-    --cyber-cyan: #00D4FF;
-    --cyber-dark: #0A0E1A;
-    --cyber-card: #0D1526;
-    --cyber-border: #1A3A4A;
+    --sidebar-background: 234 52% 8%;
+    --sidebar-foreground: 210 80% 85%;
+    --sidebar-primary: 196 100% 55%;
+    --sidebar-primary-foreground: 234 52% 10%;
+    --sidebar-accent: 233 45% 18%;
+    --sidebar-accent-foreground: 210 80% 85%;
+    --sidebar-border: 225 55% 28%;
+    --sidebar-ring: 196 100% 55%;
+    --cyber-cyan: #00CFFF;
+    --cyber-dark: #0E1235;
+    --cyber-card: #131840;
+    --cyber-border: #2A3580;
   }
 }
 
@@ -54,7 +54,7 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Rajdhani', sans-serif;
-    background-color: #0A0E1A;
+    background-color: #0E1235;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -65,31 +65,31 @@
 /* Cyber grid background */
 .cyber-grid {
   background-image: 
-    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(0, 207, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 207, 255, 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
 /* Glow effects */
 .glow-cyan {
-  text-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 40px rgba(0, 212, 255, 0.4);
+  text-shadow: 0 0 20px rgba(0, 207, 255, 0.8), 0 0 40px rgba(0, 207, 255, 0.4);
 }
 
 .glow-box {
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.2), inset 0 0 20px rgba(0, 212, 255, 0.05);
+  box-shadow: 0 0 20px rgba(0, 207, 255, 0.2), inset 0 0 20px rgba(0, 207, 255, 0.05);
 }
 
 .glow-box-hover:hover {
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.4), inset 0 0 30px rgba(0, 212, 255, 0.1);
+  box-shadow: 0 0 30px rgba(0, 207, 255, 0.4), inset 0 0 30px rgba(0, 207, 255, 0.1);
 }
 
 .glow-border {
-  border: 1px solid rgba(0, 212, 255, 0.3);
+  border: 1px solid rgba(0, 207, 255, 0.3);
 }
 
 .glow-border-strong {
-  border: 1px solid rgba(0, 212, 255, 0.6);
-  box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+  border: 1px solid rgba(0, 207, 255, 0.6);
+  box-shadow: 0 0 15px rgba(0, 207, 255, 0.3);
 }
 
 /* Scan line animation */
@@ -172,10 +172,10 @@
   transition: color 0.2s;
 }
 .nav-link:hover {
-  color: #00D4FF;
+  color: #00CFFF;
 }
 .nav-link.active {
-  color: #00D4FF;
+  color: #00CFFF;
 }
 .nav-link::after {
   content: '';
@@ -184,9 +184,9 @@
   left: 0;
   width: 0;
   height: 1px;
-  background: #00D4FF;
+  background: #00CFFF;
   transition: width 0.3s;
-  box-shadow: 0 0 8px #00D4FF;
+  box-shadow: 0 0 8px #00CFFF;
 }
 .nav-link:hover::after,
 .nav-link.active::after {
@@ -200,32 +200,32 @@
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #00D4FF;
+  color: #00CFFF;
   background: transparent;
-  border: 1px solid #00D4FF;
+  border: 1px solid #00CFFF;
   padding: 14px 32px;
   position: relative;
   transition: all 0.3s;
-  box-shadow: 0 0 15px rgba(0, 212, 255, 0.3), inset 0 0 15px rgba(0, 212, 255, 0.05);
+  box-shadow: 0 0 15px rgba(0, 207, 255, 0.3), inset 0 0 15px rgba(0, 207, 255, 0.05);
   cursor: pointer;
 }
 .cyber-btn:hover {
-  color: #0A0E1A;
-  background: #00D4FF;
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.7), inset 0 0 30px rgba(0, 212, 255, 0.3);
+  color: #0E1235;
+  background: #00CFFF;
+  box-shadow: 0 0 30px rgba(0, 207, 255, 0.7), inset 0 0 30px rgba(0, 207, 255, 0.3);
 }
 
 /* Service card */
 .service-card {
-  background: rgba(13, 21, 38, 0.9);
-  border: 1px solid rgba(0, 212, 255, 0.2);
+  background: rgba(19, 24, 64, 0.9);
+  border: 1px solid rgba(0, 207, 255, 0.2);
   transition: all 0.3s;
   position: relative;
   overflow: hidden;
 }
 .service-card:hover {
-  border-color: rgba(0, 212, 255, 0.5);
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+  border-color: rgba(0, 207, 255, 0.5);
+  box-shadow: 0 0 30px rgba(0, 207, 255, 0.15);
   transform: translateY(-4px);
 }
 .service-card::before {
@@ -235,7 +235,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #00D4FF, transparent);
+  background: linear-gradient(90deg, transparent, #00CFFF, transparent);
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -245,8 +245,8 @@
 
 /* Input styling */
 .cyber-input {
-  background: rgba(13, 21, 38, 0.8);
-  border: 1px solid rgba(0, 212, 255, 0.2);
+  background: rgba(19, 24, 64, 0.8);
+  border: 1px solid rgba(0, 207, 255, 0.2);
   color: #e0f7ff;
   font-family: 'Rajdhani', sans-serif;
   font-size: 1rem;
@@ -256,9 +256,9 @@
   width: 100%;
 }
 .cyber-input:focus {
-  border-color: rgba(0, 212, 255, 0.6);
-  box-shadow: 0 0 15px rgba(0, 212, 255, 0.15);
+  border-color: rgba(0, 207, 255, 0.6);
+  box-shadow: 0 0 15px rgba(0, 207, 255, 0.15);
 }
 .cyber-input::placeholder {
-  color: rgba(0, 212, 255, 0.3);
+  color: rgba(0, 207, 255, 0.3);
 }

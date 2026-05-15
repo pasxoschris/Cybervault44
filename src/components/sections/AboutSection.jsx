@@ -9,7 +9,7 @@ const highlights = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative py-24 bg-[#080c18] overflow-hidden">
+    <section id="about" className="relative py-24 bg-[#0b0f30] overflow-hidden">
       <div className="absolute inset-0 cyber-grid opacity-30" />
 
       {/* Glowing accent */}

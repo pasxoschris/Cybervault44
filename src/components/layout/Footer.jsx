@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative bg-[#060912] border-t border-[#00D4FF]/10 py-14 overflow-hidden">
+    <footer className="relative bg-[#080b25] border-t border-[#00CFFF]/10 py-14 overflow-hidden">
       <div className="absolute inset-0 cyber-grid opacity-20" />
       <div className="relative z-10 max-w-2xl mx-auto px-6 text-center flex flex-col items-center gap-6">
 
