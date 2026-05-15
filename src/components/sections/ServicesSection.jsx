@@ -109,7 +109,7 @@ export default function ServicesSection() {
             return (
               <div key={service.code} className="service-card p-6 group cursor-default relative flex flex-col">
                 {/* Code label */}
-                <div className="font-mono-cyber text-[10px] text-[#00D4FF]/30 tracking-widest mb-4">
+                <div className="font-mono-cyber text-xs text-[#00D4FF]/30 tracking-widest mb-4">
                   {service.code}
                 </div>
 
@@ -119,13 +119,13 @@ export default function ServicesSection() {
                 </div>
 
                 {/* Title */}
-                <h3 className="font-orbitron text-sm font-bold text-white mb-2 tracking-wider group-hover:text-[#00D4FF] transition-colors leading-snug">
+                <h3 className="font-orbitron text-base font-bold text-white mb-2 tracking-wider group-hover:text-[#00D4FF] transition-colors leading-snug">
                   {service.title}
                 </h3>
 
                 {/* Subtitle */}
                 {service.subtitle && (
-                  <p className="font-rajdhani text-sm text-[#00D4FF]/50 mb-4 leading-snug">
+                  <p className="font-rajdhani text-base text-[#00D4FF]/60 mb-4 leading-snug">
                     {service.subtitle}
                   </p>
                 )}
@@ -134,8 +134,8 @@ export default function ServicesSection() {
                 <ul className="flex flex-col gap-2 mt-auto">
                   {service.bullets.map((bullet) => (
                     <li key={bullet} className="flex items-start gap-2">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#00D4FF]/50 flex-shrink-0" />
-                      <span className="font-rajdhani text-sm text-white/50 leading-snug">{bullet}</span>
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#00D4FF]/50 flex-shrink-0" />
+                      <span className="font-rajdhani text-base text-white/60 leading-snug">{bullet}</span>
                     </li>
                   ))}
                 </ul>
