@@ -104,14 +104,8 @@ export default function HeroSection() {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="cyber-btn"
-          >
-            Αίτημα Προσφοράς
-          </button>
-          <button
             onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-            className="font-orbitron text-xs font-700 tracking-widest text-white/60 hover:text-[#00D4FF] transition-colors uppercase border border-white/10 px-8 py-3.5 hover:border-[#00D4FF]/30"
+            className="cyber-btn"
           >
             Οι Υπηρεσίες μας →
           </button>
