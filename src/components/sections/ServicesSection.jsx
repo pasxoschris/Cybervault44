@@ -2,7 +2,7 @@ import { Wrench, Camera, Wifi, BarChart3, Shield, Network } from 'lucide-react';
 
 const services = [
   {
-    icon: BarChart3,
+    icon: Network,
     title: 'Δικτύωση & WiFi για Επαγγελματικούς Χώρους',
     code: 'SVC-004',
     subtitle: 'Γρήγορο, σταθερό και οργανωμένο δίκτυο — για εσάς, το προσωπικό και τους πελάτες σας.',
