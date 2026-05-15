@@ -1,45 +1,71 @@
+import { Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
+
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative bg-[#060912] border-t border-[#00D4FF]/10 py-10 overflow-hidden">
+    <footer className="relative bg-[#060912] border-t border-[#00D4FF]/10 py-14 overflow-hidden">
       <div className="absolute inset-0 cyber-grid opacity-20" />
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/71e29efae_web-app-manifest-512x512.png" alt="CyberVault Logo" className="w-7 h-7 object-contain" />
-            <span className="font-orbitron text-sm font-bold text-white tracking-widest">
-              CYBER<span className="text-[#00D4FF]">VAULT</span>
-            </span>
-          </div>
+      <div className="relative z-10 max-w-2xl mx-auto px-6 text-center flex flex-col items-center gap-6">
 
-          {/* Links */}
-          <div className="flex items-center gap-6">
-            {['Πολιτική Απορρήτου', 'Πολιτική Ασφάλειας', 'Όροι Χρήσης'].map((link) => (
-              <span key={link} className="font-mono-cyber text-[10px] text-white/25 hover:text-[#00D4FF]/60 tracking-widest uppercase cursor-pointer transition-colors">
-                {link}
-              </span>
-            ))}
-          </div>
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <img
+            src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/71e29efae_web-app-manifest-512x512.png"
+            alt="CyberVault Logo"
+            className="w-10 h-10 object-contain"
+          />
+          <span className="font-orbitron text-lg font-bold text-white tracking-widest">
+            CYBER<span className="text-[#00D4FF]">VAULT</span>
+          </span>
+        </div>
 
-          {/* Copyright */}
-          <div className="font-mono-cyber text-[10px] text-white/25 tracking-widest">
-            © {year} CYBERVAULT. ΟΛΑ ΤΑ ΔΙΚΑΙΩΜΑΤΑ ΔΙΑΤΗΡΟΥΝΤΑΙ.
+        {/* Tagline */}
+        <p className="font-rajdhani text-base text-[#00D4FF]/70 tracking-wide">
+          Τεχνική Υποστήριξη για επιχειρήσεις εστίασης και καφέ
+        </p>
+
+        {/* Contact info */}
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-center gap-2 font-rajdhani text-sm text-white/60">
+            <Mail className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
+            <span>Email: </span>
+            <a href="mailto:info@cyber-vault.gr" className="text-[#00D4FF] font-semibold hover:underline">
+              info@cyber-vault.gr
+            </a>
+          </div>
+          <div className="flex items-center justify-center gap-2 font-rajdhani text-sm text-white/60">
+            <Phone className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
+            <span>Τηλέφωνο: </span>
+            <a href="tel:+302104449000" className="text-[#00D4FF] font-semibold hover:underline">
+              210 444-9000
+            </a>
+          </div>
+          <div className="flex items-center justify-center gap-2 font-rajdhani text-sm text-white/60">
+            <MessageCircle className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
+            <span>Μήνυμα μέσω </span>
+            <a href="viber://chat?number=%2B306931326616" className="text-[#00D4FF] font-semibold hover:underline">
+              Viber
+            </a>
+          </div>
+          <div className="flex items-center justify-center gap-2 font-rajdhani text-sm text-white/60">
+            <MapPin className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
+            <a
+              href="https://maps.google.com/?q=Πανεπιστημίου+64,+10564+Αθήνα"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#00D4FF] font-semibold hover:underline"
+            >
+              Πανεπιστημίου 64, 10564 Αθήνα
+            </a>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-8 pt-6 border-t border-[#00D4FF]/5 flex flex-col md:flex-row items-center justify-between gap-3">
-          <div className="font-mono-cyber text-[10px] text-[#00D4FF]/25 tracking-widest">
-            (+30) 210 4449 000 &nbsp;|&nbsp; cyber-vault.gr &nbsp;|&nbsp; info@cyber-vault.gr
-          </div>
-          <div className="flex gap-4">
-            {['**ΠΟΛΙΤΙΚΗ ΑΣΦΑΛΕΙΑΣ', '**ΑΝΑΦΟΡΑ ΠΑΡΑΒΙΑΣΗΣ', '**ΚΑΤΑΣΤΑΣΗ ΣΥΣΤΗΜΑΤΟΣ'].map((item) => (
-              <span key={item} className="font-mono-cyber text-[10px] text-white/20 hover:text-[#00D4FF]/40 cursor-pointer transition-colors tracking-wider">
-                {item}
-              </span>
-            ))}
-          </div>
+        {/* Divider */}
+        <div className="w-full h-px bg-[#00D4FF]/10 mt-2" />
+
+        {/* Copyright */}
+        <div className="font-mono-cyber text-[11px] text-white/25 tracking-widest">
+          © {year} CYBERVAULT — All Rights Reserved.
         </div>
       </div>
     </footer>
