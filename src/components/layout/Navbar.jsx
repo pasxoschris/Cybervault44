@@ -17,7 +17,6 @@ export default function Navbar() {
     { label: 'Αρχική', href: '#home' },
     { label: 'Υπηρεσίες', href: '#services' },
     { label: 'Σχετικά', href: '#about' },
-    { label: 'Πελάτες', href: '#clients' },
     { label: 'Επικοινωνία', href: '#contact' },
   ];
 
