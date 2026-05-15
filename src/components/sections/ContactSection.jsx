@@ -162,7 +162,7 @@ export default function ContactSection() {
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      ΑΠΟΣΤΟΛΗ ΑΣΦΑΛΟΥΣ ΑΙΤΗΜΑΤΟΣ
+                      ΑΠΟΣΤΟΛΗ ΜΗΝΥΜΑΤΟΣ
                     </>
                   )}
                 </button>
