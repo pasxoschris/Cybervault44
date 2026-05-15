@@ -113,7 +113,7 @@ export default function HeroSection() {
         {/* Stats row */}
         <div className="mt-20 grid grid-cols-3 gap-8 max-w-xl mx-auto border-t border-[#00D4FF]/10 pt-10">
           {[
-            { value: '500+', label: 'Δίκτυα Προστατευμένα' },
+            { value: '500+', label: 'ΔΙΚΤΥΑ' },
             { value: '99.9%', label: 'Uptime SLA' },
             { value: '24/7', label: 'Παρακολούθηση' },
           ].map((stat) => (
