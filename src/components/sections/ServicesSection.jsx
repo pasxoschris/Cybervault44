@@ -119,9 +119,15 @@ export default function ServicesSection() {
                 </div>
 
                 {/* Title */}
-                <h3 className="font-orbitron text-base font-bold text-white mb-2 tracking-wider group-hover:text-[#00D4FF] transition-colors leading-snug">
-                  {service.title}
-                </h3>
+                {service.code === 'SVC-001' ? (
+                  <a href="https://www.spotlightpos.com/" target="_blank" rel="noopener noreferrer" className="font-orbitron text-base font-bold text-white mb-2 tracking-wider hover:text-[#00D4FF] transition-colors leading-snug block">
+                    {service.title} ↗
+                  </a>
+                ) : (
+                  <h3 className="font-orbitron text-base font-bold text-white mb-2 tracking-wider group-hover:text-[#00D4FF] transition-colors leading-snug">
+                    {service.title}
+                  </h3>
+                )}
 
                 {/* Subtitle */}
                 {service.subtitle && (
