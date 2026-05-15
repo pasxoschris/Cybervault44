@@ -43,7 +43,7 @@ function MatrixRain({ canvasRef }) {
 export default function HeroSection() {
   const canvasRef = useRef(null);
   const [typed, setTyped] = useState('');
-  const fullText = 'ΑΣΦΑΛΕΙΣ ΔΙΚΤΥΑΚΕΣ ΥΠΟΔΟΜΕΣ_';
+  const fullText = 'ΑΣΦΑΛΕΙΣ ΔΙΚΤΥΑΚΕΣ ΥΠΟΔΟΜΕΣ';
 
   useEffect(() => {
     let i = 0;
