@@ -57,12 +57,7 @@ export default function Navbar() {
               {link.label}
             </button>
           ))}
-          <button
-            onClick={() => scrollTo('#contact')}
-            className="cyber-btn text-xs py-2.5 px-5"
-          >
-            Αίτημα Προσφοράς
-          </button>
+
         </div>
 
         {/* Mobile toggle */}
@@ -86,9 +81,7 @@ export default function Navbar() {
               {link.label}
             </button>
           ))}
-          <button onClick={() => scrollTo('#contact')} className="cyber-btn text-xs py-3 mt-2">
-            Αίτημα Προσφοράς
-          </button>
+
         </div>
       )}
     </nav>
