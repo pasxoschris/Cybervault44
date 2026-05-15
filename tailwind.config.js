@@ -4,6 +4,11 @@ module.exports = {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
+      fontFamily: {
+        orbitron: ['Orbitron', 'monospace'],
+        rajdhani: ['Rajdhani', 'sans-serif'],
+        'mono-cyber': ['"Share Tech Mono"', 'monospace'],
+      },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
