@@ -16,7 +16,6 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Αρχική', href: '#home' },
     { label: 'Υπηρεσίες', href: '#services' },
-    { label: 'Σχετικά', href: '#about' },
     { label: 'Επικοινωνία', href: '#contact' },
   ];
 

@@ -11,7 +11,6 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <ServicesSection />
-      <AboutSection />
       <ContactSection />
       <Footer />
     </div>
