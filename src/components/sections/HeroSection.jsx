@@ -87,8 +87,7 @@ export default function HeroSection() {
 
         {/* Main headline */}
         <h1 className="font-orbitron font-black text-5xl md:text-7xl lg:text-8xl text-[#00D4FF] glow-cyan mb-6 leading-none tracking-tight animate-flicker">
-          CYBER<br />
-          <span className="text-white">VAULT</span>
+          CYBER<span className="text-white">VAULT</span>
         </h1>
 
         {/* Typed subheading */}
