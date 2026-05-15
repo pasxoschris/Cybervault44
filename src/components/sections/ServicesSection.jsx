@@ -17,6 +17,7 @@ const services = [
   {
     icon: Wrench,
     title: 'Official SpotlightPOS Support',
+    link: 'https://www.spotlightpos.com/',
     code: 'SVC-001',
     subtitle: 'Επίσημοι συνεργάτες OXINUS HELLAS — εξειδικευμένη υποστήριξη για εστίαση, καφέ και λιανεμπόριο.',
     description: '',
@@ -43,6 +44,7 @@ const services = [
   {
     icon: Wifi,
     title: 'Starlink & 4G/5G — Πάντα Συνδεδεμένοι',
+    link: 'https://starlink.com/gr/business?referral=RC-481067-34312-6&utm_source=google&utm_medium=paid&utm_campaign=sls_gr_src_ggl_brd_var-pe&utm_content=sls_gr_src_ggl_brd_var-pe_res_gsa_v4m_txt_el-gr_egn&utm_term=var-pe_starlink',
     code: 'SVC-003',
     subtitle: 'Η επιχείρησή σας δεν σταματά — ούτε η σύνδεσή σας. Λύσεις για κύρια σύνδεση ή αυτόματο backup.',
     description: '',
@@ -119,8 +121,8 @@ export default function ServicesSection() {
                 </div>
 
                 {/* Title */}
-                {service.code === 'SVC-001' ? (
-                  <a href="https://www.spotlightpos.com/" target="_blank" rel="noopener noreferrer" className="font-orbitron text-base font-bold text-white mb-2 tracking-wider hover:text-[#00D4FF] transition-colors leading-snug block">
+                {service.link ? (
+                  <a href={service.link} target="_blank" rel="noopener noreferrer" className="font-orbitron text-base font-bold text-white mb-2 tracking-wider hover:text-[#00D4FF] transition-colors leading-snug block">
                     {service.title} ↗
                   </a>
                 ) : (
