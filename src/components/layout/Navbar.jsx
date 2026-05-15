@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Shield, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -37,14 +36,12 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <button onClick={() => scrollTo('#home')} className="flex items-center gap-3 group">
-          <div className="relative">
-            <Shield className="w-8 h-8 text-[#00D4FF] animate-pulse-glow" strokeWidth={1.5} />
-            <div className="absolute inset-0 bg-[#00D4FF]/20 rounded-full blur-md group-hover:bg-[#00D4FF]/30 transition-all" />
-          </div>
-          <span className="font-orbitron text-base font-bold text-white tracking-widest">
-            CYBER<span className="text-[#00D4FF]">VAULT</span>
-          </span>
+        <button onClick={() => scrollTo('#home')} className="flex items-center gap-2 group">
+          <img
+            src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/68fcc8846_CyberVaultbluelogoWEBvertical.jpg"
+            alt="CyberVault Logo"
+            className="h-10 w-auto object-contain rounded"
+          />
         </button>
 
         {/* Desktop Links */}
