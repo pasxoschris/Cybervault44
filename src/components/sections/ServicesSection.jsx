@@ -1,53 +1,81 @@
-import { Network, Shield, Eye, Lock, Radio, Server } from 'lucide-react';
+import { Wrench, Camera, Wifi, BarChart3, Shield, Network } from 'lucide-react';
 
 const services = [
   {
-    icon: Network,
-    title: 'Άμυνα Δικτύου',
+    icon: Wrench,
+    title: 'Official SpotlightPOS Support',
     code: 'SVC-001',
-    description:
-      'Ολοκληρωμένη προστασία περιμέτρου και στρατηγικές τμηματοποίησης δικτύου. Σχεδιάζουμε και αναπτύσσουμε αρχιτεκτονικές πολυεπίπεδης άμυνας για να κρατάμε τις απειλές μακριά από την υποδομή σας.',
-    tags: ['Διαχείριση Firewall', 'IDS/IPS', 'Αρχιτεκτονική DMZ'],
+    subtitle: 'Επίσημοι συνεργάτες OXINUS HELLAS',
+    description: 'Εξειδικευμένη υποστήριξη για επιχειρήσεις εστίασης και καφέ.',
+    bullets: [
+      'Εγκατάσταση νέου εξοπλισμού',
+      'On-site υποστήριξη',
+      'Εκπαίδευση χρηστών',
+      'Απομακρυσμένη τεχνική υποστήριξη',
+      'Παροχή συμβουλών για θέματα συστημάτων και λογισμικού',
+    ],
   },
   {
-    icon: Eye,
-    title: 'Πληροφορίες Απειλών',
+    icon: Camera,
+    title: 'Συστήματα Παρακολούθησης & Κάμερες',
     code: 'SVC-002',
-    description:
-      'Παρακολούθηση απειλών και ροές πληροφοριών σε πραγματικό χρόνο, προσαρμοσμένες στον κλάδο σας. Προληπτικός εντοπισμός αναδυόμενων απειλών πριν επηρεάσουν τα συστήματά σας.',
-    tags: ['Παρακολούθηση Dark Web', 'IOC Feeds', 'Threat Hunting'],
+    subtitle: 'Καθαρή εικόνα, ασφάλεια και πρόσβαση από οπουδήποτε.',
+    description: '',
+    bullets: [
+      'Εγκατάσταση IP καμερών & καταγραφικού',
+      'Ρύθμιση ασφαλούς πρόσβασης από κινητό',
+      'Πολλαπλή κάλυψη ειδικά στο χώρο του ταμείου',
+    ],
   },
   {
-    icon: Lock,
-    title: 'Zero Trust Ασφάλεια',
+    icon: Wifi,
+    title: 'Εγκατάσταση Starlink & 4G/5G',
     code: 'SVC-003',
-    description:
-      'Εφαρμογή μοντέλου ασφάλειας "μηδενικής εμπιστοσύνης" σε ολόκληρο το δίκτυό σας. Έλεγχος πρόσβασης βάσει ταυτότητας και micro-segmentation για σύγχρονες επιχειρήσεις.',
-    tags: ['IAM', 'Micro-segmentation', 'MFA'],
+    subtitle: 'Συνεχής λειτουργία με εναλλακτική σύνδεση όταν η κύρια γραμμή πέσει ή υποβαθμιστεί.',
+    description: '',
+    bullets: [
+      'Εγκατάσταση Starlink',
+      'Εγκατάσταση 4G/5G modem routers (κύρια ή εφεδρική σύνδεση)',
+      'Αυτόματη εναλλαγή γραμμών (failover) με multi-WAN router',
+    ],
   },
   {
-    icon: Radio,
-    title: 'Αντιμετώπιση Περιστατικών',
+    icon: BarChart3,
+    title: 'Δικτύωση & WiFi Υποδομές',
     code: 'SVC-004',
-    description:
-      'Άμεση αντιμετώπιση περιστατικών και υπηρεσίες ψηφιακής εγκληματολογίας. Η ομάδα μας είναι διαθέσιμη 24/7 για να περιορίσει παραβιάσεις, να ανακτήσει συστήματα και να αποτρέψει υποτροπές.',
-    tags: ['Απόκριση 24/7', 'Ψηφιακή Εγκληματολογία', 'Ανάκτηση'],
-  },
-  {
-    icon: Server,
-    title: 'Ενίσχυση Υποδομής',
-    code: 'SVC-005',
-    description:
-      'Συστηματικές αξιολογήσεις ασφάλειας και ενίσχυση διακομιστών, τερματικών και δικτυακών συσκευών. Σάρωση ευπαθειών, διαχείριση ενημερώσεων και έλεγχος διαμορφώσεων.',
-    tags: ['Pen Testing', 'Διαχείριση Patches', 'Έλεγχος Ρυθμίσεων'],
+    subtitle: 'Σταθερά δίκτυα, σωστή κάλυψη και διαχωρισμός κατηγοριών χρηστών.',
+    description: '',
+    bullets: [
+      'VLAN και QoS για: προσωπικό / πελάτες / συστήματα',
+      'Access Points και extender για ομοιόμορφη κάλυψη',
+      'Έλεγχος & βελτιστοποίηση ασύρματου δικτύου με WiFi 6e & 7 εξοπλισμό',
+    ],
   },
   {
     icon: Shield,
-    title: 'Συμμόρφωση & Έλεγχος',
+    title: 'Ασφάλεια Δικτύου & Firewall',
+    code: 'SVC-005',
+    subtitle: 'Προστασία της επιχείρησής σας από εξωτερικές και εσωτερικές απειλές.',
+    description: '',
+    bullets: [
+      'Εγκατάσταση & διαχείριση επαγγελματικού firewall',
+      'Παρακολούθηση κίνησης δικτύου σε πραγματικό χρόνο',
+      'Προστασία από κακόβουλο λογισμικό & phishing',
+      'VPN για ασφαλή απομακρυσμένη πρόσβαση',
+    ],
+  },
+  {
+    icon: Network,
+    title: 'Τεχνική Υποστήριξη & Συντήρηση',
     code: 'SVC-006',
-    description:
-      'Πλοηγηθείτε σε σύνθετες κανονιστικές απαιτήσεις με σιγουριά. Βοηθάμε οργανισμούς να επιτύχουν και να διατηρήσουν συμμόρφωση με ISO 27001, GDPR, NIS2 και πολλά άλλα.',
-    tags: ['ISO 27001', 'GDPR', 'NIS2'],
+    subtitle: 'Αξιόπιστη τεχνική υποστήριξη για ομαλή λειτουργία της επιχείρησής σας.',
+    description: '',
+    bullets: [
+      'On-site & απομακρυσμένη υποστήριξη',
+      'Προληπτική συντήρηση εξοπλισμού',
+      'Διαχείριση αναβαθμίσεων & ενημερώσεων',
+      'Προτεραιοποιημένη εξυπηρέτηση για συμβόλαια',
+    ],
   },
 ];
 
@@ -65,11 +93,11 @@ export default function ServicesSection() {
             // ΚΑΤΑΛΟΓΟΣ.ΥΠΗΡΕΣΙΩΝ //
           </div>
           <h2 className="font-orbitron font-bold text-3xl md:text-5xl text-white tracking-tight mb-4">
-            ΛΥΣΕΙΣ <span className="text-[#00D4FF] glow-cyan">ΑΣΦΑΛΕΙΑΣ</span> ΔΙΚΤΥΩΝ
+            ΛΥΣΕΙΣ <span className="text-[#00D4FF] glow-cyan">ΤΕΧΝΟΛΟΓΙΑΣ</span> & ΑΣΦΑΛΕΙΑΣ
           </h2>
           <div className="w-32 h-px bg-gradient-to-r from-transparent via-[#00D4FF] to-transparent mx-auto mb-6" />
           <p className="font-rajdhani text-lg text-white/50 max-w-2xl mx-auto">
-            Υπηρεσίες κυβερνοασφάλειας επιχειρησιακής κλάσης, σχεδιασμένες για να προστατεύουν, εντοπίζουν και αντιμετωπίζουν σύγχρονες δικτυακές απειλές.
+            Ολοκληρωμένες λύσεις δικτύωσης, ασφάλειας και τεχνολογίας για επιχειρήσεις κάθε μεγέθους.
           </p>
         </div>
 
@@ -78,7 +106,7 @@ export default function ServicesSection() {
           {services.map((service) => {
             const Icon = service.icon;
             return (
-              <div key={service.code} className="service-card p-6 group cursor-default relative">
+              <div key={service.code} className="service-card p-6 group cursor-default relative flex flex-col">
                 {/* Code label */}
                 <div className="font-mono-cyber text-[10px] text-[#00D4FF]/30 tracking-widest mb-4">
                   {service.code}
@@ -90,26 +118,26 @@ export default function ServicesSection() {
                 </div>
 
                 {/* Title */}
-                <h3 className="font-orbitron text-sm font-bold text-white mb-3 tracking-wider group-hover:text-[#00D4FF] transition-colors">
+                <h3 className="font-orbitron text-sm font-bold text-white mb-2 tracking-wider group-hover:text-[#00D4FF] transition-colors leading-snug">
                   {service.title}
                 </h3>
 
-                {/* Description */}
-                <p className="font-rajdhani text-sm text-white/50 leading-relaxed mb-5">
-                  {service.description}
-                </p>
+                {/* Subtitle */}
+                {service.subtitle && (
+                  <p className="font-rajdhani text-sm text-[#00D4FF]/50 mb-4 leading-snug">
+                    {service.subtitle}
+                  </p>
+                )}
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2">
-                  {service.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="font-mono-cyber text-[10px] text-[#00D4FF]/50 border border-[#00D4FF]/15 px-2 py-1 tracking-wider"
-                    >
-                      {tag}
-                    </span>
+                {/* Bullets */}
+                <ul className="flex flex-col gap-2 mt-auto">
+                  {service.bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-2">
+                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#00D4FF]/50 flex-shrink-0" />
+                      <span className="font-rajdhani text-sm text-white/50 leading-snug">{bullet}</span>
+                    </li>
                   ))}
-                </div>
+                </ul>
 
                 {/* Corner accents */}
                 <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-[#00D4FF]/30 group-hover:border-[#00D4FF]/60 transition-colors" />
