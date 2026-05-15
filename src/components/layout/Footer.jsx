@@ -1,5 +1,3 @@
-import { Shield } from 'lucide-react';
-
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
@@ -8,11 +6,12 @@ export default function Footer() {
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <Shield className="w-6 h-6 text-[#00D4FF]" strokeWidth={1.5} />
-            <span className="font-orbitron text-sm font-bold text-white tracking-widest">
-              CYBER<span className="text-[#00D4FF]">VAULT</span>
-            </span>
+          <div className="flex items-center">
+            <img
+              src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/36d890d99_CyberVaultbluelogo.jpg"
+              alt="CyberVault Logo"
+              className="h-8 w-auto object-contain"
+            />
           </div>
 
           {/* Links */}
