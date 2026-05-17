@@ -1,47 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Shield, Activity } from 'lucide-react';
-
-const MATRIX_CHARS = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-
-function MatrixRain({ canvasRef }) {
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const fontSize = 13;
-    const cols = Math.floor(canvas.width / fontSize);
-    const drops = Array(cols).fill(1);
-
-    const draw = () => {
-      ctx.fillStyle = 'rgba(10, 14, 26, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'rgba(0, 212, 255, 0.15)';
-      ctx.font = `${fontSize}px "Share Tech Mono", monospace`;
-      drops.forEach((y, i) => {
-        const char = MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
-        ctx.fillText(char, i * fontSize, y * fontSize);
-        if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-      });
-    };
-
-    const interval = setInterval(draw, 50);
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', resize);
-    return () => { clearInterval(interval); window.removeEventListener('resize', resize); };
-  }, [canvasRef]);
-
-  return null;
-}
+import { useEffect, useState } from 'react';
+import { ChevronDown, Activity } from 'lucide-react';
 
 export default function HeroSection() {
-  const canvasRef = useRef(null);
   const [typed, setTyped] = useState('');
   const fullText = 'ΑΣΦΑΛΕΙΣ ΔΙΚΤΥΑΚΕΣ ΥΠΟΔΟΜΕΣ';
 
@@ -64,16 +24,9 @@ export default function HeroSection() {
 
   return (
     <section id="home" className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
-      {/* Matrix canvas */}
-      <canvas ref={canvasRef} className="absolute inset-0 z-0 opacity-40" />
-      <MatrixRain canvasRef={canvasRef} />
-
-      {/* Grid overlay */}
-      <div className="absolute inset-0 cyber-grid z-0" />
-
       {/* Radial glow center */}
       <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
-        <div className="w-[600px] h-[600px] rounded-full bg-[#00D4FF]/5 blur-[120px]" />
+        <div className="w-[700px] h-[700px] rounded-full bg-[#1a3a8f]/20 blur-[100px]" />
       </div>
 
       {/* Content */}
