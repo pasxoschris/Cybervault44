@@ -62,20 +62,7 @@ export default function ContactSection() {
               </div>
             </div>
 
-            {/* Response SLA */}
-            <div className="border border-[#00D4FF]/20 bg-[#0D1526]/60 p-5">
-              <div className="font-mono-cyber text-[10px] text-[#00D4FF]/40 tracking-widest uppercase mb-3">SLA Απόκρισης</div>
-              {[
-                { label: 'Κρίσιμα Περιστατικά', value: '< 1 ώρα' },
-                { label: 'Γενικές Ερωτήσεις', value: '< 4 ώρες' },
-                { label: 'Αιτήματα Προσφοράς', value: '< 24 ώρες' },
-              ].map(({ label, value }) => (
-                <div key={label} className="flex justify-between items-center py-2 border-b border-[#00D4FF]/10 last:border-0">
-                  <span className="font-rajdhani text-xs text-white/45">{label}</span>
-                  <span className="font-mono-cyber text-xs text-[#00D4FF]">{value}</span>
-                </div>
-              ))}
-            </div>
+
           </div>
 
           {/* Right: Form */}
