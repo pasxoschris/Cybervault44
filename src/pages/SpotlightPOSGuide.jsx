@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import DotWaves from '@/components/ui/DotWaves.jsx';
 import { useState, useEffect } from 'react';
 import { ChevronRight, Smartphone, BookOpen, Users, Monitor, CreditCard, FileText, Settings, LogIn, Package, Tag, Edit3, Receipt, Clock, Layers, Download, CheckCircle2 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
@@ -44,42 +45,9 @@ export default function SpotlightPOSGuide() {
         <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(0,207,255,0.08) 0%, transparent 70%)" }} />
         <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[300px] h-[300px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(100,60,255,0.07) 0%, transparent 70%)" }} />
 
-        {/* Dot matrix - bottom right */}
-        <div className="absolute inset-y-0 right-0 pointer-events-none overflow-hidden" style={{ width: 480 }}>
-          {Array.from({ length: 18 }).map((_, row) =>
-            Array.from({ length: 14 }).map((_, col) => {
-              // Distance from bottom-right corner
-              const distX = (13 - col);
-              const distY = (17 - row);
-              const dist = Math.sqrt(distX * distX + distY * distY);
-              const maxDist = 18;
-              if (dist > maxDist) return null;
-
-              // Color: close to corner = white/light, further = cyan
-              const t = dist / maxDist; // 0 = corner, 1 = edge
-              const opacity = Math.max(0, 0.9 - t * 0.7);
-              const size = Math.max(3, 9 - t * 5);
-              // White near corner, cyan further out
-              const r = Math.round(180 + (0 - 180) * t);
-              const g = Math.round(220 + (207 - 220) * t);
-              const b = Math.round(255);
-
-              return (
-                <div
-                  key={`${row}-${col}`}
-                  className="absolute rounded-full"
-                  style={{
-                    right: col * 30 + 8,
-                    bottom: row * 30 + 8,
-                    width: size,
-                    height: size,
-                    background: `rgba(${r}, ${g}, ${b}, ${opacity})`,
-                    boxShadow: t < 0.4 ? `0 0 6px rgba(${r},${g},${b},${opacity * 0.5})` : 'none',
-                  }}
-                />
-              );
-            })
-          )}
+        {/* Dot waves - bottom right */}
+        <div className="absolute bottom-0 right-0 pointer-events-none overflow-hidden" style={{ width: 500, height: 500 }}>
+          <DotWaves />
         </div>
 
         <div className="relative max-w-4xl mx-auto px-6">

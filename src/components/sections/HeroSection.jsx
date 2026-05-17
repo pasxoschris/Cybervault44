@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import DotWaves from '@/components/ui/DotWaves.jsx';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDown, Activity } from 'lucide-react';
 
@@ -87,6 +88,11 @@ export default function HeroSection() {
       >
         <ChevronDown className="w-6 h-6" />
       </button>
+
+      {/* Dot waves - bottom right */}
+      <div className="absolute bottom-0 right-0 pointer-events-none overflow-hidden z-0" style={{ width: 560, height: 560 }}>
+        <DotWaves />
+      </div>
 
       {/* Horizontal scan line */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00D4FF]/30 to-transparent z-10" />
