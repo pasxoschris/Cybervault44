@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronDown, Activity } from 'lucide-react';
 
 export default function HeroSection() {
   const [typed, setTyped] = useState('');
+  const navigate = useNavigate();
   const fullText = 'ΑΣΦΑΛΕΙΣ ΔΙΚΤΥΑΚΕΣ ΥΠΟΔΟΜΕΣ';
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export default function HeroSection() {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button
-            onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => navigate('/services')}
             className="cyber-btn"
           >
             Οι Υπηρεσίες μας →
