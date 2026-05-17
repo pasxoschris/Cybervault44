@@ -102,39 +102,39 @@ export default function SpotlightPOSGuide() {
       <div className="max-w-4xl mx-auto px-6 py-10">
         <h2 className="text-base font-bold text-gray-900 mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>Επίλεξε από πού να ξεκινήσεις</h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {topics.map((topic) => {
             const Icon = topic.icon;
             return (
               <Link
                 key={topic.id}
                 to={topic.href}
-                className={`group relative bg-white rounded-2xl border shadow-sm p-5 hover:border-purple-300 hover:shadow-md transition-all duration-200 flex flex-col ${visited[topic.href] ? 'border-green-200' : 'border-gray-100'}`}
+                className={`group relative bg-white rounded-2xl border shadow-sm p-6 hover:border-purple-300 hover:shadow-md transition-all duration-200 flex flex-col ${visited[topic.href] ? 'border-green-200' : 'border-gray-100'}`}
               >
                 {/* Completed badge */}
                 {visited[topic.href] && (
-                  <div className="absolute top-3 right-3">
-                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  <div className="absolute top-4 right-4">
+                    <CheckCircle2 className="w-5 h-5 text-green-500" />
                   </div>
                 )}
 
                 {/* Number */}
-                <div className="text-[10px] text-gray-400 tracking-widest mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>#{String(topic.id).padStart(2, '0')}</div>
+                <div className="text-xs text-gray-400 mb-3 font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>#{String(topic.id).padStart(2, '0')}</div>
 
                 {/* Icon */}
-                <div className={`w-10 h-10 flex items-center justify-center rounded-xl border transition-colors mb-4 ${visited[topic.href] ? 'bg-green-50 border-green-100 group-hover:bg-green-100' : 'bg-purple-50 border-purple-100 group-hover:bg-purple-100'}`}>
-                  <Icon className={`w-5 h-5 ${visited[topic.href] ? 'text-green-600' : 'text-purple-600'}`} strokeWidth={1.5} />
+                <div className={`w-12 h-12 flex items-center justify-center rounded-xl border transition-colors mb-4 ${visited[topic.href] ? 'bg-green-50 border-green-100 group-hover:bg-green-100' : 'bg-purple-50 border-purple-100 group-hover:bg-purple-100'}`}>
+                  <Icon className={`w-6 h-6 ${visited[topic.href] ? 'text-green-600' : 'text-purple-600'}`} strokeWidth={1.5} />
                 </div>
 
                 {/* Text */}
-                <h3 className="text-sm font-bold text-gray-900 group-hover:text-purple-700 transition-colors leading-snug mb-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <h3 className="text-base font-bold text-gray-900 group-hover:text-purple-700 transition-colors leading-snug mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>
                   {topic.title}
                 </h3>
-                <p className="text-sm text-gray-400 flex-1" style={{ fontFamily: 'Inter, sans-serif' }}>{topic.desc}</p>
+                <p className="text-sm text-gray-500 flex-1 leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>{topic.desc}</p>
 
                 {/* Arrow */}
-                <div className="flex items-center gap-1 mt-4 text-xs text-purple-400 group-hover:text-purple-600 transition-colors font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  {visited[topic.href] ? 'Επανάληψη' : 'Δες οδηγό'} <ChevronRight className="w-3 h-3" />
+                <div className="flex items-center gap-1 mt-5 text-sm text-purple-400 group-hover:text-purple-600 transition-colors font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  {visited[topic.href] ? 'Επανάληψη' : 'Δες οδηγό'} <ChevronRight className="w-4 h-4" />
                 </div>
               </Link>
             );
