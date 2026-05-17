@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ChevronRight, Smartphone, BookOpen, Users, Monitor, CreditCard, FileText, Settings, LogIn, Package, Tag, Edit3, Receipt, Clock, Layers, Download } from 'lucide-react';
+import Navbar from '@/components/layout/Navbar';
 
 const topics = [
   { id: 1, icon: Download, title: 'Εγκατάσταση Εφαρμογής', desc: 'Κατέβασμα από App Store', href: '/tutorial/installation' },
@@ -19,6 +20,7 @@ const topics = [
 export default function SpotlightPOSGuide() {
   return (
     <div className="min-h-screen bg-[#0E1235]">
+      <Navbar />
       {/* Hero */}
       <div className="relative overflow-hidden pt-20 pb-16 border-b border-[#00D4FF]/10">
         <div className="absolute inset-0 cyber-grid opacity-30" />
