@@ -34,6 +34,15 @@ const channels = [
     live: false,
   },
   {
+    icon: MessageCircle,
+    tag: 'WhatsApp',
+    label: '(+30) 693 1326 616',
+    sublabel: '',
+    href: 'https://wa.me/306931326616',
+    external: true,
+    live: false,
+  },
+  {
     icon: MapPin,
     tag: 'Διεύθυνση',
     label: 'Πανεπιστημίου 64',
