@@ -1,40 +1,51 @@
-export function StepCard({ number, title, children }) {
+import React from "react";
+
+export function StepCard({ number, title, children, variant = "default" }) {
+  const variants = {
+    default: "bg-white border-gray-100 shadow-sm",
+    highlight: "bg-purple-50 border-purple-200",
+    warning: "bg-orange-50 border-orange-200",
+    info: "bg-blue-50 border-blue-200",
+  };
+
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex gap-4">
-      {/* Number */}
-      <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-purple-600 text-white font-orbitron text-sm font-bold">
-        {number}
-      </div>
-      {/* Content */}
-      <div className="flex-1 min-w-0">
-        <h3 className="font-orbitron text-sm font-bold text-gray-900 mb-2">{title}</h3>
-        <div className="font-rajdhani text-base text-gray-500 leading-relaxed [&_strong]:text-gray-700 [&_strong]:font-semibold">
-          {children}
+    <div className={`border rounded-2xl p-5 ${variants[variant]}`}>
+      <div className="flex items-start gap-4">
+        {number && (
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5 text-white"
+            style={{ background: "linear-gradient(135deg, #5B21B6, #2D2B55)" }}
+          >
+            {number}
+          </div>
+        )}
+        <div className="flex-1">
+          {title && <h3 className="font-orbitron font-bold text-gray-900 text-sm mb-2">{title}</h3>}
+          <div className="font-rajdhani text-gray-500 text-base leading-relaxed space-y-2 [&_strong]:text-gray-700 [&_strong]:font-semibold">
+            {children}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export function InfoBox({ icon, title, children, variant = 'info' }) {
-  const styles = {
-    info: 'border-blue-100 bg-blue-50 text-blue-700',
-    success: 'border-green-100 bg-green-50 text-green-700',
-    warning: 'border-yellow-100 bg-yellow-50 text-yellow-700',
-  };
-
-  const iconStyles = {
-    info: 'text-blue-500',
-    success: 'text-green-500',
-    warning: 'text-yellow-500',
+export function InfoBox({ icon = "💡", title, children, variant = "info" }) {
+  const variants = {
+    info: "bg-blue-50 border-blue-200 text-blue-800",
+    warning: "bg-amber-50 border-amber-200 text-amber-800",
+    success: "bg-green-50 border-green-200 text-green-800",
+    purple: "bg-purple-50 border-purple-200 text-purple-800",
   };
 
   return (
-    <div className={`border rounded-2xl p-4 flex gap-3 font-rajdhani text-base leading-relaxed ${styles[variant]}`}>
-      {icon && <span className={`text-lg flex-shrink-0 ${iconStyles[variant]}`}>{icon}</span>}
-      <div className="[&_strong]:font-semibold">
-        {title && <p className="font-orbitron text-xs font-bold mb-1 tracking-wide">{title}</p>}
-        {children}
+    <div className={`border rounded-2xl p-5 ${variants[variant]}`}>
+      <div className="flex items-start gap-3">
+        <span className="text-xl flex-shrink-0">{icon}</span>
+        <div className="font-rajdhani text-base leading-relaxed">
+          {title && <p className="font-orbitron text-xs font-bold mb-1 tracking-wide">{title}</p>}
+          <div className="[&_strong]:font-semibold">{children}</div>
+        </div>
       </div>
     </div>
   );
@@ -51,9 +62,9 @@ export function SectionTitle({ children }) {
 
 export function FieldRow({ label, value }) {
   return (
-    <div className="flex items-start gap-2 py-2 border-b border-gray-100 last:border-0 font-rajdhani text-sm">
-      <span className="text-gray-800 font-semibold min-w-[160px] flex-shrink-0">{label}</span>
-      <span className="text-gray-500">{value}</span>
+    <div className="flex items-start justify-between gap-4 py-3 border-b border-gray-100 last:border-0">
+      <span className="font-rajdhani text-sm text-gray-500 font-medium">{label}</span>
+      <span className="font-rajdhani text-sm text-gray-800 text-right">{value}</span>
     </div>
   );
 }
