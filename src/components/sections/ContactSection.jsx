@@ -21,7 +21,7 @@ const channels = [
     icon: Mail,
     tag: 'Email',
     label: 'info@cyber-vault.gr',
-    sublabel: 'Απόκριση εντός 4 ωρών',
+    sublabel: '',
     href: 'mailto:info@cyber-vault.gr',
     live: false,
   },
@@ -84,7 +84,7 @@ export default function ContactSection() {
               <div className="flex-1 min-w-0">
                 <div className="font-mono-cyber text-[9px] text-[#00D4FF]/40 tracking-widest uppercase mb-1">{tag}</div>
                 <div className="font-rajdhani text-base font-semibold text-white/85 group-hover:text-white transition-colors truncate">{label}</div>
-                <div className="font-rajdhani text-xs text-white/35 mt-0.5">{sublabel}</div>
+                {sublabel && <div className="font-rajdhani text-xs text-white/35 mt-0.5">{sublabel}</div>}
               </div>
 
               {/* Live indicator */}
