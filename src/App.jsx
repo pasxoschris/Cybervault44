@@ -17,6 +17,7 @@ import Invoice from './pages/tutorial/Invoice';
 import Login from './pages/tutorial/Login';
 import OrderDetails from './pages/tutorial/OrderDetails';
 import Scenarios from './pages/tutorial/Scenarios';
+import Shift from './pages/tutorial/Shift';
 import Settings from './pages/tutorial/Settings';
 
 const AuthenticatedApp = () => {
@@ -57,6 +58,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/login" element={<Login />} />
       <Route path="/tutorial/order-details" element={<OrderDetails />} />
       <Route path="/tutorial/scenarios" element={<Scenarios />} />
+      <Route path="/tutorial/shift" element={<Shift />} />
       <Route path="/tutorial/settings" element={<Settings />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
