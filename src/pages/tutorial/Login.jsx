@@ -21,7 +21,7 @@ export default function Login() {
     <TutorialLayout title="Σύνδεση Χρήστη" subtitle="Πώς να συνδεθείς στην εφαρμογή">
 
       <InfoBox icon="⚠️" title="Προαπαιτούμενα" variant="warning">
-        Πριν συνδεθείς, ο διαχειριστής πρέπει να έχει κάνει τα εξής στο </p><strong>Secure (Διαχειριστικό )</strong>:
+        Πριν συνδεθείς, ο διαχειριστής πρέπει να έχει κάνει τα εξής στο <strong>Secure (Διαχειριστικό)</strong>:
         <ul className="list-disc list-inside mt-2 space-y-1">
           <li>Δημιουργία χρηστών</li>
           <li>Δημιουργία σημείων πώλησης/συσκευών (POS) των χρηστών</li>
