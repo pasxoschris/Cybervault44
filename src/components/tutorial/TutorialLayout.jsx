@@ -40,12 +40,12 @@ export default function TutorialLayout({ children, title, subtitle }) {
             alt="SpotlightPOS"
             className="w-7 h-7 rounded-lg flex-shrink-0"
           />
-          <Link to="/spotlight-pos-guide" className="flex items-center gap-1 text-white/50 hover:text-white transition-colors text-xs font-rajdhani">
+          <Link to="/spotlight-pos-guide" className="flex items-center gap-1 text-white/50 hover:text-white transition-colors text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
             <Home size={12} />
             <span className="hidden sm:inline">Αρχική</span>
           </Link>
           <span className="text-white/25 text-xs">/</span>
-          <span className="text-white/80 text-xs font-rajdhani truncate">{title}</span>
+          <span className="text-white/80 text-xs truncate" style={{ fontFamily: 'Inter, sans-serif' }}>{title}</span>
         </div>
         {/* Progress dots */}
         <div className="flex justify-center gap-1.5 pb-2.5">
@@ -70,9 +70,9 @@ export default function TutorialLayout({ children, title, subtitle }) {
                 <SectionIcon size={24} className="text-white" />
               </div>
             )}
-            <h1 className="font-orbitron font-bold text-2xl md:text-3xl">{title}</h1>
-            {subtitle && <p className="text-white/60 mt-1.5 font-rajdhani text-sm">{subtitle}</p>}
-            <div className="mt-3 text-white/35 font-rajdhani text-xs">
+            <h1 className="font-bold text-2xl md:text-3xl" style={{ fontFamily: 'Inter, sans-serif' }}>{title}</h1>
+            {subtitle && <p className="text-white/60 mt-1.5 text-base" style={{ fontFamily: 'Inter, sans-serif' }}>{subtitle}</p>}
+            <div className="mt-3 text-white/35 text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
               {currentIndex + 1} / {sections.length}
             </div>
           </motion.div>
@@ -94,7 +94,7 @@ export default function TutorialLayout({ children, title, subtitle }) {
       <div className="max-w-3xl mx-auto px-6 pb-12">
         <div className="flex justify-between gap-4">
           {prev ? (
-            <Link to={prev.path} className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-3 hover:border-purple-300 hover:shadow-sm transition-all text-sm group font-rajdhani">
+            <Link to={prev.path} className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-3 hover:border-purple-300 hover:shadow-sm transition-all text-sm group" style={{ fontFamily: 'Inter, sans-serif' }}>
               <ChevronLeft size={15} className="text-gray-400 group-hover:text-purple-600 transition-colors" />
               <span className="text-gray-500 group-hover:text-gray-800 transition-colors">{prev.title}</span>
             </Link>
@@ -102,7 +102,7 @@ export default function TutorialLayout({ children, title, subtitle }) {
           {next ? (
             <Link
               to={next.path}
-              className="flex items-center gap-2 rounded-xl px-5 py-3 hover:opacity-90 hover:shadow-md transition-all text-sm ml-auto text-white font-rajdhani font-semibold"
+              className="flex items-center gap-2 rounded-xl px-5 py-3 hover:opacity-90 hover:shadow-md transition-all text-sm ml-auto text-white font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}
               style={{ background: "linear-gradient(135deg, #5B21B6, #2D2B55)" }}
             >
               <span>{next.title}</span>
@@ -111,7 +111,7 @@ export default function TutorialLayout({ children, title, subtitle }) {
           ) : (
             <Link
               to="/spotlight-pos-guide"
-              className="flex items-center gap-2 rounded-xl px-5 py-3 hover:opacity-90 transition-all text-sm ml-auto text-white font-rajdhani font-semibold"
+              className="flex items-center gap-2 rounded-xl px-5 py-3 hover:opacity-90 transition-all text-sm ml-auto text-white font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}
               style={{ background: "linear-gradient(135deg, #5B21B6, #2D2B55)" }}
             >
               <Home size={15} /> Αρχική
