@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
 import SpotlightPOSGuide from './pages/SpotlightPOSGuide';
+import CreateOrder from './pages/tutorial/CreateOrder';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -40,6 +41,7 @@ const AuthenticatedApp = () => {
       <Route path="/services" element={<Services />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/spotlight-pos-guide" element={<SpotlightPOSGuide />} />
+      <Route path="/tutorial/create-order" element={<CreateOrder />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
