@@ -14,8 +14,8 @@ export default function Footer() {
             alt="CyberVault Logo"
             className="w-10 h-10 object-contain"
           />
-          <span className="font-orbitron text-lg font-bold text-white tracking-widest">
-            CYBER<span className="text-[#00D4FF]">VAULT</span>
+          <span className="font-orbitron text-lg font-bold tracking-widest">
+            <span className="text-[#00D4FF]">CYBER</span><span className="text-white">VAULT</span>
           </span>
         </div>
 
