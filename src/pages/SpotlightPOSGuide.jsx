@@ -37,6 +37,7 @@ export default function SpotlightPOSGuide() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Navbar />
       {/* Header */}
       <div className="bg-gradient-to-br from-[#2d1b69] via-[#3d2080] to-[#1a0a40] pt-24 pb-12">
         <div className="max-w-4xl mx-auto px-6">
