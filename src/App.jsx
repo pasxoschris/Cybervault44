@@ -12,6 +12,7 @@ import SpotlightPOSGuide from './pages/SpotlightPOSGuide';
 import CreateOrder from './pages/tutorial/CreateOrder';
 import Discount from './pages/tutorial/Discount';
 import EditOrder from './pages/tutorial/EditOrder';
+import Installation from './pages/tutorial/Installation';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -46,6 +47,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/create-order" element={<CreateOrder />} />
       <Route path="/tutorial/discount" element={<Discount />} />
       <Route path="/tutorial/edit-order" element={<EditOrder />} />
+      <Route path="/tutorial/installation" element={<Installation />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
