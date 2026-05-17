@@ -51,7 +51,7 @@ export default function SpotlightPOSGuide() {
           </div>
 
           <p className="font-rajdhani text-lg text-white/50 max-w-lg mb-6">
-            Βήμα-βήμα οδηγοί για σερβιτόρους και ιδιοκτήτες εστιατορίων.
+            Βήμα-βήμα οδηγοί για χρήστες της εφαρμογής.
           </p>
 
           {/* Badges */}
