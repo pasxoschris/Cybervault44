@@ -44,6 +44,31 @@ export default function SpotlightPOSGuide() {
         <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(0,207,255,0.08) 0%, transparent 70%)" }} />
         <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[300px] h-[300px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(100,60,255,0.07) 0%, transparent 70%)" }} />
 
+        {/* Dot matrix - bottom right */}
+        <div className="absolute bottom-0 right-0 pointer-events-none overflow-hidden" style={{ width: 320, height: '100%' }}>
+          {Array.from({ length: 12 }).map((_, row) =>
+            Array.from({ length: 10 }).map((_, col) => {
+              const distFromCenter = Math.sqrt(Math.pow(col - 9, 2) + Math.pow(row - 11, 2));
+              const opacity = Math.max(0, 0.55 - distFromCenter * 0.04);
+              const size = Math.max(2, 5 - distFromCenter * 0.2);
+              return (
+                <div
+                  key={`${row}-${col}`}
+                  className="absolute rounded-full"
+                  style={{
+                    right: col * 28 + 16,
+                    bottom: row * 28 + 16,
+                    width: size,
+                    height: size,
+                    background: `rgba(0, 207, 255, ${opacity})`,
+                    boxShadow: opacity > 0.3 ? `0 0 4px rgba(0,207,255,${opacity * 0.6})` : 'none',
+                  }}
+                />
+              );
+            })
+          )}
+        </div>
+
         <div className="relative max-w-4xl mx-auto px-6">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 border font-mono-cyber text-[10px] tracking-widest uppercase animate-pulse-glow" style={{ borderColor: "rgba(0,207,255,0.3)", color: "rgba(0,207,255,0.7)", background: "rgba(0,207,255,0.05)" }}>
