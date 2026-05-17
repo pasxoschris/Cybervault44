@@ -24,7 +24,7 @@ export default function Login() {
         Πριν συνδεθείς, ο διαχειριστής πρέπει να έχει κάνει τα εξής στο <strong>Secure (διαχειριστικό)</strong>:
         <ul className="list-disc list-inside mt-2 space-y-1">
           <li>Δημιουργία των χρηστών</li>
-          <li>Δήλωση των συσκευών (POS) των χρηστών</li>
+          <li>Δημιουργία των συσκευών (POS) των χρηστών</li>
         </ul>
       </InfoBox>
 
