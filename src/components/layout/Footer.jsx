@@ -21,7 +21,7 @@ export default function Footer() {
 
         {/* Tagline */}
         <p className="font-rajdhani text-base text-[#00D4FF]/70 tracking-wide">
-          Τεχνική Υποστήριξη για επιχειρήσεις εστίασης και καφέ
+          Τεχνική Υποστήριξη για επιχειρήσεις
         </p>
 
         {/* Contact info */}
