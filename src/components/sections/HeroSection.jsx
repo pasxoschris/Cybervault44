@@ -39,7 +39,7 @@ export default function HeroSection() {
         </div>
 
         {/* Main headline */}
-        <h1 className="font-orbitron font-black text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-[#00D4FF] glow-cyan mb-6 leading-none tracking-tight animate-flicker whitespace-nowrap">
+        <h1 className="font-orbitron font-black text-5xl md:text-7xl lg:text-8xl text-[#00D4FF] glow-cyan mb-6 leading-none tracking-tight animate-flicker">
           CYBER<span className="text-white">VAULT</span>
         </h1>
 
@@ -48,7 +48,7 @@ export default function HeroSection() {
           {typed}<span className="animate-pulse">_</span>
         </div>
 
-        <p className="font-rajdhani text-base md:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed px-2">
+        <p className="font-rajdhani text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed">
           Προηγμένες λύσεις ασφάλειας δικτύων για επιχειρήσεις. Προστατεύουμε την ψηφιακή σας περίμετρο 
           με τεχνολογία νέας γενιάς, ευφυΐα απειλών και παρακολούθηση σε πραγματικό χρόνο.
         </p>
@@ -64,15 +64,15 @@ export default function HeroSection() {
         </div>
 
         {/* Stats row */}
-        <div className="mt-16 grid grid-cols-3 gap-3 sm:gap-8 max-w-xl mx-auto border-t border-[#00D4FF]/10 pt-8">
+        <div className="mt-20 grid grid-cols-3 gap-8 max-w-xl mx-auto border-t border-[#00D4FF]/10 pt-10">
           {[
             { value: '500+', label: 'ΔΙΚΤΥΑ' },
             { value: '99.9%', label: 'Uptime SLA' },
             { value: '24/7', label: 'Παρακολούθηση' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="font-orbitron text-xl sm:text-2xl md:text-3xl font-bold text-[#00D4FF] glow-cyan">{stat.value}</div>
-              <div className="font-rajdhani text-[10px] sm:text-xs text-white/40 tracking-wider sm:tracking-widest uppercase mt-1">{stat.label}</div>
+              <div className="font-orbitron text-2xl md:text-3xl font-bold text-[#00D4FF] glow-cyan">{stat.value}</div>
+              <div className="font-rajdhani text-xs text-white/40 tracking-widest uppercase mt-1">{stat.label}</div>
             </div>
           ))}
         </div>
