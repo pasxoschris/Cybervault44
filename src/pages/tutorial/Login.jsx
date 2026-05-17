@@ -50,12 +50,12 @@ export default function Login() {
           <SectionTitle>Σύνδεση για πρώτη φορά</SectionTitle>
 
           <StepCard number="1" title="Άνοιξε την εφαρμογή">
-            <p>Θα δεις την οθόνη "Συνδεθείτε στο Κατάστημα".</p>
+            <p>Θα δεις την οθόνη <strong>"Συνδεθείτε στο Κατάστημα"</strong> με Email, Κωδικό Πρόσβασης και κουμπί QR Code.</p>
             <div className="mt-3 flex justify-center">
               <img
-                src="https://media.base44.com/images/public/69f588f4590b173a2970ddb4/05d6e6612_image.png"
+                src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/d23c6a6d8_image.png"
                 alt="Οθόνη σύνδεσης SpotlightPOS"
-                className="w-48 rounded-2xl shadow-md border border-border cursor-zoom-in hover:opacity-90 transition-opacity"
+                className="w-full max-w-sm rounded-2xl shadow-md border border-gray-100 cursor-zoom-in hover:opacity-90 transition-opacity"
                 onClick={e => zoomOverlay(e.target.src)}
               />
             </div>
