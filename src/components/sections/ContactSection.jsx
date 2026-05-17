@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Send, Phone, Mail, MapPin, CheckCircle } from 'lucide-react';
+import { Send, Phone, Mail, MapPin, CheckCircle, MessageCircle } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 export default function ContactSection() {
@@ -39,30 +39,70 @@ export default function ContactSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Left: info */}
-          <div className="flex flex-col gap-8">
-            <div>
-              <div className="font-orbitron text-xs text-white/40 tracking-widest uppercase mb-6">Κανάλια Επικοινωνίας</div>
-              <div className="flex flex-col gap-5">
-                {[
-                  { icon: Phone, label: '(+30) 693 1326 616', sublabel: 'Κινητό — πάντα διαθέσιμο' },
-                  { icon: Phone, label: '(+30) 210 4449 000', sublabel: '24/7 διαθέσιμο' },
-                  { icon: Mail, label: 'info@cyber-vault.gr', sublabel: 'Απόκριση εντός 4 ωρών' },
-                  { icon: MapPin, label: '64 Πανεπιστημίου, 105 64 Αθήνα', sublabel: 'Εξυπηρέτηση πελατών σε ΕΕ' },
-                ].map(({ icon: Icon, label, sublabel }) => (
-                  <div key={label} className="flex items-start gap-4 group">
-                    <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center border border-[#00D4FF]/20 bg-[#00D4FF]/5 mt-0.5">
-                      <Icon className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
-                    </div>
-                    <div>
-                      <div className="font-rajdhani text-sm font-semibold text-white/80">{label}</div>
-                      <div className="font-rajdhani text-xs text-white/35 mt-0.5">{sublabel}</div>
-                    </div>
-                  </div>
-                ))}
+          <div className="flex flex-col gap-4">
+            <div className="font-orbitron text-xs text-white/40 tracking-widest uppercase mb-2">Κανάλια Επικοινωνίας</div>
+
+            {/* Phone 1 */}
+            <a href="tel:+306931326616" className="group flex items-center gap-4 border border-[#00D4FF]/15 bg-[#0D1526]/60 p-4 hover:border-[#00D4FF]/40 hover:bg-[#00D4FF]/5 transition-all duration-200">
+              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center border border-[#00D4FF]/30 bg-[#00D4FF]/10">
+                <Phone className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
               </div>
-            </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-mono-cyber text-[9px] text-[#00D4FF]/40 tracking-widest uppercase mb-0.5">Κινητό</div>
+                <div className="font-rajdhani text-sm font-semibold text-white/85 group-hover:text-white transition-colors">(+30) 693 1326 616</div>
+                <div className="font-rajdhani text-xs text-white/35">Πάντα διαθέσιμο</div>
+              </div>
+              <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse flex-shrink-0" />
+            </a>
 
+            {/* Phone 2 */}
+            <a href="tel:+302104449000" className="group flex items-center gap-4 border border-[#00D4FF]/15 bg-[#0D1526]/60 p-4 hover:border-[#00D4FF]/40 hover:bg-[#00D4FF]/5 transition-all duration-200">
+              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center border border-[#00D4FF]/30 bg-[#00D4FF]/10">
+                <Phone className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-mono-cyber text-[9px] text-[#00D4FF]/40 tracking-widest uppercase mb-0.5">Σταθερό</div>
+                <div className="font-rajdhani text-sm font-semibold text-white/85 group-hover:text-white transition-colors">(+30) 210 4449 000</div>
+                <div className="font-rajdhani text-xs text-white/35">24/7 διαθέσιμο</div>
+              </div>
+              <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse flex-shrink-0" />
+            </a>
 
+            {/* Email */}
+            <a href="mailto:info@cyber-vault.gr" className="group flex items-center gap-4 border border-[#00D4FF]/15 bg-[#0D1526]/60 p-4 hover:border-[#00D4FF]/40 hover:bg-[#00D4FF]/5 transition-all duration-200">
+              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center border border-[#00D4FF]/30 bg-[#00D4FF]/10">
+                <Mail className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-mono-cyber text-[9px] text-[#00D4FF]/40 tracking-widest uppercase mb-0.5">Email</div>
+                <div className="font-rajdhani text-sm font-semibold text-white/85 group-hover:text-white transition-colors truncate">info@cyber-vault.gr</div>
+                <div className="font-rajdhani text-xs text-white/35">Απόκριση εντός 4 ωρών</div>
+              </div>
+            </a>
+
+            {/* Viber */}
+            <a href="viber://chat?number=%2B306931326616" className="group flex items-center gap-4 border border-[#00D4FF]/15 bg-[#0D1526]/60 p-4 hover:border-[#00D4FF]/40 hover:bg-[#00D4FF]/5 transition-all duration-200">
+              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center border border-[#00D4FF]/30 bg-[#00D4FF]/10">
+                <MessageCircle className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-mono-cyber text-[9px] text-[#00D4FF]/40 tracking-widest uppercase mb-0.5">Viber</div>
+                <div className="font-rajdhani text-sm font-semibold text-white/85 group-hover:text-white transition-colors">(+30) 693 1326 616</div>
+                <div className="font-rajdhani text-xs text-white/35">Μήνυμα άμεσα</div>
+              </div>
+            </a>
+
+            {/* Address */}
+            <a href="https://maps.google.com/?q=Πανεπιστημίου+64,+10564+Αθήνα" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 border border-[#00D4FF]/15 bg-[#0D1526]/60 p-4 hover:border-[#00D4FF]/40 hover:bg-[#00D4FF]/5 transition-all duration-200">
+              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center border border-[#00D4FF]/30 bg-[#00D4FF]/10">
+                <MapPin className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-mono-cyber text-[9px] text-[#00D4FF]/40 tracking-widest uppercase mb-0.5">Διεύθυνση</div>
+                <div className="font-rajdhani text-sm font-semibold text-white/85 group-hover:text-white transition-colors">Πανεπιστημίου 64</div>
+                <div className="font-rajdhani text-xs text-white/35">105 64 Αθήνα</div>
+              </div>
+            </a>
           </div>
 
           {/* Right: Form */}
