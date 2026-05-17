@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
-import { StepCard, InfoBox } from "../../components/tutorial/StepCard";
+import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 
 const scenarios = [
   {
@@ -104,26 +104,26 @@ export default function Scenarios() {
   return (
     <TutorialLayout title="Σενάρια" subtitle="Πρακτικά παραδείγματα για συχνές καταστάσεις">
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
         {scenarios.map(s => (
           <button
             key={s.id}
             onClick={() => setActive(s.id)}
             className={`px-3 py-2.5 text-xs font-medium transition-all text-left border ${
               active === s.id
-                ? "border-purple-500/60 bg-purple-900/30 text-white"
-                : "border-[#00D4FF]/10 bg-[#0D1526]/70 text-white/50 hover:text-white/80 hover:border-[#00D4FF]/25"
+                ? "border-purple-500/60 bg-purple-900/20 text-purple-300"
+                : "border-[#00D4FF]/10 bg-[#0D1526]/70 text-white/50 hover:border-[#00D4FF]/30 hover:text-white/70"
             }`}
           >
             <span className="text-base block mb-1">{s.icon}</span>
-            <span className="font-rajdhani leading-tight">{s.title}</span>
+            <span className="font-rajdhani">{s.title}</span>
           </button>
         ))}
       </div>
 
       {current && (
         <>
-          <div className="flex items-center gap-3 mt-2">
+          <div className="flex items-center gap-3 mt-4 mb-2">
             <span className="text-3xl">{current.icon}</span>
             <h2 className="font-orbitron text-base font-bold text-white tracking-wide">{current.title}</h2>
           </div>
