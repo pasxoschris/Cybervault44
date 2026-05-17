@@ -45,7 +45,7 @@ export default function Invoice() {
       </StepCard>
 
       <StepCard number="4" title="Συμπλήρωσε τα στοιχεία">
-        <div className="border border-[#00D4FF]/10 bg-[#080c20]/60 rounded-sm overflow-hidden mt-2">
+        <div className="bg-[#080c20] border border-[#00D4FF]/10 rounded-sm overflow-hidden mt-2 px-3">
           {fields.map((f, i) => (
             <FieldRow key={i} label={f.label} value={f.value} />
           ))}
@@ -64,7 +64,6 @@ export default function Invoice() {
       <InfoBox icon="💡" title="Αναζήτηση ΑΦΜ" variant="info">
         Μπορείς να πατήσεις το εικονίδιο 📖 δίπλα στο πεδίο ΑΦΜ για αυτόματη αναζήτηση στην ΑΑΔΕ. Τα στοιχεία της εταιρείας θα συμπληρωθούν αυτόματα.
       </InfoBox>
-
     </TutorialLayout>
   );
 }
