@@ -37,6 +37,10 @@ export default function StartShift() {
         Χωρίς έναρξη βάρδιας δεν μπορείς να δεχτείς πληρωμές. Βεβαιώσου ότι έχεις ανοίξει βάρδια πριν ξεκινήσεις τις παραγγελίες.
       </InfoBox>
 
+        <InfoBox icon="⚠️" title="Προσοχή" variant="warning">
+        Κάνοντας αποσύνδεση δεν κλείνει η βάρδια. 
+      </InfoBox>
+
     </TutorialLayout>
   );
 }
