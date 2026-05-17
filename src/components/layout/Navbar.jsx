@@ -12,8 +12,12 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const navLinks = [
-    { label: 'Αρχική', to: '/' },
+    { label: 'Αρχική', to: '/', scrollTop: true },
     { label: 'Υπηρεσίες', to: '/services' },
     { label: 'Επικοινωνία', to: '/contact' },
   ];
@@ -42,6 +46,7 @@ export default function Navbar() {
             <Link
               key={link.to}
               to={link.to}
+              onClick={link.scrollTop ? scrollToTop : undefined}
               className="nav-link"
             >
               {link.label}
@@ -65,7 +70,7 @@ export default function Navbar() {
             <Link
               key={link.to}
               to={link.to}
-              onClick={() => setMobileOpen(false)}
+              onClick={() => { setMobileOpen(false); if (link.scrollTop) scrollToTop(); }}
               className="nav-link text-left text-sm"
             >
               {link.label}
