@@ -9,19 +9,19 @@ export function StepCard({ number, title, children, variant = "default" }) {
   };
 
   return (
-    <div className={`border rounded-2xl p-5 ${variants[variant]}`}>
-      <div className="flex items-start gap-4">
+    <div className={`border rounded-2xl p-6 ${variants[variant]}`}>
+      <div className="flex items-start gap-5">
         {number && (
           <div
-            className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5 text-white"
+            className="w-10 h-10 rounded-full flex items-center justify-center text-base font-bold flex-shrink-0 mt-0.5 text-white shadow-md"
             style={{ background: "linear-gradient(135deg, #5B21B6, #2D2B55)" }}
           >
             {number}
           </div>
         )}
         <div className="flex-1">
-          {title && <h3 className="font-orbitron font-bold text-gray-900 text-sm mb-2">{title}</h3>}
-          <div className="font-rajdhani text-gray-500 text-base leading-relaxed space-y-2 [&_strong]:text-gray-700 [&_strong]:font-semibold">
+          {title && <h3 className="font-orbitron font-bold text-gray-900 text-base mb-2">{title}</h3>}
+          <div className="font-rajdhani text-gray-600 text-lg leading-relaxed space-y-2 [&_strong]:text-gray-800 [&_strong]:font-semibold">
             {children}
           </div>
         </div>
@@ -39,11 +39,11 @@ export function InfoBox({ icon = "💡", title, children, variant = "info" }) {
   };
 
   return (
-    <div className={`border rounded-2xl p-5 ${variants[variant]}`}>
-      <div className="flex items-start gap-3">
-        <span className="text-xl flex-shrink-0">{icon}</span>
-        <div className="font-rajdhani text-base leading-relaxed">
-          {title && <p className="font-orbitron text-xs font-bold mb-1 tracking-wide">{title}</p>}
+    <div className={`border rounded-2xl p-6 ${variants[variant]}`}>
+      <div className="flex items-start gap-4">
+        <span className="text-2xl flex-shrink-0 mt-0.5">{icon}</span>
+        <div className="font-rajdhani text-lg leading-relaxed">
+          {title && <p className="font-orbitron text-sm font-bold mb-1.5 tracking-wide">{title}</p>}
           <div className="[&_strong]:font-semibold">{children}</div>
         </div>
       </div>
@@ -54,8 +54,8 @@ export function InfoBox({ icon = "💡", title, children, variant = "info" }) {
 export function SectionTitle({ children }) {
   return (
     <div className="flex items-center gap-3 mt-2">
-      <div className="w-1 h-5 bg-purple-600 rounded-full" />
-      <h2 className="font-orbitron text-base font-bold text-gray-900">{children}</h2>
+      <div className="w-1.5 h-6 bg-purple-600 rounded-full" />
+      <h2 className="font-orbitron text-lg font-bold text-gray-900">{children}</h2>
     </div>
   );
 }
