@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Edit3, Receipt, Layers, Monitor } from "lucide-react";
 import { motion } from "framer-motion";
+import { markVisited } from "@/lib/tutorialProgress";
 
 const sections = [
   { title: "Εγκατάσταση", path: "/tutorial/installation", icon: Download },
@@ -24,6 +25,10 @@ export default function TutorialLayout({ children, title, subtitle }) {
   const prev = currentIndex > 0 ? sections[currentIndex - 1] : null;
   const next = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
   const SectionIcon = sections[currentIndex]?.icon;
+
+  useEffect(() => {
+    if (location.pathname) markVisited(location.pathname);
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
-import { ChevronRight, Smartphone, BookOpen, Users, Monitor, CreditCard, FileText, Settings, LogIn, Package, Tag, Edit3, Receipt, Clock, Layers, Download } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ChevronRight, Smartphone, BookOpen, Users, Monitor, CreditCard, FileText, Settings, LogIn, Package, Tag, Edit3, Receipt, Clock, Layers, Download, CheckCircle2 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import SearchBar from '@/components/tutorial/SearchBar';
+import { getCompletedCount, isVisited } from '@/lib/tutorialProgress';
 
 const topics = [
   { id: 1, icon: Download, title: 'Εγκατάσταση Εφαρμογής', desc: 'Κατέβασμα από App Store', href: '/tutorial/installation' },
@@ -19,6 +21,20 @@ const topics = [
 ];
 
 export default function SpotlightPOSGuide() {
+  const [visited, setVisited] = useState({});
+
+  useEffect(() => {
+    const update = () => {
+      const obj = {};
+      topics.forEach(t => { obj[t.href] = isVisited(t.href); });
+      setVisited(obj);
+    };
+    update();
+  }, []);
+
+  const completedCount = topics.filter(t => visited[t.href]).length;
+  const progressPct = Math.round((completedCount / topics.length) * 100);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -63,6 +79,22 @@ export default function SpotlightPOSGuide() {
             ))}
           </div>
 
+          {/* Progress */}
+          {completedCount > 0 && (
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-rajdhani text-xs text-white/50 tracking-widest uppercase">Πρόοδος Εκπαίδευσης</span>
+                <span className="font-rajdhani text-xs text-white/70 font-semibold">{completedCount}/{topics.length} ενότητες</span>
+              </div>
+              <div className="w-full h-1.5 rounded-full bg-white/10">
+                <div
+                  className="h-1.5 rounded-full transition-all duration-500"
+                  style={{ width: `${progressPct}%`, background: "linear-gradient(90deg, #A78BFA, #7C3AED)" }}
+                />
+              </div>
+            </div>
+          )}
+
           {/* Search */}
           <SearchBar />
         </div>
@@ -79,14 +111,21 @@ export default function SpotlightPOSGuide() {
               <Link
                 key={topic.id}
                 to={topic.href}
-                className="group bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:border-purple-300 hover:shadow-md transition-all duration-200 flex flex-col"
+                className={`group relative bg-white rounded-2xl border shadow-sm p-5 hover:border-purple-300 hover:shadow-md transition-all duration-200 flex flex-col ${visited[topic.href] ? 'border-green-200' : 'border-gray-100'}`}
               >
+                {/* Completed badge */}
+                {visited[topic.href] && (
+                  <div className="absolute top-3 right-3">
+                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  </div>
+                )}
+
                 {/* Number */}
                 <div className="font-rajdhani text-[10px] text-gray-400 tracking-widest mb-3">#{String(topic.id).padStart(2, '0')}</div>
 
                 {/* Icon */}
-                <div className="w-10 h-10 flex items-center justify-center rounded-xl border border-purple-100 bg-purple-50 group-hover:bg-purple-100 transition-colors mb-4">
-                  <Icon className="w-5 h-5 text-purple-600" strokeWidth={1.5} />
+                <div className={`w-10 h-10 flex items-center justify-center rounded-xl border transition-colors mb-4 ${visited[topic.href] ? 'bg-green-50 border-green-100 group-hover:bg-green-100' : 'bg-purple-50 border-purple-100 group-hover:bg-purple-100'}`}>
+                  <Icon className={`w-5 h-5 ${visited[topic.href] ? 'text-green-600' : 'text-purple-600'}`} strokeWidth={1.5} />
                 </div>
 
                 {/* Text */}
@@ -97,7 +136,7 @@ export default function SpotlightPOSGuide() {
 
                 {/* Arrow */}
                 <div className="flex items-center gap-1 mt-4 font-rajdhani text-xs text-purple-400 group-hover:text-purple-600 transition-colors font-semibold">
-                  Δες οδηγό <ChevronRight className="w-3 h-3" />
+                  {visited[topic.href] ? 'Επανάληψη' : 'Δες οδηγό'} <ChevronRight className="w-3 h-3" />
                 </div>
               </Link>
             );
