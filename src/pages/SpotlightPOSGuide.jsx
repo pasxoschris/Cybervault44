@@ -39,42 +39,33 @@ export default function SpotlightPOSGuide() {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       {/* Header */}
-      <div className="bg-gradient-to-br from-[#2d1b69] via-[#3d2080] to-[#1a0a40] pt-24 pb-12">
-        <div className="max-w-4xl mx-auto px-6">
+      <div className="relative overflow-hidden pt-24 pb-14 cyber-grid" style={{ background: "#0E1235" }}>
+        {/* Animated glow orb */}
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(0,207,255,0.08) 0%, transparent 70%)" }} />
+        <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[300px] h-[300px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(100,60,255,0.07) 0%, transparent 70%)" }} />
+
+        <div className="relative max-w-4xl mx-auto px-6">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white/70 text-xs font-rajdhani tracking-widest uppercase">
-            SpotlightPOS · Εκπαίδευση Συστήματος
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 border font-mono-cyber text-[10px] tracking-widest uppercase animate-pulse-glow" style={{ borderColor: "rgba(0,207,255,0.3)", color: "rgba(0,207,255,0.7)", background: "rgba(0,207,255,0.05)" }}>
+            ✦ SPOTLIGHT<span className="text-white/50">POS</span> · ΕΚΠΑΙΔΕΥΣΗ ΣΥΣΤΗΜΑΤΟΣ ✦
           </div>
 
-          {/* Logo + Title */}
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 border border-purple-400/40 bg-white/10">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <line x1="18" y1="20" x2="18" y2="8" stroke="#A78BFA" strokeWidth="2.5" strokeLinecap="round"/>
-                <line x1="12" y1="20" x2="12" y2="3" stroke="#A78BFA" strokeWidth="2.5" strokeLinecap="round"/>
-                <line x1="6" y1="20" x2="6" y2="13" stroke="#A78BFA" strokeWidth="2.5" strokeLinecap="round"/>
-              </svg>
-            </div>
-            <div>
-              <p className="font-rajdhani text-xs text-purple-300/60 tracking-widest uppercase mb-0.5">SpotlightPOS</p>
-              <h1 className="font-orbitron font-bold text-2xl md:text-3xl text-white tracking-tight">
-                Οδηγός <span className="text-[#A78BFA]">Εκπαίδευσης</span>
-              </h1>
-            </div>
-          </div>
-
-          <p className="font-rajdhani text-base text-white/50 max-w-lg mb-6">
-            Βήμα-βήμα οδηγοί για χρήστες της εφαρμογής.
+          {/* Title */}
+          <h1 className="font-orbitron font-black text-3xl md:text-5xl mb-3 tracking-tight" style={{ color: "#fff" }}>
+            ΟΔΗΓΟΣ <span className="glow-cyan" style={{ color: "#00CFFF" }}>ΕΚΠΑΙΔΕΥΣΗΣ</span>
+          </h1>
+          <p className="font-rajdhani text-base md:text-lg mb-8 max-w-lg" style={{ color: "rgba(255,255,255,0.45)" }}>
+            Βήμα-βήμα οδηγοί για χρήστες της εφαρμογής SpotlightPOS.
           </p>
 
           {/* Badges */}
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div className="flex flex-wrap gap-3 mb-8">
             {[
               { icon: <Smartphone className="w-3 h-3" />, label: 'Μόνο για iOS' },
               { icon: <BookOpen className="w-3 h-3" />, label: '12 Ενότητες' },
               { icon: <Users className="w-3 h-3" />, label: 'Σερβιτόροι & Ιδιοκτήτες' },
             ].map((b) => (
-              <span key={b.label} className="flex items-center gap-1.5 font-rajdhani text-xs font-semibold px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/70">
+              <span key={b.label} className="flex items-center gap-1.5 font-rajdhani text-xs font-semibold px-3 py-1.5 border" style={{ borderColor: "rgba(0,207,255,0.2)", color: "rgba(0,207,255,0.6)", background: "rgba(0,207,255,0.04)" }}>
                 {b.icon} {b.label}
               </span>
             ))}
@@ -82,15 +73,15 @@ export default function SpotlightPOSGuide() {
 
           {/* Progress */}
           {completedCount > 0 && (
-            <div className="mb-6">
+            <div className="mb-6 max-w-sm">
               <div className="flex items-center justify-between mb-2">
-                <span className="font-rajdhani text-xs text-white/50 tracking-widest uppercase">Πρόοδος Εκπαίδευσης</span>
-                <span className="font-rajdhani text-xs text-white/70 font-semibold">{completedCount}/{topics.length} ενότητες</span>
+                <span className="font-mono-cyber text-[9px] tracking-widest uppercase" style={{ color: "rgba(0,207,255,0.5)" }}>ΠΡΟΟΔΟΣ ΕΚΠΑΙΔΕΥΣΗΣ</span>
+                <span className="font-mono-cyber text-[9px]" style={{ color: "rgba(0,207,255,0.7)" }}>{completedCount}/{topics.length}</span>
               </div>
-              <div className="w-full h-1.5 rounded-full bg-white/10">
+              <div className="w-full h-0.5 rounded-full" style={{ background: "rgba(0,207,255,0.1)" }}>
                 <div
-                  className="h-1.5 rounded-full transition-all duration-500"
-                  style={{ width: `${progressPct}%`, background: "linear-gradient(90deg, #A78BFA, #7C3AED)" }}
+                  className="h-0.5 rounded-full transition-all duration-500"
+                  style={{ width: `${progressPct}%`, background: "linear-gradient(90deg, #00CFFF, #6A3FFF)", boxShadow: "0 0 8px rgba(0,207,255,0.6)" }}
                 />
               </div>
             </div>
