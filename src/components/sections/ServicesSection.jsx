@@ -1,4 +1,4 @@
-import { Wrench, Camera, Wifi, BarChart3, Shield, Network, Zap, Package } from 'lucide-react';
+import { Wrench, Camera, Wifi, BarChart3, Shield, Network, Zap, Package, GraduationCap } from 'lucide-react';
 
 const services = [
   {
@@ -78,6 +78,19 @@ const services = [
       'Αυτοματοποιημένα backup & disaster recovery για μηδενική απώλεια δεδομένων',
       'Παρακολούθηση 24/7 με άμεση ειδοποίηση σε περίπτωση βλάβης',
       'UPS & προστασία ισχύος για αδιάλειπτη λειτουργία κρίσιμων συστημάτων',
+    ],
+  },
+  {
+    icon: GraduationCap,
+    title: 'Εκπαίδευση Security Awareness',
+    code: 'SVC-009',
+    subtitle: 'Ο πιο αδύναμος κρίκος σε κάθε σύστημα ασφαλείας είναι ο άνθρωπος — εμείς το αλλάζουμε αυτό.',
+    description: '',
+    bullets: [
+      'Εκπαίδευση προσωπικού σε phishing, social engineering & κυβερνοαπειλές της καθημερινότητας',
+      'Πρακτικές ασκήσεις με προσομοίωση επιθέσεων — μάθηση μέσα από πραγματικά σενάρια',
+      'Πολιτικές ασφαλείας & βέλτιστες πρακτικές για κωδικούς, email & συσκευές',
+      'Πιστοποιητικό ολοκλήρωσης για κάθε συμμετέχοντα — αποδεικνύει επίπεδο ετοιμότητας',
     ],
   },
   {
