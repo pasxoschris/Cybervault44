@@ -2,18 +2,18 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, Smartphone, BookOpen, Users, Monitor, CreditCard, FileText, Settings, LogIn, Package, Tag, Edit3, Receipt, Clock, Layers, Download } from 'lucide-react';
 
 const topics = [
-  { id: 1, icon: Download, title: 'Εγκατάσταση Εφαρμογής', desc: 'Κατέβασμα από App Store', href: 'https://www.spotlightpos.com/' },
-  { id: 2, icon: LogIn, title: 'Σύνδεση Χρήστη', desc: 'Πρώτη σύνδεση & επόμενες', href: 'https://www.spotlightpos.com/' },
-  { id: 3, icon: Clock, title: 'Έναρξη Βάρδιας', desc: 'Άνοιγμα βάρδιας & ταμείου', href: 'https://www.spotlightpos.com/' },
-  { id: 4, icon: Settings, title: 'Ρυθμίσεις Χρήστη', desc: 'Εκτυπωτές, POS, τιμοκατάλογος', href: 'https://www.spotlightpos.com/' },
-  { id: 5, icon: Package, title: 'Δημιουργία Παραγγελίας', desc: 'Τραπέζι, προϊόντα & αποστολή', href: 'https://www.spotlightpos.com/' },
-  { id: 6, icon: FileText, title: 'Στοιχεία Παραγγελίας', desc: 'Ακύρωση, μεταφορά, συγχώνευση', href: 'https://www.spotlightpos.com/' },
-  { id: 7, icon: Tag, title: 'Έκπτωση', desc: 'Γενική, ιδιοκατανάλωση & άλλες', href: 'https://www.spotlightpos.com/' },
-  { id: 8, icon: CreditCard, title: 'Πληρωμή', desc: 'Μετρητά, κάρτα, split payments', href: 'https://www.spotlightpos.com/' },
-  { id: 9, icon: Edit3, title: 'Επεξεργασία Παραγγελίας', desc: 'Εργαλεία επεξεργασίας', href: 'https://www.spotlightpos.com/' },
-  { id: 10, icon: Receipt, title: 'Έκδοση Τιμολογίου', desc: 'Στοιχεία & έκδοση παραστατικών', href: 'https://www.spotlightpos.com/' },
-  { id: 11, icon: Layers, title: 'Παραγγελίες Βάρδιας', desc: 'Ανάλυση, εκτύπωση & κλείσιμο', href: 'https://www.spotlightpos.com/' },
-  { id: 12, icon: Monitor, title: 'Σενάρια', desc: 'Πρακτικά παραδείγματα', href: 'https://www.spotlightpos.com/' },
+  { id: 1, icon: Download, title: 'Εγκατάσταση Εφαρμογής', desc: 'Κατέβασμα από App Store', href: '/tutorial/installation' },
+  { id: 2, icon: LogIn, title: 'Σύνδεση Χρήστη', desc: 'Πρώτη σύνδεση & επόμενες', href: '/tutorial/login' },
+  { id: 3, icon: Clock, title: 'Έναρξη Βάρδιας', desc: 'Άνοιγμα βάρδιας & ταμείου', href: '/tutorial/start-shift' },
+  { id: 4, icon: Settings, title: 'Ρυθμίσεις Χρήστη', desc: 'Εκτυπωτές, POS, τιμοκατάλογος', href: '/tutorial/settings' },
+  { id: 5, icon: Package, title: 'Δημιουργία Παραγγελίας', desc: 'Τραπέζι, προϊόντα & αποστολή', href: '/tutorial/create-order' },
+  { id: 6, icon: FileText, title: 'Στοιχεία Παραγγελίας', desc: 'Ακύρωση, μεταφορά, συγχώνευση', href: '/tutorial/order-details' },
+  { id: 7, icon: Tag, title: 'Έκπτωση', desc: 'Γενική, ιδιοκατανάλωση & άλλες', href: '/tutorial/discount' },
+  { id: 8, icon: CreditCard, title: 'Πληρωμή', desc: 'Μετρητά, κάρτα, split payments', href: '/tutorial/payment' },
+  { id: 9, icon: Edit3, title: 'Επεξεργασία Παραγγελίας', desc: 'Εργαλεία επεξεργασίας', href: '/tutorial/edit-order' },
+  { id: 10, icon: Receipt, title: 'Έκδοση Τιμολογίου', desc: 'Στοιχεία & έκδοση παραστατικών', href: '/tutorial/invoice' },
+  { id: 11, icon: Layers, title: 'Παραγγελίες Βάρδιας', desc: 'Ανάλυση, εκτύπωση & κλείσιμο', href: '/tutorial/shift' },
+  { id: 12, icon: Monitor, title: 'Σενάρια', desc: 'Πρακτικά παραδείγματα', href: '/tutorial/scenarios' },
 ];
 
 export default function SpotlightPOSGuide() {
@@ -78,9 +78,9 @@ export default function SpotlightPOSGuide() {
           {topics.map((topic) => {
             const Icon = topic.icon;
             return (
-              <a
+              <Link
                 key={topic.id}
-                href={topic.href}
+                to={topic.href}
                 className="group relative flex flex-col border border-[#00D4FF]/10 bg-[#0D1526]/70 p-5 hover:border-purple-500/50 hover:bg-purple-900/10 transition-all duration-200"
               >
                 {/* Number */}
@@ -105,7 +105,7 @@ export default function SpotlightPOSGuide() {
                 {/* Corner accents */}
                 <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-purple-500/20 group-hover:border-purple-500/50 transition-colors" />
                 <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-purple-500/20 group-hover:border-purple-500/50 transition-colors" />
-              </a>
+              </Link>
             );
           })}
         </div>
