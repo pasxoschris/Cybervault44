@@ -32,23 +32,23 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
         {/* Status badge */}
-        <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 border border-[#00D4FF]/30 bg-[#00D4FF]/5 font-mono-cyber text-xs text-[#00D4FF] tracking-widest">
-          <Activity className="w-3 h-3 animate-pulse" />
-          <span>ΣΥΣΤΗΜΑ ΕΝΕΡΓΟ — ΟΛΑ ΤΑ ΔΙΚΤΥΑ ΑΣΦΑΛΗ</span>
-          <span className="w-2 h-2 rounded-full bg-[#00D4FF] animate-pulse" />
+        <div className="inline-flex items-center gap-2 mb-6 px-3 py-2 border border-[#00D4FF]/30 bg-[#00D4FF]/5 font-mono-cyber text-[10px] md:text-xs text-[#00D4FF] tracking-widest max-w-xs md:max-w-none text-center">
+          <Activity className="w-3 h-3 animate-pulse flex-shrink-0" />
+          <span className="leading-tight">ΣΥΣΤΗΜΑ ΕΝΕΡΓΟ — ΟΛΑ ΤΑ ΔΙΚΤΥΑ ΑΣΦΑΛΗ</span>
+          <span className="w-2 h-2 rounded-full bg-[#00D4FF] animate-pulse flex-shrink-0" />
         </div>
 
         {/* Main headline */}
-        <h1 className="font-orbitron font-black text-5xl md:text-7xl lg:text-8xl text-[#00D4FF] glow-cyan mb-6 leading-none tracking-tight animate-flicker">
+        <h1 className="font-orbitron font-black text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-[#00D4FF] glow-cyan mb-6 leading-none tracking-tight animate-flicker">
           CYBER<span className="text-white">VAULT</span>
         </h1>
 
         {/* Typed subheading */}
-        <div className="font-mono-cyber text-sm md:text-base text-[#00D4FF]/70 tracking-[0.4em] mb-4 h-6">
+        <div className="font-mono-cyber text-xs md:text-base text-[#00D4FF]/70 tracking-[0.2em] md:tracking-[0.4em] mb-4 h-6">
           {typed}<span className="animate-pulse">_</span>
         </div>
 
-        <p className="font-rajdhani text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed">
+        <p className="font-rajdhani text-base md:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed px-2">
           Προηγμένες λύσεις ασφάλειας δικτύων για επιχειρήσεις. Προστατεύουμε την ψηφιακή σας περίμετρο 
           με τεχνολογία νέας γενιάς, ευφυΐα απειλών και παρακολούθηση σε πραγματικό χρόνο.
         </p>
@@ -64,15 +64,15 @@ export default function HeroSection() {
         </div>
 
         {/* Stats row */}
-        <div className="mt-20 grid grid-cols-3 gap-8 max-w-xl mx-auto border-t border-[#00D4FF]/10 pt-10">
+        <div className="mt-12 grid grid-cols-3 gap-4 md:gap-8 max-w-xl mx-auto border-t border-[#00D4FF]/10 pt-8">
           {[
             { value: '500+', label: 'ΔΙΚΤΥΑ' },
             { value: '99.9%', label: 'Uptime SLA' },
             { value: '24/7', label: 'Παρακολούθηση' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="font-orbitron text-2xl md:text-3xl font-bold text-[#00D4FF] glow-cyan">{stat.value}</div>
-              <div className="font-rajdhani text-xs text-white/40 tracking-widest uppercase mt-1">{stat.label}</div>
+              <div className="font-orbitron text-xl md:text-3xl font-bold text-[#00D4FF] glow-cyan">{stat.value}</div>
+              <div className="font-rajdhani text-[10px] md:text-xs text-white/40 tracking-wider md:tracking-widest uppercase mt-1">{stat.label}</div>
             </div>
           ))}
         </div>
