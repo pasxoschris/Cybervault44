@@ -100,7 +100,7 @@ export default function SpotlightPOSGuide() {
 
       {/* Grid */}
       <div className="max-w-4xl mx-auto px-6 py-10">
-        <h2 className="font-orbitron text-base font-bold text-gray-900 mb-6">Επέλεξε από πού να ξεκινήσεις</h2>
+        <h2 className="font-orbitron text-base font-bold text-gray-900 mb-6">Επίλεξε από πού να ξεκινήσεις</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {topics.map((topic) => {
