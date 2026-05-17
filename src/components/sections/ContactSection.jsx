@@ -29,7 +29,7 @@ const channels = [
     icon: MessageCircle,
     tag: 'Viber',
     label: '(+30) 693 1326 616',
-    sublabel: 'Μήνυμα άμεσα',
+    sublabel: '',
     href: 'viber://chat?number=%2B306931326616',
     live: false,
   },
