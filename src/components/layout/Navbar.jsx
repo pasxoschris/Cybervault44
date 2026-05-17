@@ -30,7 +30,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
+        <Link to="/" onClick={scrollToTop} className="flex items-center gap-3 group">
           <div className="relative">
             <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/71e29efae_web-app-manifest-512x512.png" alt="CyberVault Logo" className="w-9 h-9 object-contain" />
             <div className="absolute inset-0 bg-[#00D4FF]/10 rounded-full blur-md group-hover:bg-[#00D4FF]/20 transition-all" />
