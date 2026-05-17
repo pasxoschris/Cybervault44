@@ -13,7 +13,7 @@ export default function StartShift() {
       <SectionTitle>Βήματα Έναρξης Βάρδιας</SectionTitle>
 
       <StepCard number="1" title="Σύνδεση στην εφαρμογή">
-        <p>Συνδέσου στην εφαρμογή με τα στοιχεία σου (όπως περιγράφεται στην ενότητα <strong>«Σύνδεση Χρήστη»</strong>).</p>
+        <p>Συνδέσου στην εφαρμογή με τα στοιχεία σου (όπως περιγράφεται στην ενότητα <strong><a href="/tutorial/login" className="text-purple-600 underline hover:text-purple-800">«Σύνδεση Χρήστη»</a></strong>).</p>
       </StepCard>
 
       <StepCard number="2" title="Έναρξη νέας βάρδιας">
