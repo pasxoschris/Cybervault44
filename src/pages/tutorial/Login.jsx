@@ -30,18 +30,18 @@ export default function Login() {
 
       {/* Tab selector */}
       <div className="flex gap-2">
-        {[
-          { id: "first", label: "🆕 Πρώτη Φορά" },
-          { id: "repeat", label: "🔄 Επόμενες Φορές" },
-        ].map(t => (
-          <button
-            key={t.id}
-            onClick={() => setTab(t.id)}
-            className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${tab === t.id ? "bg-primary text-primary-foreground shadow" : "bg-secondary text-secondary-foreground hover:bg-secondary/80"}`}
-          >
-            {t.label}
-          </button>
-        ))}
+        <button
+          onClick={() => setTab("first")}
+          className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${tab === "first" ? "bg-primary text-primary-foreground shadow" : "bg-secondary text-secondary-foreground hover:bg-secondary/80"}`}
+        >
+          🆕 Πρώτη Φορά
+        </button>
+        <button
+          onClick={() => setTab("repeat")}
+          className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${tab === "repeat" ? "bg-primary text-primary-foreground shadow" : "bg-secondary text-secondary-foreground hover:bg-secondary/80"}`}
+        >
+          🔄 Επόμενες Φορές
+        </button>
       </div>
 
       {tab === "first" && (
@@ -104,22 +104,18 @@ export default function Login() {
         <>
           <ScreenshotGallery images={["https://media.base44.com/images/public/69f588f4590b173a2970ddb4/3eb8334c2_4.JPG"]} caption="Οθόνη User Sign in" />
           <SectionTitle>Σύνδεση μετά την πρώτη φορά</SectionTitle>
-
           <StepCard number="1" title="Βλέπεις την οθόνη User Sign in">
             <p>Εφόσον η συσκευή έχει ήδη συνδεθεί με κατάστημα, θα εμφανιστεί απευθείας η οθόνη <strong>«User Sign in»</strong>.</p>
           </StepCard>
-
           <StepCard number="2" title="Εισήγαγε στοιχεία χρήστη">
             <div className="border border-[#00D4FF]/10 bg-[#080c20]/60 rounded-sm overflow-hidden mt-2">
               <FieldRow label="Username" value="Το όνομα χρήστη σου" />
               <FieldRow label="Password" value="Ο κωδικός σου" />
             </div>
           </StepCard>
-
           <StepCard number="3" title="Πάτα Login">
             <p>Θα δεις κάτω αριστερά το <strong>κατάστημα – συσκευή</strong> (π.χ. «Spotlight Demo - pos 1»).</p>
           </StepCard>
-
           <InfoBox icon="📊" title="Πολλοί χρήστες / Άδειες" variant="info">
             Μπορείτε να δημιουργήσετε πολλούς χρήστες και πολλές συσκευές. Όμως, ο αριθμός των <strong>παράλληλα συνδεδεμένων χρηστών</strong> εξαρτάται από τις άδειες που έχετε αγοράσει.
           </InfoBox>

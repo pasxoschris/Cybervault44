@@ -16,6 +16,7 @@ import Installation from './pages/tutorial/Installation';
 import Invoice from './pages/tutorial/Invoice';
 import Login from './pages/tutorial/Login';
 import OrderDetails from './pages/tutorial/OrderDetails';
+import Scenarios from './pages/tutorial/Scenarios';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();

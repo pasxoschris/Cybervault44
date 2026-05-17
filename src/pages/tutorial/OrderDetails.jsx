@@ -12,13 +12,21 @@ const topics = [
   { id: "merge", label: "Συγχώνευση", icon: "🔗" },
 ];
 
+const overviewRows = [
+  ["ΑΝΟΙΚΤΗ ΠΑΡΑΓΓΕΛΙΑ", "Κατάσταση παραγγελίας"],
+  ["Άτομα", "Αριθμός ατόμων (π.χ. 2)"],
+  ["Τραπέζι", "Αριθμός τραπεζιού (π.χ. A4)"],
+  ["Ώρα", "Ώρα παραγγελίας"],
+  ["Προϊόντα", "Λίστα παραγγελθέντων"],
+  ["Σύνολο", "Συνολικό ποσό"],
+];
+
 export default function OrderDetails() {
   const [active, setActive] = useState("overview");
 
   return (
     <TutorialLayout title="Στοιχεία Παραγγελίας" subtitle="Διαχείριση ανοικτής παραγγελίας">
 
-      {/* Sub-nav */}
       <div className="flex flex-wrap gap-2">
         {topics.map(t => (
           <button
@@ -41,19 +49,12 @@ export default function OrderDetails() {
             caption="Στοιχεία παραγγελίας — επιλογές"
           />
           <SectionTitle>Στοιχεία Ανοικτής Παραγγελίας</SectionTitle>
-          <div className="border border-[#00D4FF]/10 bg-[#0D1526]/70 p-5">
+          <div className="border border-[#00D4FF]/10 bg-[#0D1526]/70 p-4">
             <p className="font-rajdhani text-sm text-white/50 mb-3">Στην οθόνη παραγγελίας βλέπεις:</p>
-            <div className="space-y-0">
-              {[
-                ["ΑΝΟΙΚΤΗ ΠΑΡΑΓΓΕΛΙΑ", "Κατάσταση παραγγελίας"],
-                ["Άτομα", "Αριθμός ατόμων (π.χ. 2)"],
-                ["Τραπέζι", "Αριθμός τραπεζιού (π.χ. A4)"],
-                ["Ώρα", "Ώρα παραγγελίας"],
-                ["Προϊόντα", "Λίστα παραγγελθέντων"],
-                ["Σύνολο", "Συνολικό ποσό"],
-              ].map(([label, val]) => (
-                <div key={label} className="flex justify-between font-rajdhani text-sm py-2 border-b border-[#00D4FF]/10 last:border-0">
-                  <span className="font-semibold text-white/80">{label}</span>
+            <div className="border border-[#00D4FF]/10 bg-[#080c20]/60 rounded-sm overflow-hidden">
+              {overviewRows.map(([label, val]) => (
+                <div key={label} className="flex items-start gap-2 py-2 px-3 border-b border-[#00D4FF]/10 last:border-0 font-rajdhani text-sm">
+                  <span className="text-white/80 font-semibold min-w-[160px] flex-shrink-0">{label}</span>
                   <span className="text-white/50">{val}</span>
                 </div>
               ))}
