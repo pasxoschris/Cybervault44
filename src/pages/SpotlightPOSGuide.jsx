@@ -81,8 +81,6 @@ export default function SpotlightPOSGuide() {
               <a
                 key={topic.id}
                 href={topic.href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="group relative flex flex-col border border-[#00D4FF]/10 bg-[#0D1526]/70 p-5 hover:border-purple-500/50 hover:bg-purple-900/10 transition-all duration-200"
               >
                 {/* Number */}
