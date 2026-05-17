@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ChevronRight, Smartphone, BookOpen, Users, Monitor, CreditCard, FileText, Settings, LogIn, Package, Tag, Edit3, Receipt, Clock, Layers, Download } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
+import SearchBar from '@/components/tutorial/SearchBar';
 
 const topics = [
   { id: 1, icon: Download, title: 'Εγκατάσταση Εφαρμογής', desc: 'Κατέβασμα από App Store', href: '/tutorial/installation' },
@@ -50,7 +51,7 @@ export default function SpotlightPOSGuide() {
           </p>
 
           {/* Badges */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-8">
             {[
               { icon: <Smartphone className="w-3 h-3" />, label: 'Μόνο για iOS' },
               { icon: <BookOpen className="w-3 h-3" />, label: '12 Ενότητες' },
@@ -61,6 +62,9 @@ export default function SpotlightPOSGuide() {
               </span>
             ))}
           </div>
+
+          {/* Search */}
+          <SearchBar />
         </div>
       </div>
 
