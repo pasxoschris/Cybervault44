@@ -57,7 +57,7 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-2 font-rajdhani text-sm text-white/60">
             <MapPin className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
             <a
-              href="https://maps.google.com/?q=Πανεπιστημίου+64,+10564+Αθήνα"
+              href="https://maps.app.goo.gl/pRs4d5CQ3dCZhJPX7"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#00D4FF] font-semibold hover:underline"

@@ -47,7 +47,7 @@ const channels = [
     tag: 'Διεύθυνση',
     label: 'Πανεπιστημίου 64',
     sublabel: '105 64 Αθήνα',
-    href: 'https://maps.google.com/?q=Πανεπιστημίου+64,+10564+Αθήνα',
+    href: 'https://maps.app.goo.gl/pRs4d5CQ3dCZhJPX7',
     external: true,
     live: false,
   },
