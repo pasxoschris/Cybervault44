@@ -13,6 +13,7 @@ import CreateOrder from './pages/tutorial/CreateOrder';
 import Discount from './pages/tutorial/Discount';
 import EditOrder from './pages/tutorial/EditOrder';
 import Installation from './pages/tutorial/Installation';
+import Invoice from './pages/tutorial/Invoice';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -48,6 +49,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/discount" element={<Discount />} />
       <Route path="/tutorial/edit-order" element={<EditOrder />} />
       <Route path="/tutorial/installation" element={<Installation />} />
+      <Route path="/tutorial/invoice" element={<Invoice />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

@@ -45,3 +45,12 @@ export function SectionTitle({ children }) {
     </div>
   );
 }
+
+export function FieldRow({ label, value }) {
+  return (
+    <div className="flex items-start gap-2 py-2 border-b border-[#00D4FF]/10 last:border-0 font-rajdhani text-sm">
+      <span className="text-white/80 font-semibold min-w-[160px] flex-shrink-0">{label}</span>
+      <span className="text-white/50">{value}</span>
+    </div>
+  );
+}
