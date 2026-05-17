@@ -1,4 +1,4 @@
-import { Wrench, Camera, Wifi, BarChart3, Shield, Network, Zap } from 'lucide-react';
+import { Wrench, Camera, Wifi, BarChart3, Shield, Network, Zap, Package } from 'lucide-react';
 
 const services = [
   {
@@ -78,6 +78,19 @@ const services = [
       'Αυτοματοποιημένα backup & disaster recovery για μηδενική απώλεια δεδομένων',
       'Παρακολούθηση 24/7 με άμεση ειδοποίηση σε περίπτωση βλάβης',
       'UPS & προστασία ισχύος για αδιάλειπτη λειτουργία κρίσιμων συστημάτων',
+    ],
+  },
+  {
+    icon: Package,
+    title: 'Ενοικίαση Εξοπλισμού',
+    code: 'SVC-008',
+    subtitle: 'Αποφύγετε το κόστος αγοράς — αποκτήστε τον εξοπλισμό που χρειάζεστε, όποτε τον χρειάζεστε.',
+    description: '',
+    bullets: [
+      '4G Routers — αξιόπιστη σύνδεση για pop-up, events & προσωρινές εγκαταστάσεις',
+      'iPad & iPhone — έτοιμα για χρήση με SpotlightPOS ή οποιοδήποτε σύστημα',
+      'Εκτυπωτές παραγγελιών & αποδείξεων — θερμικοί, Bluetooth & WiFi',
+      'Παράδοση, ρύθμιση & τεχνική υποστήριξη καθ\' όλη τη διάρκεια ενοικίασης',
     ],
   },
   {
