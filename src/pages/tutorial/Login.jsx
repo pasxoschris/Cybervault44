@@ -30,18 +30,18 @@ export default function Login() {
 
       {/* Tab selector */}
       <div className="flex gap-2">
-        <button
-          onClick={() => setTab("first")}
-          className={`flex-1 py-2.5 font-orbitron text-xs font-bold tracking-wide transition-all border ${tab === "first" ? "border-purple-500/60 bg-purple-900/30 text-[#A78BFA]" : "border-[#00D4FF]/10 bg-[#0D1526]/70 text-white/40 hover:text-white/60"}`}
-        >
-          🆕 Πρώτη Φορά
-        </button>
-        <button
-          onClick={() => setTab("repeat")}
-          className={`flex-1 py-2.5 font-orbitron text-xs font-bold tracking-wide transition-all border ${tab === "repeat" ? "border-purple-500/60 bg-purple-900/30 text-[#A78BFA]" : "border-[#00D4FF]/10 bg-[#0D1526]/70 text-white/40 hover:text-white/60"}`}
-        >
-          🔄 Επόμενες Φορές
-        </button>
+        {[
+          { id: "first", label: "🆕 Πρώτη Φορά" },
+          { id: "repeat", label: "🔄 Επόμενες Φορές" },
+        ].map(t => (
+          <button
+            key={t.id}
+            onClick={() => setTab(t.id)}
+            className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${tab === t.id ? "bg-primary text-primary-foreground shadow" : "bg-secondary text-secondary-foreground hover:bg-secondary/80"}`}
+          >
+            {t.label}
+          </button>
+        ))}
       </div>
 
       {tab === "first" && (
@@ -55,7 +55,7 @@ export default function Login() {
               <img
                 src="https://media.base44.com/images/public/69f588f4590b173a2970ddb4/05d6e6612_image.png"
                 alt="Οθόνη σύνδεσης SpotlightPOS"
-                className="w-48 rounded-2xl shadow-md border border-[#00D4FF]/10 cursor-zoom-in hover:opacity-90 transition-opacity"
+                className="w-48 rounded-2xl shadow-md border border-border cursor-zoom-in hover:opacity-90 transition-opacity"
                 onClick={e => zoomOverlay(e.target.src)}
               />
             </div>
@@ -72,7 +72,7 @@ export default function Login() {
               <img
                 src="https://media.base44.com/images/public/69f588f4590b173a2970ddb4/9cf0016f5_image.png"
                 alt="Επιλογή καταστήματος και POS"
-                className="w-full max-w-sm rounded-2xl shadow-md border border-[#00D4FF]/10 cursor-zoom-in hover:opacity-90 transition-opacity"
+                className="w-full max-w-sm rounded-2xl shadow-md border border-border cursor-zoom-in hover:opacity-90 transition-opacity"
                 onClick={e => zoomOverlay(e.target.src)}
               />
             </div>
@@ -84,11 +84,11 @@ export default function Login() {
               <img
                 src="https://media.base44.com/images/public/69f588f4590b173a2970ddb4/d233f965e_image.png"
                 alt="Οθόνη σύνδεσης χρήστη"
-                className="w-full max-w-sm rounded-2xl shadow-md border border-[#00D4FF]/10 cursor-zoom-in hover:opacity-90 transition-opacity"
+                className="w-full max-w-sm rounded-2xl shadow-md border border-border cursor-zoom-in hover:opacity-90 transition-opacity"
                 onClick={e => zoomOverlay(e.target.src)}
               />
             </div>
-            <div className="bg-[#080c20] border border-[#00D4FF]/10 rounded-sm px-3 mt-2">
+            <div className="border border-[#00D4FF]/10 bg-[#080c20]/60 rounded-sm overflow-hidden mt-2">
               <FieldRow label="Όνομα Χρήστη" value="Το όνομα χρήστη σου" />
               <FieldRow label="Κωδικός Πρόσβασης" value="Ο κωδικός σου" />
             </div>
@@ -110,7 +110,7 @@ export default function Login() {
           </StepCard>
 
           <StepCard number="2" title="Εισήγαγε στοιχεία χρήστη">
-            <div className="bg-[#080c20] border border-[#00D4FF]/10 rounded-sm px-3 mt-2">
+            <div className="border border-[#00D4FF]/10 bg-[#080c20]/60 rounded-sm overflow-hidden mt-2">
               <FieldRow label="Username" value="Το όνομα χρήστη σου" />
               <FieldRow label="Password" value="Ο κωδικός σου" />
             </div>

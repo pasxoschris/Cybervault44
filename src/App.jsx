@@ -15,6 +15,7 @@ import EditOrder from './pages/tutorial/EditOrder';
 import Installation from './pages/tutorial/Installation';
 import Invoice from './pages/tutorial/Invoice';
 import Login from './pages/tutorial/Login';
+import OrderDetails from './pages/tutorial/OrderDetails';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -52,6 +53,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/installation" element={<Installation />} />
       <Route path="/tutorial/invoice" element={<Invoice />} />
       <Route path="/tutorial/login" element={<Login />} />
+      <Route path="/tutorial/order-details" element={<OrderDetails />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
