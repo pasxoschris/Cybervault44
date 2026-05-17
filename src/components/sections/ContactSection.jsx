@@ -45,7 +45,7 @@ export default function ContactSection() {
               <div className="flex flex-col gap-5">
                 {[
                   { icon: Phone, label: '(+30) 693 1326 616', sublabel: 'Κινητό — πάντα διαθέσιμο' },
-                  { icon: Phone, label: '(+30) 210 4449 000', sublabel: 'Δευ–Παρ, 09:00–18:00' },
+                  { icon: Phone, label: '(+30) 210 4449 000', sublabel: '24/7 διαθέσιμο' },
                   { icon: Mail, label: 'info@cyber-vault.gr', sublabel: 'Απόκριση εντός 4 ωρών' },
                   { icon: MapPin, label: '64 Πανεπιστημίου, 105 64 Αθήνα', sublabel: 'Εξυπηρέτηση πελατών σε ΕΕ' },
                 ].map(({ icon: Icon, label, sublabel }) => (
