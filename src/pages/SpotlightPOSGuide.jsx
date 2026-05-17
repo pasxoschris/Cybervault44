@@ -100,7 +100,7 @@ export default function SpotlightPOSGuide() {
 
       {/* Grid */}
       <div className="max-w-4xl mx-auto px-6 py-10">
-        <h2 className="font-orbitron text-base font-bold text-gray-900 mb-6">Επίλεξε από πού να ξεκινήσεις</h2>
+        <h2 className="text-base font-bold text-gray-900 mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>Επίλεξε από πού να ξεκινήσεις</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {topics.map((topic) => {
@@ -119,7 +119,7 @@ export default function SpotlightPOSGuide() {
                 )}
 
                 {/* Number */}
-                <div className="font-rajdhani text-[10px] text-gray-400 tracking-widest mb-3">#{String(topic.id).padStart(2, '0')}</div>
+                <div className="text-[10px] text-gray-400 tracking-widest mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>#{String(topic.id).padStart(2, '0')}</div>
 
                 {/* Icon */}
                 <div className={`w-10 h-10 flex items-center justify-center rounded-xl border transition-colors mb-4 ${visited[topic.href] ? 'bg-green-50 border-green-100 group-hover:bg-green-100' : 'bg-purple-50 border-purple-100 group-hover:bg-purple-100'}`}>
@@ -127,13 +127,13 @@ export default function SpotlightPOSGuide() {
                 </div>
 
                 {/* Text */}
-                <h3 className="font-orbitron text-sm font-bold text-gray-900 group-hover:text-purple-700 transition-colors leading-snug mb-1">
+                <h3 className="text-sm font-bold text-gray-900 group-hover:text-purple-700 transition-colors leading-snug mb-1" style={{ fontFamily: 'Inter, sans-serif' }}>
                   {topic.title}
                 </h3>
-                <p className="font-rajdhani text-sm text-gray-400 flex-1">{topic.desc}</p>
+                <p className="text-sm text-gray-400 flex-1" style={{ fontFamily: 'Inter, sans-serif' }}>{topic.desc}</p>
 
                 {/* Arrow */}
-                <div className="flex items-center gap-1 mt-4 font-rajdhani text-xs text-purple-400 group-hover:text-purple-600 transition-colors font-semibold">
+                <div className="flex items-center gap-1 mt-4 text-xs text-purple-400 group-hover:text-purple-600 transition-colors font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
                   {visited[topic.href] ? 'Επανάληψη' : 'Δες οδηγό'} <ChevronRight className="w-3 h-3" />
                 </div>
               </Link>
@@ -149,7 +149,7 @@ export default function SpotlightPOSGuide() {
               <path d="M12 8v4m0 4h.01" stroke="#7C3AED" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
           </div>
-          <p className="font-rajdhani text-base text-gray-600">
+          <p className="text-base text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>
             <span className="text-purple-700 font-semibold">Συμβουλή:</span> Ξεκίνα από την εγκατάσταση αν είναι η πρώτη φορά. Αν είσαι ήδη εξοικειωμένος, πήγαινε κατευθείαν στην ενότητα που χρειάζεσαι.
           </p>
         </div>
