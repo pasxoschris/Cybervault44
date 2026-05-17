@@ -25,6 +25,9 @@ export default function Login() {
         <ul className="list-disc list-inside mt-2 space-y-1">
           <li>Δημιουργία των χρηστών</li>
           <li>Δημιουργία των σημείων πώλησης/συσκευών (POS) των χρηστών</li>
+          <li>Δημιουργία Καταλόγου και συνοδευτικών</li>
+          <li>Δημιουργία Τραπεζιών</li>
+          <li>Δημιουργία Εκτυπωτών</li>
         </ul>
       </InfoBox>
 
