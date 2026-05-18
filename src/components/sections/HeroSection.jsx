@@ -53,7 +53,7 @@ export default function HeroSection() {
 
         <p className="font-rajdhani text-base md:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed px-2">
           Προηγμένες λύσεις ασφάλειας δικτύων για επιχειρήσεις. Προστατεύουμε την ψηφιακή σας περίμετρο 
-          με τεχνολογία νέας γενιάς, ευφυΐα απειλών και παρακολούθηση σε πραγματικό χρόνο.
+          με τεχνολογία νέας γενιάς και παρακολούθηση σε πραγματικό χρόνο.
         </p>
 
         {/* CTAs */}
