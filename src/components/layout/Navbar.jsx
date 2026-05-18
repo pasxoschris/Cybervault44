@@ -66,7 +66,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-[#0E1235] border-t border-[#00D4FF]/20 px-6 py-6 flex flex-col gap-5 items-end" style={{ position: 'relative', zIndex: 100 }}>
+        <div className="md:hidden bg-[#0E1235] border-t border-[#00D4FF]/20 px-6 py-6 flex flex-col gap-5 items-end" style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 100 }}>
           {navLinks.map((link) => (
             <Link
               key={link.to}
