@@ -10,11 +10,8 @@ const testimonials = [
 ];
 
 const clientSectors = [
-  'ΤΡΑΠΕΖΙΚΟΣ & ΧΡΗΜΑΤΟΟΙΚΟΝΟΜΙΚΟΣ ΤΟΜΕΑΣ',
-  'ΥΓΕΙΑ',
-  'LOGISTICS',
-  'ΤΗΛΕΠΙΚΟΙΝΩΝΙΕΣ',
-  'ΕΝΕΡΓΕΙΑ',
+  'ΕΣΤΙΑΣΗ',
+  
 ];
 
 export default function ClientsSection() {
