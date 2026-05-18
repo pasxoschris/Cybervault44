@@ -2,10 +2,9 @@ import { CheckCircle, Award, Users, Globe } from 'lucide-react';
 
 const highlights = [
   { icon: Award, label: 'Πιστοποίηση ISO 27001', desc: 'Διεθνώς αναγνωρισμένη διαχείριση ασφάλειας' },
-  { icon: Users, label: 'Εξειδικευμένη Ομάδα', desc: '50+ πιστοποιημένοι επαγγελματίες ασφάλειας' },
-  { icon: Globe, label: 'Πανευρωπαϊκή Εμβέλεια', desc: 'Εξυπηρέτηση επιχειρήσεων σε Ελλάδα & ΕΕ' },
-  { icon: CheckCircle, label: 'Αποδεδειγμένο Ιστορικό', desc: '10+ χρόνια απρόσκοπτης λειτουργίας' },
-];
+  { icon: Users, label: 'Εξειδικευμένη Ομάδα', desc: 'Πιστοποιημένοι επαγγελματίες ασφάλειας' },
+  { icon: Globe, label: 'Πανελλαδική Εμβέλεια', desc: 'Εξυπηρέτηση επιχειρήσεων σε όλη την Ελλάδα' },
+  ];
 
 export default function AboutSection() {
   return (
