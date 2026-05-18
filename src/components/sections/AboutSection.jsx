@@ -29,7 +29,7 @@ export default function AboutSection() {
 
             <p className="font-rajdhani text-lg text-white/60 leading-relaxed mb-6">
               Η CyberVault είναι κορυφαία ελληνική εταιρεία κυβερνοασφάλειας, εξειδικευμένη στην ασφάλεια 
-              δικτύων και την προστασία υποδομών.
+              δικτύων.
             </p>
             <p className="font-rajdhani text-lg text-white/60 leading-relaxed mb-10">
               Αποστολή μας είναι να παρέχουμε στις επιχειρήσεις το ίδιο επίπεδο ασφάλειας δικτύων 
