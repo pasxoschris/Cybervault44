@@ -10,8 +10,7 @@ const testimonials = [
 ];
 
 const clientSectors = [
-  'ΕΣΤΙΑΣΗ',
-  
+  'ΕΣΤΙΑΣΗ',  
 ];
 
 export default function ClientsSection() {
