@@ -174,18 +174,18 @@ export default function ServicesSection() {
 
                 {/* Title */}
                 {service.link ? (
-                  <a href={service.link} target="_blank" rel="noopener noreferrer" className="font-orbitron text-base font-bold text-white mb-2 tracking-wider hover:text-[#00D4FF] transition-colors leading-snug block">
+                  <a href={service.link} target="_blank" rel="noopener noreferrer" className="font-rajdhani text-xl font-bold text-white mb-2 hover:text-[#00D4FF] transition-colors leading-snug block">
                     {service.title} ↗
                   </a>
                 ) : (
-                  <h3 className="font-orbitron text-base font-bold text-white mb-2 tracking-wider group-hover:text-[#00D4FF] transition-colors leading-snug">
+                  <h3 className="font-rajdhani text-xl font-bold text-white mb-2 group-hover:text-[#00D4FF] transition-colors leading-snug">
                     {service.title}
                   </h3>
                 )}
 
                 {/* Subtitle */}
                 {service.subtitle && (
-                  <p className="font-rajdhani text-base text-[#00D4FF]/60 mb-4 leading-snug">
+                  <p className="font-rajdhani text-lg text-[#00D4FF]/60 mb-4 leading-snug">
                     {service.subtitle}
                   </p>
                 )}
@@ -195,7 +195,7 @@ export default function ServicesSection() {
                   {service.bullets.map((bullet) => (
                     <li key={bullet} className="flex items-start gap-2">
                       <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#00D4FF]/50 flex-shrink-0" />
-                      <span className="font-rajdhani text-base text-white/60 leading-snug">{bullet}</span>
+                      <span className="font-rajdhani text-lg text-white/70 leading-snug">{bullet}</span>
                     </li>
                   ))}
                 </ul>
