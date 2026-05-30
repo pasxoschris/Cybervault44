@@ -14,7 +14,7 @@ export default function ServiceDesk() {
     base44.auth.me()
       .then(async u => {
         setUser(u);
-        const list = await base44.entities.AllowedUser.list();
+        const list = await base44.asServiceRole.entities.AllowedUser.list();
         const emails = list.map(a => a.email.toLowerCase());
         setAllowed(u.role === 'admin' || emails.includes(u.email.toLowerCase()));
       })
