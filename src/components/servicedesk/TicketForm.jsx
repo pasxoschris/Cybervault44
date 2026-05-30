@@ -74,6 +74,8 @@ export default function TicketForm({ user, onSaved }) {
             onChange={e => set('date', e.target.value)}
             className="cyber-input"
             required
+            style={{ colorScheme: 'dark' }}
+            placeholder="ηη/μμ/εεεε"
           />
         </div>
         <div>
