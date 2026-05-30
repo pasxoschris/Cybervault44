@@ -20,9 +20,10 @@ export default function Navbar() {
     { label: 'Αρχική', to: '/', scrollTop: true },
     { label: 'Υπηρεσίες', to: '/services' },
     { label: 'SpotlightPOS Guide', to: '/spotlight-pos-guide' },
-    { label: 'Επικοινωνία', to: '/contact' },
     { label: 'Service Desk', to: '/service-desk' },
   ];
+
+  const contactLink = { label: 'Επικοινωνία', to: '/contact' };
 
   return (
     <nav
@@ -54,6 +55,9 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          <Link to={contactLink.to} className="cyber-btn !py-2 !px-5 text-xs">
+            {contactLink.label}
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -78,6 +82,13 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          <Link
+            to={contactLink.to}
+            onClick={() => setMobileOpen(false)}
+            className="nav-link text-left text-sm"
+          >
+            {contactLink.label}
+          </Link>
         </div>
       )}
     </nav>
