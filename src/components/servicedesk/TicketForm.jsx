@@ -212,7 +212,7 @@ export default function TicketForm({ user, onSaved }) {
 
       {/* Notes */}
       <div>
-        <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Παρατηρήσεις</label>
+        <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Παρατηρήσεις <span className="normal-case font-rajdhani text-[11px]">(όπως το αναφέρει ο πελάτης)</span></label>
         <textarea
           value={form.notes}
           onChange={e => set('notes', e.target.value)}
