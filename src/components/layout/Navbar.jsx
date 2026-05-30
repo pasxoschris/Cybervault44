@@ -1,10 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    base44.auth.me().then(u => { if (u?.role === 'admin') setIsAdmin(true); }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -24,6 +30,7 @@ export default function Navbar() {
   ];
 
   const contactLink = { label: 'Επικοινωνία', to: '/contact' };
+  const adminLink = { label: 'Whitelist', to: '/admin/whitelist' };
 
   return (
     <nav
@@ -55,6 +62,11 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link to={adminLink.to} className="nav-link">
+              {adminLink.label}
+            </Link>
+          )}
           <Link to={contactLink.to} className="cyber-btn !py-2 !px-5 text-xs">
             {contactLink.label}
           </Link>
@@ -82,6 +94,15 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link
+              to={adminLink.to}
+              onClick={() => setMobileOpen(false)}
+              className="nav-link text-left text-sm"
+            >
+              {adminLink.label}
+            </Link>
+          )}
           <Link
             to={contactLink.to}
             onClick={() => setMobileOpen(false)}
