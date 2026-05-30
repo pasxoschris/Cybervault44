@@ -184,7 +184,7 @@ export default function TicketForm({ user, onSaved }) {
         }`}>
           {form.resolved && <span className="text-[#0E1235] text-xs font-bold">✓</span>}
         </div>
-        <span className="font-rajdhani text-white/80 text-base">Επιλύθηκε ή στάλθηκε στο ox.one support</span>
+        <span className="font-rajdhani text-white/80 text-base">Επιλύθηκε ή στάλθηκε στο support@ox.one</span>
       </div>
 
       {/* Notes / Ενέργειες */}
@@ -195,7 +195,7 @@ export default function TicketForm({ user, onSaved }) {
           onChange={e => set('notes', e.target.value)}
           className="cyber-input resize-none"
           rows={3}
-          placeholder="Ελεύθερο κείμενο..."
+          placeholder="Ενέργειες που έγιναν..."
         />
       </div>
 
