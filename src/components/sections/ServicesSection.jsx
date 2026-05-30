@@ -1,4 +1,4 @@
-import { Wrench, Camera, Wifi, BarChart3, Shield, Network, Zap, Package, GraduationCap } from 'lucide-react';
+import { Wrench, Camera, Wifi, BarChart3, Shield, Network, Zap, Package, GraduationCap, CreditCard, Store } from 'lucide-react';
 
 const services = [
   {
@@ -91,6 +91,32 @@ const services = [
       'iPad & iPhone — έτοιμα για χρήση με SpotlightPOS ή οποιοδήποτε σύστημα',
       'Θερμικοί Εκτυπωτές παραγγελιών & αποδείξεων',
       "Παράδοση, ρύθμιση & τεχνική υποστήριξη καθ' όλη τη διάρκεια ενοικίασης",
+    ],
+  },
+  {
+    icon: Store,
+    title: 'Modulus — Authorized Reseller',
+    link: 'https://www.modulus.gr/',
+    code: 'SVC-010',
+    subtitle: 'Εξουσιοδοτημένοι μεταπωλητές Modulus',
+    description: '',
+    bullets: [
+      'Πώληση & εγκατάσταση POS τερματικών Modulus',
+      'Παραμετροποίηση & υποστήριξη για εστίαση και λιανεμπόριο',
+      'Άμεση τεχνική βοήθεια μέσω εξουσιοδοτημένου συνεργάτη',
+    ],
+  },
+  {
+    icon: CreditCard,
+    title: 'Viva Wallet — Authorized Reseller',
+    link: 'https://www.vivawallet.com/',
+    code: 'SVC-011',
+    subtitle: 'Εξουσιοδοτημένοι μεταπωλητές Viva Wallet',
+    description: '',
+    bullets: [
+      'Πώληση & ενεργοποίηση Viva POS τερματικών',
+      'Ολοκλήρωση πληρωμών με κάρτα για κάθε επιχείρηση',
+      'Υποστήριξη για ρύθμιση & σύνδεση με POS συστήματα',
     ],
   },
   {
