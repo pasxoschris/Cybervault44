@@ -185,6 +185,18 @@ export default function TicketForm({ user, onSaved }) {
         <span className="font-rajdhani text-white/80 text-base">Επιλύθηκε ή στάλθηκε στο ox.one support</span>
       </div>
 
+      {/* Notes / Ενέργειες */}
+      <div>
+        <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ενέργειες</label>
+        <textarea
+          value={form.notes}
+          onChange={e => set('notes', e.target.value)}
+          className="cyber-input resize-none"
+          rows={3}
+          placeholder="Ελεύθερο κείμενο..."
+        />
+      </div>
+
       {/* Categories */}
       <div>
         <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-3 uppercase">Το πρόβλημα αφορούσε</label>
@@ -208,18 +220,6 @@ export default function TicketForm({ user, onSaved }) {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Notes */}
-      <div>
-        <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Παρατηρήσεις</label>
-        <textarea
-          value={form.notes}
-          onChange={e => set('notes', e.target.value)}
-          className="cyber-input resize-none"
-          rows={3}
-          placeholder="Ελεύθερο κείμενο..."
-        />
       </div>
 
       {/* Submit */}
