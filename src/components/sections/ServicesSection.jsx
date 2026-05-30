@@ -19,7 +19,7 @@ const services = [
     title: 'Official SpotlightPOS Support',
     link: 'https://www.spotlightpos.com/',
     code: 'SVC-001',
-    subtitle: 'Επίσημοι συνεργάτες OXINUS HELLAS — εξειδικευμένη υποστήριξη',
+    subtitle: 'Επίσημοι συνεργάτες OXINUS HELLAS',
     description: '',
     bullets: [
       'Εγκατάσταση & παραμετροποίηση εξοπλισμού',
