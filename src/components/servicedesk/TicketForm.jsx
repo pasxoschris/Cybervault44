@@ -6,12 +6,12 @@ const today = () => new Date().toISOString().split('T')[0];
 const nowTime = () => new Date().toTimeString().slice(0, 5);
 
 const CATEGORIES = [
-  { key: 'category_not_spotlight', label: 'ΔΕΝ ΑΦΟΡΟΥΣΕ ΤΗ SPOTLIGHT' },
-  { key: 'category_printers', label: 'ΕΚΤΥΠΩΤΕΣ' },
-  { key: 'category_settings', label: 'ΡΥΘΜΙΣΕΙΣ ΕΦΑΡΜΟΓΗΣ' },
-  { key: 'category_pos', label: 'POS' },
-  { key: 'category_pda', label: 'PDA' },
-  { key: 'category_invoices', label: 'Τιμολόγια' },
+  { key: 'category_not_spotlight',  label: 'ΔΕΝ ΑΦΟΡΟΥΣΕ ΤΗ SPOTLIGHT' },
+  { key: 'category_printers',       label: 'ΕΚΤΥΠΩΤΕΣ' },
+  { key: 'category_settings',       label: 'ΡΥΘΜΙΣΕΙΣ ΕΦΑΡΜΟΓΗΣ' },
+  { key: 'category_pos',            label: 'POS' },
+  { key: 'category_pda',            label: 'PDA' },
+  { key: 'category_invoices',       label: 'Τιμολόγια' },
 ];
 
 export default function TicketForm({ user, onSaved }) {
