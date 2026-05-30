@@ -39,7 +39,7 @@ export default function ServiceDesk() {
           <div className="font-mono-cyber text-red-400 text-xs tracking-widest mb-3">ACCESS DENIED</div>
           <h2 className="font-orbitron text-white text-xl mb-2">Δεν έχεις πρόσβαση</h2>
           <p className="font-rajdhani text-white/40 text-sm">Το email σου δεν βρίσκεται στη λίστα εξουσιοδοτημένων χρηστών.</p>
-          <p className="font-rajdhani text-white/40 text-sm mt-3">Στείλτε αίτημα στο <a href="mailto:pasxoschris@cyber-vault.gr" className="text-[#00CFFF] hover:underline">pasxoschris@cyber-vault.gr</a></p>
+          <p className="font-rajdhani text-white/40 text-sm mt-3">Στείλτε αίτημα στο <a href="mailto:support@cyber-vault.gr" className="text-[#00CFFF] hover:underline">support@cyber-vault.gr</a></p>
         </div>
       </div>
     );
