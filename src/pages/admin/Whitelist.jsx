@@ -18,7 +18,7 @@ export default function Whitelist() {
           return;
         }
         setUser(u);
-        return base44.entities.AllowedUser.list();
+        return base44.asServiceRole.entities.AllowedUser.list();
       })
       .then(list => { if (list) setAllowed(list); })
       .finally(() => setLoading(false));
