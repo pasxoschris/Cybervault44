@@ -20,6 +20,7 @@ import Scenarios from './pages/tutorial/Scenarios';
 import Shift from './pages/tutorial/Shift';
 import StartShift from './pages/tutorial/StartShift';
 import Settings from './pages/tutorial/Settings';
+import Faults from './pages/Faults';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -61,6 +62,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/scenarios" element={<Scenarios />} />
       <Route path="/tutorial/start-shift" element={<StartShift />} />
       <Route path="/tutorial/settings" element={<Settings />} />
+      <Route path="/faults" element={<Faults />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
