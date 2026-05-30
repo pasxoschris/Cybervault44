@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import Navbar from '@/components/layout/Navbar';
+import TicketForm from '@/components/servicedesk/TicketForm';
+import TicketList from '@/components/servicedesk/TicketList';
 
 export default function ServiceDesk() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [view, setView] = useState('form'); // 'form' | 'list'
 
   useEffect(() => {
     base44.auth.me()
@@ -26,9 +29,9 @@ export default function ServiceDesk() {
   return (
     <div className="min-h-screen bg-[#0E1235] cyber-grid">
       <Navbar />
-      <div className="max-w-5xl mx-auto px-6 pt-28 pb-16">
+      <div className="max-w-4xl mx-auto px-6 pt-28 pb-16">
         {/* Header */}
-        <div className="mb-10">
+        <div className="mb-8">
           <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 border font-mono-cyber text-[10px] tracking-widest uppercase"
             style={{ borderColor: "rgba(0,207,255,0.3)", color: "rgba(0,207,255,0.7)", background: "rgba(0,207,255,0.05)" }}>
             ✦ ΤΕΧΝΙΚΟ PORTAL
@@ -41,12 +44,35 @@ export default function ServiceDesk() {
           </p>
         </div>
 
-        {/* Placeholder content */}
-        <div className="border border-[#00CFFF]/20 bg-[#131840]/80 rounded-sm p-12 text-center">
-          <p className="font-orbitron text-white/30 text-sm tracking-widest">
-            Η φόρμα καταγραφής βλαβών θα εμφανιστεί εδώ
-          </p>
+        {/* Tab Toggle */}
+        <div className="flex gap-2 mb-8">
+          <button
+            onClick={() => setView('form')}
+            className={`px-6 py-2 font-orbitron text-xs tracking-widest uppercase border transition-all ${
+              view === 'form'
+                ? 'bg-[#00CFFF] text-[#0E1235] border-[#00CFFF]'
+                : 'text-[#00CFFF] border-[#00CFFF]/30 hover:border-[#00CFFF]/60'
+            }`}
+          >
+            Νέο Ticket
+          </button>
+          <button
+            onClick={() => setView('list')}
+            className={`px-6 py-2 font-orbitron text-xs tracking-widest uppercase border transition-all ${
+              view === 'list'
+                ? 'bg-[#00CFFF] text-[#0E1235] border-[#00CFFF]'
+                : 'text-[#00CFFF] border-[#00CFFF]/30 hover:border-[#00CFFF]/60'
+            }`}
+          >
+            Ιστορικό
+          </button>
         </div>
+
+        {view === 'form' ? (
+          <TicketForm user={user} onSaved={() => setView('list')} />
+        ) : (
+          <TicketList />
+        )}
       </div>
     </div>
   );
