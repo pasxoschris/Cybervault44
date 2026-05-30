@@ -21,6 +21,7 @@ export default function Navbar() {
     { label: 'Υπηρεσίες', to: '/services' },
     { label: 'SpotlightPOS Guide', to: '/spotlight-pos-guide' },
     { label: 'Επικοινωνία', to: '/contact' },
+    { label: 'Service Desk', to: '/service-desk' },
   ];
 
   return (
