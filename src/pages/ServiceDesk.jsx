@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import Navbar from '@/components/layout/Navbar';
 
-export default function Faults() {
+export default function ServiceDesk() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -34,7 +34,7 @@ export default function Faults() {
             ✦ ΤΕΧΝΙΚΟ PORTAL
           </div>
           <h1 className="font-orbitron text-3xl font-bold text-white mb-2">
-            ΚΑΤΑΓΡΑΦΗ <span className="text-[#00CFFF]">ΒΛΑΒΩΝ</span>
+            SERVICE <span className="text-[#00CFFF]">DESK</span>
           </h1>
           <p className="font-rajdhani text-white/50 text-lg">
             Καλωσήρθες, <span className="text-[#00CFFF]">{user.full_name}</span>
