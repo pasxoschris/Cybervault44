@@ -6,12 +6,18 @@ import TicketList from '@/components/servicedesk/TicketList';
 
 export default function ServiceDesk() {
   const [user, setUser] = useState(null);
+  const [allowed, setAllowed] = useState(null); // null=loading, true/false
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('form'); // 'form' | 'list'
 
   useEffect(() => {
     base44.auth.me()
-      .then(setUser)
+      .then(async u => {
+        setUser(u);
+        const list = await base44.entities.AllowedUser.list();
+        const emails = list.map(a => a.email.toLowerCase());
+        setAllowed(u.role === 'admin' || emails.includes(u.email.toLowerCase()));
+      })
       .catch(() => base44.auth.redirectToLogin())
       .finally(() => setLoading(false));
   }, []);
@@ -25,6 +31,18 @@ export default function ServiceDesk() {
   }
 
   if (!user) return null;
+
+  if (allowed === false) {
+    return (
+      <div className="min-h-screen bg-[#0E1235] cyber-grid flex items-center justify-center">
+        <div className="text-center p-10 border border-red-500/30 bg-[#131840]/80 max-w-sm">
+          <div className="font-mono-cyber text-red-400 text-xs tracking-widest mb-3">ACCESS DENIED</div>
+          <h2 className="font-orbitron text-white text-xl mb-2">Δεν έχεις πρόσβαση</h2>
+          <p className="font-rajdhani text-white/40 text-sm">Το email σου δεν βρίσκεται στη λίστα εξουσιοδοτημένων χρηστών.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0E1235] cyber-grid">

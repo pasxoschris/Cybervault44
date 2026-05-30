@@ -21,6 +21,7 @@ import Shift from './pages/tutorial/Shift';
 import StartShift from './pages/tutorial/StartShift';
 import Settings from './pages/tutorial/Settings';
 import ServiceDesk from './pages/ServiceDesk';
+import Whitelist from './pages/admin/Whitelist';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -63,6 +64,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/start-shift" element={<StartShift />} />
       <Route path="/tutorial/settings" element={<Settings />} />
       <Route path="/service-desk" element={<ServiceDesk />} />
+      <Route path="/admin/whitelist" element={<Whitelist />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
