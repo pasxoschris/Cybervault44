@@ -5,6 +5,7 @@ import { ChevronRight, Smartphone, BookOpen, Users, Monitor, CreditCard, FileTex
 import Navbar from '@/components/layout/Navbar';
 import SearchBar from '@/components/tutorial/SearchBar';
 import { getCompletedCount, isVisited } from '@/lib/tutorialProgress';
+import { base44 } from '@/api/base44Client';
 
 const topics = [
   { id: 1, icon: Download, title: 'Εγκατάσταση Εφαρμογής', desc: 'Κατέβασμα από App Store', href: '/tutorial/installation' },
@@ -23,8 +24,20 @@ const topics = [
 
 export default function SpotlightPOSGuide() {
   const [visited, setVisited] = useState({});
+  const [allowed, setAllowed] = useState(null); // null=loading
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    base44.auth.me()
+      .then(async u => {
+        if (u.role === 'admin') { setAllowed(true); return; }
+        const list = await base44.asServiceRole?.entities?.AllowedUser?.list?.() || await base44.entities.AllowedUser.list();
+        const emails = list.map(a => a.email.toLowerCase());
+        setAllowed(emails.includes(u.email.toLowerCase()));
+      })
+      .catch(() => base44.auth.redirectToLogin())
+      .finally(() => setLoading(false));
+
     const update = () => {
       const obj = {};
       topics.forEach(t => { obj[t.href] = isVisited(t.href); });
@@ -35,6 +48,29 @@ export default function SpotlightPOSGuide() {
 
   const completedCount = topics.filter(t => visited[t.href]).length;
   const progressPct = Math.round((completedCount / topics.length) * 100);
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-[#0E1235]">
+        <div className="w-8 h-8 border-4 border-[#00CFFF]/30 border-t-[#00CFFF] rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (allowed === false) {
+    return (
+      <div className="min-h-screen bg-[#0E1235] cyber-grid flex items-center justify-center">
+        <div className="text-center p-10 border border-red-500/30 bg-[#131840]/80 max-w-md">
+          <div className="font-mono-cyber text-red-400 text-xs tracking-widest mb-3">ACCESS DENIED</div>
+          <h2 className="font-orbitron text-white text-xl mb-2">Δεν έχεις πρόσβαση</h2>
+          <p className="font-rajdhani text-white/40 text-sm">Το email σου δεν βρίσκεται στη λίστα εξουσιοδοτημένων χρηστών.</p>
+          <p className="font-rajdhani text-white/50 text-sm mt-4">Για αίτημα πρόσβασης στείλε email στο:</p>
+          <a href="mailto:support@cyber-vault.gr" className="text-[#00CFFF] hover:underline font-mono-cyber text-sm">support@cyber-vault.gr</a>
+          <p className="font-rajdhani text-white/30 text-xs mt-3">Αναφέρετε ονοματεπώνυμο, Επωνυμία και ΑΦΜ καταστήματος.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
