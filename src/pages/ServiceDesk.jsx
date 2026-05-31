@@ -1,33 +1,33 @@
 import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useAuth } from '@/lib/AuthContext';
 import Navbar from '@/components/layout/Navbar';
 import TicketForm from '@/components/servicedesk/TicketForm';
 import TicketList from '@/components/servicedesk/TicketList';
 
 export default function ServiceDesk() {
-  const { user: authUser, isLoadingAuth, navigateToLogin } = useAuth();
   const [user, setUser] = useState(null);
   const [allowed, setAllowed] = useState(null); // null=loading, true/false
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('form'); // 'form' | 'list'
 
   useEffect(() => {
-    if (isLoadingAuth) return;
-    if (!authUser) {
-      navigateToLogin();
-      return;
-    }
-    setUser(authUser);
-    base44.asServiceRole.entities.AllowedUser.list()
-      .then(list => {
+    // App is public — check auth manually
+    base44.auth.me()
+      .then(async u => {
+        if (!u) {
+          base44.auth.redirectToLogin(window.location.href);
+          return;
+        }
+        setUser(u);
+        const list = await base44.asServiceRole.entities.AllowedUser.list();
         const emails = list.map(a => a.email.toLowerCase());
-        setAllowed(authUser.role === 'admin' || emails.includes(authUser.email.toLowerCase()));
+        setAllowed(u.role === 'admin' || emails.includes(u.email.toLowerCase()));
       })
+      .catch(() => base44.auth.redirectToLogin(window.location.href))
       .finally(() => setLoading(false));
-  }, [authUser, isLoadingAuth]);
+  }, []);
 
-  if (isLoadingAuth || loading) {
+  if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-[#0E1235]">
         <div className="w-8 h-8 border-4 border-[#00CFFF]/30 border-t-[#00CFFF] rounded-full animate-spin" />
