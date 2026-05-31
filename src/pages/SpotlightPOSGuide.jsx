@@ -40,7 +40,7 @@ export default function SpotlightPOSGuide() {
           setAllowed(true);
         } else {
           try {
-            const list = await base44.entities.AllowedUser.filter({ email: u.email.toLowerCase() });
+            const list = await base44.entities.AllowedUserGuide.filter({ email: u.email.toLowerCase() });
             setAllowed(list.length > 0);
           } catch {
             setAllowed(false);
