@@ -11,20 +11,24 @@ export default function ServiceDesk() {
   const [view, setView] = useState('form'); // 'form' | 'list'
 
   useEffect(() => {
-    // App is public — check auth manually
-    base44.auth.me()
-      .then(async u => {
-        if (!u) {
+    const init = async () => {
+      try {
+        const authed = await base44.auth.isAuthenticated();
+        if (!authed) {
           base44.auth.redirectToLogin(window.location.href);
           return;
         }
+        const u = await base44.auth.me();
         setUser(u);
         const list = await base44.asServiceRole.entities.AllowedUser.list();
         const emails = list.map(a => a.email.toLowerCase());
         setAllowed(u.role === 'admin' || emails.includes(u.email.toLowerCase()));
-      })
-      .catch(() => base44.auth.redirectToLogin(window.location.href))
-      .finally(() => setLoading(false));
+        setLoading(false);
+      } catch {
+        base44.auth.redirectToLogin(window.location.href);
+      }
+    };
+    init();
   }, []);
 
   if (loading) {
