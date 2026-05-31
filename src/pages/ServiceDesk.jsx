@@ -23,10 +23,10 @@ export default function ServiceDesk() {
         const list = await base44.asServiceRole.entities.AllowedUser.list();
         const emails = list.map(a => a.email.toLowerCase());
         setAllowed(u.role === 'admin' || emails.includes(u.email.toLowerCase()));
-        setLoading(false);
       } catch {
         base44.auth.redirectToLogin(window.location.href);
       }
+      setLoading(false);
     };
     init();
   }, []);
