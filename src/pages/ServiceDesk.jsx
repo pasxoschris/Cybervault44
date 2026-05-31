@@ -19,9 +19,16 @@ export default function ServiceDesk() {
       }
       const u = await base44.auth.me();
       setUser(u);
-      const list = await base44.asServiceRole.entities.AllowedUser.list();
-      const emails = list.map(a => a.email.toLowerCase());
-      setAllowed(u.role === 'admin' || emails.includes(u.email.toLowerCase()));
+      if (u.role === 'admin') {
+        setAllowed(true);
+      } else {
+        try {
+          const list = await base44.entities.AllowedUser.filter({ email: u.email.toLowerCase() });
+          setAllowed(list.length > 0);
+        } catch {
+          setAllowed(false);
+        }
+      }
       setLoading(false);
     };
     init();

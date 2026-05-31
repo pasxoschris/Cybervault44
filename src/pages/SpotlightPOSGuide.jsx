@@ -36,11 +36,15 @@ export default function SpotlightPOSGuide() {
           return;
         }
         const u = await base44.auth.me();
-        if (u.role === 'admin') { setAllowed(true); }
-        else {
-          const list = await base44.asServiceRole.entities.AllowedUser.list();
-          const emails = list.map(a => a.email.toLowerCase());
-          setAllowed(emails.includes(u.email.toLowerCase()));
+        if (u.role === 'admin') {
+          setAllowed(true);
+        } else {
+          try {
+            const list = await base44.entities.AllowedUser.filter({ email: u.email.toLowerCase() });
+            setAllowed(list.length > 0);
+          } catch {
+            setAllowed(false);
+          }
         }
       } catch {
         base44.auth.redirectToLogin(window.location.href);
