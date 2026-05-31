@@ -28,15 +28,26 @@ export default function SpotlightPOSGuide() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    base44.auth.me()
-      .then(async u => {
-        if (u.role === 'admin') { setAllowed(true); return; }
-        const list = await base44.asServiceRole?.entities?.AllowedUser?.list?.() || await base44.entities.AllowedUser.list();
-        const emails = list.map(a => a.email.toLowerCase());
-        setAllowed(emails.includes(u.email.toLowerCase()));
-      })
-      .catch(() => base44.auth.redirectToLogin())
-      .finally(() => setLoading(false));
+    const init = async () => {
+      try {
+        const authed = await base44.auth.isAuthenticated();
+        if (!authed) {
+          base44.auth.redirectToLogin(window.location.href);
+          return;
+        }
+        const u = await base44.auth.me();
+        if (u.role === 'admin') { setAllowed(true); }
+        else {
+          const list = await base44.asServiceRole.entities.AllowedUser.list();
+          const emails = list.map(a => a.email.toLowerCase());
+          setAllowed(emails.includes(u.email.toLowerCase()));
+        }
+      } catch {
+        base44.auth.redirectToLogin(window.location.href);
+      }
+      setLoading(false);
+    };
+    init();
 
     const update = () => {
       const obj = {};
