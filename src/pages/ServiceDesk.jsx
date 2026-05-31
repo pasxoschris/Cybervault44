@@ -18,7 +18,7 @@ export default function ServiceDesk() {
         const emails = list.map(a => a.email.toLowerCase());
         setAllowed(u.role === 'admin' || emails.includes(u.email.toLowerCase()));
       })
-      .catch(() => base44.auth.redirectToLogin())
+      .catch(() => base44.auth.redirectToLogin(window.location.href))
       .finally(() => setLoading(false));
   }, []);
 
