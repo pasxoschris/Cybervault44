@@ -12,20 +12,16 @@ export default function ServiceDesk() {
 
   useEffect(() => {
     const init = async () => {
-      try {
-        const authed = await base44.auth.isAuthenticated();
-        if (!authed) {
-          base44.auth.redirectToLogin(window.location.href);
-          return;
-        }
-        const u = await base44.auth.me();
-        setUser(u);
-        const list = await base44.asServiceRole.entities.AllowedUser.list();
-        const emails = list.map(a => a.email.toLowerCase());
-        setAllowed(u.role === 'admin' || emails.includes(u.email.toLowerCase()));
-      } catch {
+      const authed = await base44.auth.isAuthenticated();
+      if (!authed) {
         base44.auth.redirectToLogin(window.location.href);
+        return;
       }
+      const u = await base44.auth.me();
+      setUser(u);
+      const list = await base44.asServiceRole.entities.AllowedUser.list();
+      const emails = list.map(a => a.email.toLowerCase());
+      setAllowed(u.role === 'admin' || emails.includes(u.email.toLowerCase()));
       setLoading(false);
     };
     init();
