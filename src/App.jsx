@@ -22,6 +22,10 @@ import StartShift from './pages/tutorial/StartShift';
 import Settings from './pages/tutorial/Settings';
 import ServiceDesk from './pages/ServiceDesk';
 import Whitelist from './pages/admin/Whitelist';
+import RoleSelection from './pages/RoleSelection';
+import RolePath from './pages/RolePath';
+import PlaceholderLesson from './pages/tutorial/PlaceholderLesson';
+import Payment from './pages/tutorial/Payment';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -65,6 +69,17 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/settings" element={<Settings />} />
       <Route path="/service-desk" element={<ServiceDesk />} />
       <Route path="/admin/whitelist" element={<Whitelist />} />
+      {/* Academy / Role-based learning */}
+      <Route path="/spotlight-pos-guide/roles" element={<RoleSelection />} />
+      <Route path="/academy/:roleId" element={<RolePath />} />
+      {/* Payment & Shift (were missing) */}
+      <Route path="/tutorial/payment" element={<Payment />} />
+      <Route path="/tutorial/shift" element={<Shift />} />
+      {/* Placeholder lessons for all other roles */}
+      <Route path="/tutorial/maitre-service/*" element={<PlaceholderLesson />} />
+      <Route path="/tutorial/maitre-mode/*" element={<PlaceholderLesson />} />
+      <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
+      <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
