@@ -97,7 +97,7 @@ const services = [
   {
     icon: CreditCard,
     title: 'Viva Wallet — Authorized Reseller',
-    link: 'https://www.vivawallet.com/',
+    link: 'https://www.viva.com/el-gr/onboarding?utm_source=partners&utm_medium=leadreferral&utm_campaign=gr_cybervault18022026&utm_content=cybervault',
     code: 'SVC-011',
     subtitle: 'Εξουσιοδοτημένοι μεταπωλητές Viva Wallet',
     description: '',
