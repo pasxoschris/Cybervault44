@@ -1,16 +1,84 @@
 <!doctype html>
-<html lang="en">
+<html lang="el">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/136eeae84_web-app-manifest-512x512.png" />
     <link rel="apple-touch-icon" href="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/136eeae84_web-app-manifest-512x512.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="/manifest.json" />
-    <title>CyberVault</title>
-    <meta name="description" content="Επαγγελματικές υπηρεσίες δικτύων, ασφάλειας πληροφοριών και τεχνικής υποστήριξης για επιχειρήσεις. Εγκατάσταση, παρακολούθηση και προστασία δικτυακών υποδομών." />
+
+    <!-- Default Title & Description (overridden per-page via react-helmet or SeoHead) -->
+    <title>CyberVault — Τεχνική Υποστήριξη & Ασφάλεια Δικτύων</title>
+    <meta name="description" content="Επαγγελματικές υπηρεσίες δικτύων, ασφάλειας & τεχνικής υποστήριξης για επιχειρήσεις στην Ελλάδα. CyberVault E.E. — αξιόπιστη τεχνολογική εταιρεία." />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="CyberVault E.E." />
+    <meta name="language" content="el" />
+
+    <!-- Canonical (default — overridden per page) -->
+    <link rel="canonical" href="https://cyber-vault.gr/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CyberVault" />
+    <meta property="og:locale" content="el_GR" />
     <meta property="og:title" content="CyberVault — Τεχνική Υποστήριξη & Ασφάλεια Δικτύων" />
-    <meta property="og:description" content="Επαγγελματικές υπηρεσίες δικτύων, ασφάλειας πληροφοριών και τεχνικής υποστήριξης για επιχειρήσεις. Εγκατάσταση, παρακολούθηση και προστασία δικτυακών υποδομών." />
+    <meta property="og:description" content="Επαγγελματικές υπηρεσίες δικτύων, ασφάλειας & τεχνικής υποστήριξης για επιχειρήσεις στην Ελλάδα. CyberVault E.E." />
     <meta property="og:image" content="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/136eeae84_web-app-manifest-512x512.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:url" content="https://cyber-vault.gr/" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="CyberVault — Τεχνική Υποστήριξη & Ασφάλεια Δικτύων" />
+    <meta name="twitter:description" content="Επαγγελματικές υπηρεσίες δικτύων, ασφάλειας & τεχνικής υποστήριξης για επιχειρήσεις στην Ελλάδα." />
+    <meta name="twitter:image" content="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/136eeae84_web-app-manifest-512x512.png" />
+
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CyberVault E.E.",
+      "url": "https://cyber-vault.gr",
+      "logo": "https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/136eeae84_web-app-manifest-512x512.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "support@cyber-vault.gr",
+        "availableLanguage": "Greek"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "GR"
+      },
+      "sameAs": []
+    }
+    </script>
+
+    <!-- Structured Data: LocalBusiness -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "CyberVault E.E.",
+      "url": "https://cyber-vault.gr",
+      "logo": "https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/136eeae84_web-app-manifest-512x512.png",
+      "email": "support@cyber-vault.gr",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "GR"
+      },
+      "description": "Επαγγελματικές υπηρεσίες δικτύων, ασφάλειας πληροφοριών και τεχνικής υποστήριξης για επιχειρήσεις.",
+      "priceRange": "€€"
+    }
+    </script>
+
+    <!-- Preload critical font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
     <div id="root"></div>
