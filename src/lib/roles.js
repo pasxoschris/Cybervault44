@@ -26,7 +26,7 @@ export const ROLES = [
     id: 'maitre-service',
     emoji: '👨‍💼',
     title: 'Maitre Service',
-    subtitle: 'Head Waiter / Προϊστάμενος Σάλας',
+    subtitle: 'Σερβιτόρος σε maitre-mode',
     color: '#0891B2',
     colorLight: 'rgba(8,145,178,0.12)',
     colorBorder: 'rgba(8,145,178,0.3)',
