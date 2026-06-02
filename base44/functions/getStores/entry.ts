@@ -1,4 +1,6 @@
-export const STORES = [
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
+
+const STORES = [
   "10 am Apotheke","180 Degrees","1800 Spetses","1821 Cocktail Bar","1901 Wine Bar (Καβάλα)","2 Saints",
   "22 Σουβλάκια (Καλαμαριά)","22 Σουβλάκια (Πλ. Αριστοτέλους)","22 Σουβλάκια (Τούμπα)","22 Canteen (Θεσσαλονίκη)",
   "3 Donkeys","4 Εποχές","7 Μάρτυρες","8","Αβερτα","Αγαύη","Αγαύη new","Άγκυρα (Σκύρος)","Άκρα","Ακτή Πειραιώς",
@@ -137,3 +139,12 @@ export const STORES = [
   "Yalos (Παξοί)","Yapa (Αντίπαρος)","Yaya Καλλιθέα new","Yaya Μαβίλη new","York 22","Ypsilon","YTON",
   "Yton new","Yucca (Πάρος)","Yuzu","Zelus","Zen","Zero Bar","Zurbaran"
 ];
+
+Deno.serve(async (req) => {
+  const base44 = createClientFromRequest(req);
+  const user = await base44.auth.me();
+  if (!user) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  return Response.json({ stores: STORES });
+});

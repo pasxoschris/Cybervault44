@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { STORES } from '@/lib/stores';
 
 const today = () => new Date().toISOString().split('T')[0];
 const nowTime = () => new Date().toTimeString().slice(0, 5);
@@ -15,6 +14,12 @@ const CATEGORIES = [
 ];
 
 export default function TicketForm({ user, onSaved }) {
+  const [stores, setStores] = useState([]);
+
+  useEffect(() => {
+    base44.functions.invoke('getStores', {}).then(res => setStores(res.data?.stores || []));
+  }, []);
+
   const [form, setForm] = useState({
     date: today(),
     time: nowTime(),
@@ -37,7 +42,7 @@ export default function TicketForm({ user, onSaved }) {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  const filteredStores = STORES.filter(s =>
+  const filteredStores = stores.filter(s =>
     s.toLowerCase().includes(storeSearch.toLowerCase())
   ).slice(0, 50);
 
