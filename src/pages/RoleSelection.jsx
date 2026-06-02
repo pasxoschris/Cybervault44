@@ -59,7 +59,7 @@ export default function RoleSelection() {
         <div className="max-w-4xl mx-auto px-6">
           <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 border font-mono-cyber text-[10px] tracking-widest uppercase animate-pulse-glow"
             style={{ borderColor: "rgba(0,207,255,0.3)", color: "rgba(0,207,255,0.7)", background: "rgba(0,207,255,0.05)" }}>
-            ✦ CYBERVAULT ACADEMY · SPOTLIGHT<span className="text-white/50">POS</span>
+            ✦ CYBERVAULT ACADEMY · SPOTLIGHTPOS<span className="text-white/50">App</span>
           </div>
           <h1 className="font-orbitron font-black text-3xl md:text-4xl mb-3 text-white">
             ΕΠΙΛΕΞΕ <span className="glow-cyan" style={{ color: "#00CFFF" }}>ΡΟΛΟ</span>
