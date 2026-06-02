@@ -43,7 +43,7 @@ export const ROLES = [
     id: 'maitre-mode',
     emoji: '🎛️',
     title: 'Maitre Mode',
-    subtitle: 'Κεντρική διαχείριση σάλας',
+    subtitle: 'Κεντρικό Ταμείο',
     color: '#059669',
     colorLight: 'rgba(5,150,105,0.12)',
     colorBorder: 'rgba(5,150,105,0.3)',
