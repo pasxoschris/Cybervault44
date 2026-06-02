@@ -1,5 +1,5 @@
 Deno.serve(async (req) => {
-  const baseUrl = "https://cyber-vault.gr";
+  const baseUrl = "https://cybervault.gr";
   const now = new Date().toISOString().split("T")[0];
 
   const pages = [

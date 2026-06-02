@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const BASE_URL = 'https://cyber-vault.gr';
+const BASE_URL = 'https://cybervault.gr';
 const DEFAULT_IMAGE = 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/136eeae84_web-app-manifest-512x512.png';
 
 /**

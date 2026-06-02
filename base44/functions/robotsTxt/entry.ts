@@ -1,5 +1,5 @@
 Deno.serve(async (req) => {
-  const sitemapUrl = "https://cyber-vault.gr/sitemap.xml";
+  const sitemapUrl = "https://cybervault.gr/sitemap.xml";
 
   const content = `User-agent: *
 Allow: /
