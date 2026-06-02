@@ -3,7 +3,7 @@ export const ROLES = [
     id: 'service',
     emoji: '🍽️',
     title: 'Service Mode',
-    subtitle: 'Κλασικός σερβιτόρος',
+    subtitle: 'Σερβιτόρος',
     color: '#7C3AED',
     colorLight: 'rgba(124,58,237,0.12)',
     colorBorder: 'rgba(124,58,237,0.3)',
