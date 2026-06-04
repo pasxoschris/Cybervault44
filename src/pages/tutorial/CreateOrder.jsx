@@ -40,7 +40,7 @@ export default function CreateOrder() {
       </StepCard>
 
       <StepCard number="6" title="Αποστολή παραγγελίας">
-        <p>Αφού προσθέσεις όλα τα προϊόντα, πάτα <strong>→</strong> (αποστολή) για να αποσταλεί η παραγγελία στην κουζίνα/μπαρ.</p>
+        <p>Αφού προσθέσεις όλα τα προϊόντα, πάτα <strong>εκτυπωτή ↑ </strong> (αποστολή) για να αποσταλεί η παραγγελία στην κουζίνα/μπαρ.</p>
       </StepCard>
 
       <InfoBox icon="🔍" title="Αναζήτηση προϊόντος" variant="info">
