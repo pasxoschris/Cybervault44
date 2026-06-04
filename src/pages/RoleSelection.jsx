@@ -5,6 +5,7 @@ import Navbar from '@/components/layout/Navbar';
 import { ROLES } from '@/lib/roles';
 import { getCompletedCount } from '@/lib/tutorialProgress';
 import { ChevronRight } from 'lucide-react';
+import AssistantFloatingButton from '@/components/academy/AssistantFloatingButton';
 
 export default function RoleSelection() {
   const [allowed, setAllowed] = useState(null);
@@ -126,6 +127,7 @@ export default function RoleSelection() {
           })}
         </div>
       </div>
+      <AssistantFloatingButton />
     </div>
   );
 }

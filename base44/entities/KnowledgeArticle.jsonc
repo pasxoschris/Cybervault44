@@ -1,0 +1,70 @@
+{
+  "name": "KnowledgeArticle",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "\u03a4\u03af\u03c4\u03bb\u03bf\u03c2 \u03ac\u03c1\u03b8\u03c1\u03bf\u03c5"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "service",
+        "maitre-service",
+        "maitre-mode",
+        "cashier",
+        "backoffice",
+        "general"
+      ],
+      "description": "\u03a1\u03cc\u03bb\u03bf\u03c2 \u03c0\u03bf\u03c5 \u03b1\u03c6\u03bf\u03c1\u03ac"
+    },
+    "category": {
+      "type": "string",
+      "description": "\u039a\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1 (\u03c0.\u03c7. \u03c0\u03b1\u03c1\u03b1\u03b3\u03b3\u03b5\u03bb\u03af\u03b5\u03c2, \u03c0\u03bb\u03b7\u03c1\u03c9\u03bc\u03ad\u03c2, \u03b2\u03ac\u03c1\u03b4\u03b9\u03b1)"
+    },
+    "lesson_title": {
+      "type": "string",
+      "description": "\u03a4\u03af\u03c4\u03bb\u03bf\u03c2 \u03bc\u03b1\u03b8\u03ae\u03bc\u03b1\u03c4\u03bf\u03c2"
+    },
+    "lesson_url": {
+      "type": "string",
+      "description": "URL \u03bc\u03b1\u03b8\u03ae\u03bc\u03b1\u03c4\u03bf\u03c2"
+    },
+    "keywords": {
+      "type": "string",
+      "description": "\u039b\u03ad\u03be\u03b5\u03b9\u03c2-\u03ba\u03bb\u03b5\u03b9\u03b4\u03b9\u03ac \u03b3\u03b9\u03b1 \u03b1\u03bd\u03b1\u03b6\u03ae\u03c4\u03b7\u03c3\u03b7 (comma-separated)"
+    },
+    "content": {
+      "type": "string",
+      "description": "\u03a0\u03b5\u03c1\u03b9\u03b5\u03c7\u03cc\u03bc\u03b5\u03bd\u03bf \u03ac\u03c1\u03b8\u03c1\u03bf\u03c5 \u2014 \u03b2\u03ae\u03bc\u03b1\u03c4\u03b1, \u03bf\u03b4\u03b7\u03b3\u03af\u03b5\u03c2, \u03c3\u03b7\u03bc\u03b5\u03b9\u03ce\u03c3\u03b5\u03b9\u03c2"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "\u0395\u03bd\u03b5\u03c1\u03b3\u03cc"
+    }
+  },
+  "required": [
+    "title",
+    "role",
+    "content"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

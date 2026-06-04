@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import { getRoleById } from '@/lib/roles';
 import { getCompletedCount, isVisited } from '@/lib/tutorialProgress';
 import { ChevronRight, CheckCircle2, ArrowLeft } from 'lucide-react';
+import AssistantFloatingButton from '@/components/academy/AssistantFloatingButton';
 
 export default function RolePath() {
   const { roleId } = useParams();
@@ -99,6 +100,7 @@ export default function RolePath() {
           })}
         </div>
       </div>
+      <AssistantFloatingButton />
     </div>
   );
 }

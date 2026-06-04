@@ -26,6 +26,7 @@ import RoleSelection from './pages/RoleSelection';
 import RolePath from './pages/RolePath';
 import PlaceholderLesson from './pages/tutorial/PlaceholderLesson';
 import Payment from './pages/tutorial/Payment';
+import Assistant from './pages/academy/Assistant';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -75,6 +76,7 @@ const AuthenticatedApp = () => {
       {/* Payment & Shift (were missing) */}
       <Route path="/tutorial/payment" element={<Payment />} />
       <Route path="/tutorial/shift" element={<Shift />} />
+      <Route path="/academy/assistant" element={<Assistant />} />
       {/* Placeholder lessons for all other roles */}
       <Route path="/tutorial/maitre-service/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/maitre-mode/*" element={<PlaceholderLesson />} />
