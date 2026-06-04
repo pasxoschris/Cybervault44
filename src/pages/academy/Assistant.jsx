@@ -36,11 +36,27 @@ function MessageBubble({ message }) {
             <ReactMarkdown
               className="prose prose-invert prose-sm max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
               components={{
-                a: ({ children, href }) => (
-                  <Link to={href || '#'} className="text-[#00CFFF] underline hover:text-[#00CFFF]/80">
-                    {children}
-                  </Link>
-                ),
+                a: ({ children, href }) => {
+                  const url = href || '#';
+                  // Convert absolute URLs to relative for internal navigation
+                  let to = url;
+                  try {
+                    const parsed = new URL(url);
+                    if (parsed.origin === window.location.origin) {
+                      to = parsed.pathname + parsed.search + parsed.hash;
+                    }
+                  } catch {}
+                  const isRelative = to.startsWith('/');
+                  return isRelative ? (
+                    <Link to={to} className="text-[#00CFFF] underline hover:text-[#00CFFF]/80">
+                      {children}
+                    </Link>
+                  ) : (
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] underline hover:text-[#00CFFF]/80">
+                      {children}
+                    </a>
+                  );
+                },
                 p: ({ children }) => <p className="my-1">{children}</p>,
                 ul: ({ children }) => <ul className="my-1 ml-4 list-disc">{children}</ul>,
                 ol: ({ children }) => <ol className="my-1 ml-4 list-decimal">{children}</ol>,
