@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { Search, Plus, Eye, Edit, Trash2, Filter, X } from "lucide-react";
@@ -15,6 +16,7 @@ export default function Stores() {
   const [showFilters, setShowFilters] = useState(false);
   const [deleting, setDeleting] = useState(null);
   const [page, setPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState(null); // null | "asc" | "desc"
   const PAGE_SIZE = 50;
 
   useEffect(() => {
@@ -56,8 +58,13 @@ export default function Stores() {
     return true;
   });
 
-  // Sort: exact VAT match first
+  // Sort: by business_name if sortOrder set, else exact VAT match first
   const sorted = [...filtered].sort((a, b) => {
+    if (sortOrder) {
+      const nameA = (a.business_name || "").toLowerCase();
+      const nameB = (b.business_name || "").toLowerCase();
+      return sortOrder === "asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+    }
     const q = search.trim();
     if (!q) return 0;
     if (a.vat_number === q) return -1;
@@ -167,10 +174,20 @@ export default function Stores() {
               <table className="w-full text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
                 <thead>
                   <tr className="bg-[#131840] border-b border-[#2A3580]">
-                    {["ΑΦΜ","Επωνυμία","Διακριτικός","Κατάστημα","Email","Τηλέφωνο","Υπεύθυνος","Academy","Σύμβαση","Support",""].map(h => (
-                      <th key={h} className="text-left px-4 py-3 text-white/50 text-xs font-semibold uppercase tracking-wide whitespace-nowrap">{h}</th>
-                    ))}
-                  </tr>
+                     <th className="text-left px-4 py-3 text-white/50 text-xs font-semibold uppercase tracking-wide whitespace-nowrap">ΑΦΜ</th>
+                     <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide whitespace-nowrap">
+                       <button
+                         onClick={() => { setSortOrder(o => o === "asc" ? "desc" : o === "desc" ? null : "asc"); resetPage(); }}
+                         className="flex items-center gap-1.5 text-white/50 hover:text-[#00CFFF] transition-colors cursor-pointer"
+                       >
+                         ΕΠΩΝΥΜΙΑ
+                         {sortOrder === "asc" ? <ArrowUp size={13} className="text-[#00CFFF]" /> : sortOrder === "desc" ? <ArrowDown size={13} className="text-[#00CFFF]" /> : <ArrowUpDown size={13} className="text-white/30" />}
+                       </button>
+                     </th>
+                     {["Διακριτικός","Κατάστημα","Email","Τηλέφωνο","Υπεύθυνος","Academy","Σύμβαση","Support",""].map(h => (
+                       <th key={h} className="text-left px-4 py-3 text-white/50 text-xs font-semibold uppercase tracking-wide whitespace-nowrap">{h}</th>
+                     ))}
+                   </tr>
                 </thead>
                 <tbody>
                   {paginated.map((s, i) => (
