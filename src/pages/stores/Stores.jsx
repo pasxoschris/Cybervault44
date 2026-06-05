@@ -15,9 +15,20 @@ export default function Stores() {
   const [deleting, setDeleting] = useState(null);
 
   useEffect(() => {
-    base44.entities.Store.list("-created_date", 500)
-      .then(setStores)
-      .finally(() => setLoading(false));
+    const fetchAll = async () => {
+      let all = [];
+      let skip = 0;
+      const limit = 200;
+      while (true) {
+        const batch = await base44.entities.Store.list("-created_date", limit, skip);
+        all = [...all, ...batch];
+        if (batch.length < limit) break;
+        skip += limit;
+      }
+      setStores(all);
+      setLoading(false);
+    };
+    fetchAll();
   }, []);
 
   const filtered = stores.filter(s => {
