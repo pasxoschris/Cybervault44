@@ -94,7 +94,7 @@ export default function Stores() {
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div>
-              <h1 className="font-orbitron text-2xl font-bold text-white">Κατάστημα Registry</h1>
+              <h1 className="font-orbitron text-2xl font-bold text-white">Καταστήματα</h1>
               <p className="text-white/40 text-sm mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
                 {stores.length} καταστήματα συνολικά
               </p>
