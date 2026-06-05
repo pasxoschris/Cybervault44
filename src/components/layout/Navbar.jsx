@@ -31,6 +31,7 @@ export default function Navbar() {
 
   const contactLink = { label: 'Επικοινωνία', to: '/contact' };
   const adminLink = { label: 'Whitelist', to: '/admin/whitelist' };
+  const storesLink = { label: 'Καταστήματα', to: '/stores' };
 
   return (
     <nav
@@ -60,6 +61,11 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link to={storesLink.to} className="nav-link">
+              {storesLink.label}
+            </Link>
+          )}
           {isAdmin && (
             <Link to={adminLink.to} className="nav-link">
               {adminLink.label}
@@ -92,6 +98,15 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link
+              to={storesLink.to}
+              onClick={() => setMobileOpen(false)}
+              className="nav-link text-left text-sm"
+            >
+              {storesLink.label}
+            </Link>
+          )}
           {isAdmin && (
             <Link
               to={adminLink.to}
