@@ -165,7 +165,6 @@
     }
   },
   "required": [
-    "vat_number",
     "business_name"
   ],
   "rls": {
