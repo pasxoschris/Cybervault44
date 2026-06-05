@@ -193,7 +193,9 @@ export default function Stores() {
                   {paginated.map((s, i) => (
                     <tr key={s.id} className={`border-b border-[#2A3580]/50 hover:bg-[#131840]/70 transition-colors ${i % 2 === 0 ? "bg-[#0E1235]" : "bg-[#0f1339]/60"}`}>
                       <td className="px-4 py-3 font-mono text-[#00CFFF] font-semibold whitespace-nowrap">{s.vat_number}</td>
-                      <td className="px-4 py-3 text-white font-medium whitespace-nowrap max-w-[180px] truncate">{s.business_name}</td>
+                      <td className="px-4 py-3 whitespace-nowrap max-w-[180px] truncate">
+                        <Link to={`/stores/${s.id}`} className="text-white font-medium hover:text-[#00CFFF] transition-colors truncate block">{s.business_name}</Link>
+                      </td>
                       <td className="px-4 py-3 text-white/70 whitespace-nowrap max-w-[140px] truncate">{s.trade_name || "—"}</td>
                       <td className="px-4 py-3 text-white/70 whitespace-nowrap max-w-[140px] truncate">{s.store_name || "—"}</td>
                       <td className="px-4 py-3 text-white/60 whitespace-nowrap max-w-[160px] truncate">{s.email || "—"}</td>
