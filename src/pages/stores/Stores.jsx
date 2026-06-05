@@ -10,9 +10,12 @@ export default function Stores() {
   const [stores, setStores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const resetPage = () => setPage(1);
   const [filters, setFilters] = useState({ status: "", academy_access: "", training_status: "", support_contract: "", support_level: "", support_status: "" });
   const [showFilters, setShowFilters] = useState(false);
   const [deleting, setDeleting] = useState(null);
+  const [page, setPage] = useState(1);
+  const PAGE_SIZE = 50;
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -62,6 +65,10 @@ export default function Stores() {
     return 0;
   });
 
+  const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
+  const currentPage = Math.min(page, totalPages || 1);
+  const paginated = sorted.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   const handleDelete = async (id) => {
     if (!window.confirm("Διαγραφή καταστήματος; Αυτή η ενέργεια δεν αναιρείται.")) return;
     setDeleting(id);
@@ -96,7 +103,7 @@ export default function Stores() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 w-4 h-4" />
               <input
-                value={search} onChange={e => setSearch(e.target.value)}
+                value={search} onChange={e => { setSearch(e.target.value); resetPage(); }}
                 placeholder="Αναζήτηση με ΑΦΜ, επωνυμία.."
                 className="w-full bg-[#131840] border border-[#2A3580] rounded-xl pl-10 pr-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/25"
               />
@@ -127,7 +134,7 @@ export default function Stores() {
                   <label className="text-white/50 text-xs">{label}</label>
                   <select
                     value={filters[key]}
-                    onChange={e => setFilters(f => ({ ...f, [key]: e.target.value }))}
+                    onChange={e => { setFilters(f => ({ ...f, [key]: e.target.value })); resetPage(); }}
                     className="bg-[#0E1235] border border-[#2A3580] rounded-lg px-2 py-1.5 text-white text-xs focus:outline-none focus:border-[#00CFFF]/50"
                   >
                     <option value="">Όλα</option>
@@ -166,7 +173,7 @@ export default function Stores() {
                   </tr>
                 </thead>
                 <tbody>
-                  {sorted.map((s, i) => (
+                  {paginated.map((s, i) => (
                     <tr key={s.id} className={`border-b border-[#2A3580]/50 hover:bg-[#131840]/70 transition-colors ${i % 2 === 0 ? "bg-[#0E1235]" : "bg-[#0f1339]/60"}`}>
                       <td className="px-4 py-3 font-mono text-[#00CFFF] font-semibold whitespace-nowrap">{s.vat_number}</td>
                       <td className="px-4 py-3 text-white font-medium whitespace-nowrap max-w-[180px] truncate">{s.business_name}</td>
@@ -192,8 +199,48 @@ export default function Stores() {
             </div>
           )}
 
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-6">
+              <button
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="px-3 py-1.5 rounded-lg border border-[#2A3580] text-white/60 hover:text-white hover:border-[#00CFFF]/50 disabled:opacity-30 text-sm transition-colors"
+              >
+                ← Προηγ.
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 2)
+                .reduce((acc, p, idx, arr) => {
+                  if (idx > 0 && p - arr[idx - 1] > 1) acc.push("...");
+                  acc.push(p);
+                  return acc;
+                }, [])
+                .map((p, i) =>
+                  p === "..." ? (
+                    <span key={`ellipsis-${i}`} className="text-white/30 px-1">…</span>
+                  ) : (
+                    <button
+                      key={p}
+                      onClick={() => setPage(p)}
+                      className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${currentPage === p ? "bg-[#00CFFF] text-[#0E1235] font-bold" : "border border-[#2A3580] text-white/60 hover:text-white hover:border-[#00CFFF]/50"}`}
+                    >
+                      {p}
+                    </button>
+                  )
+                )}
+              <button
+                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1.5 rounded-lg border border-[#2A3580] text-white/60 hover:text-white hover:border-[#00CFFF]/50 disabled:opacity-30 text-sm transition-colors"
+              >
+                Επόμ. →
+              </button>
+            </div>
+          )}
+
           <p className="text-white/25 text-xs mt-4 text-right" style={{ fontFamily: 'Inter, sans-serif' }}>
-            {sorted.length} από {stores.length} καταστήματα
+            {(currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, sorted.length)} από {sorted.length} ({stores.length} συνολικά)
           </p>
         </div>
       </div>
