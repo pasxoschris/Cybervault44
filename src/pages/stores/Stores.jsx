@@ -16,7 +16,7 @@ export default function Stores() {
   const [showFilters, setShowFilters] = useState(false);
   const [deleting, setDeleting] = useState(null);
   const [page, setPage] = useState(1);
-  const [sortOrder, setSortOrder] = useState(null); // null | "asc" | "desc"
+  const [sortOrder, setSortOrder] = useState("asc"); // null | "asc" | "desc"
   const PAGE_SIZE = 50;
 
   useEffect(() => {
