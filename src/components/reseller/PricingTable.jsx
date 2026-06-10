@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Plus, Edit, Trash2, Save, X } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-react';
 
 const CATEGORIES = [
   ['spotlight_pos','Spotlight POS'],['network_equipment','Εξοπλισμός Δικτύου'],
@@ -16,6 +16,32 @@ export default function PricingTable() {
   const [editing, setEditing] = useState(null); // null | 'new' | item.id
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [sortCol, setSortCol] = useState(null);
+  const [sortDir, setSortDir] = useState('asc');
+
+  const handleSort = (col) => {
+    if (sortCol === col) {
+      if (sortDir === 'asc') setSortDir('desc');
+      else { setSortCol(null); setSortDir('asc'); }
+    } else {
+      setSortCol(col); setSortDir('asc');
+    }
+  };
+
+  const sortedItems = [...items].sort((a, b) => {
+    if (!sortCol) return 0;
+    let va = a[sortCol]; let vb = b[sortCol];
+    if (typeof va === 'string') va = va.toLowerCase();
+    if (typeof vb === 'string') vb = vb.toLowerCase();
+    if (va < vb) return sortDir === 'asc' ? -1 : 1;
+    if (va > vb) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  const SortIcon = ({ col }) => {
+    if (sortCol !== col) return <ArrowUpDown size={11} className="text-white/20 inline ml-1"/>;
+    return sortDir === 'asc' ? <ArrowUp size={11} className="text-[#00CFFF] inline ml-1"/> : <ArrowDown size={11} className="text-[#00CFFF] inline ml-1"/>;
+  };
 
   const load = () => base44.entities.ResellerPricingItem.list().then(setItems).finally(()=>setLoading(false));
   useEffect(()=>{ load(); },[]);
@@ -93,13 +119,19 @@ export default function PricingTable() {
         <table className="w-full text-sm" style={{fontFamily:'Inter,sans-serif'}}>
           <thead>
             <tr className="bg-[#131840] border-b border-[#2A3580]">
-              {['Όνομα','Περιγραφή','Κατηγορία','Τιμή','ΦΠΑ %','Έκπτωση %','Ενεργό',''].map(h=>(
-                <th key={h} className="text-left px-3 py-3 text-white/40 text-xs font-semibold uppercase tracking-wide whitespace-nowrap">{h}</th>
+              {[['name','Όνομα'],['description','Περιγραφή'],['category','Κατηγορία'],['unit_price','Τιμή'],['vat_rate','ΦΠΑ %'],['default_discount_percentage','Έκπτωση %'],['is_active','Ενεργό'],[null,'']].map(([col,h])=>(
+                <th key={h} className="text-left px-3 py-3 text-white/40 text-xs font-semibold uppercase tracking-wide whitespace-nowrap">
+                  {col ? (
+                    <button onClick={()=>handleSort(col)} className="flex items-center gap-0.5 hover:text-[#00CFFF] transition-colors">
+                      {h}<SortIcon col={col}/>
+                    </button>
+                  ) : h}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {items.map((item,i)=>(
+            {sortedItems.map((item,i)=>(
               <tr key={item.id} className={`border-b border-[#2A3580]/50 hover:bg-[#131840]/70 transition-colors ${i%2===0?'bg-[#0E1235]':'bg-[#0f1339]/60'}`}>
                 <td className="px-3 py-3 text-white font-medium whitespace-nowrap">{item.name}</td>
                 <td className="px-3 py-3 text-white/50 max-w-[180px] truncate">{item.description||'—'}</td>
