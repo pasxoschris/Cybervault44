@@ -1,0 +1,245 @@
+import { useState, useEffect } from 'react';
+import { base44 } from '@/api/base44Client';
+import { Plus, Trash2, Save, Eye, Mail, RotateCcw } from 'lucide-react';
+import EmailModal from './EmailModal';
+
+const CATEGORY_LABELS = {
+  spotlight_pos: 'Spotlight POS', network_equipment: 'Εξοπλισμός Δικτύου',
+  printers: 'Εκτυπωτές', installation: 'Εγκατάσταση', training: 'Εκπαίδευση',
+  services: 'Υπηρεσίες', other: 'Άλλο'
+};
+
+function generateRef() {
+  const d = new Date();
+  const date = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+  const seq = String(Math.floor(Math.random()*900)+100);
+  return `CYV-SPOT-${date}-${seq}`;
+}
+
+const EMPTY_CUSTOMER = { store_name:'', company_legal_name:'', vat_number:'', address:'', contact_person:'', email:'', phone:'', notes:'' };
+
+export default function OfferForm({ editOffer, onSaved }) {
+  const [customer, setCustomer] = useState(EMPTY_CUSTOMER);
+  const [pricingItems, setPricingItems] = useState([]);
+  const [lines, setLines] = useState([]);
+  const [saving, setSaving] = useState(false);
+  const [showEmail, setShowEmail] = useState(false);
+  const [savedOffer, setSavedOffer] = useState(null);
+  const [settings, setSettings] = useState({ vat_rate: 24, offer_validity_days: 30 });
+
+  useEffect(() => {
+    base44.entities.ResellerPricingItem.filter({ is_active: true }).then(setPricingItems);
+    base44.entities.ResellerSettings.list().then(list => { if (list[0]) setSettings(list[0]); });
+    if (editOffer) {
+      setCustomer({
+        store_name: editOffer.store_name || '', company_legal_name: editOffer.company_legal_name || '',
+        vat_number: editOffer.vat_number || '', address: editOffer.address || '',
+        contact_person: editOffer.contact_person || '', email: editOffer.email || '',
+        phone: editOffer.phone || '', notes: editOffer.notes || ''
+      });
+      try { setLines(JSON.parse(editOffer.items || '[]')); } catch {}
+    }
+  }, [editOffer]);
+
+  const addLine = (item) => {
+    setLines(prev => [...prev, {
+      id: Date.now(), name: item.name, description: item.description || '',
+      quantity: 1, unit_price: item.unit_price,
+      discount_pct: item.default_discount_percentage || 0
+    }]);
+  };
+
+  const updateLine = (id, field, val) => {
+    setLines(prev => prev.map(l => l.id === id ? { ...l, [field]: val } : l));
+  };
+
+  const removeLine = (id) => setLines(prev => prev.filter(l => l.id !== id));
+
+  const lineTotal = (l) => {
+    const sub = l.quantity * l.unit_price;
+    return sub * (1 - l.discount_pct / 100);
+  };
+
+  const subtotalBefore = lines.reduce((s, l) => s + l.quantity * l.unit_price, 0);
+  const subtotalAfter = lines.reduce((s, l) => s + lineTotal(l), 0);
+  const totalDiscount = subtotalBefore - subtotalAfter;
+  const vatRate = settings.default_vat_rate || 24;
+  const vatAmount = subtotalAfter * vatRate / 100;
+  const finalTotal = subtotalAfter + vatAmount;
+
+  const fmt = (n) => Number(n).toFixed(2);
+
+  const handleSave = async (status = 'draft') => {
+    setSaving(true);
+    const validityDays = settings.offer_validity_days || 30;
+    const expiresAt = new Date(Date.now() + validityDays * 86400000).toISOString().split('T')[0];
+    const data = {
+      ...customer,
+      reference_number: editOffer?.reference_number || generateRef(),
+      status,
+      items: JSON.stringify(lines),
+      subtotal_before_discount: subtotalBefore,
+      total_discount: totalDiscount,
+      subtotal_after_discount: subtotalAfter,
+      vat_rate: vatRate,
+      vat_amount: vatAmount,
+      final_total: finalTotal,
+      expires_at: expiresAt,
+    };
+    let saved;
+    if (editOffer) {
+      saved = await base44.entities.ResellerOffer.update(editOffer.id, data);
+    } else {
+      saved = await base44.entities.ResellerOffer.create(data);
+    }
+    setSavedOffer(saved);
+    setSaving(false);
+    if (onSaved) onSaved(saved);
+  };
+
+  const handleClear = () => {
+    setCustomer(EMPTY_CUSTOMER);
+    setLines([]);
+    setSavedOffer(null);
+  };
+
+  const inputCls = "w-full bg-[#0E1235] border border-[#2A3580] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20";
+
+  return (
+    <div className="space-y-6">
+      {/* Customer */}
+      <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
+        <h3 className="font-orbitron text-sm text-[#00CFFF] mb-4 tracking-wider">ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {[
+            ['store_name','Κατάστημα','text'],['company_legal_name','Επωνυμία','text'],
+            ['vat_number','ΑΦΜ','text'],['address','Διεύθυνση','text'],
+            ['contact_person','Υπεύθυνος','text'],['email','Email','email'],
+            ['phone','Τηλέφωνο','tel']
+          ].map(([key, label, type]) => (
+            <div key={key}>
+              <label className="block text-white/40 text-xs mb-1">{label}</label>
+              <input type={type} value={customer[key]} onChange={e => setCustomer(c=>({...c,[key]:e.target.value}))} className={inputCls} />
+            </div>
+          ))}
+          <div className="md:col-span-2">
+            <label className="block text-white/40 text-xs mb-1">Σημειώσεις</label>
+            <textarea value={customer.notes} onChange={e => setCustomer(c=>({...c,notes:e.target.value}))} rows={2} className={inputCls} />
+          </div>
+        </div>
+      </div>
+
+      {/* Item selector */}
+      <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
+        <h3 className="font-orbitron text-sm text-[#00CFFF] mb-4 tracking-wider">ΕΠΙΛΟΓΗ ΕΞΟΠΛΙΣΜΟΥ / ΥΠΗΡΕΣΙΩΝ</h3>
+        {pricingItems.length === 0 ? (
+          <p className="text-white/30 text-sm">Δεν υπάρχουν ενεργά προϊόντα. Προσθέστε τιμές στον Τιμοκατάλογο.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+            {pricingItems.map(item => (
+              <button key={item.id} onClick={() => addLine(item)}
+                className="flex items-center justify-between px-3 py-2.5 bg-[#0E1235] border border-[#2A3580] rounded-lg hover:border-[#00CFFF]/40 hover:bg-[#00CFFF]/5 transition-all text-left group">
+                <div>
+                  <div className="text-white text-sm group-hover:text-[#00CFFF]">{item.name}</div>
+                  <div className="text-white/30 text-xs">{CATEGORY_LABELS[item.category]}</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[#00CFFF] text-xs font-mono">€{fmt(item.unit_price)}</span>
+                  <Plus size={14} className="text-white/30 group-hover:text-[#00CFFF]" />
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Lines table */}
+      {lines.length > 0 && (
+        <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
+          <h3 className="font-orbitron text-sm text-[#00CFFF] mb-4 tracking-wider">ΓΡΑΜΜΕΣ ΠΡΟΣΦΟΡΑΣ</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-[#2A3580]">
+                  {['Προϊόν/Υπηρεσία','Περιγραφή','Ποσότητα','Τιμή','Έκπτωση %','Σύνολο',''].map(h => (
+                    <th key={h} className="text-left py-2 px-2 text-white/40 text-xs font-semibold">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {lines.map(l => (
+                  <tr key={l.id} className="border-b border-[#2A3580]/40">
+                    <td className="py-2 px-2">
+                      <input value={l.name} onChange={e => updateLine(l.id,'name',e.target.value)} className="bg-transparent text-white text-sm focus:outline-none w-32 border-b border-transparent focus:border-[#00CFFF]/30" />
+                    </td>
+                    <td className="py-2 px-2">
+                      <input value={l.description} onChange={e => updateLine(l.id,'description',e.target.value)} className="bg-transparent text-white/50 text-xs focus:outline-none w-28 border-b border-transparent focus:border-[#00CFFF]/30" />
+                    </td>
+                    <td className="py-2 px-2">
+                      <input type="number" min={1} value={l.quantity} onChange={e => updateLine(l.id,'quantity',parseFloat(e.target.value)||1)}
+                        className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-16 focus:outline-none focus:border-[#00CFFF]/40" />
+                    </td>
+                    <td className="py-2 px-2">
+                      <input type="number" min={0} step={0.01} value={l.unit_price} onChange={e => updateLine(l.id,'unit_price',parseFloat(e.target.value)||0)}
+                        className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-20 focus:outline-none focus:border-[#00CFFF]/40" />
+                    </td>
+                    <td className="py-2 px-2">
+                      <input type="number" min={0} max={100} step={0.5} value={l.discount_pct} onChange={e => updateLine(l.id,'discount_pct',parseFloat(e.target.value)||0)}
+                        className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-16 focus:outline-none focus:border-[#00CFFF]/40" />
+                    </td>
+                    <td className="py-2 px-2 text-[#00CFFF] font-mono text-sm">€{fmt(lineTotal(l))}</td>
+                    <td className="py-2 px-2">
+                      <button onClick={() => removeLine(l.id)} className="text-white/30 hover:text-red-400 transition-colors"><Trash2 size={14} /></button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Totals */}
+          <div className="mt-4 flex justify-end">
+            <div className="w-64 space-y-1.5 text-sm">
+              <div className="flex justify-between text-white/60"><span>Σύνολο πριν έκπτωση</span><span className="font-mono">€{fmt(subtotalBefore)}</span></div>
+              <div className="flex justify-between text-red-400"><span>Έκπτωση</span><span className="font-mono">-€{fmt(totalDiscount)}</span></div>
+              <div className="flex justify-between text-white/60"><span>Καθαρό ποσό</span><span className="font-mono">€{fmt(subtotalAfter)}</span></div>
+              <div className="flex justify-between text-white/60"><span>ΦΠΑ {vatRate}%</span><span className="font-mono">€{fmt(vatAmount)}</span></div>
+              <div className="flex justify-between border-t border-[#2A3580] pt-2 text-[#00CFFF] font-bold text-base">
+                <span>Σύνολο</span><span className="font-mono">€{fmt(finalTotal)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Actions */}
+      <div className="flex flex-wrap gap-3">
+        <button onClick={() => handleSave('draft')} disabled={saving}
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#131840] border border-[#2A3580] rounded-xl text-white text-sm hover:border-[#00CFFF]/40 transition-colors disabled:opacity-40">
+          <Save size={15} /> {saving ? 'Αποθήκευση...' : 'Αποθήκευση Draft'}
+        </button>
+        <button onClick={() => handleSave('draft').then(() => {})} disabled={saving || lines.length === 0}
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#00CFFF]/10 border border-[#00CFFF]/30 rounded-xl text-[#00CFFF] text-sm hover:bg-[#00CFFF]/20 transition-colors disabled:opacity-40">
+          <Eye size={15} /> Preview
+        </button>
+        <button onClick={() => { handleSave('draft'); setShowEmail(true); }} disabled={!savedOffer && lines.length === 0}
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#131840] border border-[#2A3580] rounded-xl text-white text-sm hover:border-[#00CFFF]/40 transition-colors disabled:opacity-40">
+          <Mail size={15} /> Αποστολή Email
+        </button>
+        <button onClick={handleClear}
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#131840] border border-red-500/20 rounded-xl text-red-400/70 text-sm hover:border-red-400/50 transition-colors">
+          <RotateCcw size={15} /> Καθαρισμός
+        </button>
+      </div>
+
+      {showEmail && (
+        <EmailModal
+          offer={savedOffer}
+          customer={customer}
+          defaultSettings={settings}
+          onClose={() => setShowEmail(false)}
+        />
+      )}
+    </div>
+  );
+}

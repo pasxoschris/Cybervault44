@@ -96,6 +96,7 @@ function WhitelistSection({ entityName, title, description }) {
 const TABS = [
   { key: 'AllowedUser', label: 'Service Desk', description: 'Διαχείριση πρόσβασης στο Service Desk' },
   { key: 'AllowedUserGuide', label: 'SpotlightPOS Guide', description: 'Διαχείριση πρόσβασης στον Οδηγό Εκπαίδευσης' },
+  { key: 'AllowedUserReseller', label: 'Reseller Console', description: 'Διαχείριση πρόσβασης στο Reseller Console' },
 ];
 
 export default function Whitelist() {

@@ -1,0 +1,61 @@
+{
+  "name": "ResellerPricingItem",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "\u038c\u03bd\u03bf\u03bc\u03b1 \u03c0\u03c1\u03bf\u03ca\u03cc\u03bd\u03c4\u03bf\u03c2/\u03c5\u03c0\u03b7\u03c1\u03b5\u03c3\u03af\u03b1\u03c2"
+    },
+    "description": {
+      "type": "string",
+      "description": "\u03a0\u03b5\u03c1\u03b9\u03b3\u03c1\u03b1\u03c6\u03ae"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "spotlight_pos",
+        "network_equipment",
+        "printers",
+        "installation",
+        "training",
+        "services",
+        "other"
+      ],
+      "default": "other",
+      "description": "\u039a\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1"
+    },
+    "unit_price": {
+      "type": "number",
+      "description": "\u03a4\u03b9\u03bc\u03ae \u03bc\u03bf\u03bd\u03ac\u03b4\u03b1\u03c2 (\u20ac)"
+    },
+    "vat_rate": {
+      "type": "number",
+      "default": 24,
+      "description": "\u03a6\u03a0\u0391 %"
+    },
+    "default_discount_percentage": {
+      "type": "number",
+      "default": 0,
+      "description": "\u03a0\u03c1\u03bf\u03b5\u03c0\u03b9\u03bb\u03b5\u03b3\u03bc\u03ad\u03bd\u03b7 \u03ad\u03ba\u03c0\u03c4\u03c9\u03c3\u03b7 %"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "\u0395\u03bd\u03b5\u03c1\u03b3\u03cc"
+    }
+  },
+  "required": [
+    "name",
+    "unit_price"
+  ],
+  "rls": {
+    "create": {},
+    "read": {},
+    "update": {},
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
