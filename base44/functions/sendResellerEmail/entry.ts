@@ -12,38 +12,46 @@ Deno.serve(async (req) => {
     return Response.json({ error: 'Missing required fields: to, subject, html_body' }, { status: 400 });
   }
 
-  // Send email via base44 integration
-  await base44.asServiceRole.integrations.Core.SendEmail({
-    to,
-    subject,
-    body: html_body,
-    from_name: 'CyberVault'
-  });
+  const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 
-  if (cc) {
-    await base44.asServiceRole.integrations.Core.SendEmail({
-      to: cc,
-      subject,
-      body: html_body,
-      from_name: 'CyberVault'
+  const sendViaResend = async (recipient) => {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'CyberVault <onboarding@resend.dev>',
+        to: [recipient],
+        subject,
+        html: html_body,
+      }),
     });
-  }
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || 'Resend error');
+    }
+    return res.json();
+  };
+
+  await sendViaResend(to);
+  if (cc) await sendViaResend(cc);
 
   // Update offer status and log
   if (offer_id) {
-    const offer = await base44.asServiceRole.entities.ResellerOffer.list();
-    const found = offer.find(o => o.id === offer_id);
+    const now = new Date().toISOString();
+    const offers = await base44.asServiceRole.entities.ResellerOffer.list();
+    const found = offers.find(o => o.id === offer_id);
     if (found) {
-      const now = new Date().toISOString();
       let history = [];
       try { history = JSON.parse(found.email_history || '[]'); } catch {}
       history.push({ sent_at: now, to, cc: cc || null, subject });
-
       await base44.asServiceRole.entities.ResellerOffer.update(offer_id, {
         status: 'sent',
         last_sent_at: now,
         last_sent_to: to,
-        email_history: JSON.stringify(history)
+        email_history: JSON.stringify(history),
       });
     }
   }
