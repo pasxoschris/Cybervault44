@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Plus, Trash2, Save, Eye, Mail, RotateCcw } from 'lucide-react';
 import EmailModal from './EmailModal';
+import OfferPreviewModal from './OfferPreviewModal';
 
 const CATEGORY_LABELS = {
   spotlight_pos: 'Spotlight POS', network_equipment: 'Εξοπλισμός Δικτύου',
@@ -24,6 +25,7 @@ export default function OfferForm({ editOffer, onSaved }) {
   const [lines, setLines] = useState([]);
   const [saving, setSaving] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   const [savedOffer, setSavedOffer] = useState(null);
   const [settings, setSettings] = useState({ vat_rate: 24, offer_validity_days: 30 });
 
@@ -218,7 +220,7 @@ export default function OfferForm({ editOffer, onSaved }) {
           className="flex items-center gap-2 px-5 py-2.5 bg-[#131840] border border-[#2A3580] rounded-xl text-white text-sm hover:border-[#00CFFF]/40 transition-colors disabled:opacity-40">
           <Save size={15} /> {saving ? 'Αποθήκευση...' : 'Αποθήκευση Draft'}
         </button>
-        <button onClick={() => handleSave('draft').then(() => {})} disabled={saving || lines.length === 0}
+        <button onClick={() => setShowPreview(true)} disabled={lines.length === 0}
           className="flex items-center gap-2 px-5 py-2.5 bg-[#00CFFF]/10 border border-[#00CFFF]/30 rounded-xl text-[#00CFFF] text-sm hover:bg-[#00CFFF]/20 transition-colors disabled:opacity-40">
           <Eye size={15} /> Preview
         </button>
@@ -238,6 +240,17 @@ export default function OfferForm({ editOffer, onSaved }) {
           customer={customer}
           defaultSettings={settings}
           onClose={() => setShowEmail(false)}
+        />
+      )}
+
+      {showPreview && (
+        <OfferPreviewModal
+          customer={customer}
+          lines={lines}
+          totals={{ subtotalBefore, subtotalAfter, totalDiscount, vatRate, vatAmount, finalTotal }}
+          settings={settings}
+          refNumber={editOffer?.reference_number || savedOffer?.reference_number}
+          onClose={() => setShowPreview(false)}
         />
       )}
     </div>
