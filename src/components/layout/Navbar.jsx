@@ -7,9 +7,17 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isReseller, setIsReseller] = useState(false);
 
   useEffect(() => {
-    base44.auth.me().then(u => { if (u?.role === 'admin') setIsAdmin(true); }).catch(() => {});
+    base44.auth.me().then(async u => {
+      if (!u) return;
+      if (u.role === 'admin') { setIsAdmin(true); setIsReseller(true); return; }
+      try {
+        const list = await base44.entities.AllowedUserReseller.filter({ email: u.email });
+        if (list.length > 0) setIsReseller(true);
+      } catch {}
+    }).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -67,7 +75,7 @@ export default function Navbar() {
               {storesLink.label}
             </Link>
           )}
-          {isAdmin && (
+          {isReseller && (
             <Link to={resellerLink.to} className="nav-link">
               {resellerLink.label}
             </Link>
@@ -113,7 +121,7 @@ export default function Navbar() {
               {storesLink.label}
             </Link>
           )}
-          {isAdmin && (
+          {isReseller && (
             <Link
               to={resellerLink.to}
               onClick={() => setMobileOpen(false)}
