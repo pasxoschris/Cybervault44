@@ -1,37 +1,46 @@
 import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Plus, Trash2, Save, Eye, Mail, RotateCcw } from 'lucide-react';
+import { Plus, Trash2, Save, Eye, Mail, RotateCcw, Search, ChevronDown, ChevronRight } from 'lucide-react';
 import EmailModal from './EmailModal';
 import OfferPreviewModal from './OfferPreviewModal';
 
-const CATEGORY_LABELS = {
-  spotlight_pos: 'Spotlight POS', network_equipment: 'Εξοπλισμός Δικτύου',
-  printers: 'Εκτυπωτές', installation: 'Εγκατάσταση', training: 'Εκπαίδευση',
-  services: 'Υπηρεσίες', other: 'Άλλο'
-};
-
 function generateRef() {
   const d = new Date();
-  const date = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
-  const seq = String(Math.floor(Math.random()*900)+100);
+  const date = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+  const seq = String(Math.floor(Math.random() * 900) + 100);
   return `CYV-SPOT-${date}-${seq}`;
 }
 
-const EMPTY_CUSTOMER = { store_name:'', company_legal_name:'', vat_number:'', address:'', contact_person:'', email:'', phone:'', notes:'' };
+const EMPTY_CUSTOMER = { store_name: '', company_legal_name: '', vat_number: '', address: '', contact_person: '', email: '', phone: '', notes: '' };
 
 export default function OfferForm({ editOffer, onSaved }) {
   const [customer, setCustomer] = useState(EMPTY_CUSTOMER);
   const [pricingItems, setPricingItems] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [lines, setLines] = useState([]);
   const [saving, setSaving] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [savedOffer, setSavedOffer] = useState(null);
   const [settings, setSettings] = useState({ vat_rate: 24, offer_validity_days: 30 });
+  const [search, setSearch] = useState('');
+  const [openCategories, setOpenCategories] = useState({});
 
   useEffect(() => {
-    base44.entities.ResellerPricingItem.filter({ is_active: true }).then(setPricingItems);
-    base44.entities.ResellerSettings.list().then(list => { if (list[0]) setSettings(list[0]); });
+    Promise.all([
+      base44.entities.ResellerPricingItem.filter({ is_active: true }),
+      base44.entities.ResellerCategory.list('display_order'),
+      base44.entities.ResellerSettings.list(),
+    ]).then(([items, cats, settingsList]) => {
+      setPricingItems(items);
+      setCategories(cats.filter(c => c.is_active));
+      if (settingsList[0]) setSettings(settingsList[0]);
+      // Open all categories by default
+      const openState = {};
+      cats.forEach(c => { openState[c.id] = true; });
+      openState['__uncategorized__'] = true;
+      setOpenCategories(openState);
+    });
     if (editOffer) {
       setCustomer({
         store_name: editOffer.store_name || '', company_legal_name: editOffer.company_legal_name || '',
@@ -39,9 +48,11 @@ export default function OfferForm({ editOffer, onSaved }) {
         contact_person: editOffer.contact_person || '', email: editOffer.email || '',
         phone: editOffer.phone || '', notes: editOffer.notes || ''
       });
-      try { setLines(JSON.parse(editOffer.items || '[]')); } catch {}
+      try { setLines(JSON.parse(editOffer.items || '[]')); } catch { }
     }
   }, [editOffer]);
+
+  const toggleCategory = (id) => setOpenCategories(prev => ({ ...prev, [id]: !prev[id] }));
 
   const addLine = (item) => {
     setLines(prev => [...prev, {
@@ -68,7 +79,6 @@ export default function OfferForm({ editOffer, onSaved }) {
   const vatRate = settings.default_vat_rate || 24;
   const vatAmount = subtotalAfter * vatRate / 100;
   const finalTotal = subtotalAfter + vatAmount;
-
   const fmt = (n) => Number(n).toFixed(2);
 
   const handleSave = async (status = 'draft') => {
@@ -107,6 +117,18 @@ export default function OfferForm({ editOffer, onSaved }) {
 
   const inputCls = "w-full bg-[#0E1235] border border-[#2A3580] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20";
 
+  // Filter + group items
+  const q = search.trim().toLowerCase();
+  const filteredItems = q ? pricingItems.filter(i => i.name.toLowerCase().includes(q) || (i.description || '').toLowerCase().includes(q)) : pricingItems;
+
+  // Build grouped structure: ordered categories first, then uncategorized
+  const grouped = categories.map(cat => ({
+    cat,
+    items: filteredItems.filter(i => i.category_id === cat.id),
+  })).filter(g => g.items.length > 0);
+
+  const uncategorized = filteredItems.filter(i => !i.category_id || !categories.find(c => c.id === i.category_id));
+
   return (
     <div className="space-y-6">
       {/* Customer */}
@@ -114,43 +136,94 @@ export default function OfferForm({ editOffer, onSaved }) {
         <h3 className="font-orbitron text-sm text-[#00CFFF] mb-4 tracking-wider">ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {[
-            ['store_name','Κατάστημα','text'],['company_legal_name','Επωνυμία','text'],
-            ['vat_number','ΑΦΜ','text'],['address','Διεύθυνση','text'],
-            ['contact_person','Υπεύθυνος','text'],['email','Email','email'],
-            ['phone','Τηλέφωνο','tel']
+            ['store_name', 'Κατάστημα', 'text'], ['company_legal_name', 'Επωνυμία', 'text'],
+            ['vat_number', 'ΑΦΜ', 'text'], ['address', 'Διεύθυνση', 'text'],
+            ['contact_person', 'Υπεύθυνος', 'text'], ['email', 'Email', 'email'],
+            ['phone', 'Τηλέφωνο', 'tel']
           ].map(([key, label, type]) => (
             <div key={key}>
               <label className="block text-white/40 text-xs mb-1">{label}</label>
-              <input type={type} value={customer[key]} onChange={e => setCustomer(c=>({...c,[key]:e.target.value}))} className={inputCls} />
+              <input type={type} value={customer[key]} onChange={e => setCustomer(c => ({ ...c, [key]: e.target.value }))} className={inputCls} />
             </div>
           ))}
           <div className="md:col-span-2">
             <label className="block text-white/40 text-xs mb-1">Σημειώσεις</label>
-            <textarea value={customer.notes} onChange={e => setCustomer(c=>({...c,notes:e.target.value}))} rows={2} className={inputCls} />
+            <textarea value={customer.notes} onChange={e => setCustomer(c => ({ ...c, notes: e.target.value }))} rows={2} className={inputCls} />
           </div>
         </div>
       </div>
 
-      {/* Item selector */}
+      {/* Item selector — categorized */}
       <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
-        <h3 className="font-orbitron text-sm text-[#00CFFF] mb-4 tracking-wider">ΕΠΙΛΟΓΗ ΕΞΟΠΛΙΣΜΟΥ / ΥΠΗΡΕΣΙΩΝ</h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-orbitron text-sm text-[#00CFFF] tracking-wider">ΕΠΙΛΟΓΗ ΕΞΟΠΛΙΣΜΟΥ / ΥΠΗΡΕΣΙΩΝ</h3>
+          {lines.length > 0 && (
+            <span className="text-xs text-white/40" style={{ fontFamily: 'Inter,sans-serif' }}>{lines.length} επιλεγμένα</span>
+          )}
+        </div>
+
         {pricingItems.length === 0 ? (
           <p className="text-white/30 text-sm">Δεν υπάρχουν ενεργά προϊόντα. Προσθέστε τιμές στον Τιμοκατάλογο.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-            {pricingItems.map(item => (
-              <button key={item.id} onClick={() => addLine(item)}
-                className="flex items-center justify-between px-3 py-2.5 bg-[#0E1235] border border-[#2A3580] rounded-lg hover:border-[#00CFFF]/40 hover:bg-[#00CFFF]/5 transition-all text-left group">
-                <div>
-                  <div className="text-white text-sm group-hover:text-[#00CFFF]">{item.name}</div>
-                  <div className="text-white/30 text-xs">{CATEGORY_LABELS[item.category]}</div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-[#00CFFF] text-xs font-mono">€{fmt(item.unit_price)}</span>
-                  <Plus size={14} className="text-white/30 group-hover:text-[#00CFFF]" />
-                </div>
-              </button>
+          <div className="space-y-3">
+            {/* Search */}
+            <div className="relative">
+              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+              <input
+                value={search} onChange={e => setSearch(e.target.value)}
+                placeholder="Αναζήτηση προϊόντος..."
+                className="w-full bg-[#0E1235] border border-[#2A3580] rounded-lg pl-9 pr-4 py-2 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20"
+              />
+            </div>
+
+            {/* Grouped sections */}
+            {grouped.length === 0 && uncategorized.length === 0 && (
+              <p className="text-white/30 text-sm text-center py-6">Δεν βρέθηκαν αποτελέσματα.</p>
+            )}
+
+            {grouped.map(({ cat, items }) => (
+              <div key={cat.id} className="border border-[#2A3580] rounded-xl overflow-hidden">
+                <button
+                  onClick={() => toggleCategory(cat.id)}
+                  className="w-full flex items-center justify-between px-4 py-2.5 bg-[#0E1235] hover:bg-[#131840] transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    {openCategories[cat.id] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
+                    <span className="font-orbitron text-xs text-white tracking-wide">{cat.name}</span>
+                    <span className="text-xs text-white/30 font-mono">({items.length})</span>
+                  </div>
+                </button>
+                {openCategories[cat.id] && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-3 bg-[#0a0d28]/40">
+                    {items.map(item => (
+                      <ItemCard key={item.id} item={item} onAdd={addLine} fmt={fmt} />
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
+
+            {uncategorized.length > 0 && (
+              <div className="border border-[#2A3580] rounded-xl overflow-hidden">
+                <button
+                  onClick={() => toggleCategory('__uncategorized__')}
+                  className="w-full flex items-center justify-between px-4 py-2.5 bg-[#0E1235] hover:bg-[#131840] transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    {openCategories['__uncategorized__'] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
+                    <span className="font-orbitron text-xs text-white/60 tracking-wide">Χωρίς κατηγορία</span>
+                    <span className="text-xs text-white/30 font-mono">({uncategorized.length})</span>
+                  </div>
+                </button>
+                {openCategories['__uncategorized__'] && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-3 bg-[#0a0d28]/40">
+                    {uncategorized.map(item => (
+                      <ItemCard key={item.id} item={item} onAdd={addLine} fmt={fmt} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -163,7 +236,7 @@ export default function OfferForm({ editOffer, onSaved }) {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-[#2A3580]">
-                  {['Προϊόν/Υπηρεσία','Περιγραφή','Ποσότητα','Τιμή','Έκπτωση %','Σύνολο',''].map(h => (
+                  {['Προϊόν/Υπηρεσία', 'Περιγραφή', 'Ποσότητα', 'Τιμή', 'Έκπτωση %', 'Σύνολο', ''].map(h => (
                     <th key={h} className="text-left py-2 px-2 text-white/40 text-xs font-semibold">{h}</th>
                   ))}
                 </tr>
@@ -172,21 +245,21 @@ export default function OfferForm({ editOffer, onSaved }) {
                 {lines.map(l => (
                   <tr key={l.id} className="border-b border-[#2A3580]/40">
                     <td className="py-2 px-2">
-                      <input value={l.name} onChange={e => updateLine(l.id,'name',e.target.value)} className="bg-transparent text-white text-sm focus:outline-none w-32 border-b border-transparent focus:border-[#00CFFF]/30" />
+                      <input value={l.name} onChange={e => updateLine(l.id, 'name', e.target.value)} className="bg-transparent text-white text-sm focus:outline-none w-32 border-b border-transparent focus:border-[#00CFFF]/30" />
                     </td>
                     <td className="py-2 px-2">
-                      <input value={l.description} onChange={e => updateLine(l.id,'description',e.target.value)} className="bg-transparent text-white/50 text-xs focus:outline-none w-28 border-b border-transparent focus:border-[#00CFFF]/30" />
+                      <input value={l.description} onChange={e => updateLine(l.id, 'description', e.target.value)} className="bg-transparent text-white/50 text-xs focus:outline-none w-28 border-b border-transparent focus:border-[#00CFFF]/30" />
                     </td>
                     <td className="py-2 px-2">
-                      <input type="number" min={1} value={l.quantity} onChange={e => updateLine(l.id,'quantity',parseFloat(e.target.value)||1)}
+                      <input type="number" min={1} value={l.quantity} onChange={e => updateLine(l.id, 'quantity', parseFloat(e.target.value) || 1)}
                         className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-16 focus:outline-none focus:border-[#00CFFF]/40" />
                     </td>
                     <td className="py-2 px-2">
-                      <input type="number" min={0} step={0.01} value={l.unit_price} onChange={e => updateLine(l.id,'unit_price',parseFloat(e.target.value)||0)}
+                      <input type="number" min={0} step={0.01} value={l.unit_price} onChange={e => updateLine(l.id, 'unit_price', parseFloat(e.target.value) || 0)}
                         className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-20 focus:outline-none focus:border-[#00CFFF]/40" />
                     </td>
                     <td className="py-2 px-2">
-                      <input type="number" min={0} max={100} step={0.5} value={l.discount_pct} onChange={e => updateLine(l.id,'discount_pct',parseFloat(e.target.value)||0)}
+                      <input type="number" min={0} max={100} step={0.5} value={l.discount_pct} onChange={e => updateLine(l.id, 'discount_pct', parseFloat(e.target.value) || 0)}
                         className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-16 focus:outline-none focus:border-[#00CFFF]/40" />
                     </td>
                     <td className="py-2 px-2 text-[#00CFFF] font-mono text-sm">€{fmt(lineTotal(l))}</td>
@@ -235,24 +308,32 @@ export default function OfferForm({ editOffer, onSaved }) {
       </div>
 
       {showEmail && (
-        <EmailModal
-          offer={savedOffer}
-          customer={customer}
-          defaultSettings={settings}
-          onClose={() => setShowEmail(false)}
-        />
+        <EmailModal offer={savedOffer} customer={customer} defaultSettings={settings} onClose={() => setShowEmail(false)} />
       )}
-
       {showPreview && (
         <OfferPreviewModal
-          customer={customer}
-          lines={lines}
+          customer={customer} lines={lines}
           totals={{ subtotalBefore, subtotalAfter, totalDiscount, vatRate, vatAmount, finalTotal }}
-          settings={settings}
-          refNumber={editOffer?.reference_number || savedOffer?.reference_number}
+          settings={settings} refNumber={editOffer?.reference_number || savedOffer?.reference_number}
           onClose={() => setShowPreview(false)}
         />
       )}
     </div>
+  );
+}
+
+function ItemCard({ item, onAdd, fmt }) {
+  return (
+    <button onClick={() => onAdd(item)}
+      className="flex items-center justify-between px-3 py-2.5 bg-[#0E1235] border border-[#2A3580] rounded-lg hover:border-[#00CFFF]/40 hover:bg-[#00CFFF]/5 transition-all text-left group">
+      <div className="min-w-0 flex-1">
+        <div className="text-white text-sm group-hover:text-[#00CFFF] truncate">{item.name}</div>
+        {item.description && <div className="text-white/30 text-xs truncate">{item.description}</div>}
+      </div>
+      <div className="flex items-center gap-2 ml-2 flex-shrink-0">
+        <span className="text-[#00CFFF] text-xs font-mono">€{fmt(item.unit_price)}</span>
+        <Plus size={14} className="text-white/30 group-hover:text-[#00CFFF]" />
+      </div>
+    </button>
   );
 }
