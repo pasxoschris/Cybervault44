@@ -3,7 +3,21 @@ import { base44 } from '@/api/base44Client';
 import { X, Send } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 
-export default function EmailModal({ offer, customer, lines, totals, defaultSettings, onClose }) {
+export default function EmailModal({ offer, customer, lines: linesProp, totals: totalsProp, defaultSettings, onClose }) {
+  // If lines/totals not passed directly, derive them from the saved offer object
+  const lines = linesProp && linesProp.length > 0
+    ? linesProp
+    : (() => { try { return JSON.parse(offer?.items || '[]'); } catch { return []; } })();
+
+  const totals = totalsProp || {
+    subtotalBefore: offer?.subtotal_before_discount || 0,
+    subtotalAfter: offer?.subtotal_after_discount || 0,
+    totalDiscount: offer?.total_discount || 0,
+    vatRate: offer?.vat_rate || 24,
+    vatAmount: offer?.vat_amount || 0,
+    finalTotal: offer?.final_total || 0,
+  };
+
   const [to, setTo] = useState(customer?.email || offer?.email || '');
   const [cc, setCc] = useState('');
   const [subject, setSubject] = useState(defaultSettings?.default_email_subject || 'Προσφορά Spotlight POS – CyberVault');

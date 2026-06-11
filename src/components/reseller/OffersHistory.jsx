@@ -18,8 +18,15 @@ export default function OffersHistory({ onEdit }) {
   const [loading, setLoading] = useState(true);
   const [emailOffer, setEmailOffer] = useState(null);
   const [search, setSearch] = useState('');
+  const [settings, setSettings] = useState({});
 
-  const load = () => base44.entities.ResellerOffer.list('-created_date', 200).then(setOffers).finally(() => setLoading(false));
+  const load = () => Promise.all([
+    base44.entities.ResellerOffer.list('-created_date', 200),
+    base44.entities.ResellerSettings.list(),
+  ]).then(([offerList, settingsList]) => {
+    setOffers(offerList);
+    if (settingsList[0]) setSettings(settingsList[0]);
+  }).finally(() => setLoading(false));
   useEffect(() => { load(); }, []);
 
   const updateStatus = async (id, status) => {
@@ -118,7 +125,7 @@ export default function OffersHistory({ onEdit }) {
           </table>
         </div>
       )}
-      {emailOffer && <EmailModal offer={emailOffer} customer={{email:emailOffer.email}} defaultSettings={{}} onClose={()=>setEmailOffer(null)} />}
+      {emailOffer && <EmailModal offer={emailOffer} customer={{email:emailOffer.email, contact_person:emailOffer.contact_person, store_name:emailOffer.store_name, company_legal_name:emailOffer.company_legal_name, vat_number:emailOffer.vat_number, address:emailOffer.address, phone:emailOffer.phone}} defaultSettings={settings} onClose={()=>setEmailOffer(null)} />}
     </div>
   );
 
