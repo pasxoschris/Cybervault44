@@ -6,11 +6,16 @@
       "type": "string",
       "description": "Unique offer reference, e.g. CYV-SPOT-20240605-001"
     },
+    "public_token": {
+      "type": "string",
+      "description": "Secure non-sequential public token for /offers/:publicToken URL"
+    },
     "status": {
       "type": "string",
       "enum": [
         "draft",
         "sent",
+        "viewed",
         "accepted",
         "rejected",
         "expired"
@@ -83,6 +88,10 @@
       "type": "string",
       "description": "URL of generated PDF"
     },
+    "accepted_pdf_url": {
+      "type": "string",
+      "description": "URL of accepted PDF with certificate"
+    },
     "pdf_generated_at": {
       "type": "string",
       "description": "PDF generation datetime"
@@ -103,6 +112,43 @@
     "email_history": {
       "type": "string",
       "description": "JSON array of sent email log entries"
+    },
+    "viewed_at": {
+      "type": "string",
+      "description": "First view timestamp"
+    },
+    "accepted_at": {
+      "type": "string",
+      "description": "Acceptance timestamp"
+    },
+    "rejected_at": {
+      "type": "string",
+      "description": "Rejection timestamp"
+    },
+    "otp_hash": {
+      "type": "string",
+      "description": "SHA-256 hash of the OTP (never store plain text)"
+    },
+    "otp_expires_at": {
+      "type": "string",
+      "description": "OTP expiry datetime"
+    },
+    "otp_attempts": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of OTP verification attempts"
+    },
+    "otp_last_sent_at": {
+      "type": "string",
+      "description": "Last OTP send datetime (for cooldown)"
+    },
+    "verification_details": {
+      "type": "string",
+      "description": "JSON: {method, verified_email, verified_at, ip, user_agent, otp_success, otp_attempts}"
+    },
+    "audit_log": {
+      "type": "string",
+      "description": "JSON array of {action, timestamp, actor, details}"
     }
   },
   "required": [

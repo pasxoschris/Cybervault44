@@ -12,6 +12,15 @@ function generateRef() {
   return `CYV-SPOT-${date}-${seq}`;
 }
 
+function generatePublicToken() {
+  // Use crypto.randomUUID if available, else fallback to random hex
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return Array.from(crypto.getRandomValues(new Uint8Array(16)))
+    .map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 const EMPTY_CUSTOMER = { store_name: '', company_legal_name: '', vat_number: '', address: '', contact_person: '', email: '', phone: '', notes: '' };
 
 // Sort items within a category: by display_order (nulls last), then by name
@@ -94,9 +103,21 @@ export default function OfferForm({ editOffer, onSaved }) {
     setSaving(true);
     const validityDays = settings.offer_validity_days || 30;
     const expiresAt = new Date(Date.now() + validityDays * 86400000).toISOString().split('T')[0];
+    const now = new Date().toISOString();
+    const refNum = editOffer?.reference_number || generateRef();
+    const token = editOffer?.public_token || generatePublicToken();
+
+    // Build/update audit log
+    let auditLog = [];
+    try { auditLog = JSON.parse(editOffer?.audit_log || '[]'); } catch {}
+    if (!editOffer) {
+      auditLog.push({ action: 'created', timestamp: now, actor: 'admin', details: { reference_number: refNum } });
+    }
+
     const data = {
       ...customer,
-      reference_number: editOffer?.reference_number || generateRef(),
+      reference_number: refNum,
+      public_token: token,
       status,
       items: JSON.stringify(lines),
       subtotal_before_discount: subtotalBefore,
@@ -106,6 +127,7 @@ export default function OfferForm({ editOffer, onSaved }) {
       vat_amount: vatAmount,
       final_total: finalTotal,
       expires_at: expiresAt,
+      audit_log: JSON.stringify(auditLog),
     };
     let saved;
     if (editOffer) {

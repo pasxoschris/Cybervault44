@@ -32,6 +32,7 @@ import StoreDetails from './pages/stores/StoreDetails';
 import StoreNew from './pages/stores/StoreNew';
 import StoreEdit from './pages/stores/StoreEdit';
 import ResellerConsole from './pages/ResellerConsole';
+import PublicOfferPage from './pages/PublicOfferPage';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -88,6 +89,7 @@ const AuthenticatedApp = () => {
       <Route path="/stores/:id" element={<StoreDetails />} />
       <Route path="/stores/:id/edit" element={<StoreEdit />} />
       <Route path="/reseller-console" element={<ResellerConsole />} />
+      <Route path="/offers/:publicToken" element={<PublicOfferPage />} />
       {/* Placeholder lessons for all other roles */}
       <Route path="/tutorial/maitre-service/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/maitre-mode/*" element={<PlaceholderLesson />} />
