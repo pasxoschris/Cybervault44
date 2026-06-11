@@ -1,19 +1,19 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 import { PDFDocument, rgb, StandardFonts } from 'npm:pdf-lib@1.17.1';
+import fontkit from 'npm:@pdf-lib/fontkit@1.1.1';
 
 // Helper: generate PDF bytes from offer data
 async function buildOfferPdf(offer, customer, lines, totals, settings) {
   const pdfDoc = await PDFDocument.create();
+  pdfDoc.registerFontkit(fontkit);
 
-  // Embed a font - use Helvetica (Latin only) for labels, and handle Greek via unicode fallback
-  // For Greek support, fetch Noto Sans from CDN
+  // Fetch Noto Sans from CDN for Greek support
   let regularFont, boldFont;
   try {
     const [regBytes, boldBytes] = await Promise.all([
       fetch('https://cdn.jsdelivr.net/gh/notofonts/notofonts.github.io/fonts/NotoSans/hinted/ttf/NotoSans-Regular.ttf').then(r => r.arrayBuffer()),
       fetch('https://cdn.jsdelivr.net/gh/notofonts/notofonts.github.io/fonts/NotoSans/hinted/ttf/NotoSans-Bold.ttf').then(r => r.arrayBuffer()),
     ]);
-    await pdfDoc.registerFontkit((await import('npm:@pdf-lib/fontkit@1.1.1')).default);
     regularFont = await pdfDoc.embedFont(regBytes);
     boldFont = await pdfDoc.embedFont(boldBytes);
   } catch {
