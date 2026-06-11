@@ -6,7 +6,7 @@ Deno.serve(async (req) => {
   if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = await req.json();
-  const { to, cc, subject, html_body, offer_id } = body;
+  const { to, cc, subject, html_body, offer_id, pdf_base64, pdf_filename } = body;
 
   if (!to || !subject || !html_body) {
     return Response.json({ error: 'Missing required fields: to, subject, html_body' }, { status: 400 });
@@ -15,18 +15,25 @@ Deno.serve(async (req) => {
   const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 
   const sendViaResend = async (recipient) => {
+    const payload = {
+      from: 'CyberVault <offers@cybervault.gr>',
+      to: [recipient],
+      subject,
+      html: html_body,
+    };
+    if (pdf_base64 && pdf_filename) {
+      payload.attachments = [{
+        filename: pdf_filename,
+        content: pdf_base64,
+      }];
+    }
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        from: 'CyberVault <offers@cybervault.gr>',
-        to: [recipient],
-        subject,
-        html: html_body,
-      }),
+      body: JSON.stringify(payload),
     });
     if (!res.ok) {
       const err = await res.json();
