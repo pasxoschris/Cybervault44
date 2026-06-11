@@ -152,6 +152,8 @@ export default function OfferPreviewModal({ customer, lines, totals, settings, r
         <EmailModal
           offer={savedOffer}
           customer={customer}
+          lines={lines}
+          totals={totals}
           defaultSettings={settings}
           onClose={() => setShowEmail(false)}
         />
