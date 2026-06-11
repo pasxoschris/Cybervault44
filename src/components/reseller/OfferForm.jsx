@@ -35,10 +35,11 @@ export default function OfferForm({ editOffer, onSaved }) {
       setPricingItems(items);
       setCategories(cats.filter(c => c.is_active));
       if (settingsList[0]) setSettings(settingsList[0]);
-      // Open all categories by default
+      // Only first category open by default
       const openState = {};
-      cats.forEach(c => { openState[c.id] = true; });
-      openState['__uncategorized__'] = true;
+      const activeCats = cats.filter(c => c.is_active);
+      activeCats.forEach((c, idx) => { openState[c.id] = idx === 0; });
+      openState['__uncategorized__'] = false;
       setOpenCategories(openState);
     });
     if (editOffer) {
