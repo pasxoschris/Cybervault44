@@ -106,7 +106,7 @@ async function buildOfferPdf(offer, customer, lines, totals, settings) {
     y -= 16;
   });
 
-  y -= 40;
+  y -= 20;
 
   // Totals
   const t = totals || {};
