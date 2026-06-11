@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Plus, Edit, Trash2, Save, X, ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-react';
 
-const EMPTY = { name: '', description: '', category_id: '', unit_price: 0, vat_rate: 24, default_discount_percentage: 0, is_active: true };
+const EMPTY = { name: '', description: '', category_id: '', unit_price: 0, vat_rate: 24, default_discount_percentage: 0, display_order: 0, is_active: true };
 
 export default function PricingTable() {
   const [items, setItems] = useState([]);
@@ -13,6 +13,8 @@ export default function PricingTable() {
   const [saving, setSaving] = useState(false);
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState('asc');
+  const [quickEditId, setQuickEditId] = useState(null);
+  const [quickEditVal, setQuickEditVal] = useState('');
 
   const handleSort = (col) => {
     if (sortCol === col) {
@@ -52,7 +54,7 @@ export default function PricingTable() {
 
   useEffect(() => { load(); }, []);
 
-  const startEdit = (item) => { setEditing(item.id); setForm({ ...item }); };
+  const startEdit = (item) => { setEditing(item.id); setForm({ ...item, display_order: item.display_order ?? 0 }); };
   const startNew = () => {
     setEditing('new');
     setForm({ ...EMPTY, category_id: categories[0]?.id || '' });
@@ -81,6 +83,18 @@ export default function PricingTable() {
     if (!window.confirm('Διαγραφή;')) return;
     await base44.entities.ResellerPricingItem.delete(id);
     setItems(p => p.filter(x => x.id !== id));
+  };
+
+  const startQuickEdit = (item) => {
+    setQuickEditId(item.id);
+    setQuickEditVal(String(item.display_order ?? 0));
+  };
+
+  const saveQuickEdit = async (id) => {
+    const val = parseInt(quickEditVal) || 0;
+    const updated = await base44.entities.ResellerPricingItem.update(id, { display_order: val });
+    setItems(p => p.map(x => x.id === id ? updated : x));
+    setQuickEditId(null);
   };
 
   const inputCls = "bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1.5 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 w-full";
@@ -112,6 +126,7 @@ export default function PricingTable() {
             <div><label className="text-white/40 text-xs block mb-1">Τιμή (€)</label><input type="number" min={0} step={0.01} value={form.unit_price} onChange={e => setForm(f => ({ ...f, unit_price: parseFloat(e.target.value) || 0 }))} className={inputCls} /></div>
             <div><label className="text-white/40 text-xs block mb-1">ΦΠΑ %</label><input type="number" min={0} max={100} value={form.vat_rate} onChange={e => setForm(f => ({ ...f, vat_rate: parseFloat(e.target.value) || 24 }))} className={inputCls} /></div>
             <div><label className="text-white/40 text-xs block mb-1">Έκπτωση % (προεπιλογή)</label><input type="number" min={0} max={100} step={0.5} value={form.default_discount_percentage || 0} onChange={e => setForm(f => ({ ...f, default_discount_percentage: parseFloat(e.target.value) || 0 }))} className={inputCls} /></div>
+            <div><label className="text-white/40 text-xs block mb-1">Σειρά Εμφάνισης</label><input type="number" min={0} value={form.display_order ?? 0} onChange={e => setForm(f => ({ ...f, display_order: parseInt(e.target.value) || 0 }))} className={inputCls} /></div>
           </div>
           <div className="flex gap-3 mt-4">
             <button onClick={save} disabled={saving}
@@ -129,7 +144,17 @@ export default function PricingTable() {
         <table className="w-full text-sm" style={{ fontFamily: 'Inter,sans-serif' }}>
           <thead>
             <tr className="bg-[#131840] border-b border-[#2A3580]">
-              {[['name', 'Όνομα'], ['description', 'Περιγραφή'], ['category_id', 'Κατηγορία'], ['unit_price', 'Τιμή'], ['vat_rate', 'ΦΠΑ %'], ['default_discount_percentage', 'Έκπτωση %'], ['is_active', 'Ενεργό'], [null, '']].map(([col, h]) => (
+              {[
+                ['name', 'Όνομα'],
+                ['description', 'Περιγραφή'],
+                ['category_id', 'Κατηγορία'],
+                ['unit_price', 'Τιμή'],
+                ['vat_rate', 'ΦΠΑ %'],
+                ['default_discount_percentage', 'Έκπτωση %'],
+                ['display_order', 'Σειρά'],
+                ['is_active', 'Ενεργό'],
+                [null, '']
+              ].map(([col, h]) => (
                 <th key={h} className="text-left px-3 py-3 text-white/40 text-xs font-semibold uppercase tracking-wide whitespace-nowrap">
                   {col ? (
                     <button onClick={() => handleSort(col)} className="flex items-center gap-0.5 hover:text-[#00CFFF] transition-colors">
@@ -149,6 +174,26 @@ export default function PricingTable() {
                 <td className="px-3 py-3 font-mono text-[#00CFFF] whitespace-nowrap">€{Number(item.unit_price).toFixed(2)}</td>
                 <td className="px-3 py-3 text-white/60">{item.vat_rate}%</td>
                 <td className="px-3 py-3 text-white/60">{item.default_discount_percentage || 0}%</td>
+                <td className="px-3 py-3">
+                  {quickEditId === item.id ? (
+                    <div className="flex items-center gap-1">
+                      <input
+                        type="number" value={quickEditVal}
+                        onChange={e => setQuickEditVal(e.target.value)}
+                        onKeyDown={e => { if (e.key === 'Enter') saveQuickEdit(item.id); if (e.key === 'Escape') setQuickEditId(null); }}
+                        autoFocus
+                        className="bg-[#0E1235] border border-[#00CFFF]/40 rounded px-1.5 py-0.5 text-white text-xs w-14 focus:outline-none"
+                      />
+                      <button onClick={() => saveQuickEdit(item.id)} className="text-[#00CFFF] hover:text-white transition-colors"><Save size={11} /></button>
+                      <button onClick={() => setQuickEditId(null)} className="text-white/30 hover:text-white transition-colors"><X size={11} /></button>
+                    </div>
+                  ) : (
+                    <button onClick={() => startQuickEdit(item)}
+                      className="font-mono text-white/60 hover:text-[#00CFFF] transition-colors text-xs px-1.5 py-0.5 rounded hover:bg-[#00CFFF]/10 border border-transparent hover:border-[#00CFFF]/20">
+                      {item.display_order ?? 0}
+                    </button>
+                  )}
+                </td>
                 <td className="px-3 py-3">
                   <button onClick={() => toggle(item)} className={`px-2 py-0.5 rounded-full text-xs font-medium border ${item.is_active ? 'bg-green-100 text-green-700 border-green-200' : 'bg-gray-100 text-gray-500 border-gray-200'}`}>
                     {item.is_active ? 'Ναι' : 'Όχι'}

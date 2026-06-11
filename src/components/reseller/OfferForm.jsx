@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Plus, Trash2, Save, Eye, Mail, RotateCcw, Search, ChevronDown, ChevronRight } from 'lucide-react';
+import { Plus, Trash2, Save, Eye, Mail, RotateCcw, Search, ChevronDown, ChevronRight, GripVertical } from 'lucide-react';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import EmailModal from './EmailModal';
 import OfferPreviewModal from './OfferPreviewModal';
 
@@ -12,6 +13,14 @@ function generateRef() {
 }
 
 const EMPTY_CUSTOMER = { store_name: '', company_legal_name: '', vat_number: '', address: '', contact_person: '', email: '', phone: '', notes: '' };
+
+// Sort items within a category: by display_order (nulls last), then by name
+const sortItems = (items) => [...items].sort((a, b) => {
+  const ao = a.display_order == null ? 99999 : a.display_order;
+  const bo = b.display_order == null ? 99999 : b.display_order;
+  if (ao !== bo) return ao - bo;
+  return (a.name || '').localeCompare(b.name || '');
+});
 
 export default function OfferForm({ editOffer, onSaved }) {
   const [customer, setCustomer] = useState(EMPTY_CUSTOMER);
@@ -35,7 +44,6 @@ export default function OfferForm({ editOffer, onSaved }) {
       setPricingItems(items);
       setCategories(cats.filter(c => c.is_active));
       if (settingsList[0]) setSettings(settingsList[0]);
-      // Only first category open by default
       const openState = {};
       const activeCats = cats.filter(c => c.is_active);
       activeCats.forEach((c, idx) => { openState[c.id] = idx === 0; });
@@ -116,19 +124,53 @@ export default function OfferForm({ editOffer, onSaved }) {
     setSavedOffer(null);
   };
 
+  // Drag-and-drop handler: reorder items within the same category and persist display_order
+  const handleDragEnd = async (result) => {
+    if (!result.destination) return;
+    const catId = result.source.droppableId;
+    if (catId !== result.destination.droppableId) return;
+
+    // Get current items for this category, sorted
+    const catItems = sortItems(pricingItems.filter(i =>
+      catId === '__uncategorized__'
+        ? (!i.category_id || !categories.find(c => c.id === i.category_id))
+        : i.category_id === catId
+    ));
+
+    const reordered = [...catItems];
+    const [moved] = reordered.splice(result.source.index, 1);
+    reordered.splice(result.destination.index, 0, moved);
+
+    // Assign new display_order values
+    const updates = reordered.map((item, idx) => ({ id: item.id, display_order: idx * 10 }));
+
+    // Optimistic update
+    setPricingItems(prev => prev.map(item => {
+      const upd = updates.find(u => u.id === item.id);
+      return upd ? { ...item, display_order: upd.display_order } : item;
+    }));
+
+    // Persist to backend
+    await Promise.all(updates.map(u =>
+      base44.entities.ResellerPricingItem.update(u.id, { display_order: u.display_order })
+    ));
+  };
+
   const inputCls = "w-full bg-[#0E1235] border border-[#2A3580] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20";
 
-  // Filter + group items
+  // Filter items
   const q = search.trim().toLowerCase();
-  const filteredItems = q ? pricingItems.filter(i => i.name.toLowerCase().includes(q) || (i.description || '').toLowerCase().includes(q)) : pricingItems;
+  const filteredItems = q
+    ? pricingItems.filter(i => i.name.toLowerCase().includes(q) || (i.description || '').toLowerCase().includes(q))
+    : pricingItems;
 
-  // Build grouped structure: ordered categories first, then uncategorized
+  // Build grouped structure: ordered categories, sorted items within each
   const grouped = categories.map(cat => ({
     cat,
-    items: filteredItems.filter(i => i.category_id === cat.id),
+    items: sortItems(filteredItems.filter(i => i.category_id === cat.id)),
   })).filter(g => g.items.length > 0);
 
-  const uncategorized = filteredItems.filter(i => !i.category_id || !categories.find(c => c.id === i.category_id));
+  const uncategorized = sortItems(filteredItems.filter(i => !i.category_id || !categories.find(c => c.id === i.category_id)));
 
   return (
     <div className="space-y-6">
@@ -154,7 +196,7 @@ export default function OfferForm({ editOffer, onSaved }) {
         </div>
       </div>
 
-      {/* Item selector — categorized */}
+      {/* Item selector — categorized with DnD */}
       <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-orbitron text-sm text-[#00CFFF] tracking-wider">ΕΠΙΛΟΓΗ ΕΞΟΠΛΙΣΜΟΥ / ΥΠΗΡΕΣΙΩΝ</h3>
@@ -177,54 +219,79 @@ export default function OfferForm({ editOffer, onSaved }) {
               />
             </div>
 
-            {/* Grouped sections */}
             {grouped.length === 0 && uncategorized.length === 0 && (
               <p className="text-white/30 text-sm text-center py-6">Δεν βρέθηκαν αποτελέσματα.</p>
             )}
 
-            {grouped.map(({ cat, items }) => (
-              <div key={cat.id} className="border border-[#2A3580] rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleCategory(cat.id)}
-                  className="w-full flex items-center justify-between px-4 py-2.5 bg-[#0E1235] hover:bg-[#131840] transition-colors"
-                >
-                  <div className="flex items-center gap-2">
-                    {openCategories[cat.id] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
-                    <span className="font-orbitron text-xs text-white tracking-wide">{cat.name}</span>
-                    <span className="text-xs text-white/30 font-mono">({items.length})</span>
-                  </div>
-                </button>
-                {openCategories[cat.id] && (
-                  <div className="flex flex-col p-3 gap-1.5 bg-[#0a0d28]/40">
-                    {items.map(item => (
-                      <ItemCard key={item.id} item={item} onAdd={addLine} fmt={fmt} />
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+            <DragDropContext onDragEnd={handleDragEnd}>
+              {grouped.map(({ cat, items }) => (
+                <div key={cat.id} className="border border-[#2A3580] rounded-xl overflow-hidden">
+                  <button
+                    onClick={() => toggleCategory(cat.id)}
+                    className="w-full flex items-center justify-between px-4 py-2.5 bg-[#0E1235] hover:bg-[#131840] transition-colors"
+                  >
+                    <div className="flex items-center gap-2">
+                      {openCategories[cat.id] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
+                      <span className="font-orbitron text-xs text-white tracking-wide">{cat.name}</span>
+                      <span className="text-xs text-white/30 font-mono">({items.length})</span>
+                    </div>
+                  </button>
+                  {openCategories[cat.id] && (
+                    <Droppable droppableId={cat.id} isDropDisabled={!!q}>
+                      {(provided) => (
+                        <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col p-3 gap-1.5 bg-[#0a0d28]/40">
+                          {items.map((item, index) => (
+                            <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={!!q}>
+                              {(drag, snapshot) => (
+                                <div ref={drag.innerRef} {...drag.draggableProps}
+                                  className={`${snapshot.isDragging ? 'opacity-80 shadow-lg shadow-[#00CFFF]/10' : ''}`}>
+                                  <ItemCard item={item} onAdd={addLine} fmt={fmt} dragHandleProps={drag.dragHandleProps} />
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  )}
+                </div>
+              ))}
 
-            {uncategorized.length > 0 && (
-              <div className="border border-[#2A3580] rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleCategory('__uncategorized__')}
-                  className="w-full flex items-center justify-between px-4 py-2.5 bg-[#0E1235] hover:bg-[#131840] transition-colors"
-                >
-                  <div className="flex items-center gap-2">
-                    {openCategories['__uncategorized__'] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
-                    <span className="font-orbitron text-xs text-white/60 tracking-wide">Χωρίς κατηγορία</span>
-                    <span className="text-xs text-white/30 font-mono">({uncategorized.length})</span>
-                  </div>
-                </button>
-                {openCategories['__uncategorized__'] && (
-                  <div className="flex flex-col p-3 gap-1.5 bg-[#0a0d28]/40">
-                    {uncategorized.map(item => (
-                      <ItemCard key={item.id} item={item} onAdd={addLine} fmt={fmt} />
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
+              {uncategorized.length > 0 && (
+                <div className="border border-[#2A3580] rounded-xl overflow-hidden">
+                  <button
+                    onClick={() => toggleCategory('__uncategorized__')}
+                    className="w-full flex items-center justify-between px-4 py-2.5 bg-[#0E1235] hover:bg-[#131840] transition-colors"
+                  >
+                    <div className="flex items-center gap-2">
+                      {openCategories['__uncategorized__'] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
+                      <span className="font-orbitron text-xs text-white/60 tracking-wide">Χωρίς κατηγορία</span>
+                      <span className="text-xs text-white/30 font-mono">({uncategorized.length})</span>
+                    </div>
+                  </button>
+                  {openCategories['__uncategorized__'] && (
+                    <Droppable droppableId="__uncategorized__" isDropDisabled={!!q}>
+                      {(provided) => (
+                        <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col p-3 gap-1.5 bg-[#0a0d28]/40">
+                          {uncategorized.map((item, index) => (
+                            <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={!!q}>
+                              {(drag, snapshot) => (
+                                <div ref={drag.innerRef} {...drag.draggableProps}
+                                  className={`${snapshot.isDragging ? 'opacity-80 shadow-lg shadow-[#00CFFF]/10' : ''}`}>
+                                  <ItemCard item={item} onAdd={addLine} fmt={fmt} dragHandleProps={drag.dragHandleProps} />
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  )}
+                </div>
+              )}
+            </DragDropContext>
           </div>
         )}
       </div>
@@ -323,20 +390,26 @@ export default function OfferForm({ editOffer, onSaved }) {
   );
 }
 
-function ItemCard({ item, onAdd, fmt }) {
+function ItemCard({ item, onAdd, fmt, dragHandleProps }) {
   return (
-    <button onClick={() => onAdd(item)}
-      className="w-full flex items-center justify-between px-4 py-3 bg-[#0E1235] border border-[#2A3580] rounded-lg hover:border-[#00CFFF]/40 hover:bg-[#00CFFF]/5 transition-all text-left group">
-      <div className="min-w-0 flex-1">
-        <div className="text-white text-sm group-hover:text-[#00CFFF]">{item.name}</div>
-        {item.description && <div className="text-white/30 text-xs mt-0.5">{item.description}</div>}
+    <div className="w-full flex items-center bg-[#0E1235] border border-[#2A3580] rounded-lg hover:border-[#00CFFF]/40 hover:bg-[#00CFFF]/5 transition-all group">
+      {/* Drag handle */}
+      <div {...dragHandleProps} className="flex-shrink-0 px-2 py-3 cursor-grab active:cursor-grabbing text-white/20 hover:text-white/50 transition-colors">
+        <GripVertical size={14} />
       </div>
-      <div className="flex items-center gap-3 ml-4 flex-shrink-0">
-        <span className="text-[#00CFFF] font-mono text-sm">€{fmt(item.unit_price)}</span>
-        <div className="w-6 h-6 flex items-center justify-center rounded border border-[#2A3580] group-hover:border-[#00CFFF]/60 group-hover:bg-[#00CFFF]/10 transition-all">
-          <Plus size={13} className="text-white/40 group-hover:text-[#00CFFF]" />
+      {/* Clickable area */}
+      <button onClick={() => onAdd(item)} className="flex items-center justify-between flex-1 pr-4 py-3 text-left min-w-0">
+        <div className="min-w-0 flex-1">
+          <div className="text-white text-sm group-hover:text-[#00CFFF]">{item.name}</div>
+          {item.description && <div className="text-white/30 text-xs mt-0.5">{item.description}</div>}
         </div>
-      </div>
-    </button>
+        <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+          <span className="text-[#00CFFF] font-mono text-sm">€{fmt(item.unit_price)}</span>
+          <div className="w-6 h-6 flex items-center justify-center rounded border border-[#2A3580] group-hover:border-[#00CFFF]/60 group-hover:bg-[#00CFFF]/10 transition-all">
+            <Plus size={13} className="text-white/40 group-hover:text-[#00CFFF]" />
+          </div>
+        </div>
+      </button>
+    </div>
   );
 }
