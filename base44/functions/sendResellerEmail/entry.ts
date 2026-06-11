@@ -163,9 +163,12 @@ async function buildOfferPdf(offer, customer, lines, totals, settings) {
   }
 
   const pdfBytes = await pdfDoc.save();
-  // Convert to base64
+  // Convert Uint8Array to base64 safely (chunked to avoid stack overflow)
+  const CHUNK = 8192;
   let binary = '';
-  for (let i = 0; i < pdfBytes.length; i++) binary += String.fromCharCode(pdfBytes[i]);
+  for (let i = 0; i < pdfBytes.length; i += CHUNK) {
+    binary += String.fromCharCode(...pdfBytes.subarray(i, i + CHUNK));
+  }
   return btoa(binary);
 }
 
