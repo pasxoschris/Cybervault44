@@ -383,6 +383,7 @@ export default function OfferForm({ editOffer, onSaved }) {
           customer={customer} lines={lines}
           totals={{ subtotalBefore, subtotalAfter, totalDiscount, vatRate, vatAmount, finalTotal }}
           settings={settings} refNumber={editOffer?.reference_number || savedOffer?.reference_number}
+          savedOffer={savedOffer}
           onClose={() => setShowPreview(false)}
         />
       )}

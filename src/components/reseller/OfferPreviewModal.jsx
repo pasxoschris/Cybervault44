@@ -1,4 +1,6 @@
-import { X } from 'lucide-react';
+import { X, Mail } from 'lucide-react';
+import { useState } from 'react';
+import EmailModal from './EmailModal';
 
 const CATEGORY_LABELS = {
   spotlight_pos: 'Spotlight POS', network_equipment: 'Εξοπλισμός Δικτύου',
@@ -8,7 +10,8 @@ const CATEGORY_LABELS = {
 
 const fmt = (n) => Number(n).toFixed(2);
 
-export default function OfferPreviewModal({ customer, lines, totals, settings, refNumber, onClose }) {
+export default function OfferPreviewModal({ customer, lines, totals, settings, refNumber, savedOffer, onClose }) {
+  const [showEmail, setShowEmail] = useState(false);
   const today = new Date().toLocaleDateString('el-GR');
   const validityDays = settings?.offer_validity_days || 30;
   const expiresDate = new Date(Date.now() + validityDays * 86400000).toLocaleDateString('el-GR');
@@ -23,6 +26,13 @@ export default function OfferPreviewModal({ customer, lines, totals, settings, r
         {/* Close */}
         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 z-10">
           <X size={20} />
+        </button>
+        {/* Email button */}
+        <button
+          onClick={() => setShowEmail(true)}
+          className="absolute top-4 right-12 flex items-center gap-1.5 px-3 py-1.5 bg-[#0E1235] text-white text-xs rounded-lg hover:bg-[#0099cc] transition-colors font-medium"
+        >
+          <Mail size={13} /> Αποστολή Email
         </button>
 
         <div className="p-8 space-y-6">
@@ -124,6 +134,14 @@ export default function OfferPreviewModal({ customer, lines, totals, settings, r
           )}
         </div>
       </div>
+      {showEmail && (
+        <EmailModal
+          offer={savedOffer}
+          customer={customer}
+          defaultSettings={settings}
+          onClose={() => setShowEmail(false)}
+        />
+      )}
     </div>
   );
 }
