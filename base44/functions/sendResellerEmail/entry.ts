@@ -124,7 +124,8 @@ async function buildOfferPdf(offer, customer, lines, totals, settings) {
   drawTotalRow('Καθαρό ποσό:', t.subtotalAfter || 0, false);
   drawTotalRow(`ΦΠΑ ${t.vatRate || 24}%:`, t.vatAmount || 0, false);
 
-  // Final total box
+  // Final total box — draw AFTER all rows, with extra gap
+  y -= 8;
   page.drawRectangle({ x: width - 170, y: y - 5, width: 150, height: 22, color: darkBlue });
   page.drawText('ΣΥΝΟΛΟ:', { x: width - 162, y: y + 3, size: 10, font: boldFont, color: white });
   const finalStr = fmt(t.finalTotal || 0);
