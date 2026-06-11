@@ -42,7 +42,7 @@ export default function ResellerConsole() {
             <h1 className="font-orbitron text-3xl font-bold text-white mb-1">
               RESELLER <span className="text-[#00CFFF]">CONSOLE</span>
             </h1>
-            <p className="font-rajdhani text-white/40 text-base">Spotlight POS · Διαχείριση Προσφορών & Τιμοκαταλόγου</p>
+            <p className="font-rajdhani text-white/40 text-base">Διαχείριση Προσφορών & Τιμοκαταλόγου</p>
           </div>
 
           {/* Tabs */}
