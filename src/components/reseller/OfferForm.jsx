@@ -195,7 +195,7 @@ export default function OfferForm({ editOffer, onSaved }) {
                   </div>
                 </button>
                 {openCategories[cat.id] && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-3 bg-[#0a0d28]/40">
+                  <div className="flex flex-col p-3 gap-1.5 bg-[#0a0d28]/40">
                     {items.map(item => (
                       <ItemCard key={item.id} item={item} onAdd={addLine} fmt={fmt} />
                     ))}
@@ -217,7 +217,7 @@ export default function OfferForm({ editOffer, onSaved }) {
                   </div>
                 </button>
                 {openCategories['__uncategorized__'] && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-3 bg-[#0a0d28]/40">
+                  <div className="flex flex-col p-3 gap-1.5 bg-[#0a0d28]/40">
                     {uncategorized.map(item => (
                       <ItemCard key={item.id} item={item} onAdd={addLine} fmt={fmt} />
                     ))}
@@ -326,14 +326,16 @@ export default function OfferForm({ editOffer, onSaved }) {
 function ItemCard({ item, onAdd, fmt }) {
   return (
     <button onClick={() => onAdd(item)}
-      className="flex items-center justify-between px-3 py-2.5 bg-[#0E1235] border border-[#2A3580] rounded-lg hover:border-[#00CFFF]/40 hover:bg-[#00CFFF]/5 transition-all text-left group">
+      className="w-full flex items-center justify-between px-4 py-3 bg-[#0E1235] border border-[#2A3580] rounded-lg hover:border-[#00CFFF]/40 hover:bg-[#00CFFF]/5 transition-all text-left group">
       <div className="min-w-0 flex-1">
-        <div className="text-white text-sm group-hover:text-[#00CFFF] truncate">{item.name}</div>
-        {item.description && <div className="text-white/30 text-xs truncate">{item.description}</div>}
+        <div className="text-white text-sm group-hover:text-[#00CFFF]">{item.name}</div>
+        {item.description && <div className="text-white/30 text-xs mt-0.5">{item.description}</div>}
       </div>
-      <div className="flex items-center gap-2 ml-2 flex-shrink-0">
-        <span className="text-[#00CFFF] text-xs font-mono">€{fmt(item.unit_price)}</span>
-        <Plus size={14} className="text-white/30 group-hover:text-[#00CFFF]" />
+      <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+        <span className="text-[#00CFFF] font-mono text-sm">€{fmt(item.unit_price)}</span>
+        <div className="w-6 h-6 flex items-center justify-center rounded border border-[#2A3580] group-hover:border-[#00CFFF]/60 group-hover:bg-[#00CFFF]/10 transition-all">
+          <Plus size={13} className="text-white/40 group-hover:text-[#00CFFF]" />
+        </div>
       </div>
     </button>
   );
