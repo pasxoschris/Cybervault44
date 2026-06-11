@@ -27,13 +27,7 @@ export default function OfferPreviewModal({ customer, lines, totals, settings, r
         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 z-10">
           <X size={20} />
         </button>
-        {/* Email button */}
-        <button
-          onClick={() => setShowEmail(true)}
-          className="absolute top-4 right-12 flex items-center gap-1.5 px-3 py-1.5 bg-[#0E1235] text-white text-xs rounded-lg hover:bg-[#0099cc] transition-colors font-medium"
-        >
-          <Mail size={13} /> Αποστολή Email
-        </button>
+
 
         <div className="p-8 space-y-6">
           {/* Header */}
@@ -132,6 +126,15 @@ export default function OfferPreviewModal({ customer, lines, totals, settings, r
               <p className="text-xs text-gray-400 whitespace-pre-wrap">{settings.default_terms}</p>
             </div>
           )}
+        </div>
+        {/* Bottom actions */}
+        <div className="border-t border-gray-100 px-8 py-4 flex justify-end">
+          <button
+            onClick={() => setShowEmail(true)}
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#0E1235] text-white text-sm rounded-xl hover:bg-[#0099cc] transition-colors font-medium"
+          >
+            <Mail size={15} /> Αποστολή Email
+          </button>
         </div>
       </div>
       {showEmail && (
