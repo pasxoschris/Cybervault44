@@ -75,6 +75,12 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
         </thead>
         <tbody>${itemRows}${totalsHtml}</tbody>
       </table>
+      ${offer?.public_token ? `
+      <div style="margin-top:24px;padding:24px;background:#f0f9ff;border:2px solid #0099cc;border-radius:8px;text-align:center;">
+        <p style="margin:0 0 8px;font-size:15px;color:#0E1235;font-weight:bold;">Αποδοχή ή Απόρριψη Προσφοράς</p>
+        <p style="margin:0 0 16px;font-size:13px;color:#666;">Κάντε κλικ στον παρακάτω σύνδεσμο για να δείτε και να αποδεχτείτε ηλεκτρονικά την προσφορά:</p>
+        <a href="${window.location.origin}/offers/${offer.public_token}" style="display:inline-block;background:#0099cc;color:#fff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:15px;">Προβολή &amp; Αποδοχή Προσφοράς</a>
+      </div>` : ''}
       ${defaultSettings?.default_terms ? `<div style="margin-top:20px;padding:16px;background:#f5f5f5;border-radius:6px;font-size:11px;color:#888;"><strong>Όροι & Προϋποθέσεις</strong><br>${defaultSettings.default_terms.replace(/\n/g, '<br>')}</div>` : ''}
       <div style="margin-top:20px;padding:16px;border-top:2px solid #0099cc;font-size:12px;color:#888;">
         ${defaultSettings?.public_phone ? `Τηλ: ${defaultSettings.public_phone} &nbsp;|&nbsp; ` : ''}
@@ -146,7 +152,7 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
               <input value={subject} onChange={e=>setSubject(e.target.value)} className={inputCls} />
             </div>
             <div className="text-xs text-white/30 bg-[#0E1235] border border-[#2A3580] rounded-lg px-3 py-2">
-              📄 Το email θα περιλαμβάνει αναλυτικά τη προσφορά με όλα τα είδη και τα σύνολα, καθώς και το PDF ως συνημμένο αρχείο.
+              📄 Το email θα περιλαμβάνει αναλυτικά τη προσφορά, {offer?.public_token ? 'κουμπί ηλεκτρονικής αποδοχής,' : ''} και το PDF ως συνημμένο αρχείο.
             </div>
             {error && <p className="text-red-400 text-xs">{error}</p>}
             <div className="flex gap-3 pt-1">
