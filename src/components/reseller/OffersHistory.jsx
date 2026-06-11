@@ -63,7 +63,11 @@ export default function OffersHistory({ onEdit }) {
             <tbody>
               {offers.map((o,i) => (
                 <tr key={o.id} className={`border-b border-[#2A3580]/50 hover:bg-[#131840]/70 transition-colors ${i%2===0?'bg-[#0E1235]':'bg-[#0f1339]/60'}`}>
-                  <td className="px-3 py-3 font-mono text-[#00CFFF] text-xs whitespace-nowrap">{o.reference_number||'—'}</td>
+                  <td className="px-3 py-3 whitespace-nowrap">
+                    <button onClick={() => onEdit(o)} className="font-mono text-[#00CFFF] text-xs hover:underline hover:text-white transition-colors cursor-pointer">
+                      {o.reference_number||'—'}
+                    </button>
+                  </td>
                   <td className="px-3 py-3 text-white/60 whitespace-nowrap text-xs">{fmtDate(o.created_date)}</td>
                   <td className="px-3 py-3 text-white/60 whitespace-nowrap text-xs">{fmtDate(o.expires_at)}</td>
                   <td className="px-3 py-3 text-white whitespace-nowrap max-w-[130px] truncate">{o.store_name||'—'}</td>
