@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Plus, Edit, Trash2, Save, X, ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-react';
 
@@ -15,6 +15,7 @@ export default function PricingTable() {
   const [sortDir, setSortDir] = useState('asc');
   const [quickEditId, setQuickEditId] = useState(null);
   const [quickEditVal, setQuickEditVal] = useState('');
+  const editRef = useRef(null);
 
   const handleSort = (col) => {
     if (sortCol === col) {
@@ -54,10 +55,15 @@ export default function PricingTable() {
 
   useEffect(() => { load(); }, []);
 
-  const startEdit = (item) => { setEditing(item.id); setForm({ ...item, display_order: item.display_order ?? 0 }); };
+  const startEdit = (item) => {
+    setEditing(item.id);
+    setForm({ ...item, display_order: item.display_order ?? 0 });
+    setTimeout(() => editRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  };
   const startNew = () => {
     setEditing('new');
     setForm({ ...EMPTY, category_id: categories[0]?.id || '' });
+    setTimeout(() => editRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   };
   const cancel = () => setEditing(null);
 
@@ -111,7 +117,7 @@ export default function PricingTable() {
       </div>
 
       {editing && (
-        <div className="bg-[#131840] border border-[#00CFFF]/30 rounded-2xl p-5">
+        <div ref={editRef} className="bg-[#131840] border border-[#00CFFF]/30 rounded-2xl p-5">
           <h4 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">{editing === 'new' ? 'Νέο Προϊόν' : 'Επεξεργασία'}</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             <div><label className="text-white/40 text-xs block mb-1">Όνομα</label><input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={inputCls} /></div>
