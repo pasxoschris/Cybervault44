@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { X, Send } from 'lucide-react';
-import { jsPDF } from 'jspdf';
 
 export default function EmailModal({ offer, customer, lines: linesProp, totals: totalsProp, defaultSettings, onClose }) {
   // If lines/totals not passed directly, derive them from the saved offer object
@@ -89,183 +88,22 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
   const [sent, setSent] = useState(false);
   const [error, setError] = useState('');
 
-  const buildPdfBase64 = async () => {
-    const fmt = (n) => Number(n).toFixed(2);
-    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-
-    // Load Noto Sans font (supports Greek) from Google Fonts CDN
-    const fontResp = await fetch('https://fonts.gstatic.com/s/notosans/v36/o-0IIpQlx3QUlC5A4PNr6DRAW.woff2');
-    const fontBuffer = await fontResp.arrayBuffer();
-    // Convert to base64
-    const fontBase64 = btoa(String.fromCharCode(...new Uint8Array(fontBuffer)));
-    doc.addFileToVFS('NotoSans.ttf', fontBase64);
-    doc.addFont('NotoSans.ttf', 'NotoSans', 'normal');
-
-    const fontRespBold = await fetch('https://fonts.gstatic.com/s/notosans/v36/o-0NIpQlx3QUlC5A4PNjXhFVatyBx2pqPIif.woff2');
-    const fontBufferBold = await fontRespBold.arrayBuffer();
-    const fontBase64Bold = btoa(String.fromCharCode(...new Uint8Array(fontBufferBold)));
-    doc.addFileToVFS('NotoSans-Bold.ttf', fontBase64Bold);
-    doc.addFont('NotoSans-Bold.ttf', 'NotoSans', 'bold');
-
-    const t = totals || {};
-    const ref = offer?.reference_number || '';
-    const today = new Date().toLocaleDateString('el-GR');
-    const validityDays = defaultSettings?.offer_validity_days || 30;
-    const expiresDate = new Date(Date.now() + validityDays * 86400000).toLocaleDateString('el-GR');
-
-    let y = 20;
-    const lm = 15;
-    const pw = 180;
-
-    // Header bar
-    doc.setFillColor(14, 18, 53);
-    doc.rect(0, 0, 210, 30, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(18);
-    doc.setFont('NotoSans', 'bold');
-    doc.text('CYBERVAULT', lm, 20);
-    if (defaultSettings?.company_name) {
-      doc.setFontSize(9);
-      doc.setFont('NotoSans', 'normal');
-      doc.setTextColor(180, 180, 180);
-      doc.text(defaultSettings.company_name, lm, 27);
-    }
-    doc.setTextColor(0, 153, 204);
-    doc.setFontSize(10);
-    doc.setFont('NotoSans', 'bold');
-    doc.text(ref, 195, 15, { align: 'right' });
-    doc.setTextColor(180, 180, 180);
-    doc.setFontSize(8);
-    doc.setFont('NotoSans', 'normal');
-    doc.text(`Ημ/νία: ${today}`, 195, 21, { align: 'right' });
-    doc.text(`Ισχύς έως: ${expiresDate}`, 195, 26, { align: 'right' });
-
-    y = 40;
-
-    // Customer info box
-    doc.setFillColor(245, 245, 250);
-    doc.rect(lm, y, pw, 28, 'F');
-    doc.setDrawColor(200, 200, 220);
-    doc.rect(lm, y, pw, 28, 'S');
-    doc.setTextColor(100, 100, 120);
-    doc.setFontSize(7);
-    doc.setFont('NotoSans', 'bold');
-    doc.text('ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ', lm + 3, y + 6);
-    doc.setFont('NotoSans', 'normal');
-    doc.setTextColor(50, 50, 70);
-    doc.setFontSize(9);
-    const cust = customer || {};
-    const col1 = [];
-    const col2 = [];
-    if (cust.company_legal_name) col1.push(`Επωνυμία: ${cust.company_legal_name}`);
-    if (cust.store_name) col1.push(`Κατάστημα: ${cust.store_name}`);
-    if (cust.vat_number) col1.push(`ΑΦΜ: ${cust.vat_number}`);
-    if (cust.address) col1.push(`Διεύθυνση: ${cust.address}`);
-    if (cust.contact_person) col2.push(`Υπεύθυνος: ${cust.contact_person}`);
-    if (cust.email) col2.push(`Email: ${cust.email}`);
-    if (cust.phone) col2.push(`Τηλ: ${cust.phone}`);
-    col1.forEach((line, i) => doc.text(line, lm + 3, y + 12 + i * 5));
-    col2.forEach((line, i) => doc.text(line, lm + pw / 2, y + 12 + i * 5));
-
-    y += 34;
-
-    // Table header
-    doc.setFillColor(14, 18, 53);
-    doc.rect(lm, y, pw, 8, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(8);
-    doc.setFont('NotoSans', 'bold');
-    doc.text('Περιγραφή', lm + 3, y + 5.5);
-    doc.text('Ποσ.', lm + 100, y + 5.5, { align: 'center' });
-    doc.text('Τιμή', lm + 126, y + 5.5, { align: 'right' });
-    doc.text('Έκπτ.', lm + 148, y + 5.5, { align: 'center' });
-    doc.text('Σύνολο', lm + pw, y + 5.5, { align: 'right' });
-    y += 8;
-
-    // Table rows
-    (lines || []).forEach((l, idx) => {
-      const sub = l.quantity * l.unit_price;
-      const total = sub * (1 - l.discount_pct / 100);
-      doc.setFillColor(idx % 2 === 0 ? 255 : 248, idx % 2 === 0 ? 255 : 248, idx % 2 === 0 ? 255 : 252);
-      doc.rect(lm, y, pw, 8, 'F');
-      doc.setDrawColor(230, 230, 240);
-      doc.line(lm, y + 8, lm + pw, y + 8);
-      doc.setTextColor(40, 40, 60);
-      doc.setFont('NotoSans', 'normal');
-      doc.setFontSize(8.5);
-      doc.text(l.name.substring(0, 45), lm + 3, y + 5.5);
-      doc.text(String(l.quantity), lm + 100, y + 5.5, { align: 'center' });
-      doc.text(`€${fmt(l.unit_price)}`, lm + 126, y + 5.5, { align: 'right' });
-      doc.text(l.discount_pct > 0 ? `${l.discount_pct}%` : '—', lm + 148, y + 5.5, { align: 'center' });
-      doc.setTextColor(0, 153, 204);
-      doc.setFont('NotoSans', 'bold');
-      doc.text(`€${fmt(total)}`, lm + pw, y + 5.5, { align: 'right' });
-      y += 8;
-      if (y > 250) { doc.addPage(); y = 20; }
-    });
-
-    // Totals
-    y += 4;
-    const addTotal = (label, value, bold, color) => {
-      doc.setFontSize(9);
-      doc.setFont('NotoSans', bold ? 'bold' : 'normal');
-      if (color) doc.setTextColor(...color); else doc.setTextColor(80, 80, 100);
-      doc.text(label, lm + pw - 55, y);
-      doc.text(`€${fmt(value)}`, lm + pw, y, { align: 'right' });
-      y += 6;
-    };
-    addTotal('Σύνολο πριν έκπτωση:', t.subtotalBefore || 0, false);
-    if ((t.totalDiscount || 0) > 0) addTotal('Έκπτωση:', -(t.totalDiscount || 0), false, [220, 60, 60]);
-    addTotal('Καθαρό ποσό:', t.subtotalAfter || 0, false);
-    addTotal(`ΦΠΑ ${t.vatRate || 24}%:`, t.vatAmount || 0, false);
-    // Final total box
-    doc.setFillColor(14, 18, 53);
-    doc.rect(lm + pw - 60, y - 1, 62, 10, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFont('NotoSans', 'bold');
-    doc.setFontSize(10);
-    doc.text('ΣΥΝΟΛΟ:', lm + pw - 57, y + 6);
-    doc.setTextColor(0, 207, 255);
-    doc.text(`€${fmt(t.finalTotal || 0)}`, lm + pw, y + 6, { align: 'right' });
-    y += 16;
-
-    // Terms
-    if (defaultSettings?.default_terms) {
-      if (y > 240) { doc.addPage(); y = 20; }
-      doc.setTextColor(120, 120, 140);
-      doc.setFontSize(7);
-      doc.setFont('NotoSans', 'bold');
-      doc.text('ΟΡΟΙ & ΠΡΟΫΠΟΘΕΣΕΙΣ', lm, y);
-      y += 4;
-      doc.setFont('NotoSans', 'normal');
-      const termLines = doc.splitTextToSize(defaultSettings.default_terms, pw);
-      doc.text(termLines, lm, y);
-    }
-
-    // Footer
-    doc.setFillColor(14, 18, 53);
-    doc.rect(0, 285, 210, 12, 'F');
-    doc.setTextColor(150, 150, 170);
-    doc.setFontSize(7.5);
-    doc.setFont('NotoSans', 'normal');
-    const footerParts = [];
-    if (defaultSettings?.public_phone) footerParts.push(`Τηλ: ${defaultSettings.public_phone}`);
-    if (defaultSettings?.public_email) footerParts.push(defaultSettings.public_email);
-    doc.text(footerParts.join('   |   '), 105, 292, { align: 'center' });
-
-    return doc.output('datauristring').split(',')[1];
-  };
-
   const handleSend = async () => {
     if (!to) { setError('Εισάγετε email παραλήπτη.'); return; }
     setSending(true);
     setError('');
     const htmlBody = buildHtmlBody();
-    const pdfBase64 = await buildPdfBase64();
-    const filename = offer?.reference_number ? `Προσφορά-${offer.reference_number}.pdf` : 'Προσφορά.pdf';
     const res = await base44.functions.invoke('sendResellerEmail', {
-      to, cc, subject, html_body: htmlBody, offer_id: offer?.id,
-      pdf_base64: pdfBase64, pdf_filename: filename
+      to, cc, subject,
+      html_body: htmlBody,
+      offer_id: offer?.id,
+      offer_data: {
+        offer,
+        customer,
+        lines,
+        totals,
+        settings: defaultSettings,
+      },
     });
     if (res.data?.success) {
       setSent(true);
