@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Plus, Edit, Trash2, Save, X, ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, ArrowUp, ArrowDown, ArrowUpDown, Search } from 'lucide-react';
 
 const EMPTY = { name: '', description: '', category_id: '', unit_price: 0, vat_rate: 24, default_discount_percentage: 0, display_order: 0, is_active: true };
 
@@ -15,6 +15,7 @@ export default function PricingTable() {
   const [sortDir, setSortDir] = useState('asc');
   const [quickEditId, setQuickEditId] = useState(null);
   const [quickEditVal, setQuickEditVal] = useState('');
+  const [search, setSearch] = useState('');
   const editRef = useRef(null);
 
   const handleSort = (col) => {
@@ -26,7 +27,16 @@ export default function PricingTable() {
     }
   };
 
-  const sortedItems = [...items].sort((a, b) => {
+  const filteredItems = items.filter(item => {
+    const q = search.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      (item.name || '').toLowerCase().includes(q) ||
+      (item.description || '').toLowerCase().includes(q)
+    );
+  });
+
+  const sortedItems = [...filteredItems].sort((a, b) => {
     if (!sortCol) return 0;
     let va = a[sortCol]; let vb = b[sortCol];
     if (typeof va === 'string') va = va.toLowerCase();
@@ -109,6 +119,16 @@ export default function PricingTable() {
 
   return (
     <div className="space-y-4">
+      {/* Search */}
+      <div className="relative">
+        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+        <input
+          value={search} onChange={e => setSearch(e.target.value)}
+          placeholder="Αναζήτηση προϊόντος ή υπηρεσίας..."
+          className="w-full bg-[#0E1235] border border-[#2A3580] rounded-xl pl-9 pr-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20"
+        />
+      </div>
+
       <div className="flex justify-end">
         <button onClick={startNew}
           className="flex items-center gap-2 px-4 py-2 bg-[#00CFFF] text-[#0E1235] rounded-xl text-sm font-bold hover:bg-[#00CFFF]/80 transition-colors">
