@@ -143,7 +143,7 @@ export default function PricingTable() {
           <tbody>
             {sortedItems.map((item, i) => (
               <tr key={item.id} className={`border-b border-[#2A3580]/50 hover:bg-[#131840]/70 transition-colors ${i % 2 === 0 ? 'bg-[#0E1235]' : 'bg-[#0f1339]/60'}`}>
-                <td className="px-3 py-3 text-white font-medium whitespace-nowrap">{item.name}</td>
+                <td className="px-3 py-3 text-white font-medium whitespace-nowrap cursor-pointer hover:text-[#00CFFF] transition-colors" onClick={() => startEdit(item)}>{item.name}</td>
                 <td className="px-3 py-3 text-white/50 max-w-[180px] truncate">{item.description || '—'}</td>
                 <td className="px-3 py-3 text-white/60 whitespace-nowrap">{getCategoryName(item.category_id)}</td>
                 <td className="px-3 py-3 font-mono text-[#00CFFF] whitespace-nowrap">€{Number(item.unit_price).toFixed(2)}</td>
