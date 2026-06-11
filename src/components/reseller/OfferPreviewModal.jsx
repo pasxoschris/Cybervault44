@@ -10,8 +10,18 @@ const CATEGORY_LABELS = {
 
 const fmt = (n) => Number(n).toFixed(2);
 
-export default function OfferPreviewModal({ customer, lines, totals, settings, refNumber, savedOffer, onClose }) {
+export default function OfferPreviewModal({ customer, lines, totals, settings, refNumber, savedOffer, onClose, onSaveBeforeEmail }) {
   const [showEmail, setShowEmail] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const handleEmailClick = async () => {
+    if (!savedOffer && onSaveBeforeEmail) {
+      setSaving(true);
+      await onSaveBeforeEmail();
+      setSaving(false);
+    }
+    setShowEmail(true);
+  };
   const today = new Date().toLocaleDateString('el-GR');
   const validityDays = settings?.offer_validity_days || 30;
   const expiresDate = new Date(Date.now() + validityDays * 86400000).toLocaleDateString('el-GR');
@@ -130,10 +140,11 @@ export default function OfferPreviewModal({ customer, lines, totals, settings, r
         {/* Bottom actions */}
         <div className="border-t border-gray-100 px-8 py-4 flex justify-end">
           <button
-            onClick={() => setShowEmail(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#0E1235] text-white text-sm rounded-xl hover:bg-[#0099cc] transition-colors font-medium"
+            onClick={handleEmailClick}
+            disabled={saving}
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#0E1235] text-white text-sm rounded-xl hover:bg-[#0099cc] transition-colors font-medium disabled:opacity-50"
           >
-            <Mail size={15} /> Αποστολή Email
+            <Mail size={15} /> {saving ? 'Αποθήκευση...' : 'Αποστολή Email'}
           </button>
         </div>
       </div>

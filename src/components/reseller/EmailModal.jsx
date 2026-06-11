@@ -3,10 +3,19 @@ import { base44 } from '@/api/base44Client';
 import { X, Send } from 'lucide-react';
 
 export default function EmailModal({ offer, customer, defaultSettings, onClose }) {
-  const [to, setTo] = useState(customer?.email || '');
+  const [to, setTo] = useState(customer?.email || offer?.email || '');
   const [cc, setCc] = useState('');
   const [subject, setSubject] = useState(defaultSettings?.default_email_subject || 'Προσφορά Spotlight POS – CyberVault');
-  const [body, setBody] = useState(defaultSettings?.default_email_body || `Αγαπητέ/ή,\n\nΣας αποστέλλουμε την προσφορά μας για το σύστημα Spotlight POS.\n\nΜε εκτίμηση,\nΗ ομάδα CyberVault`);
+
+  const buildDefaultBody = () => {
+    if (defaultSettings?.default_email_body) return defaultSettings.default_email_body;
+    const ref = offer?.reference_number ? `\nΑριθμός Προσφοράς: ${offer.reference_number}` : '';
+    const total = offer?.final_total ? `\nΣυνολικό Ποσό: €${Number(offer.final_total).toFixed(2)}` : '';
+    const expires = offer?.expires_at ? `\nΙσχύς έως: ${new Date(offer.expires_at).toLocaleDateString('el-GR')}` : '';
+    return `Αγαπητέ/ή ${customer?.contact_person || ''},\n\nΣας αποστέλλουμε την προσφορά μας για το σύστημα Spotlight POS.${ref}${total}${expires}\n\nΓια οποιαδήποτε απορία, είμαστε στη διάθεσή σας.\n\nΜε εκτίμηση,\nΗ ομάδα CyberVault`;
+  };
+
+  const [body, setBody] = useState(buildDefaultBody);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState('');
