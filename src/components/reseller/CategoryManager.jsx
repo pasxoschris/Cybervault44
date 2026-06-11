@@ -71,8 +71,8 @@ export default function CategoryManager() {
       {/* Inline form */}
       {editing && (
         <div className="bg-[#131840] border border-[#00CFFF]/30 rounded-2xl p-5">
-          <h4 className="font-orbitron text-xs text-[#00CFFF] mb-4 tracking-wider">
-            {editing === 'new' ? 'ΝΕΑ ΚΑΤΗΓΟΡΙΑ' : 'ΕΠΕΞΕΡΓΑΣΙΑ ΚΑΤΗΓΟΡΙΑΣ'}
+          <h4 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">
+            {editing === 'new' ? 'Νέα Κατηγορία' : 'Επεξεργασία Κατηγορίας'}
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="sm:col-span-2">

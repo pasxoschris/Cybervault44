@@ -42,7 +42,7 @@ export default function ResellerSettingsTab() {
     <div className="max-w-2xl space-y-6">
       {/* Company */}
       <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
-        <h3 className="font-orbitron text-sm text-[#00CFFF] mb-4 tracking-wider">ΣΤΟΙΧΕΙΑ ΕΤΑΙΡΕΙΑΣ</h3>
+        <h3 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">Στοιχεία Εταιρείας</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div><label className="text-white/40 text-xs block mb-1">Επωνυμία</label><input value={form.company_name} onChange={e=>set('company_name',e.target.value)} className={inputCls}/></div>
           <div><label className="text-white/40 text-xs block mb-1">ΑΦΜ</label><input value={form.company_vat_number} onChange={e=>set('company_vat_number',e.target.value)} className={inputCls}/></div>
@@ -54,7 +54,7 @@ export default function ResellerSettingsTab() {
 
       {/* Offer defaults */}
       <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
-        <h3 className="font-orbitron text-sm text-[#00CFFF] mb-4 tracking-wider">ΡΥΘΜΙΣΕΙΣ ΠΡΟΣΦΟΡΩΝ</h3>
+        <h3 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">Ρυθμίσεις Προσφορών</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div><label className="text-white/40 text-xs block mb-1">Ισχύς Προσφοράς (ημέρες)</label><input type="number" min={1} value={form.offer_validity_days} onChange={e=>set('offer_validity_days',parseInt(e.target.value)||30)} className={inputCls}/></div>
           <div><label className="text-white/40 text-xs block mb-1">Προεπιλεγμένο ΦΠΑ %</label><input type="number" min={0} max={100} value={form.default_vat_rate} onChange={e=>set('default_vat_rate',parseFloat(e.target.value)||24)} className={inputCls}/></div>
@@ -63,7 +63,7 @@ export default function ResellerSettingsTab() {
 
       {/* Email defaults */}
       <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
-        <h3 className="font-orbitron text-sm text-[#00CFFF] mb-4 tracking-wider">ΠΡΟΕΠΙΛΟΓΕΣ EMAIL</h3>
+        <h3 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">Προεπιλογές Email</h3>
         <div className="space-y-3">
           <div><label className="text-white/40 text-xs block mb-1">Θέμα Email</label><input value={form.default_email_subject} onChange={e=>set('default_email_subject',e.target.value)} className={inputCls}/></div>
           <div><label className="text-white/40 text-xs block mb-1">Σώμα Email</label><textarea value={form.default_email_body} onChange={e=>set('default_email_body',e.target.value)} rows={4} className={inputCls}/></div>
@@ -72,7 +72,7 @@ export default function ResellerSettingsTab() {
 
       {/* Terms */}
       <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
-        <h3 className="font-orbitron text-sm text-[#00CFFF] mb-4 tracking-wider">ΟΡΟΙ & ΠΡΟΫΠΟΘΕΣΕΙΣ</h3>
+        <h3 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">Όροι & Προϋποθέσεις</h3>
         <textarea value={form.default_terms} onChange={e=>set('default_terms',e.target.value)} rows={5} className={inputCls} placeholder="Εισάγετε τους προεπιλεγμένους όρους προσφοράς..."/>
       </div>
 

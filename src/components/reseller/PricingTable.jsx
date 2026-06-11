@@ -112,7 +112,7 @@ export default function PricingTable() {
 
       {editing && (
         <div className="bg-[#131840] border border-[#00CFFF]/30 rounded-2xl p-5">
-          <h4 className="font-orbitron text-xs text-[#00CFFF] mb-4 tracking-wider">{editing === 'new' ? 'ΝΕΟ ΠΡΟΪΟΝ' : 'ΕΠΕΞΕΡΓΑΣΙΑ'}</h4>
+          <h4 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">{editing === 'new' ? 'Νέο Προϊόν' : 'Επεξεργασία'}</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             <div><label className="text-white/40 text-xs block mb-1">Όνομα</label><input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={inputCls} /></div>
             <div><label className="text-white/40 text-xs block mb-1">Περιγραφή</label><input value={form.description || ''} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} className={inputCls} /></div>

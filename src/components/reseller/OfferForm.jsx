@@ -176,7 +176,7 @@ export default function OfferForm({ editOffer, onSaved }) {
     <div className="space-y-6">
       {/* Customer */}
       <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
-        <h3 className="font-orbitron text-sm text-[#00CFFF] mb-4 tracking-wider">ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ</h3>
+        <h3 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">Στοιχεία Πελάτη</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {[
             ['store_name', 'Κατάστημα', 'text'], ['company_legal_name', 'Επωνυμία', 'text'],
@@ -199,7 +199,7 @@ export default function OfferForm({ editOffer, onSaved }) {
       {/* Item selector — categorized with DnD */}
       <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-orbitron text-sm text-[#00CFFF] tracking-wider">ΕΠΙΛΟΓΗ ΕΞΟΠΛΙΣΜΟΥ / ΥΠΗΡΕΣΙΩΝ</h3>
+          <h3 className="text-xs font-semibold text-[#00CFFF] uppercase tracking-widest">Επιλογή Εξοπλισμού / Υπηρεσιών</h3>
           {lines.length > 0 && (
             <span className="text-xs text-white/40" style={{ fontFamily: 'Inter,sans-serif' }}>{lines.length} επιλεγμένα</span>
           )}
@@ -232,7 +232,7 @@ export default function OfferForm({ editOffer, onSaved }) {
                   >
                     <div className="flex items-center gap-2">
                       {openCategories[cat.id] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
-                      <span className="font-orbitron text-xs text-white tracking-wide">{cat.name}</span>
+                      <span className="text-xs font-medium text-white">{cat.name}</span>
                       <span className="text-xs text-white/30 font-mono">({items.length})</span>
                     </div>
                   </button>
@@ -266,7 +266,7 @@ export default function OfferForm({ editOffer, onSaved }) {
                   >
                     <div className="flex items-center gap-2">
                       {openCategories['__uncategorized__'] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
-                      <span className="font-orbitron text-xs text-white/60 tracking-wide">Χωρίς κατηγορία</span>
+                      <span className="text-xs font-medium text-white/60">Χωρίς κατηγορία</span>
                       <span className="text-xs text-white/30 font-mono">({uncategorized.length})</span>
                     </div>
                   </button>
@@ -299,7 +299,7 @@ export default function OfferForm({ editOffer, onSaved }) {
       {/* Lines table */}
       {lines.length > 0 && (
         <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
-          <h3 className="font-orbitron text-sm text-[#00CFFF] mb-4 tracking-wider">ΓΡΑΜΜΕΣ ΠΡΟΣΦΟΡΑΣ</h3>
+          <h3 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">Γραμμές Προσφοράς</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>

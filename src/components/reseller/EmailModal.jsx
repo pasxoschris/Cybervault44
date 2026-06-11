@@ -33,7 +33,7 @@ export default function EmailModal({ offer, customer, defaultSettings, onClose }
     <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
       <div className="bg-[#131840] border border-[#2A3580] rounded-2xl w-full max-w-lg">
         <div className="flex items-center justify-between p-5 border-b border-[#2A3580]">
-          <h3 className="font-orbitron text-white text-sm tracking-wider">ΑΠΟΣΤΟΛΗ EMAIL</h3>
+          <h3 className="text-white text-sm font-semibold">Αποστολή Email</h3>
           <button onClick={onClose} className="text-white/40 hover:text-white"><X size={18} /></button>
         </div>
         {sent ? (
@@ -41,9 +41,9 @@ export default function EmailModal({ offer, customer, defaultSettings, onClose }
             <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-3">
               <Send size={20} className="text-green-400" />
             </div>
-            <p className="font-orbitron text-white text-sm">Το email εστάλη!</p>
+            <p className="text-white text-sm font-semibold">Το email εστάλη!</p>
             <p className="text-white/40 text-xs mt-1">Στάλθηκε σε: {to}</p>
-            <button onClick={onClose} className="mt-4 px-6 py-2 bg-[#00CFFF] text-[#0E1235] rounded-xl font-bold text-sm">Κλείσιμο</button>
+            <button onClick={onClose} className="mt-4 px-6 py-2 bg-[#00CFFF] text-[#0E1235] rounded-xl font-semibold text-sm">Κλείσιμο</button>
           </div>
         ) : (
           <div className="p-5 space-y-3">

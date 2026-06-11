@@ -6,8 +6,8 @@ module.exports = {
   	extend: {
       fontFamily: {
         orbitron: ['Orbitron', 'monospace'],
-        rajdhani: ['Rajdhani', 'sans-serif'],
         'mono-cyber': ['"Share Tech Mono"', 'monospace'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
   		borderRadius: {
   			lg: 'var(--radius)',

@@ -42,17 +42,17 @@ export default function ResellerConsole() {
             <h1 className="font-orbitron text-3xl font-bold text-white mb-1">
               RESELLER <span className="text-[#00CFFF]">CONSOLE</span>
             </h1>
-            <p className="font-rajdhani text-white/40 text-base">Διαχείριση Προσφορών & Τιμοκαταλόγου</p>
+            <p className="text-white/40 text-sm">Διαχείριση Προσφορών & Τιμοκαταλόγου</p>
           </div>
 
           {/* Tabs */}
           <div className="flex flex-wrap gap-2 mb-8">
             {TABS.map(t => (
               <button key={t.key} onClick={() => { setTab(t.key); if (t.key === 'offer') setEditOffer(null); }}
-                className={`px-6 py-2 font-orbitron text-xs tracking-widest uppercase border transition-all ${
+                className={`px-5 py-2 text-sm font-medium border rounded-lg transition-all ${
                   tab === t.key
                     ? 'bg-[#00CFFF] text-[#0E1235] border-[#00CFFF]'
-                    : 'text-[#00CFFF] border-[#00CFFF]/30 hover:border-[#00CFFF]/60'
+                    : 'text-[#00CFFF] border-[#00CFFF]/30 hover:border-[#00CFFF]/60 hover:bg-[#00CFFF]/5'
                 }`}>
                 {t.label}
               </button>
