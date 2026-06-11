@@ -89,26 +89,24 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
   const [sent, setSent] = useState(false);
   const [error, setError] = useState('');
 
-  // Transliterate Greek to Latin for jsPDF (helvetica doesn't support Greek)
-  const gr2lat = (str) => {
-    if (!str) return '';
-    const map = {
-      'α':'a','β':'v','γ':'g','δ':'d','ε':'e','ζ':'z','η':'i','θ':'th','ι':'i','κ':'k',
-      'λ':'l','μ':'m','ν':'n','ξ':'x','ο':'o','π':'p','ρ':'r','σ':'s','τ':'t','υ':'y',
-      'φ':'f','χ':'ch','ψ':'ps','ω':'o','ς':'s',
-      'Α':'A','Β':'V','Γ':'G','Δ':'D','Ε':'E','Ζ':'Z','Η':'I','Θ':'TH','Ι':'I','Κ':'K',
-      'Λ':'L','Μ':'M','Ν':'N','Ξ':'X','Ο':'O','Π':'P','Ρ':'R','Σ':'S','Τ':'T','Υ':'Y',
-      'Φ':'F','Χ':'CH','Ψ':'PS','Ω':'O',
-      'ά':'a','έ':'e','ή':'i','ί':'i','ό':'o','ύ':'y','ώ':'o',
-      'Ά':'A','Έ':'E','Ή':'I','Ί':'I','Ό':'O','Ύ':'Y','Ώ':'O',
-      'ϊ':'i','ϋ':'y','ΐ':'i','ΰ':'y','Ϊ':'I','Ϋ':'Y',
-    };
-    return str.split('').map(c => map[c] !== undefined ? map[c] : c).join('');
-  };
-
-  const buildPdfBase64 = () => {
+  const buildPdfBase64 = async () => {
     const fmt = (n) => Number(n).toFixed(2);
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+    // Load Noto Sans font (supports Greek) from Google Fonts CDN
+    const fontResp = await fetch('https://fonts.gstatic.com/s/notosans/v36/o-0IIpQlx3QUlC5A4PNr6DRAW.woff2');
+    const fontBuffer = await fontResp.arrayBuffer();
+    // Convert to base64
+    const fontBase64 = btoa(String.fromCharCode(...new Uint8Array(fontBuffer)));
+    doc.addFileToVFS('NotoSans.ttf', fontBase64);
+    doc.addFont('NotoSans.ttf', 'NotoSans', 'normal');
+
+    const fontRespBold = await fetch('https://fonts.gstatic.com/s/notosans/v36/o-0NIpQlx3QUlC5A4PNjXhFVatyBx2pqPIif.woff2');
+    const fontBufferBold = await fontRespBold.arrayBuffer();
+    const fontBase64Bold = btoa(String.fromCharCode(...new Uint8Array(fontBufferBold)));
+    doc.addFileToVFS('NotoSans-Bold.ttf', fontBase64Bold);
+    doc.addFont('NotoSans-Bold.ttf', 'NotoSans', 'bold');
+
     const t = totals || {};
     const ref = offer?.reference_number || '';
     const today = new Date().toLocaleDateString('el-GR');
@@ -124,23 +122,23 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
     doc.rect(0, 0, 210, 30, 'F');
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(18);
-    doc.setFont('helvetica', 'bold');
+    doc.setFont('NotoSans', 'bold');
     doc.text('CYBERVAULT', lm, 20);
     if (defaultSettings?.company_name) {
       doc.setFontSize(9);
-      doc.setFont('helvetica', 'normal');
+      doc.setFont('NotoSans', 'normal');
       doc.setTextColor(180, 180, 180);
-      doc.text(gr2lat(defaultSettings.company_name), lm, 27);
+      doc.text(defaultSettings.company_name, lm, 27);
     }
     doc.setTextColor(0, 153, 204);
     doc.setFontSize(10);
-    doc.setFont('helvetica', 'bold');
+    doc.setFont('NotoSans', 'bold');
     doc.text(ref, 195, 15, { align: 'right' });
     doc.setTextColor(180, 180, 180);
     doc.setFontSize(8);
-    doc.setFont('helvetica', 'normal');
-    doc.text(`Hm/nia: ${today}`, 195, 21, { align: 'right' });
-    doc.text(`Isxys eos: ${expiresDate}`, 195, 26, { align: 'right' });
+    doc.setFont('NotoSans', 'normal');
+    doc.text(`Ημ/νία: ${today}`, 195, 21, { align: 'right' });
+    doc.text(`Ισχύς έως: ${expiresDate}`, 195, 26, { align: 'right' });
 
     y = 40;
 
@@ -151,21 +149,21 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
     doc.rect(lm, y, pw, 28, 'S');
     doc.setTextColor(100, 100, 120);
     doc.setFontSize(7);
-    doc.setFont('helvetica', 'bold');
-    doc.text('STOIXEIA PELATI', lm + 3, y + 6);
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('NotoSans', 'bold');
+    doc.text('ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ', lm + 3, y + 6);
+    doc.setFont('NotoSans', 'normal');
     doc.setTextColor(50, 50, 70);
     doc.setFontSize(9);
     const cust = customer || {};
     const col1 = [];
     const col2 = [];
-    if (cust.company_legal_name) col1.push(`Eponimia: ${gr2lat(cust.company_legal_name)}`);
-    if (cust.store_name) col1.push(`Katastima: ${gr2lat(cust.store_name)}`);
-    if (cust.vat_number) col1.push(`AFM: ${cust.vat_number}`);
-    if (cust.address) col1.push(`Dieythynsi: ${gr2lat(cust.address)}`);
-    if (cust.contact_person) col2.push(`Ypeythynos: ${gr2lat(cust.contact_person)}`);
+    if (cust.company_legal_name) col1.push(`Επωνυμία: ${cust.company_legal_name}`);
+    if (cust.store_name) col1.push(`Κατάστημα: ${cust.store_name}`);
+    if (cust.vat_number) col1.push(`ΑΦΜ: ${cust.vat_number}`);
+    if (cust.address) col1.push(`Διεύθυνση: ${cust.address}`);
+    if (cust.contact_person) col2.push(`Υπεύθυνος: ${cust.contact_person}`);
     if (cust.email) col2.push(`Email: ${cust.email}`);
-    if (cust.phone) col2.push(`Til: ${cust.phone}`);
+    if (cust.phone) col2.push(`Τηλ: ${cust.phone}`);
     col1.forEach((line, i) => doc.text(line, lm + 3, y + 12 + i * 5));
     col2.forEach((line, i) => doc.text(line, lm + pw / 2, y + 12 + i * 5));
 
@@ -176,12 +174,12 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
     doc.rect(lm, y, pw, 8, 'F');
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(8);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Perigrafh', lm + 3, y + 5.5);
-    doc.text('Pos.', lm + 100, y + 5.5, { align: 'center' });
-    doc.text('Timh', lm + 126, y + 5.5, { align: 'right' });
-    doc.text('Ekpt.', lm + 148, y + 5.5, { align: 'center' });
-    doc.text('Synolo', lm + pw, y + 5.5, { align: 'right' });
+    doc.setFont('NotoSans', 'bold');
+    doc.text('Περιγραφή', lm + 3, y + 5.5);
+    doc.text('Ποσ.', lm + 100, y + 5.5, { align: 'center' });
+    doc.text('Τιμή', lm + 126, y + 5.5, { align: 'right' });
+    doc.text('Έκπτ.', lm + 148, y + 5.5, { align: 'center' });
+    doc.text('Σύνολο', lm + pw, y + 5.5, { align: 'right' });
     y += 8;
 
     // Table rows
@@ -193,15 +191,15 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
       doc.setDrawColor(230, 230, 240);
       doc.line(lm, y + 8, lm + pw, y + 8);
       doc.setTextColor(40, 40, 60);
-      doc.setFont('helvetica', 'normal');
+      doc.setFont('NotoSans', 'normal');
       doc.setFontSize(8.5);
-      doc.text(gr2lat(l.name).substring(0, 45), lm + 3, y + 5.5);
+      doc.text(l.name.substring(0, 45), lm + 3, y + 5.5);
       doc.text(String(l.quantity), lm + 100, y + 5.5, { align: 'center' });
-      doc.text(`EUR ${fmt(l.unit_price)}`, lm + 126, y + 5.5, { align: 'right' });
-      doc.text(l.discount_pct > 0 ? `${l.discount_pct}%` : '-', lm + 148, y + 5.5, { align: 'center' });
+      doc.text(`€${fmt(l.unit_price)}`, lm + 126, y + 5.5, { align: 'right' });
+      doc.text(l.discount_pct > 0 ? `${l.discount_pct}%` : '—', lm + 148, y + 5.5, { align: 'center' });
       doc.setTextColor(0, 153, 204);
-      doc.setFont('helvetica', 'bold');
-      doc.text(`EUR ${fmt(total)}`, lm + pw, y + 5.5, { align: 'right' });
+      doc.setFont('NotoSans', 'bold');
+      doc.text(`€${fmt(total)}`, lm + pw, y + 5.5, { align: 'right' });
       y += 8;
       if (y > 250) { doc.addPage(); y = 20; }
     });
@@ -210,25 +208,25 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
     y += 4;
     const addTotal = (label, value, bold, color) => {
       doc.setFontSize(9);
-      if (bold) { doc.setFont('helvetica', 'bold'); } else { doc.setFont('helvetica', 'normal'); }
+      doc.setFont('NotoSans', bold ? 'bold' : 'normal');
       if (color) doc.setTextColor(...color); else doc.setTextColor(80, 80, 100);
       doc.text(label, lm + pw - 55, y);
-      doc.text(`EUR ${fmt(value)}`, lm + pw, y, { align: 'right' });
+      doc.text(`€${fmt(value)}`, lm + pw, y, { align: 'right' });
       y += 6;
     };
-    addTotal('Synolo prin ekptosi:', t.subtotalBefore || 0, false);
-    if ((t.totalDiscount || 0) > 0) addTotal('Ekptosi:', -(t.totalDiscount || 0), false, [220, 60, 60]);
-    addTotal('Katharo poso:', t.subtotalAfter || 0, false);
-    addTotal(`FPA ${t.vatRate || 24}%:`, t.vatAmount || 0, false);
+    addTotal('Σύνολο πριν έκπτωση:', t.subtotalBefore || 0, false);
+    if ((t.totalDiscount || 0) > 0) addTotal('Έκπτωση:', -(t.totalDiscount || 0), false, [220, 60, 60]);
+    addTotal('Καθαρό ποσό:', t.subtotalAfter || 0, false);
+    addTotal(`ΦΠΑ ${t.vatRate || 24}%:`, t.vatAmount || 0, false);
     // Final total box
     doc.setFillColor(14, 18, 53);
     doc.rect(lm + pw - 60, y - 1, 62, 10, 'F');
     doc.setTextColor(255, 255, 255);
-    doc.setFont('helvetica', 'bold');
+    doc.setFont('NotoSans', 'bold');
     doc.setFontSize(10);
-    doc.text('SYNOLO:', lm + pw - 57, y + 6);
+    doc.text('ΣΥΝΟΛΟ:', lm + pw - 57, y + 6);
     doc.setTextColor(0, 207, 255);
-    doc.text(`EUR ${fmt(t.finalTotal || 0)}`, lm + pw, y + 6, { align: 'right' });
+    doc.text(`€${fmt(t.finalTotal || 0)}`, lm + pw, y + 6, { align: 'right' });
     y += 16;
 
     // Terms
@@ -236,11 +234,11 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
       if (y > 240) { doc.addPage(); y = 20; }
       doc.setTextColor(120, 120, 140);
       doc.setFontSize(7);
-      doc.setFont('helvetica', 'bold');
-      doc.text('OROI & PROYPOTHESEIS', lm, y);
+      doc.setFont('NotoSans', 'bold');
+      doc.text('ΟΡΟΙ & ΠΡΟΫΠΟΘΕΣΕΙΣ', lm, y);
       y += 4;
-      doc.setFont('helvetica', 'normal');
-      const termLines = doc.splitTextToSize(gr2lat(defaultSettings.default_terms), pw);
+      doc.setFont('NotoSans', 'normal');
+      const termLines = doc.splitTextToSize(defaultSettings.default_terms, pw);
       doc.text(termLines, lm, y);
     }
 
@@ -249,9 +247,9 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
     doc.rect(0, 285, 210, 12, 'F');
     doc.setTextColor(150, 150, 170);
     doc.setFontSize(7.5);
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('NotoSans', 'normal');
     const footerParts = [];
-    if (defaultSettings?.public_phone) footerParts.push(`Tel: ${defaultSettings.public_phone}`);
+    if (defaultSettings?.public_phone) footerParts.push(`Τηλ: ${defaultSettings.public_phone}`);
     if (defaultSettings?.public_email) footerParts.push(defaultSettings.public_email);
     doc.text(footerParts.join('   |   '), 105, 292, { align: 'center' });
 
@@ -263,7 +261,7 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
     setSending(true);
     setError('');
     const htmlBody = buildHtmlBody();
-    const pdfBase64 = buildPdfBase64();
+    const pdfBase64 = await buildPdfBase64();
     const filename = offer?.reference_number ? `Προσφορά-${offer.reference_number}.pdf` : 'Προσφορά.pdf';
     const res = await base44.functions.invoke('sendResellerEmail', {
       to, cc, subject, html_body: htmlBody, offer_id: offer?.id,
