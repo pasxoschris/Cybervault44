@@ -23,10 +23,8 @@ export default function PublicOfferPage() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
-  const [acceptConfirm, setAcceptConfirm] = useState(false);
   const [accepting, setAccepting] = useState(false);
   const [acceptError, setAcceptError] = useState('');
-  const [rejectConfirm, setRejectConfirm] = useState(false);
   const [rejecting, setRejecting] = useState(false);
 
   useEffect(() => {
@@ -60,14 +58,11 @@ export default function PublicOfferPage() {
       if (res.data?.success) {
         const updated = await base44.entities.ResellerOffer.filter({ public_token: publicToken });
         if (updated[0]) setOffer(updated[0]);
-        setAcceptConfirm(false);
       } else {
         setAcceptError(res.data?.error || 'Σφάλμα αποδοχής.');
-        setAcceptConfirm(false);
       }
     } catch (e) {
       setAcceptError('Σφάλμα αποδοχής. Παρακαλώ δοκιμάστε ξανά.');
-      setAcceptConfirm(false);
     }
     setAccepting(false);
   };
@@ -80,7 +75,6 @@ export default function PublicOfferPage() {
       if (updated[0]) setOffer(updated[0]);
     } catch (e) {}
     setRejecting(false);
-    setRejectConfirm(false);
   };
 
   if (loading) {
@@ -267,57 +261,15 @@ export default function PublicOfferPage() {
             )}
 
             <div className="flex flex-wrap gap-3">
-              <button onClick={() => setAcceptConfirm(true)}
-                className="flex items-center gap-2 px-6 py-3 bg-[#0E1235] text-white rounded-xl font-semibold text-sm hover:bg-[#0099cc] transition-colors">
-                <CheckCircle size={16} /> Αποδοχή Προσφοράς
+              <button onClick={handleAccept} disabled={accepting}
+                className="flex items-center gap-2 px-6 py-3 bg-[#0E1235] text-white rounded-xl font-semibold text-sm hover:bg-[#0099cc] transition-colors disabled:opacity-50">
+                <CheckCircle size={16} /> {accepting ? 'Αποδοχή...' : 'Αποδοχή Προσφοράς'}
               </button>
-              <button onClick={() => setRejectConfirm(true)}
-                className="flex items-center gap-2 px-6 py-3 border border-red-200 text-red-600 rounded-xl font-semibold text-sm hover:bg-red-50 transition-colors">
-                <XCircle size={16} /> Απόρριψη
+              <button onClick={handleReject} disabled={rejecting}
+                className="flex items-center gap-2 px-6 py-3 border border-red-200 text-red-600 rounded-xl font-semibold text-sm hover:bg-red-50 transition-colors disabled:opacity-50">
+                <XCircle size={16} /> {rejecting ? 'Απόρριψη...' : 'Απόρριψη'}
               </button>
             </div>
-
-            {/* Accept confirm dialog */}
-            {acceptConfirm && (
-              <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-                <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-                  <h3 className="font-bold text-gray-800 mb-2">Αποδοχή Προσφοράς</h3>
-                  <p className="text-gray-600 text-sm mb-5">
-                    Είστε σίγουροι ότι θέλετε να αποδεχτείτε οριστικά αυτή την προσφορά; Θα λάβετε επιβεβαίωση στο email σας.
-                  </p>
-                  <div className="flex gap-3">
-                    <button onClick={handleAccept} disabled={accepting}
-                      className="px-5 py-2.5 bg-green-600 text-white rounded-xl font-semibold text-sm hover:bg-green-700 transition-colors disabled:opacity-50">
-                      {accepting ? 'Αποδοχή...' : 'Ναι, Αποδοχή'}
-                    </button>
-                    <button onClick={() => { setAcceptConfirm(false); setAcceptError(''); }}
-                      className="px-5 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-sm hover:border-gray-300 transition-colors">
-                      Ακύρωση
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Reject confirm dialog */}
-            {rejectConfirm && (
-              <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-                <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-                  <h3 className="font-bold text-gray-800 mb-2">Απόρριψη Προσφοράς</h3>
-                  <p className="text-gray-600 text-sm mb-5">Είστε σίγουροι ότι θέλετε να απορρίψετε αυτή την προσφορά;</p>
-                  <div className="flex gap-3">
-                    <button onClick={handleReject} disabled={rejecting}
-                      className="px-5 py-2.5 bg-red-600 text-white rounded-xl font-semibold text-sm hover:bg-red-700 transition-colors disabled:opacity-50">
-                      {rejecting ? 'Απόρριψη...' : 'Ναι, Απόρριψη'}
-                    </button>
-                    <button onClick={() => setRejectConfirm(false)}
-                      className="px-5 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-sm hover:border-gray-300 transition-colors">
-                      Ακύρωση
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         )}
 
