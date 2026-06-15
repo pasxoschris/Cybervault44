@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { CheckCircle, XCircle, Clock, AlertTriangle, Download, FileText, Shield } from 'lucide-react';
+import { CheckCircle, XCircle, Clock, AlertTriangle, Download, FileText } from 'lucide-react';
 
 const fmt = (n) => `€${Number(n).toFixed(2)}`;
 const fmtDate = (s) => s ? new Date(s).toLocaleDateString('el-GR') : '—';
@@ -23,11 +23,9 @@ export default function PublicOfferPage() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
-  // OTP flow state
-  const [otpStep, setOtpStep] = useState('idle'); // idle | sending | code_sent | verifying | success | error
-  const [otpCode, setOtpCode] = useState('');
-  const [otpError, setOtpError] = useState('');
-  const [otpMessage, setOtpMessage] = useState('');
+  const [acceptConfirm, setAcceptConfirm] = useState(false);
+  const [accepting, setAccepting] = useState(false);
+  const [acceptError, setAcceptError] = useState('');
   const [rejectConfirm, setRejectConfirm] = useState(false);
   const [rejecting, setRejecting] = useState(false);
 
@@ -41,61 +39,37 @@ export default function PublicOfferPage() {
       const found = offers[0];
       setOffer(found);
       if (settingsList[0]) setSettings(settingsList[0]);
-      // Log view
       logView(found);
     }).finally(() => setLoading(false));
   }, [publicToken]);
 
   const logView = async (foundOffer) => {
-    // Only log if not already in a final state and not already viewed
     if (['accepted', 'rejected', 'expired'].includes(foundOffer.status)) return;
     try {
       await base44.functions.invoke('logOfferView', { offer_id: foundOffer.id });
-      // Refresh offer to get updated status
       const updated = await base44.entities.ResellerOffer.filter({ public_token: publicToken });
       if (updated[0]) setOffer(updated[0]);
-    } catch (e) {
-      // Non-blocking — don't show error to user
-    }
+    } catch (e) {}
   };
 
-  const handleRequestOtp = async () => {
-    setOtpStep('sending');
-    setOtpError('');
+  const handleAccept = async () => {
+    setAccepting(true);
+    setAcceptError('');
     try {
-      const res = await base44.functions.invoke('initiateOfferAcceptance', { offer_id: offer.id });
+      const res = await base44.functions.invoke('acceptOffer', { offer_id: offer.id });
       if (res.data?.success) {
-        setOtpStep('code_sent');
-        setOtpMessage(res.data.message || 'Ο κωδικός στάλθηκε στο email σας.');
-      } else {
-        setOtpError(res.data?.error || 'Σφάλμα αποστολής OTP.');
-        setOtpStep('idle');
-      }
-    } catch (e) {
-      setOtpError('Σφάλμα αποστολής OTP.');
-      setOtpStep('idle');
-    }
-  };
-
-  const handleVerifyOtp = async () => {
-    if (!otpCode || otpCode.length !== 6) { setOtpError('Εισάγετε 6ψήφιο κωδικό.'); return; }
-    setOtpStep('verifying');
-    setOtpError('');
-    try {
-      const res = await base44.functions.invoke('verifyOfferOtp', { offer_id: offer.id, otp_code: otpCode });
-      if (res.data?.success) {
-        setOtpStep('success');
-        // Refresh offer
         const updated = await base44.entities.ResellerOffer.filter({ public_token: publicToken });
         if (updated[0]) setOffer(updated[0]);
+        setAcceptConfirm(false);
       } else {
-        setOtpError(res.data?.error || 'Λάθος κωδικός.');
-        setOtpStep('code_sent');
+        setAcceptError(res.data?.error || 'Σφάλμα αποδοχής.');
+        setAcceptConfirm(false);
       }
     } catch (e) {
-      setOtpError('Σφάλμα επαλήθευσης.');
-      setOtpStep('code_sent');
+      setAcceptError('Σφάλμα αποδοχής. Παρακαλώ δοκιμάστε ξανά.');
+      setAcceptConfirm(false);
     }
+    setAccepting(false);
   };
 
   const handleReject = async () => {
@@ -280,82 +254,47 @@ export default function PublicOfferPage() {
           </div>
         )}
 
-        {/* Action Area — only if not read-only */}
+        {/* Action Area */}
         {!isReadOnly && (
           <div className="bg-white rounded-2xl border border-gray-200 p-6">
-            <div className="flex items-center gap-3 mb-5">
-              <Shield size={20} className="text-[#0099cc]" />
-              <h2 className="font-bold text-gray-800">Ηλεκτρονική Αποδοχή Προσφοράς</h2>
+            <h2 className="font-bold text-gray-800 text-lg mb-4">Αποδοχή Προσφοράς</h2>
+            <p className="text-sm text-gray-600 mb-5">
+              Μπορείτε να αποδεχτείτε ή να απορρίψετε την προσφορά απευθείας. Η αποδοχή είναι οριστική.
+            </p>
+
+            {acceptError && (
+              <p className="text-red-600 text-sm mb-4 bg-red-50 rounded-lg px-4 py-3">{acceptError}</p>
+            )}
+
+            <div className="flex flex-wrap gap-3">
+              <button onClick={() => setAcceptConfirm(true)}
+                className="flex items-center gap-2 px-6 py-3 bg-[#0E1235] text-white rounded-xl font-semibold text-sm hover:bg-[#0099cc] transition-colors">
+                <CheckCircle size={16} /> Αποδοχή Προσφοράς
+              </button>
+              <button onClick={() => setRejectConfirm(true)}
+                className="flex items-center gap-2 px-6 py-3 border border-red-200 text-red-600 rounded-xl font-semibold text-sm hover:bg-red-50 transition-colors">
+                <XCircle size={16} /> Απόρριψη
+              </button>
             </div>
 
-            {otpStep === 'idle' && (
-              <div className="space-y-4">
-                <p className="text-sm text-gray-600">
-                  Για να αποδεχτείτε την προσφορά, θα σταλεί κωδικός OTP στο email: <strong>{offer.email}</strong>
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <button onClick={handleRequestOtp}
-                    className="flex items-center gap-2 px-6 py-3 bg-[#0E1235] text-white rounded-xl font-semibold text-sm hover:bg-[#0099cc] transition-colors">
-                    <CheckCircle size={16} /> Αποδοχή Προσφοράς
-                  </button>
-                  <button onClick={() => setRejectConfirm(true)}
-                    className="flex items-center gap-2 px-6 py-3 border border-red-200 text-red-600 rounded-xl font-semibold text-sm hover:bg-red-50 transition-colors">
-                    <XCircle size={16} /> Απόρριψη
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {otpStep === 'sending' && (
-              <div className="flex items-center gap-3 text-sm text-gray-600">
-                <div className="w-5 h-5 border-2 border-gray-200 border-t-[#0099cc] rounded-full animate-spin" />
-                Αποστολή κωδικού...
-              </div>
-            )}
-
-            {otpStep === 'code_sent' && (
-              <div className="space-y-4">
-                <p className="text-sm text-green-700 bg-green-50 rounded-lg px-4 py-3">{otpMessage}</p>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Κωδικός OTP (6 ψηφία)</label>
-                  <input
-                    type="text" inputMode="numeric" maxLength={6}
-                    value={otpCode} onChange={e => setOtpCode(e.target.value.replace(/\D/g, ''))}
-                    placeholder="000000"
-                    className="w-48 text-center text-2xl font-mono tracking-[0.5em] border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-[#0099cc]"
-                  />
-                </div>
-                {otpError && <p className="text-red-600 text-sm">{otpError}</p>}
-                <div className="flex gap-3">
-                  <button onClick={handleVerifyOtp}
-                    className="px-6 py-2.5 bg-[#0E1235] text-white rounded-xl font-semibold text-sm hover:bg-[#0099cc] transition-colors">
-                    Επαλήθευση
-                  </button>
-                  <button onClick={() => { setOtpStep('idle'); setOtpCode(''); setOtpError(''); }}
-                    className="px-4 py-2.5 border border-gray-200 text-gray-500 rounded-xl text-sm hover:border-gray-300 transition-colors">
-                    Ακύρωση
-                  </button>
-                  <button onClick={handleRequestOtp}
-                    className="px-4 py-2.5 text-[#0099cc] text-sm hover:underline">
-                    Επαναποστολή
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {otpStep === 'verifying' && (
-              <div className="flex items-center gap-3 text-sm text-gray-600">
-                <div className="w-5 h-5 border-2 border-gray-200 border-t-[#0099cc] rounded-full animate-spin" />
-                Επαλήθευση κωδικού...
-              </div>
-            )}
-
-            {otpStep === 'success' && (
-              <div className="bg-green-50 border border-green-200 rounded-xl p-5 flex items-center gap-4">
-                <CheckCircle size={28} className="text-green-500" />
-                <div>
-                  <p className="font-bold text-green-800">Η αποδοχή ολοκληρώθηκε!</p>
-                  <p className="text-green-700 text-sm">Θα λάβετε επιβεβαίωση στο email σας.</p>
+            {/* Accept confirm dialog */}
+            {acceptConfirm && (
+              <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+                <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+                  <h3 className="font-bold text-gray-800 mb-2">Αποδοχή Προσφοράς</h3>
+                  <p className="text-gray-600 text-sm mb-5">
+                    Είστε σίγουροι ότι θέλετε να αποδεχτείτε οριστικά αυτή την προσφορά; Θα λάβετε επιβεβαίωση στο email σας.
+                  </p>
+                  <div className="flex gap-3">
+                    <button onClick={handleAccept} disabled={accepting}
+                      className="px-5 py-2.5 bg-green-600 text-white rounded-xl font-semibold text-sm hover:bg-green-700 transition-colors disabled:opacity-50">
+                      {accepting ? 'Αποδοχή...' : 'Ναι, Αποδοχή'}
+                    </button>
+                    <button onClick={() => { setAcceptConfirm(false); setAcceptError(''); }}
+                      className="px-5 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-sm hover:border-gray-300 transition-colors">
+                      Ακύρωση
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
