@@ -131,19 +131,17 @@ async function buildAcceptedPdf(offer, verificationDetails) {
   const alW = boldFont.widthOfTextAtSize(acceptedLabel, 13);
   p.drawText(acceptedLabel, { x: (w - alW) / 2, y: h2 - 110, size: 13, font: boldFont, color: white });
 
-  let cy = h2 - 160;
+  let cy = h2 - 170;
   const certBoxX = 50;
   const certBoxW = w - 100;
-  const certBoxH = 380;
+  const certBoxH = 420;
   p.drawRectangle({ x: certBoxX, y: cy - certBoxH, width: certBoxW, height: certBoxH, color: lightGray, borderColor: rgb(0.8, 0.8, 0.85), borderWidth: 1 });
 
   const drawCertRow = (label, value) => {
-    p.drawText(label, { x: certBoxX + 20, y: cy - 20, size: 8, font: boldFont, color: gray });
-    cy -= 18;
-    p.drawText(value || '—', { x: certBoxX + 20, y: cy - 5, size: 11, font: boldFont, color: darkBlue });
-    cy -= 22;
-    p.drawRectangle({ x: certBoxX + 15, y: cy + 5, width: certBoxW - 30, height: 0.5, color: rgb(0.87, 0.87, 0.9) });
-    cy -= 8;
+    p.drawText(label, { x: certBoxX + 20, y: cy, size: 9, font: boldFont, color: gray });
+    p.drawText(value || '—', { x: certBoxX + 20, y: cy - 16, size: 11, font: boldFont, color: darkBlue });
+    p.drawRectangle({ x: certBoxX + 15, y: cy - 26, width: certBoxW - 30, height: 0.5, color: rgb(0.85, 0.85, 0.9) });
+    cy -= 46;
   };
 
   cy -= 10;
