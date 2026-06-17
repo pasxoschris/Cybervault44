@@ -346,6 +346,10 @@ function StoreTicketCard({ ticket }) {
         <div className="text-white/80 text-sm leading-relaxed">{ticket.problem}</div>
       )}
 
+      {ticket.notes && (
+        <div className="text-white/50 text-xs leading-relaxed italic">"{ticket.notes}"</div>
+      )}
+
       {activeCategories.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
           {activeCategories.map(cat => (
