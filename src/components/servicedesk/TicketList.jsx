@@ -18,8 +18,10 @@ export default function TicketList() {
   const [editingTicket, setEditingTicket] = useState(null);
 
   const loadTickets = () => {
+    setLoading(true);
     base44.entities.Ticket.list('-created_date', 100)
-      .then(setTickets);
+      .then(setTickets)
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
