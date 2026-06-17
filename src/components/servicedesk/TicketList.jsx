@@ -23,6 +23,7 @@ export default function TicketList() {
   const [dateTo, setDateTo] = useState('');
   const [statusFilter, setStatusFilter] = useState('all'); // all | resolved | unresolved
   const [categoryFilter, setCategoryFilter] = useState('');
+  const [priorityFilter, setPriorityFilter] = useState('');
 
   const loadTickets = () => {
     setLoading(true);
@@ -52,9 +53,10 @@ export default function TicketList() {
       if (statusFilter === 'resolved' && !t.resolved) return false;
       if (statusFilter === 'unresolved' && t.resolved) return false;
       if (categoryFilter && !t[categoryFilter]) return false;
+      if (priorityFilter && t.priority !== priorityFilter) return false;
       return true;
     });
-  }, [tickets, searchText, dateFrom, dateTo, statusFilter, categoryFilter]);
+  }, [tickets, searchText, dateFrom, dateTo, statusFilter, categoryFilter, priorityFilter]);
 
   const clearFilters = () => {
     setSearchText('');
@@ -62,9 +64,10 @@ export default function TicketList() {
     setDateTo('');
     setStatusFilter('all');
     setCategoryFilter('');
+    setPriorityFilter('');
   };
 
-  const hasFilters = searchText || dateFrom || dateTo || statusFilter !== 'all' || categoryFilter;
+  const hasFilters = searchText || dateFrom || dateTo || statusFilter !== 'all' || categoryFilter || priorityFilter;
 
   if (loading) {
     return <div className="text-center py-16 font-mono-cyber text-[#00CFFF]/40 text-sm tracking-widest">ΦΟΡΤΩΣΗ...</div>;
@@ -124,6 +127,17 @@ export default function TicketList() {
               <option key={c.key} value={c.key}>{c.label}</option>
             ))}
           </select>
+          <select
+            value={priorityFilter}
+            onChange={e => setPriorityFilter(e.target.value)}
+            className="cyber-input text-xs w-40 font-mono-cyber"
+          >
+            <option value="">ΟΛΕΣ ΟΙ ΠΡΟΤΕΡΑΙΟΤΗΤΕΣ</option>
+            <option value="low">ΧΑΜΗΛΗ</option>
+            <option value="normal">ΚΑΝΟΝΙΚΗ</option>
+            <option value="high">ΥΨΗΛΗ</option>
+            <option value="urgent">ΕΠΕΙΓΟΥΣΑ</option>
+          </select>
           {hasFilters && (
             <button onClick={clearFilters} className="flex items-center gap-1 text-xs font-mono-cyber text-red-400/70 hover:text-red-400 tracking-wider transition-colors">
               <X size={12} /> ΚΑΘΑΡΙΣΜΟΣ
@@ -147,6 +161,15 @@ export default function TicketList() {
                 {t.operator && <span className="text-white/40">· {t.operator}</span>}
               </div>
               <div className="flex items-center gap-2">
+                {t.priority && t.priority !== 'normal' && (
+                  <span className={`px-2 py-0.5 text-[10px] font-mono-cyber tracking-widest border ${
+                    t.priority === 'urgent' ? 'border-red-400/40 text-red-400 bg-red-500/10' :
+                    t.priority === 'high' ? 'border-yellow-400/40 text-yellow-400 bg-yellow-500/10' :
+                    'border-blue-400/40 text-blue-400 bg-blue-500/10'
+                  }`}>
+                    {t.priority === 'urgent' ? '⚡ ΕΠΕΙΓΟΥΣΑ' : t.priority === 'high' ? '▲ ΥΨΗΛΗ' : '▼ ΧΑΜΗΛΗ'}
+                  </span>
+                )}
                 {t.resolved && (
                   <span className="px-2 py-0.5 text-[10px] font-mono-cyber tracking-widest border border-green-500/40 text-green-400 bg-green-500/10">
                     ✓ ΕΠΙΛΥΘΗΚΕ

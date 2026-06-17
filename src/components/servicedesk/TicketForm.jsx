@@ -34,6 +34,7 @@ export default function TicketForm({ user, onSaved }) {
     caller: '',
     phone: '',
     problem: '',
+    priority: 'normal',
     resolved: false,
     notes: '',
     category_not_spotlight: false,
@@ -97,7 +98,7 @@ export default function TicketForm({ user, onSaved }) {
         setSaved(false);
         setForm({
           date: today(), time: nowTime(), operator: user?.full_name || '',
-          store_id: '', store: '', caller: '', phone: '', problem: '', resolved: false, notes: '',
+          store_id: '', store: '', caller: '', phone: '', problem: '', priority: 'normal', resolved: false, notes: '',
           category_not_spotlight: false, category_printers: false, category_settings: false,
           category_pos: false, category_pda: false, category_invoices: false,
         });
@@ -223,6 +224,36 @@ export default function TicketForm({ user, onSaved }) {
               placeholder="Περιγραφή προβλήματος..."
               required
             />
+          </div>
+
+          {/* Priority */}
+          <div>
+            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Προτεραιότητα</label>
+            <div className="grid grid-cols-4 gap-2">
+              {[
+                { key: 'low', label: 'ΧΑΜΗΛΗ', color: 'border-blue-400/40 text-blue-400 bg-blue-400/5' },
+                { key: 'normal', label: 'ΚΑΝΟΝΙΚΗ', color: 'border-[#00CFFF]/40 text-[#00CFFF] bg-[#00CFFF]/5' },
+                { key: 'high', label: 'ΥΨΗΛΗ', color: 'border-yellow-400/40 text-yellow-400 bg-yellow-400/5' },
+                { key: 'urgent', label: 'ΕΠΕΙΓΟΥΣΑ', color: 'border-red-400/40 text-red-400 bg-red-400/5' },
+              ].map(p => (
+                <div
+                  key={p.key}
+                  onClick={() => set('priority', p.key)}
+                  className={`flex items-center justify-center gap-2 p-2 border cursor-pointer transition-all font-mono-cyber text-[11px] tracking-widest ${
+                    form.priority === p.key
+                      ? `${p.color} border-current`
+                      : 'border-[#00CFFF]/15 bg-[#131840]/40 text-white/35 hover:border-[#00CFFF]/35'
+                  }`}
+                >
+                  <div className={`w-3 h-3 rounded-full border flex items-center justify-center flex-shrink-0 transition-all ${
+                    form.priority === p.key ? 'border-current bg-current' : 'border-[#00CFFF]/40'
+                  }`}>
+                    {form.priority === p.key && <span className="text-[#0E1235] text-[7px] font-bold">✓</span>}
+                  </div>
+                  {p.label}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Resolved checkbox */}

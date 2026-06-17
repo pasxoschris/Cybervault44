@@ -30,6 +30,7 @@ export default function EditTicketModal({ ticket, onClose, onSaved }) {
       caller: ticket.caller || '',
       phone: ticket.phone || '',
       problem: ticket.problem || '',
+      priority: ticket.priority || 'normal',
       resolved: ticket.resolved || false,
       notes: ticket.notes || '',
       category_not_spotlight: ticket.category_not_spotlight || false,
@@ -155,6 +156,36 @@ export default function EditTicketModal({ ticket, onClose, onSaved }) {
             <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Πρόβλημα</label>
             <textarea value={form.problem} onChange={e => set('problem', e.target.value)}
               className="cyber-input resize-none text-xs" rows={3} placeholder="Περιγραφή..." />
+          </div>
+
+          {/* Priority */}
+          <div>
+            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Προτεραιότητα</label>
+            <div className="grid grid-cols-4 gap-1.5">
+              {[
+                { key: 'low', label: 'ΧΑΜΗΛΗ', color: 'border-blue-400/40 text-blue-400 bg-blue-400/5' },
+                { key: 'normal', label: 'ΚΑΝΟΝΙΚΗ', color: 'border-[#00CFFF]/40 text-[#00CFFF] bg-[#00CFFF]/5' },
+                { key: 'high', label: 'ΥΨΗΛΗ', color: 'border-yellow-400/40 text-yellow-400 bg-yellow-400/5' },
+                { key: 'urgent', label: 'ΕΠΕΙΓΟΥΣΑ', color: 'border-red-400/40 text-red-400 bg-red-400/5' },
+              ].map(p => (
+                <div
+                  key={p.key}
+                  onClick={() => set('priority', p.key)}
+                  className={`flex items-center justify-center gap-1 p-1.5 border cursor-pointer transition-all font-mono-cyber text-[10px] tracking-widest ${
+                    form.priority === p.key
+                      ? `${p.color} border-current`
+                      : 'border-[#00CFFF]/15 bg-[#131840]/40 text-white/35 hover:border-[#00CFFF]/35'
+                  }`}
+                >
+                  <div className={`w-2.5 h-2.5 rounded-full border flex items-center justify-center flex-shrink-0 transition-all ${
+                    form.priority === p.key ? 'border-current bg-current' : 'border-[#00CFFF]/40'
+                  }`}>
+                    {form.priority === p.key && <span className="text-[#0E1235] text-[6px] font-bold">✓</span>}
+                  </div>
+                  {p.label}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Resolved */}
