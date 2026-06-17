@@ -110,43 +110,43 @@ export default function TicketForm({ user, onSaved }) {
 
   return (
     <form onSubmit={handleSubmit}>
+      {/* Row: Date + Time + Operator — full width */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+        <div>
+          <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ημερομηνία</label>
+          <input
+            type="date"
+            value={form.date}
+            onChange={e => set('date', e.target.value)}
+            className="cyber-input"
+            required
+            style={{ colorScheme: 'dark' }}
+            placeholder="ηη/μμ/εεεε"
+          />
+        </div>
+        <div>
+          <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ώρα</label>
+          <input
+            type="time"
+            value={form.time}
+            onChange={e => set('time', e.target.value)}
+            className="cyber-input"
+          />
+        </div>
+        <div>
+          <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Χειριστής</label>
+          <input
+            type="text"
+            value={form.operator}
+            onChange={e => set('operator', e.target.value)}
+            className="cyber-input"
+            placeholder="Όνομα χειριστή"
+          />
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-6 items-start">
         <div className="space-y-5">
-          {/* Row: Date + Time + Operator */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ημερομηνία</label>
-              <input
-                type="date"
-                value={form.date}
-                onChange={e => set('date', e.target.value)}
-                className="cyber-input"
-                required
-                style={{ colorScheme: 'dark' }}
-                placeholder="ηη/μμ/εεεε"
-              />
-            </div>
-            <div>
-              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ώρα</label>
-              <input
-                type="time"
-                value={form.time}
-                onChange={e => set('time', e.target.value)}
-                className="cyber-input"
-              />
-            </div>
-            <div>
-              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Χειριστής</label>
-              <input
-                type="text"
-                value={form.operator}
-                onChange={e => set('operator', e.target.value)}
-                className="cyber-input"
-                placeholder="Όνομα χειριστή"
-              />
-            </div>
-          </div>
-
           {/* Store searchable dropdown */}
           <div className="relative">
             <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Κατάστημα</label>
@@ -291,7 +291,7 @@ export default function TicketForm({ user, onSaved }) {
 
         {/* Store ticket history sidebar */}
         {form.store && (
-          <aside className="sticky top-[200px] border border-[#00CFFF]/20 bg-[#131840]/80 p-5 space-y-4">
+          <aside className="border border-[#00CFFF]/20 bg-[#131840]/80 p-5 space-y-4">
             <div>
               <div className="font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 uppercase mb-1">Ιστορικό Καταστήματος</div>
               <h3 className="font-orbitron text-white text-sm leading-snug">{form.store}</h3>
