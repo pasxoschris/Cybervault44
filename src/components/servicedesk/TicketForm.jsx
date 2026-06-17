@@ -152,7 +152,7 @@ export default function TicketForm({ user, onSaved }) {
               <div
                 key={s.id}
                 onMouseDown={() => selectStore(s)}
-                className="px-4 py-2 text-white/80 hover:bg-[#00CFFF]/10 hover:text-[#00CFFF] cursor-pointer font-rajdhani text-sm"
+                className="px-4 py-2 text-white/80 hover:bg-[#00CFFF]/10 hover:text-[#00CFFF] cursor-pointer  text-sm"
               >
                 <div>{s.label}</div>
                 {s.vat_number && <div className="text-white/30 text-xs">ΑΦΜ: {s.vat_number}</div>}
@@ -161,7 +161,7 @@ export default function TicketForm({ user, onSaved }) {
           </div>
         )}
         {form.store && (
-          <div className="mt-1 text-[#00CFFF] font-rajdhani text-sm">✓ {form.store}</div>
+          <div className="mt-1 text-[#00CFFF]  text-sm">✓ {form.store}</div>
         )}
       </div>
 
@@ -216,7 +216,7 @@ export default function TicketForm({ user, onSaved }) {
         }`}>
           {form.resolved && <span className="text-[#0E1235] text-xs font-bold">✓</span>}
         </div>
-        <span className="font-rajdhani text-white/80 text-base">Επιλύθηκε ή στάλθηκε στο support@ox.one</span>
+        <span className=" text-white/80 text-base">Επιλύθηκε ή στάλθηκε στο support@ox.one</span>
       </div>
 
       {/* Notes / Ενέργειες */}
