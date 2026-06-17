@@ -91,41 +91,43 @@ export default function TicketForm({ user, onSaved }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      {/* Row: Date + Time + Operator */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div>
-          <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ημερομηνία</label>
-          <input
-            type="date"
-            value={form.date}
-            onChange={e => set('date', e.target.value)}
-            className="cyber-input"
-            required
-            style={{ colorScheme: 'dark' }}
-            placeholder="ηη/μμ/εεεε"
-          />
-        </div>
-        <div>
-          <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ώρα</label>
-          <input
-            type="time"
-            value={form.time}
-            onChange={e => set('time', e.target.value)}
-            className="cyber-input"
-          />
-        </div>
-        <div>
-          <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Χειριστής</label>
-          <input
-            type="text"
-            value={form.operator}
-            onChange={e => set('operator', e.target.value)}
-            className="cyber-input"
-            placeholder="Όνομα χειριστή"
-          />
-        </div>
-      </div>
+    <form onSubmit={handleSubmit}>
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-6 items-start">
+        <div className="space-y-5">
+          {/* Row: Date + Time + Operator */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ημερομηνία</label>
+              <input
+                type="date"
+                value={form.date}
+                onChange={e => set('date', e.target.value)}
+                className="cyber-input"
+                required
+                style={{ colorScheme: 'dark' }}
+                placeholder="ηη/μμ/εεεε"
+              />
+            </div>
+            <div>
+              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ώρα</label>
+              <input
+                type="time"
+                value={form.time}
+                onChange={e => set('time', e.target.value)}
+                className="cyber-input"
+              />
+            </div>
+            <div>
+              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Χειριστής</label>
+              <input
+                type="text"
+                value={form.operator}
+                onChange={e => set('operator', e.target.value)}
+                className="cyber-input"
+                placeholder="Όνομα χειριστή"
+              />
+            </div>
+          </div>
 
       {/* Store searchable dropdown */}
       <div className="relative">
@@ -157,7 +159,10 @@ export default function TicketForm({ user, onSaved }) {
                 <div>{s.label}</div>
                 {s.vat_number && <div className="text-white/30 text-xs">ΑΦΜ: {s.vat_number}</div>}
               </div>
-            ))}
+            )}
+            {form.store && (
+              <div className="mt-1 text-[#00CFFF] font-rajdhani text-sm">✓ {form.store}</div>
+            )}
           </div>
         )}
         {form.store && (
@@ -165,42 +170,120 @@ export default function TicketForm({ user, onSaved }) {
         )}
       </div>
 
-      {/* Caller + Phone */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ποιος κάλεσε</label>
-          <input
-            type="text"
-            value={form.caller}
-            onChange={e => set('caller', e.target.value)}
-            className="cyber-input"
-            placeholder="Όνομα καλούντα"
-          />
-        </div>
-        <div>
-          <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Τηλέφωνο</label>
-          <input
-            type="tel"
-            value={form.phone}
-            onChange={e => set('phone', e.target.value)}
-            className="cyber-input"
-            placeholder="6900000000"
-          />
-        </div>
-      </div>
+          {/* Caller + Phone */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ποιος κάλεσε</label>
+              <input
+                type="text"
+                value={form.caller}
+                onChange={e => set('caller', e.target.value)}
+                className="cyber-input"
+                placeholder="Όνομα καλούντα"
+              />
+            </div>
+            <div>
+              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Τηλέφωνο</label>
+              <input
+                type="tel"
+                value={form.phone}
+                onChange={e => set('phone', e.target.value)}
+                className="cyber-input"
+                placeholder="6900000000"
+              />
+            </div>
+          </div>
 
-      {/* Problem */}
-      <div>
-        <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Πρόβλημα</label>
-        <textarea
-          value={form.problem}
-          onChange={e => set('problem', e.target.value)}
-          className="cyber-input resize-none"
-          rows={3}
-          placeholder="Περιγραφή προβλήματος..."
-          required
+          {/* Problem */}
+          <div>
+            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Πρόβλημα</label>
+            <textarea
+              value={form.problem}
+              onChange={e => set('problem', e.target.value)}
+              className="cyber-input resize-none"
+              rows={3}
+              placeholder="Περιγραφή προβλήματος..."
+              required
+            />
+          </div>
+
+          {/* Resolved checkbox */}
+          <div
+            onClick={() => set('resolved', !form.resolved)}
+            className={`flex items-center gap-3 p-4 border cursor-pointer transition-all ${
+              form.resolved
+                ? 'border-[#00CFFF]/60 bg-[#00CFFF]/10'
+                : 'border-[#00CFFF]/20 bg-[#131840]/60 hover:border-[#00CFFF]/40'
+            }`}
+          >
+            <div className={`w-5 h-5 border flex items-center justify-center flex-shrink-0 transition-all ${
+              form.resolved ? 'border-[#00CFFF] bg-[#00CFFF]' : 'border-[#00CFFF]/40'
+            }`}>
+              {form.resolved && <span className="text-[#0E1235] text-xs font-bold">✓</span>}
+            </div>
+            <span className="font-rajdhani text-white/80 text-base">Επιλύθηκε ή στάλθηκε στο support@ox.one</span>
+          </div>
+
+          {/* Notes / Ενέργειες */}
+          <div>
+            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ενέργειες</label>
+            <textarea
+              value={form.notes}
+              onChange={e => set('notes', e.target.value)}
+              className="cyber-input resize-none"
+              rows={3}
+              placeholder="Ενέργειες που έγιναν..."
+            />
+          </div>
+
+          {/* Categories */}
+          <div>
+            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-3 uppercase">Το πρόβλημα αφορούσε</label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {CATEGORIES.map(cat => (
+                <div
+                  key={cat.key}
+                  onClick={() => set(cat.key, !form[cat.key])}
+                  className={`flex items-center gap-3 p-3 border cursor-pointer transition-all ${
+                    form[cat.key]
+                      ? 'border-[#00CFFF]/60 bg-[#00CFFF]/10'
+                      : 'border-[#00CFFF]/15 bg-[#131840]/40 hover:border-[#00CFFF]/35'
+                  }`}
+                >
+                  <div className={`w-4 h-4 border flex items-center justify-center flex-shrink-0 transition-all ${
+                    form[cat.key] ? 'border-[#00CFFF] bg-[#00CFFF]' : 'border-[#00CFFF]/40'
+                  }`}>
+                    {form[cat.key] && <span className="text-[#0E1235] text-[10px] font-bold">✓</span>}
+                  </div>
+                  <span className="font-mono-cyber text-xs text-white/70 tracking-wider">{cat.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Submit */}
+          {submitError && (
+            <p className="text-red-400 text-sm bg-red-400/10 border border-red-400/20 rounded-lg px-4 py-3">{submitError}</p>
+          )}
+          <button
+            type="submit"
+            disabled={saving || saved || !form.store}
+            className="w-full cyber-btn disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {saved ? '✓ ΑΠΟΘΗΚΕΥΤΗΚΕ' : saving ? 'ΑΠΟΘΗΚΕΥΣΗ...' : 'ΚΑΤΑΧΩΡΗΣΗ TICKET'}
+          </button>
+        </div>
+
+        <StoreTicketsSidebar
+          storeName={form.store}
+          tickets={storeTickets}
+          loading={storeTicketsLoading}
+          error={storeTicketsError}
         />
       </div>
+    </form>
+  );
+}
 
       {/* Resolved checkbox */}
       <div
@@ -219,41 +302,48 @@ export default function TicketForm({ user, onSaved }) {
         <span className=" text-white/80 text-base">Επιλύθηκε ή στάλθηκε στο support@ox.one</span>
       </div>
 
-      {/* Notes / Ενέργειες */}
+  return (
+    <aside className="sticky top-28 border border-[#00CFFF]/20 bg-[#131840]/80 p-5 space-y-4">
       <div>
-        <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ενέργειες</label>
-        <textarea
-          value={form.notes}
-          onChange={e => set('notes', e.target.value)}
-          className="cyber-input resize-none"
-          rows={3}
-          placeholder="Ενέργειες που έγιναν..."
-        />
+        <div className="font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 uppercase mb-1">Ιστορικό Καταστήματος</div>
+        <h3 className="font-orbitron text-white text-sm leading-snug">{storeName}</h3>
       </div>
 
-      {/* Categories */}
-      <div>
-        <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-3 uppercase">Το πρόβλημα αφορούσε</label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          {CATEGORIES.map(cat => (
-            <div
-              key={cat.key}
-              onClick={() => set(cat.key, !form[cat.key])}
-              className={`flex items-center gap-3 p-3 border cursor-pointer transition-all ${
-                form[cat.key]
-                  ? 'border-[#00CFFF]/60 bg-[#00CFFF]/10'
-                  : 'border-[#00CFFF]/15 bg-[#131840]/40 hover:border-[#00CFFF]/35'
-              }`}
-            >
-              <div className={`w-4 h-4 border flex items-center justify-center flex-shrink-0 transition-all ${
-                form[cat.key] ? 'border-[#00CFFF] bg-[#00CFFF]' : 'border-[#00CFFF]/40'
-              }`}>
-                {form[cat.key] && <span className="text-[#0E1235] text-[10px] font-bold">✓</span>}
-              </div>
-              <span className="font-mono-cyber text-xs text-white/70 tracking-wider">{cat.label}</span>
-            </div>
+      {loading && (
+        <div className="py-8 text-center font-mono-cyber text-[#00CFFF]/40 text-xs tracking-widest">ΦΟΡΤΩΣΗ...</div>
+      )}
+
+      {error && !loading && (
+        <p className="text-red-400 text-xs bg-red-400/10 border border-red-400/20 px-3 py-2">{error}</p>
+      )}
+
+      {!loading && !error && tickets.length === 0 && (
+        <div className="py-8 text-center font-rajdhani text-white/35 text-sm">Δεν υπάρχουν προηγούμενα tickets για αυτό το κατάστημα.</div>
+      )}
+
+      {!loading && !error && tickets.length > 0 && (
+        <div className="space-y-3 max-h-[620px] overflow-y-auto pr-1">
+          {tickets.map(ticket => (
+            <StoreTicketCard key={ticket.id} ticket={ticket} />
           ))}
         </div>
+      )}
+    </aside>
+  );
+}
+
+function StoreTicketCard({ ticket }) {
+  const activeCategories = CATEGORIES.filter(cat => ticket[cat.key]);
+
+  return (
+    <div className="border border-[#00CFFF]/10 bg-[#0E1235]/80 p-3 space-y-2">
+      <div className="flex items-start justify-between gap-3">
+        <div className="font-mono-cyber text-[10px] text-[#00CFFF]/60">
+          {ticket.date || '—'}{ticket.time ? ` · ${ticket.time}` : ''}
+        </div>
+        {ticket.resolved && (
+          <span className="px-1.5 py-0.5 text-[9px] font-mono-cyber tracking-widest border border-green-500/40 text-green-400 bg-green-500/10 whitespace-nowrap">✓ OK</span>
+        )}
       </div>
 
       {/* Submit */}
