@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Pencil } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import EditTicketModal from '@/components/servicedesk/EditTicketModal';
 
 const today = () => new Date().toISOString().split('T')[0];
 const nowTime = () => new Date().toTimeString().slice(0, 5);
@@ -51,6 +53,7 @@ export default function TicketForm({ user, onSaved }) {
   const [storeTickets, setStoreTickets] = useState([]);
   const [storeTicketsLoading, setStoreTicketsLoading] = useState(false);
   const [storeTicketsError, setStoreTicketsError] = useState('');
+  const [editingTicket, setEditingTicket] = useState(null);
 
   useEffect(() => {
     if (!form.store_id) {
@@ -312,18 +315,32 @@ export default function TicketForm({ user, onSaved }) {
             {!storeTicketsLoading && !storeTicketsError && storeTickets.length > 0 && (
               <div className="space-y-3 max-h-[620px] overflow-y-auto pr-1">
                 {storeTickets.map(ticket => (
-                  <StoreTicketCard key={ticket.id} ticket={ticket} />
+                  <StoreTicketCard key={ticket.id} ticket={ticket} onEdit={() => setEditingTicket(ticket)} />
                 ))}
               </div>
             )}
           </aside>
         )}
       </div>
+      {editingTicket && (
+        <EditTicketModal
+          ticket={editingTicket}
+          onClose={() => setEditingTicket(null)}
+          onSaved={() => {
+            setEditingTicket(null);
+            if (form.store_id) {
+              base44.functions.invoke('getStoreTickets', { store_id: form.store_id, store: form.store })
+                .then(res => setStoreTickets(res.data?.tickets || []))
+                .catch(() => {});
+            }
+          }}
+        />
+      )}
     </form>
   );
 }
 
-function StoreTicketCard({ ticket }) {
+function StoreTicketCard({ ticket, onEdit }) {
   const activeCategories = CATEGORIES.filter(cat => ticket[cat.key]);
 
   return (
@@ -339,6 +356,9 @@ function StoreTicketCard({ ticket }) {
           {ticket.resolved && (
             <span className="px-1.5 py-0.5 text-[9px] font-mono-cyber tracking-widest border border-green-500/40 text-green-400 bg-green-500/10 whitespace-nowrap">✓ OK</span>
           )}
+          <button onClick={onEdit} className="text-white/20 hover:text-[#00CFFF] transition-colors ml-1" title="Επεξεργασία">
+            <Pencil size={12} />
+          </button>
         </div>
       </div>
 

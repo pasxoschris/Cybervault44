@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Pencil } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import EditTicketModal from '@/components/servicedesk/EditTicketModal';
 
 const CATEGORIES = [
   { key: 'category_not_spotlight', label: 'ΔΕΝ ΑΦΟΡΟΥΣΕ ΤΗ SPOTLIGHT' },
@@ -13,11 +15,15 @@ const CATEGORIES = [
 export default function TicketList() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editingTicket, setEditingTicket] = useState(null);
+
+  const loadTickets = () => {
+    base44.entities.Ticket.list('-created_date', 100)
+      .then(setTickets);
+  };
 
   useEffect(() => {
-    base44.entities.Ticket.list('-created_date', 100)
-      .then(setTickets)
-      .finally(() => setLoading(false));
+    loadTickets();
   }, []);
 
   if (loading) {
@@ -39,11 +45,16 @@ export default function TicketList() {
               {t.time && <span>{t.time}</span>}
               {t.operator && <span className="text-white/40">· {t.operator}</span>}
             </div>
-            {t.resolved && (
-              <span className="px-2 py-0.5 text-[10px] font-mono-cyber tracking-widest border border-green-500/40 text-green-400 bg-green-500/10">
-                ✓ ΕΠΙΛΥΘΗΚΕ
-              </span>
-            )}
+            <div className="flex items-center gap-2">
+              {t.resolved && (
+                <span className="px-2 py-0.5 text-[10px] font-mono-cyber tracking-widest border border-green-500/40 text-green-400 bg-green-500/10">
+                  ✓ ΕΠΙΛΥΘΗΚΕ
+                </span>
+              )}
+              <button onClick={() => setEditingTicket(t)} className="text-white/20 hover:text-[#00CFFF] transition-colors" title="Επεξεργασία">
+                <Pencil size={13} />
+              </button>
+            </div>
           </div>
 
           {/* Store */}
@@ -78,6 +89,16 @@ export default function TicketList() {
           )}
         </div>
       ))}
+      {editingTicket && (
+        <EditTicketModal
+          ticket={editingTicket}
+          onClose={() => setEditingTicket(null)}
+          onSaved={() => {
+            setEditingTicket(null);
+            loadTickets();
+          }}
+        />
+      )}
     </div>
   );
 }
