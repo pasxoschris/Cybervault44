@@ -15,15 +15,19 @@ const CATEGORIES = [
 
 export default function TicketForm({ user, onSaved }) {
   const [stores, setStores] = useState([]);
+  const [storesError, setStoresError] = useState('');
 
   useEffect(() => {
-    base44.functions.invoke('getStores', {}).then(res => setStores(res.data?.stores || []));
+    base44.functions.invoke('getStores', {})
+      .then(res => setStores(res.data?.stores || []))
+      .catch(() => setStoresError('Αδυναμία φόρτωσης καταστημάτων.'));
   }, []);
 
   const [form, setForm] = useState({
     date: today(),
     time: nowTime(),
     operator: user?.full_name || '',
+    store_id: '',
     store: '',
     caller: '',
     phone: '',
@@ -41,30 +45,49 @@ export default function TicketForm({ user, onSaved }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
-  const filteredStores = stores.filter(s =>
-    s.toLowerCase().includes(storeSearch.toLowerCase())
-  ).slice(0, 50);
+  const filteredStores = stores.filter(s => {
+    const q = storeSearch.toLowerCase();
+    return s.label.toLowerCase().includes(q)
+      || s.business_name.toLowerCase().includes(q)
+      || s.trade_name.toLowerCase().includes(q)
+      || s.store_name.toLowerCase().includes(q)
+      || s.vat_number.toLowerCase().includes(q);
+  }).slice(0, 50);
 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
+
+  const selectStore = (storeObj) => {
+    set('store_id', storeObj.id);
+    set('store', storeObj.label);
+    setStoreSearch('');
+    setShowDropdown(false);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    await base44.entities.Ticket.create(form);
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => {
-      setSaved(false);
-      setForm({
-        date: today(), time: nowTime(), operator: user?.full_name || '',
-        store: '', caller: '', phone: '', problem: '', resolved: false, notes: '',
-        category_not_spotlight: false, category_printers: false, category_settings: false,
-        category_pos: false, category_pda: false, category_invoices: false,
-      });
-      setStoreSearch('');
-      onSaved();
-    }, 1200);
+    setSubmitError('');
+    try {
+      await base44.entities.Ticket.create(form);
+      setSaved(true);
+      setTimeout(() => {
+        setSaved(false);
+        setForm({
+          date: today(), time: nowTime(), operator: user?.full_name || '',
+          store_id: '', store: '', caller: '', phone: '', problem: '', resolved: false, notes: '',
+          category_not_spotlight: false, category_printers: false, category_settings: false,
+          category_pos: false, category_pda: false, category_invoices: false,
+        });
+        setStoreSearch('');
+        onSaved();
+      }, 1200);
+    } catch {
+      setSubmitError('Σφάλμα καταχώρησης. Παρακαλώ δοκιμάστε ξανά.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -107,10 +130,13 @@ export default function TicketForm({ user, onSaved }) {
       {/* Store searchable dropdown */}
       <div className="relative">
         <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Κατάστημα</label>
+        {storesError && (
+          <p className="text-red-400 text-xs mb-2">{storesError}</p>
+        )}
         <input
           type="text"
           value={storeSearch || form.store}
-          onChange={e => { setStoreSearch(e.target.value); set('store', ''); setShowDropdown(true); }}
+          onChange={e => { setStoreSearch(e.target.value); set('store', ''); set('store_id', ''); setShowDropdown(true); }}
           onFocus={() => setShowDropdown(true)}
           onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
           className="cyber-input"
@@ -124,11 +150,12 @@ export default function TicketForm({ user, onSaved }) {
           <div className="absolute z-50 left-0 right-0 mt-1 max-h-56 overflow-y-auto border border-[#00CFFF]/30 bg-[#0E1235] shadow-lg shadow-black/50">
             {filteredStores.map(s => (
               <div
-                key={s}
-                onMouseDown={() => { set('store', s); setStoreSearch(''); setShowDropdown(false); }}
+                key={s.id}
+                onMouseDown={() => selectStore(s)}
                 className="px-4 py-2 text-white/80 hover:bg-[#00CFFF]/10 hover:text-[#00CFFF] cursor-pointer font-rajdhani text-sm"
               >
-                {s}
+                <div>{s.label}</div>
+                {s.vat_number && <div className="text-white/30 text-xs">ΑΦΜ: {s.vat_number}</div>}
               </div>
             ))}
           </div>
@@ -230,6 +257,9 @@ export default function TicketForm({ user, onSaved }) {
       </div>
 
       {/* Submit */}
+      {submitError && (
+        <p className="text-red-400 text-sm bg-red-400/10 border border-red-400/20 rounded-lg px-4 py-3">{submitError}</p>
+      )}
       <button
         type="submit"
         disabled={saving || saved || !form.store}
