@@ -291,7 +291,7 @@ export default function TicketForm({ user, onSaved }) {
 
         {/* Store ticket history sidebar */}
         {form.store && (
-          <aside className="sticky top-28 border border-[#00CFFF]/20 bg-[#131840]/80 p-5 space-y-4">
+          <aside className="sticky top-[200px] border border-[#00CFFF]/20 bg-[#131840]/80 p-5 space-y-4">
             <div>
               <div className="font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 uppercase mb-1">Ιστορικό Καταστήματος</div>
               <h3 className="font-orbitron text-white text-sm leading-snug">{form.store}</h3>
