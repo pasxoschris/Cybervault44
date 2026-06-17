@@ -116,7 +116,7 @@ export default function TicketForm({ user, onSaved }) {
       {/* Row: Date + Time + Operator — full width */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
         <div>
-          <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ημερομηνία</label>
+          <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ημερομηνία</label>
           <input
             type="date"
             value={form.date}
@@ -128,7 +128,7 @@ export default function TicketForm({ user, onSaved }) {
           />
         </div>
         <div>
-          <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ώρα</label>
+          <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ώρα</label>
           <input
             type="time"
             value={form.time}
@@ -137,7 +137,7 @@ export default function TicketForm({ user, onSaved }) {
           />
         </div>
         <div>
-          <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Χειριστής</label>
+          <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Χειριστής</label>
           <input
             type="text"
             value={form.operator}
@@ -152,7 +152,7 @@ export default function TicketForm({ user, onSaved }) {
         <div className="space-y-5">
           {/* Store searchable dropdown */}
           <div className="relative">
-            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Κατάστημα</label>
+            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Κατάστημα</label>
             {storesError && (
               <p className="text-red-400 text-xs mb-2">{storesError}</p>
             )}
@@ -191,7 +191,7 @@ export default function TicketForm({ user, onSaved }) {
           {/* Caller + Phone */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ποιος κάλεσε</label>
+              <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ποιος κάλεσε</label>
               <input
                 type="text"
                 value={form.caller}
@@ -201,7 +201,7 @@ export default function TicketForm({ user, onSaved }) {
               />
             </div>
             <div>
-              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Τηλέφωνο</label>
+              <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Τηλέφωνο</label>
               <input
                 type="tel"
                 value={form.phone}
@@ -214,7 +214,7 @@ export default function TicketForm({ user, onSaved }) {
 
           {/* Problem */}
           <div>
-            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Πρόβλημα</label>
+            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Πρόβλημα</label>
             <textarea
               value={form.problem}
               onChange={e => set('problem', e.target.value)}
@@ -244,7 +244,7 @@ export default function TicketForm({ user, onSaved }) {
 
           {/* Notes / Ενέργειες */}
           <div>
-            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ενέργειες</label>
+            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ενέργειες</label>
             <textarea
               value={form.notes}
               onChange={e => set('notes', e.target.value)}
@@ -256,7 +256,7 @@ export default function TicketForm({ user, onSaved }) {
 
           {/* Categories */}
           <div>
-            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-3 uppercase">Το πρόβλημα αφορούσε</label>
+            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-3 uppercase">Το πρόβλημα αφορούσε</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {CATEGORIES.map(cat => (
                 <div
@@ -271,7 +271,7 @@ export default function TicketForm({ user, onSaved }) {
                   <div className={`w-4 h-4 border flex items-center justify-center flex-shrink-0 transition-all ${
                     form[cat.key] ? 'border-[#00CFFF] bg-[#00CFFF]' : 'border-[#00CFFF]/40'
                   }`}>
-                    {form[cat.key] && <span className="text-[#0E1235] text-[10px] font-bold">✓</span>}
+                    {form[cat.key] && <span className="text-[#0E1235] text-xs font-bold">✓</span>}
                   </div>
                   <span className="font-mono-cyber text-xs text-white/70 tracking-wider">{cat.label}</span>
                 </div>
@@ -296,7 +296,7 @@ export default function TicketForm({ user, onSaved }) {
         {form.store && (
           <aside className="border border-[#00CFFF]/20 bg-[#131840]/80 p-5 space-y-4">
             <div>
-              <div className="font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 uppercase mb-1">Ιστορικό Καταστήματος</div>
+              <div className="font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 uppercase mb-1">Ιστορικό Καταστήματος</div>
               <h3 className="font-orbitron text-white text-sm leading-snug">{form.store}</h3>
             </div>
 
@@ -346,12 +346,12 @@ function StoreTicketCard({ ticket, onEdit }) {
   return (
     <div className="border border-[#00CFFF]/10 bg-[#0E1235]/80 p-3 space-y-2">
       <div className="flex items-center justify-between gap-2">
-        <div className="font-mono-cyber text-[10px] text-[#00CFFF]/60">
+        <div className="font-mono-cyber text-xs text-[#00CFFF]/60">
           {ticket.date || '—'}{ticket.time ? ` · ${ticket.time}` : ''}
         </div>
         <div className="flex items-center gap-2">
           {ticket.operator && (
-            <span className="text-white/40 text-[10px]">{ticket.operator}</span>
+            <span className="text-white/40 text-xs">{ticket.operator}</span>
           )}
           {ticket.resolved && (
             <span className="px-1.5 py-0.5 text-[9px] font-mono-cyber tracking-widest border border-green-500/40 text-green-400 bg-green-500/10 whitespace-nowrap">✓ OK</span>

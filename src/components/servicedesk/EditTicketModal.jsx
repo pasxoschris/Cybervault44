@@ -96,17 +96,17 @@ export default function EditTicketModal({ ticket, onClose, onSaved }) {
           {/* Date + Time + Operator */}
           <div className="grid grid-cols-3 gap-3">
             <div>
-              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Ημερομηνία</label>
+              <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Ημερομηνία</label>
               <input type="date" value={form.date} onChange={e => set('date', e.target.value)}
                 className="cyber-input text-xs" style={{ colorScheme: 'dark' }} />
             </div>
             <div>
-              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Ώρα</label>
+              <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Ώρα</label>
               <input type="time" value={form.time} onChange={e => set('time', e.target.value)}
                 className="cyber-input text-xs" />
             </div>
             <div>
-              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Χειριστής</label>
+              <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Χειριστής</label>
               <input type="text" value={form.operator} onChange={e => set('operator', e.target.value)}
                 className="cyber-input text-xs" placeholder="Όνομα" />
             </div>
@@ -114,7 +114,7 @@ export default function EditTicketModal({ ticket, onClose, onSaved }) {
 
           {/* Store */}
           <div className="relative">
-            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Κατάστημα</label>
+            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Κατάστημα</label>
             <input
               type="text"
               value={storeSearch || form.store}
@@ -139,12 +139,12 @@ export default function EditTicketModal({ ticket, onClose, onSaved }) {
           {/* Caller + Phone */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Ποιος κάλεσε</label>
+              <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Ποιος κάλεσε</label>
               <input type="text" value={form.caller} onChange={e => set('caller', e.target.value)}
                 className="cyber-input text-xs" placeholder="Όνομα" />
             </div>
             <div>
-              <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Τηλέφωνο</label>
+              <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Τηλέφωνο</label>
               <input type="tel" value={form.phone} onChange={e => set('phone', e.target.value)}
                 className="cyber-input text-xs" placeholder="6900000000" />
             </div>
@@ -152,7 +152,7 @@ export default function EditTicketModal({ ticket, onClose, onSaved }) {
 
           {/* Problem */}
           <div>
-            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Πρόβλημα</label>
+            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Πρόβλημα</label>
             <textarea value={form.problem} onChange={e => set('problem', e.target.value)}
               className="cyber-input resize-none text-xs" rows={3} placeholder="Περιγραφή..." />
           </div>
@@ -165,21 +165,21 @@ export default function EditTicketModal({ ticket, onClose, onSaved }) {
             <div className={`w-4 h-4 border flex items-center justify-center flex-shrink-0 transition-all ${
               form.resolved ? 'border-[#00CFFF] bg-[#00CFFF]' : 'border-[#00CFFF]/40'
             }`}>
-              {form.resolved && <span className="text-[#0E1235] text-[10px] font-bold">✓</span>}
+              {form.resolved && <span className="text-[#0E1235] text-xs font-bold">✓</span>}
             </div>
             <span className="text-white/80">Επιλύθηκε ή στάλθηκε στο support@ox.one</span>
           </div>
 
           {/* Notes */}
           <div>
-            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Ενέργειες</label>
+            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Ενέργειες</label>
             <textarea value={form.notes} onChange={e => set('notes', e.target.value)}
               className="cyber-input resize-none text-xs" rows={3} placeholder="Ενέργειες που έγιναν..." />
           </div>
 
           {/* Categories */}
           <div>
-            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-2 uppercase">Κατηγορίες</label>
+            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-2 uppercase">Κατηγορίες</label>
             <div className="grid grid-cols-2 gap-1.5">
               {CATEGORIES.map(cat => (
                 <div key={cat.key} onClick={() => set(cat.key, !form[cat.key])}
@@ -191,7 +191,7 @@ export default function EditTicketModal({ ticket, onClose, onSaved }) {
                   }`}>
                     {form[cat.key] && <span className="text-[#0E1235] text-[8px] font-bold">✓</span>}
                   </div>
-                  <span className="font-mono-cyber text-[10px] text-white/70 tracking-wider">{cat.label}</span>
+                  <span className="font-mono-cyber text-xs text-white/70 tracking-wider">{cat.label}</span>
                 </div>
               ))}
             </div>
