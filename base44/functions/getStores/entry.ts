@@ -1,144 +1,6 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
-const STORES = [
-  "10 am Apotheke","180 Degrees","1800 Spetses","1821 Cocktail Bar","1901 Wine Bar (Καβάλα)","2 Saints",
-  "22 Σουβλάκια (Καλαμαριά)","22 Σουβλάκια (Πλ. Αριστοτέλους)","22 Σουβλάκια (Τούμπα)","22 Canteen (Θεσσαλονίκη)",
-  "3 Donkeys","4 Εποχές","7 Μάρτυρες","8","Αβερτα","Αγαύη","Αγαύη new","Άγκυρα (Σκύρος)","Άκρα","Ακτή Πειραιώς",
-  "Ακτή Πειραιώς New","Άλσος Χολαργού","Αντωνάκης (Πάρος)","Άνω Τελεία","Ανώνυμο (Αίγιο)","Απίκο","Απίκο 2",
-  "ΑΣΤΡΑΧΑΝ","Αυλή","Αυλή Δονούσα new","Αφρός","Αχινός","Αχλάδι (Σύρος)","Βάτραχος (Σέριφος)","Βουλκανιζατέρ",
-  "Βράχος","Γάιδαρος New","Γιαγιά Κούκου - Πρωτοράκι","Γιαγιά Κούκου Κύθνος","Γιαγιά Κούκου Athens","Γιάντες",
-  "Γκαζόζα","Γκρούβα","Γλυκιά Σουρλουλού","Γλυκιά Σουρλουλού Κύθνος","Γορίλας","Δέκα","Δημαρχείον",
-  "Δί Άδερ Ουάν (Κύθηρα)","Δρακονήσι","Εδώ","Έλα το Σουβλάκι","Ελαία","Έλβις Σουβλάκια","Ελεβέ","Ελιές",
-  "Έλξατε","Εν Καραγατς","Εν Πυρά","Έναστρον","Ενδοχώρα","Ενδοχώρα 2","Έξαρχος Bakery","Επι της Δεξαμενής",
-  "Ζιγκοάλα","Ζορμπάς","Η Γοργόνα","Η Θερμιώτισσα ( Κύθνος)","Η Θερμιώτισσα (Κύθνος)","Θεσσαλονικιός",
-  "Θεσσαλονικιός new","Θιδύρα","Ιπίτου","Ιταλικό Μπατσί ( Άνδρος)","Ιταλικό Μπατσί (Άνδρος)","Καλαμακερί",
-  "Καμάρι (Σκύρος)","Καντούνι Κύθνος","Κάρδαμο new","Καρδαμύλη","Καρπός","Κατσίμπας (Παύλιανη)",
-  "Καφενείο Αλλιώς new","Καφενείο τα Κανάρια","Κάψα","Κέδρος new","Κέδρος Wine Bar","Κεραμείο","Κλακάζ",
-  "Κλούκι new","Κο ( Θεσσαλονίκη)","Κουλ","Κοχυλάκι (Άνδρος)","Κτήμα Ρούκουνα","Κύριος","Λε Καφέ",
-  "ΛΙΝΟΥ ΣΟΥΜΠΑΣΗΣ","Λιοτρίβι","Λόβεν Bakery & Coffee","Λόκαλ","Λου Σου","Μάγειρας","Μαζί","Μαΐστρος",
-  "Μαΐστρος (Καρδαμύλη)","Μάμπο Παξός","Μεθύρα","Μελίνα","Μετέωρο","Μικρασιάτικο Μεζεδοπωλείο",
-  "Μοναστήρι Πάρος","Μονόλιθος","Μπακακάκι","Μπαμπέσα","Μπαρμπαδήμος Μικρολίμανο","Μπη Σάιντ",
-  "Μπότζιο Καφέ","Μπουλούκος","Νερέσιους","Ξύλινο","Ο Μάγκας","Ο Μπάτης","Ο Παλιάτσος","Οι Μύλοι new",
-  "Οφ Λάιν","Π2","Παλιό Ταχυδρομείο","Πάνω Πιάτσα","Παραλία (Σίφνος)","Παρδαλό Κατσίκι","Πετριάς",
-  "Πινέζα","Πίσω Γυάλια","Πλυτά","Ποντικονήσι Hotel","Προβλήτα (Καλαμαριά)","Πύλη 1","Πυρολίκι","Ρείκι",
-  "Ρεμέτζο","Ρέμπελος Bar","Ρίφι ( Τήνος)","Ροζ Πάνθηρας","Ρομάντσο","Ρουμπίνι","Ρώγα","Σβούρα Αθήνα",
-  "Σβούρα Τήνος","Σέρζα","Σκαντζόχοιρος","Σουβλάκια Ο Θύμιος","Στεφανάκος","Στις Βάρκες","Στο Νησί (Κύθνος)",
-  "Στυλ cafe","Σύμπνοια","Τα Καλάμια","Τα Σουβλάκια της Πετμεζά","Ταβέρνα ο Χιώτης","Ταβέρνα των φίλων",
-  "Ταράτσα","Τεκνό","Τέρας","Τζουτζούκα","Τιγρέ","Το Βαζάκι Juice Bar","Το Γιαβρί (Ηρακλειά)","Το Γουπί",
-  "Το Κάστρο","Το Λοκάλι","Το Μανάρι","Το Νόστιμο Σουβλάκι (Γύθειο)","Το Παραδοσιακόν","Το Πέτρινο",
-  "Το Σπιτικό (Νάξος)","Το Στέκι της Στούπας","Το Στέκι του Θανάση ( Αντίπαρος)","Το Στέκι του Θανάση (Αντίπαρος)",
-  "Το Ψαράκι","Τόπος (Άνδρος)","Τουριστικό Περίπτερο","Τριανταράκι","Φλέρτ (Καλαμάτα)","Φλόγα","Φοίβος",
-  "Φοίνικας","Φοίνιξ Καφενείο","Φοιτητής","Φουφου new","Φώκια Beach Bar (Αλόννησος)","Χαλίκι Beach bar",
-  "Χαλίκι Beach Bar (Αίγιο)","Χαρούμενες Σαρδέλες","Χίου","Χονολουλού","Ψύρρα",
-  "Ab Ovo new","Abat Jour","Acai Verao","ADD Festival","Adelante","Adrianou 33",
-  "AEK Cantina 1","AEK Cantina 2","AEK Cantina 3","AEK Cantina 4","AEK Cantina 5","AEK Cantina Master",
-  "Aella","Aeolous Beach Bar","Afros Antiparos","Afros Paros","After Love (Σέριφος)","After Love 2 (Σέριφος)",
-  "Agape","Agora Bar ( Νάξος)","Agosto","Aigis Boutique Hotel","Akamatra","Akre Hotel Naxos",
-  "Al Cantino (Γλυφάδα)","Al Cantino (Περιστέρι)","Aldebaran","Alexios Champagne Bar","Alisachni",
-  "Ambelonas Corfu","Amber Athens","Amente (Λευκάδα)","Ammos Bar","Ammos Bar new","Ammos Restaurant",
-  "Ammos Restaurant new","Anama Restaurant","Anana Coffee","Anasa","Anasha new","Anasha new 2",
-  "Ancho Κυψέλη","Ancho Athens","Ancho Mall","Ancora","Anemos beach bar","Angels","Annie Fine Cooking",
-  "Ano The Upper Cocktail Bar","Apokalipsi Cafe (Κύθνος)","Apoteka","Apsou Bar","Aqua Beach Bar",
-  "Aquarella","Arcadion Bistrot (Κέρκυρα)","Archipelagos Cafe","Argentina","Arias Restaurant","Armando",
-  "Armenaki","Asap (Σπέτσες)","Asotos","Asteria","Athens Mansion Luxury Suites Roof Garden","Atisbar",
-  "Atlantis","Au Grand Zinc","Aura Rooftop Bar","Aurora","Avaton","Avit","Azade","Baba Au Rum",
-  "Baga Smashed Burgers","Baia","Bakara","Bakel","Balloon","Balthazar","Bar Amore","Barbarosa","Bardot",
-  "Barelle Espresso Bar","Barista Street Cafe (Κέρκυρα)","Baroque","Barrio (Πρέβεζα)","Barro Negro",
-  "Bartesera","Barzoo new","Beauty Killed the Beast","Beef Boss","Beetle Bar","Beez Bar","Begg For Egg Χαλάνδρι",
-  "Bel Ray Bar","Beniamin","Beniamin new","Bibo","Biga","Bikini","Bios","Birbili (Ανάφη)","Bites by Ap",
-  "BKTB 2","Black Drop","Black Drop Thassos","Black Salami","Bless me Father (Old)","BLESS ME FATHER NEW",
-  "Blizz","Block Kolonaki","Blue Bamboo Athens","Blue Bamboo Serifos","Blue Bird","Blue Blood","Blue Cafe",
-  "Blue Dome (Χανιά)","Blue Sky","Bokeh","Boken","Bonnie & Clyde","Bonnie Burgers","Bonnie Burgers Nikaia",
-  "Bookali","Bora-Bora Beach Bar","Borghese","BOTOXE","Breadman","Bronco (Αράχωβα)","Bronco (Νέα Ερυθραία)",
-  "Bruja","Brutus ( Θεσσαλονίκη)","Brutus (Θεσσαλονίκη)","Buena Vista","Bueno","Buka Bar","Bunga","Cabaret",
-  "Cabeiri (Λήμνος)","Cacti","Cafe Cafe","Cafe Montreal","Calli Cafe (Καλλίκωμο)","Calmo (Τζιά)",
-  "Cannelait Naousa","Cannelait naousa new","Cannelait Paroikia","Capri Aigaleo","Captain John","Cartel",
-  "Casa Fistiki","Casa Mersedes","Caya","Caya new","Ceci Hong Kong","Central Moonwalk","Cerise Paschalidis",
-  "Chalet Politeia","Chariot","Cheat","Chelsea","Chelsea new","Chico","Cinapos","Cirali (Τζιά)",
-  "Citron ( Αντίπαρος)","Citron (Αντίπαρος)","Clumsies","Coff55","Coff55 new","Coffee Bear 2","Comfort",
-  "Common","Commune","Contessa's Nails Salon","Cookie Spot","Cookoovaya","Cookoovaya ( Αντίπαρος)",
-  "Cookoovaya (Αντίπαρος)","Cornell","Courtside","Crepa House Athens","Creperie Απολαυσεις",
-  "Crispy Cone ( Παξοί)","Crispy Cone (Παξοί)","Crust Nea Smyrni","Crust Psyrri","Cup & Co","Cupola",
-  "CV Distiller","DAL CAPO del porto","Dalton Bar","Dam Pizza","Dandelion","Darlin","Davos Grill & More",
-  "Dear John","Destin","Diakopes","Dilien","Dirty Sanchez","Disco The Que (Αμοργός)","District","Django EE",
-  "DL Αττική","DL Ηράκλειο 1","DL Ηράκλειο 2","DL Θησείο","DL Καλλιθέα","DL Κηφισιά","DL Μαρούσι",
-  "DL Μοναστηράκι","DL Μοσχάτο","DL Ν.Ιωνία","DL Ομόνοια","DL Πειραιά","DL Πλατεία Βικτωρίας","DL Ταύρος",
-  "Dodoni Koroni","Dogpound","Don't be a dick","Doors","Doors Kolonaki","Dope Gkizi","Dopios","Dopios Glyfada",
-  "Draxmi","Draxmi 2","Drink In Peace","Drupes & Drips","Dry Paros","Dude","Easy Peasy","Eataly","Edw 2",
-  "Eight oh Eight","Elephant","Eliott","Elvis Peristeri","Enalia","Enigma","Enkelt","Enrique (Θεσσαλονική)",
-  "Enso","Enteka Athens","Epik Gelato","Epos Burger (Αντίπαρος)","Epos Burger (Γλυφάδα)",
-  "Epos Burger (Νέα Ερυθραία)","Epos Burger (Χαλάνδρι)","Eprepe Bar","Eprepe bar new","Epta new","Erli",
-  "Ermou 18","Esperia","Estet Cafe","Etere","Ether","EVENT Canteen","Exotica","Familia","Faros (Λάρισα)",
-  "Faros 10 new","Favorita","FD4 COFFEE","Feeling Tipsy","Feggera","Felicita","Fellos","Feyrouz",
-  "Feyrouz Θεσσαλονίκη","Filips","Filips (Τρίκαλα)","Fine August","Fine Mess Smokehouse","Firefighting Cafe",
-  "FitMeals Staging","Fitness Meals Test Store","Fitpal","Flanagans","Flisvos (Κέρκυρα)","Flower",
-  "Flying Horses","Foofootos","Forget About it","Fotografio The Bar","Four Hands","Fractal ( Θεσσαλονίκη)",
-  "Fractal (Θεσσαλονίκη)","Fresco (Άνδρος)","Fresh & Co","Freza","Fuego Pizza","Funky Cod","Funky Vibes",
-  "Gaku","Gamay","Gastros Athens","Gatsby","Gatto Nero","Gaz Summer Style Club","Gennaro","Ghost Burger",
-  "Giant","Gin Ger","Gisele","Gordo","Gordo Festival","Gorlomi","Grand Hotel Kalamata","Greasy Spoon Pagkrati",
-  "Greasy Spoon Paros","Green Pepper","Grey","Groovy Mango","Guerilla","Guerilla Chef Burgers (Neos Kosmos)",
-  "Guzel Mykonos","Guzel Spetses","Half Man","Halkee","Halo","Hamsa","Hatch","Hive2o","Homa (Τήνος)",
-  "Hono & Lulu Spetses","Hook Bar","Hope So","Hotel Ermou","Hotel Sandy","Husky","Hygge","Hype (Εύοσμος)",
-  "Hype (Λιμάνι)","Hype (Τούμπα)","In Love Again","Inamorata & Jackie is on Fire","Indigo Bakery",
-  "Indigo Cafe","Iodio","Iriana Cafe","Island Concept (Κρήτη)","Island Concept (Χανιά)","Isola Paros",
-  "Jardin Espresso Bar","Jasper's Santorini","Jerar","Jo Cafe","Joshua Tree New","Juicy Grill Ghost",
-  "Junction in the Yard","Kairion","Kappa 10","Kaps","Kapu","Kastraki","Kenedi","King George","King George new",
-  "Kissa","Kitschen Dim Sum Bar","Klouvi","Knave Bar","Komna Traka","Kora Bakery","Koselig","Kouchico",
-  "Koukounari","Koul Athens","Kraken Beach Bar","Kreopwleion29","Kubrick","Kuchisabishii","Kykinthos","Kykloi",
-  "La Casa Azul","La Frianderie","La Linda","La Piadina Lumbro","La Piedra ( Μέθανα)","La Piedra (Μέθανα)",
-  "La Strada (Νάξος)","Labo.bar (Τήνος)","Lagoon Beach Bar","Lalos","Lambros","Latraac Skate Cafe",
-  "LAZY ATHENS","Lazy Duck","Lazy Pepe","Le Pain Quotidien","Le Sapin","Lemon Drops",
-  "Lemoni Cocktail Bar ( Καλαμάτα)","Lemoni Cocktail Bar (Καλαμάτα)","Liokalyvo","Liquid Beach Bar",
-  "Lisa Athens","Little Frog","Little Ginger","Lobster","Loggia Wine Bar","Lola Montez (Καλαμάτα)",
-  "Lost Athens new","Lotte","Louza new","LS DEMO","Ls demo slave","Lucy (Σύρος)","Luna Lounge",
-  "Magdalena Aperitivo","Magnum Opus Plus","Maimou Bar","Maison de Katrin 3","Mama Says","Mango Summer Bar",
-  "Manu Sea Tapas","Maradona","Marakesh","Marentakis DEMO STORE","Marentakis test slave","Margarita's",
-  "Marias Coffe Bar new","Marias Coffee Bar","Mayor new","Me Kolonaki","Mediterraneo","Mentor Cafe","Merlin",
-  "Miles","Miltech","Mirlo Kebab","Mirra","Misa","Mish mash new","Miss Neapolis","MK Demo Store","Mojobar",
-  "Momix Athens Psirri","Mon Amie","Mona Bay Beach Bar new","Mona Bay Beach Bar new 2","MonkFish Athens",
-  "Monokeros Bakery","Montana","Moraitis Beach","Moraitis Outdoors","Moraitis Surf Shop","Moraitis Water Sports",
-  "Moraitis Watersports (Dunes)","Moraitis Watersports (MO)","Moraitis Watersports (W)","Mostar","Must",
-  "My Cafe 1","My little place on the hill","Mylos Bar Αστυπάλαια","Naboo","Naif Νew","Naif Bar","Naos",
-  "Ninnolo Kolonaki","Ninnolo River West","Nionio","No Crumbs","Noa Poke Koukaki","Noa Poke Panormou",
-  "Noca bar new","Nonnas","Nord","North Bar Cafe","Ntami","Ntiva","Nuff Said","Nummus Café Athens",
-  "Nustema Bar","NYX","O Elatos","O Kalamakis","O Ntellos","Obscura Athens","Ocean View","Oddy new","Odori",
-  "Oh my Pinsa","Ohh Boy New","OK FYNE","Okra Athens","Oku Sushi","Olio","Olympias","Ombrela Cafe",
-  "On the run Athens","Osteria Mamma","Ovio","Ox Athens","Ox Demo Store","OZ Bay","Paf","Paidotopos Tigris",
-  "Paidotopos Tigris new","Palm Twins","Pandaisia","Pappu Athens","Paprika","Paprika new","Paralos","Parco",
-  "Paspari (Σέριφος)","Pasta Flora","Pastabar","Peanuts","Pelosof","Penelope","Pezoula Cafe (Λήμνος)",
-  "Phaos","Pharaoh","Piccolo","Pizza Dough","Pizza Tros","Plan B","Play House 2","Play House 3","Poco a Poco",
-  "Pony Club","Posidonio","Positano Kithnos","Pougki Bar","Prince","PROFICHÉRIE","Pura Vida","Qhera","Qoel",
-  "Qoelitas","Qoelitas ( Κάλαμος)","Quaranta","RAKOUMEL NEW","Ramon ( Νέα Πεντέλη)","Ramon (Νέα Πεντέλη)",
-  "Recipe Bar","Red Jane","Regal","Resaverse Demo","Ringo Kalamaki Pub","Riza","Rock 'n' Roll",
-  "Rock 'n' Roll new","Romania POC","Romeo new","Rootina","Roots","Salt Meet The Bar (Κεφαλονιά)",
-  "Salumeria del Greco","Sante Rock Bar","Sapou","Sapou (Αντίπαρος)","Sarok","Scamp","Sea Shell","Sea You",
-  "Second Child","See You Soon","Seminario new","Senor Picante","September 18","Serenita","Sergiani","SGR",
-  "Shamone","Sharm Hotel Mykonos","She Mykonos Boutique Hotel","Shindig","Sima","Sinaksis",
-  "Sinners Pizza (Μύκονος)","SinTrofi","Sip Happens","Sipsip","Sister","Six Dogs Club","Skal",
-  "Skala up for food","Skra (Πατησίων)","Skra( Άγιος Στέφανος)","Smoku","Socrates","Socrates new","Solene",
-  "Soul Cafe Bar","Sousou new","Sousourada","Spina","Spitaki","Spoiled new","Sport Side","Spotlight Demo GR",
-  "Spotlight Internal DEV","Spotlight Testing","SpotlightPOS - Deliverect","Stadiou 7",
-  "Starlight Burgers (Γλυφάδα)","STARLIGHT BURGERS ATHENS Ε Ε","Stella","Steve's Κεραμεικός",
-  "Steve's Πειραιάς","Sto Kentro","Storeys","Summer Omen","Sunbreak","Sunnteiz","Sunset (Αντίπαρος)",
-  "Sunset (Πάτμος)","Suntan Avia","Super Duper","Surf & Earth","Sushi Lunchi","Sweet Beach","Swing Bar",
-  "Swing bar new","Sync","Takis Restaurant","Tala's local meze & aperitivo","Tamara Fresh Juice",
-  "Tamara Fresh Juice Syntagma","TanPopo","Tart","Taverna Meraki (Πάρος)","Teddy's Elixir",
-  "Teddy's Elixir & Speakeasy","Teddy's Elixir & Speakeasy (Σ.Ε.Φ.)","Teddy's Speakeasy",
-  "Template Store EN","Template Store GR","Template Store KSA","Template Store UAE","Tempo","Temps Perdu",
-  "Temps Perdu Syntagma","Ten Twenty Club Restaurant","Test OneSys Store","Teti Charitou Haute Greek Design",
-  "Thalassa","Thalassa new","The Bitters Bar","The Burger Dudes","The Kraken","The Locals","The Makers",
-  "The Park Kiosk","The Room","The Roosters","The Roosters Athens","The Roosters Vrilisia","The Wall 2",
-  "The Windmill Resort","Theosis","Thermaikos Bar","Thermaikos bar new","Theros Wave Bar","THEROS WAVE BAR 2026",
-  "Thetis Boutique Apartments","This is loco new","Tholos","To spitiko (Φολέγανδρος) new",
-  "Tokyo Joe Βουλιαγμένη","Tokyo Joe Βουλιαγμένη new","Traka Bar","Tranzistor NEW","Trap Basement",
-  "Trap basement new","Trattoria (Αντίπαρος)","TRE SORELLE NEW","Trevizo","Twenty Five","Tyco Athens New",
-  "TYCO Master","Tyco Mykonos New","Upupa","Valerie","Valteziana 2.0","Veganaki","Veggera",
-  "Velvet & Vanilla","Verde Andros","Vermuteria","Vetro","Villa Incognito (Τρίπολη)","Vinum","Vistonia",
-  "Viva Bar","Votsalo","Vrelos Beach Bar","Warehouse LS testing store 2026","WeCook","Whatever",
-  "Windmill Hydra","Wine is Fine new","Wonderwall Fun Bar (Θεσσαλονίκη)","Xyla Beach","Yalos ( Παξοί)",
-  "Yalos (Παξοί)","Yapa (Αντίπαρος)","Yaya Καλλιθέα new","Yaya Μαβίλη new","York 22","Ypsilon","YTON",
-  "Yton new","Yucca (Πάρος)","Yuzu","Zelus","Zen","Zero Bar","Zurbaran"
-];
+const toLabel = (store) => store.store_name || store.trade_name || store.business_name || '';
 
 Deno.serve(async (req) => {
   const base44 = createClientFromRequest(req);
@@ -146,5 +8,35 @@ Deno.serve(async (req) => {
   if (!user) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  return Response.json({ stores: STORES });
+
+  try {
+    const allStores = [];
+    let skip = 0;
+    const limit = 200;
+
+    while (true) {
+      const batch = await base44.asServiceRole.entities.Store.list('business_name', limit, skip);
+      allStores.push(...batch);
+      if (batch.length < limit) break;
+      skip += limit;
+    }
+
+    const stores = allStores
+      .map((store) => ({
+        id: store.id,
+        label: toLabel(store),
+        business_name: store.business_name || '',
+        trade_name: store.trade_name || '',
+        store_name: store.store_name || '',
+        vat_number: store.vat_number || '',
+        status: store.status || '',
+      }))
+      .filter((store) => store.id && store.label)
+      .sort((a, b) => a.label.localeCompare(b.label, 'el', { sensitivity: 'base' }));
+
+    return Response.json({ stores });
+  } catch (error) {
+    console.error('Failed to load stores:', error?.message || error);
+    return Response.json({ error: 'Failed to load stores' }, { status: 500 });
+  }
 });
