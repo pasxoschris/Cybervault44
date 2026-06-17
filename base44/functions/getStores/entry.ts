@@ -1,7 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
-const toLabel = (store) => store.store_name || store.trade_name || store.business_name || '';
-
 Deno.serve(async (req) => {
   const base44 = createClientFromRequest(req);
   const user = await base44.auth.me();
@@ -10,33 +8,20 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const allStores = [];
-    let skip = 0;
-    const limit = 200;
+    // Use service role to read Store records despite admin-only RLS
+    const stores = await base44.asServiceRole.entities.Store.list('label');
+    const mapped = stores.map(s => ({
+      id: s.id,
+      label: s.store_name || s.trade_name || s.business_name || '—',
+      business_name: s.business_name || '',
+      trade_name: s.trade_name || '',
+      store_name: s.store_name || '',
+      vat_number: s.vat_number || '',
+      status: s.status || 'active',
+    })).sort((a, b) => a.label.localeCompare(b.label, 'el'));
 
-    while (true) {
-      const batch = await base44.asServiceRole.entities.Store.list('business_name', limit, skip);
-      allStores.push(...batch);
-      if (batch.length < limit) break;
-      skip += limit;
-    }
-
-    const stores = allStores
-      .map((store) => ({
-        id: store.id,
-        label: toLabel(store),
-        business_name: store.business_name || '',
-        trade_name: store.trade_name || '',
-        store_name: store.store_name || '',
-        vat_number: store.vat_number || '',
-        status: store.status || '',
-      }))
-      .filter((store) => store.id && store.label)
-      .sort((a, b) => a.label.localeCompare(b.label, 'el', { sensitivity: 'base' }));
-
-    return Response.json({ stores });
+    return Response.json({ stores: mapped });
   } catch (error) {
-    console.error('Failed to load stores:', error?.message || error);
-    return Response.json({ error: 'Failed to load stores' }, { status: 500 });
+    return Response.json({ error: error.message }, { status: 500 });
   }
 });

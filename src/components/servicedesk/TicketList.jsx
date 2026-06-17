@@ -51,7 +51,7 @@ export default function TicketList() {
 
           {/* Caller + Phone */}
           {(t.caller || t.phone) && (
-            <div className="font-rajdhani text-white/60 text-sm">
+            <div className=" text-white/60 text-sm">
               {t.caller && <span>{t.caller}</span>}
               {t.caller && t.phone && <span className="mx-2 text-white/20">·</span>}
               {t.phone && <span>{t.phone}</span>}
@@ -59,7 +59,7 @@ export default function TicketList() {
           )}
 
           {/* Problem */}
-          <div className="font-rajdhani text-white/85 text-base leading-relaxed">{t.problem}</div>
+          <div className=" text-white/85 text-base leading-relaxed">{t.problem}</div>
 
           {/* Categories */}
           {CATEGORIES.some(c => t[c.key]) && (
@@ -74,7 +74,7 @@ export default function TicketList() {
 
           {/* Notes */}
           {t.notes && (
-            <div className="font-rajdhani text-white/45 text-sm italic border-t border-[#00CFFF]/10 pt-3">{t.notes}</div>
+            <div className=" text-white/45 text-sm italic border-t border-[#00CFFF]/10 pt-3">{t.notes}</div>
           )}
         </div>
       ))}
