@@ -329,8 +329,13 @@ function StoreTicketCard({ ticket }) {
   return (
     <div className="border border-[#00CFFF]/10 bg-[#0E1235]/80 p-3 space-y-2">
       <div className="flex items-start justify-between gap-3">
-        <div className="font-mono-cyber text-[10px] text-[#00CFFF]/60">
-          {ticket.date || '—'}{ticket.time ? ` · ${ticket.time}` : ''}
+        <div className="space-y-0.5">
+          <div className="font-mono-cyber text-[10px] text-[#00CFFF]/60">
+            {ticket.date || '—'}{ticket.time ? ` · ${ticket.time}` : ''}
+          </div>
+          {ticket.operator && (
+            <div className="text-white/40 text-[10px]">{ticket.operator}</div>
+          )}
         </div>
         {ticket.resolved && (
           <span className="px-1.5 py-0.5 text-[9px] font-mono-cyber tracking-widest border border-green-500/40 text-green-400 bg-green-500/10 whitespace-nowrap">✓ OK</span>
