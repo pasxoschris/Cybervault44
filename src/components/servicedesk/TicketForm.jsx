@@ -47,6 +47,24 @@ export default function TicketForm({ user, onSaved }) {
   const [saved, setSaved] = useState(false);
   const [submitError, setSubmitError] = useState('');
 
+  // Store ticket history
+  const [storeTickets, setStoreTickets] = useState([]);
+  const [storeTicketsLoading, setStoreTicketsLoading] = useState(false);
+  const [storeTicketsError, setStoreTicketsError] = useState('');
+
+  useEffect(() => {
+    if (!form.store_id) {
+      setStoreTickets([]);
+      return;
+    }
+    setStoreTicketsLoading(true);
+    setStoreTicketsError('');
+    base44.functions.invoke('getStoreTickets', { store_id: form.store_id })
+      .then(res => setStoreTickets(res.data?.tickets || []))
+      .catch(() => setStoreTicketsError('Αδυναμία φόρτωσης ιστορικού.'))
+      .finally(() => setStoreTicketsLoading(false));
+  }, [form.store_id]);
+
   const filteredStores = stores.filter(s => {
     const q = storeSearch.toLowerCase();
     return s.label.toLowerCase().includes(q)
@@ -129,46 +147,43 @@ export default function TicketForm({ user, onSaved }) {
             </div>
           </div>
 
-      {/* Store searchable dropdown */}
-      <div className="relative">
-        <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Κατάστημα</label>
-        {storesError && (
-          <p className="text-red-400 text-xs mb-2">{storesError}</p>
-        )}
-        <input
-          type="text"
-          value={storeSearch || form.store}
-          onChange={e => { setStoreSearch(e.target.value); set('store', ''); set('store_id', ''); setShowDropdown(true); }}
-          onFocus={() => setShowDropdown(true)}
-          onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
-          className="cyber-input"
-          placeholder="Αναζήτηση καταστήματος..."
-          required={!form.store}
-        />
-        {form.store && !storeSearch && (
-          <div className="absolute right-3 top-9 text-[#00CFFF] text-xs font-mono-cyber">{form.store}</div>
-        )}
-        {showDropdown && storeSearch && filteredStores.length > 0 && (
-          <div className="absolute z-50 left-0 right-0 mt-1 max-h-56 overflow-y-auto border border-[#00CFFF]/30 bg-[#0E1235] shadow-lg shadow-black/50">
-            {filteredStores.map(s => (
-              <div
-                key={s.id}
-                onMouseDown={() => selectStore(s)}
-                className="px-4 py-2 text-white/80 hover:bg-[#00CFFF]/10 hover:text-[#00CFFF] cursor-pointer  text-sm"
-              >
-                <div>{s.label}</div>
-                {s.vat_number && <div className="text-white/30 text-xs">ΑΦΜ: {s.vat_number}</div>}
+          {/* Store searchable dropdown */}
+          <div className="relative">
+            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Κατάστημα</label>
+            {storesError && (
+              <p className="text-red-400 text-xs mb-2">{storesError}</p>
+            )}
+            <input
+              type="text"
+              value={storeSearch || form.store}
+              onChange={e => { setStoreSearch(e.target.value); set('store', ''); set('store_id', ''); setShowDropdown(true); }}
+              onFocus={() => setShowDropdown(true)}
+              onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+              className="cyber-input"
+              placeholder="Αναζήτηση καταστήματος..."
+              required={!form.store}
+            />
+            {form.store && !storeSearch && (
+              <div className="absolute right-3 top-9 text-[#00CFFF] text-xs font-mono-cyber">{form.store}</div>
+            )}
+            {showDropdown && storeSearch && filteredStores.length > 0 && (
+              <div className="absolute z-50 left-0 right-0 mt-1 max-h-56 overflow-y-auto border border-[#00CFFF]/30 bg-[#0E1235] shadow-lg shadow-black/50">
+                {filteredStores.map(s => (
+                  <div
+                    key={s.id}
+                    onMouseDown={() => selectStore(s)}
+                    className="px-4 py-2 text-white/80 hover:bg-[#00CFFF]/10 hover:text-[#00CFFF] cursor-pointer text-sm"
+                  >
+                    <div>{s.label}</div>
+                    {s.vat_number && <div className="text-white/30 text-xs">ΑΦΜ: {s.vat_number}</div>}
+                  </div>
+                ))}
               </div>
             )}
             {form.store && (
-              <div className="mt-1 text-[#00CFFF] font-rajdhani text-sm">✓ {form.store}</div>
+              <div className="mt-1 text-[#00CFFF] text-sm">✓ {form.store}</div>
             )}
           </div>
-        )}
-        {form.store && (
-          <div className="mt-1 text-[#00CFFF]  text-sm">✓ {form.store}</div>
-        )}
-      </div>
 
           {/* Caller + Phone */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -221,7 +236,7 @@ export default function TicketForm({ user, onSaved }) {
             }`}>
               {form.resolved && <span className="text-[#0E1235] text-xs font-bold">✓</span>}
             </div>
-            <span className="font-rajdhani text-white/80 text-base">Επιλύθηκε ή στάλθηκε στο support@ox.one</span>
+            <span className="text-white/80 text-base">Επιλύθηκε ή στάλθηκε στο support@ox.one</span>
           </div>
 
           {/* Notes / Ενέργειες */}
@@ -274,61 +289,37 @@ export default function TicketForm({ user, onSaved }) {
           </button>
         </div>
 
-        <StoreTicketsSidebar
-          storeName={form.store}
-          tickets={storeTickets}
-          loading={storeTicketsLoading}
-          error={storeTicketsError}
-        />
+        {/* Store ticket history sidebar */}
+        {form.store && (
+          <aside className="sticky top-28 border border-[#00CFFF]/20 bg-[#131840]/80 p-5 space-y-4">
+            <div>
+              <div className="font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 uppercase mb-1">Ιστορικό Καταστήματος</div>
+              <h3 className="font-orbitron text-white text-sm leading-snug">{form.store}</h3>
+            </div>
+
+            {storeTicketsLoading && (
+              <div className="py-8 text-center font-mono-cyber text-[#00CFFF]/40 text-xs tracking-widest">ΦΟΡΤΩΣΗ...</div>
+            )}
+
+            {storeTicketsError && !storeTicketsLoading && (
+              <p className="text-red-400 text-xs bg-red-400/10 border border-red-400/20 px-3 py-2">{storeTicketsError}</p>
+            )}
+
+            {!storeTicketsLoading && !storeTicketsError && storeTickets.length === 0 && (
+              <div className="py-8 text-center text-white/35 text-sm">Δεν υπάρχουν προηγούμενα tickets για αυτό το κατάστημα.</div>
+            )}
+
+            {!storeTicketsLoading && !storeTicketsError && storeTickets.length > 0 && (
+              <div className="space-y-3 max-h-[620px] overflow-y-auto pr-1">
+                {storeTickets.map(ticket => (
+                  <StoreTicketCard key={ticket.id} ticket={ticket} />
+                ))}
+              </div>
+            )}
+          </aside>
+        )}
       </div>
     </form>
-  );
-}
-
-      {/* Resolved checkbox */}
-      <div
-        onClick={() => set('resolved', !form.resolved)}
-        className={`flex items-center gap-3 p-4 border cursor-pointer transition-all ${
-          form.resolved
-            ? 'border-[#00CFFF]/60 bg-[#00CFFF]/10'
-            : 'border-[#00CFFF]/20 bg-[#131840]/60 hover:border-[#00CFFF]/40'
-        }`}
-      >
-        <div className={`w-5 h-5 border flex items-center justify-center flex-shrink-0 transition-all ${
-          form.resolved ? 'border-[#00CFFF] bg-[#00CFFF]' : 'border-[#00CFFF]/40'
-        }`}>
-          {form.resolved && <span className="text-[#0E1235] text-xs font-bold">✓</span>}
-        </div>
-        <span className=" text-white/80 text-base">Επιλύθηκε ή στάλθηκε στο support@ox.one</span>
-      </div>
-
-  return (
-    <aside className="sticky top-28 border border-[#00CFFF]/20 bg-[#131840]/80 p-5 space-y-4">
-      <div>
-        <div className="font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 uppercase mb-1">Ιστορικό Καταστήματος</div>
-        <h3 className="font-orbitron text-white text-sm leading-snug">{storeName}</h3>
-      </div>
-
-      {loading && (
-        <div className="py-8 text-center font-mono-cyber text-[#00CFFF]/40 text-xs tracking-widest">ΦΟΡΤΩΣΗ...</div>
-      )}
-
-      {error && !loading && (
-        <p className="text-red-400 text-xs bg-red-400/10 border border-red-400/20 px-3 py-2">{error}</p>
-      )}
-
-      {!loading && !error && tickets.length === 0 && (
-        <div className="py-8 text-center font-rajdhani text-white/35 text-sm">Δεν υπάρχουν προηγούμενα tickets για αυτό το κατάστημα.</div>
-      )}
-
-      {!loading && !error && tickets.length > 0 && (
-        <div className="space-y-3 max-h-[620px] overflow-y-auto pr-1">
-          {tickets.map(ticket => (
-            <StoreTicketCard key={ticket.id} ticket={ticket} />
-          ))}
-        </div>
-      )}
-    </aside>
   );
 }
 
@@ -346,17 +337,19 @@ function StoreTicketCard({ ticket }) {
         )}
       </div>
 
-      {/* Submit */}
-      {submitError && (
-        <p className="text-red-400 text-sm bg-red-400/10 border border-red-400/20 rounded-lg px-4 py-3">{submitError}</p>
+      {ticket.problem && (
+        <div className="text-white/80 text-sm leading-relaxed">{ticket.problem}</div>
       )}
-      <button
-        type="submit"
-        disabled={saving || saved || !form.store}
-        className="w-full cyber-btn disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {saved ? '✓ ΑΠΟΘΗΚΕΥΤΗΚΕ' : saving ? 'ΑΠΟΘΗΚΕΥΣΗ...' : 'ΚΑΤΑΧΩΡΗΣΗ TICKET'}
-      </button>
-    </form>
+
+      {activeCategories.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {activeCategories.map(cat => (
+            <span key={cat.key} className="px-1.5 py-0.5 text-[9px] font-mono-cyber tracking-widest border border-[#00CFFF]/30 text-[#00CFFF]/70 bg-[#00CFFF]/5">
+              {cat.label}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
