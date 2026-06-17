@@ -59,7 +59,7 @@ export default function TicketForm({ user, onSaved }) {
     }
     setStoreTicketsLoading(true);
     setStoreTicketsError('');
-    base44.functions.invoke('getStoreTickets', { store_id: form.store_id })
+    base44.functions.invoke('getStoreTickets', { store_id: form.store_id, store: form.store })
       .then(res => setStoreTickets(res.data?.tickets || []))
       .catch(() => setStoreTicketsError('Αδυναμία φόρτωσης ιστορικού.'))
       .finally(() => setStoreTicketsLoading(false));
