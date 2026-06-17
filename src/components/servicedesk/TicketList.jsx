@@ -80,35 +80,35 @@ export default function TicketList() {
             type="text"
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
-            className="cyber-input flex-1 text-xs"
+            className="cyber-input flex-1 text-sm"
             placeholder="Αναζήτηση σε κατάστημα, πρόβλημα, καλούντα, χειριστή..."
           />
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-1.5 text-[10px] font-mono-cyber text-[#00CFFF]/60 tracking-wider">
+          <div className="flex items-center gap-1.5 text-xs font-mono-cyber text-[#00CFFF]/60 tracking-wider">
             <span>ΑΠΟ</span>
             <input
               type="date"
               value={dateFrom}
               onChange={e => setDateFrom(e.target.value)}
-              className="cyber-input text-[10px] w-36"
+              className="cyber-input text-xs w-36"
               style={{ colorScheme: 'dark' }}
             />
           </div>
-          <div className="flex items-center gap-1.5 text-[10px] font-mono-cyber text-[#00CFFF]/60 tracking-wider">
+          <div className="flex items-center gap-1.5 text-xs font-mono-cyber text-[#00CFFF]/60 tracking-wider">
             <span>ΕΩΣ</span>
             <input
               type="date"
               value={dateTo}
               onChange={e => setDateTo(e.target.value)}
-              className="cyber-input text-[10px] w-36"
+              className="cyber-input text-xs w-36"
               style={{ colorScheme: 'dark' }}
             />
           </div>
           <select
             value={statusFilter}
             onChange={e => setStatusFilter(e.target.value)}
-            className="cyber-input text-[10px] w-40 font-mono-cyber"
+            className="cyber-input text-xs w-40 font-mono-cyber"
           >
             <option value="all">ΟΛΑ</option>
             <option value="resolved">ΕΠΙΛΥΜΕΝΑ</option>
@@ -117,7 +117,7 @@ export default function TicketList() {
           <select
             value={categoryFilter}
             onChange={e => setCategoryFilter(e.target.value)}
-            className="cyber-input text-[10px] w-44 font-mono-cyber"
+            className="cyber-input text-xs w-44 font-mono-cyber"
           >
             <option value="">ΟΛΕΣ ΟΙ ΚΑΤΗΓΟΡΙΕΣ</option>
             {CATEGORIES.map(c => (
@@ -125,7 +125,7 @@ export default function TicketList() {
             ))}
           </select>
           {hasFilters && (
-            <button onClick={clearFilters} className="flex items-center gap-1 text-[10px] font-mono-cyber text-red-400/70 hover:text-red-400 tracking-wider transition-colors">
+            <button onClick={clearFilters} className="flex items-center gap-1 text-xs font-mono-cyber text-red-400/70 hover:text-red-400 tracking-wider transition-colors">
               <X size={12} /> ΚΑΘΑΡΙΣΜΟΣ
             </button>
           )}
