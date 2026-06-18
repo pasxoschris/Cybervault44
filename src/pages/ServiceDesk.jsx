@@ -8,7 +8,7 @@ export default function ServiceDesk() {
   const [user, setUser] = useState(null);
   const [allowed, setAllowed] = useState(null); // null=loading, true/false
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState('form'); // 'form' | 'list'
+  const [view, setView] = useState(null); // 'form' | 'list' — set after auth
 
   useEffect(() => {
     const init = async () => {
@@ -44,18 +44,9 @@ export default function ServiceDesk() {
 
   if (!user) return null;
 
-  if (allowed === false) {
-    return (
-      <div className="min-h-screen bg-[#0E1235] cyber-grid flex items-center justify-center">
-        <div className="text-center p-10 border border-red-500/30 bg-[#131840]/80 max-w-sm">
-          <div className="font-mono-cyber text-red-400 text-xs tracking-widest mb-3">ACCESS DENIED</div>
-          <h2 className="font-orbitron text-white text-xl mb-2">Δεν έχεις πρόσβαση</h2>
-          <p className=" text-white/40 text-sm">Το email σου δεν βρίσκεται στη λίστα εξουσιοδοτημένων χρηστών.</p>
-          <p className=" text-white/40 text-sm mt-3">Στείλτε αίτημα στο <a href="mailto:support@cyber-vault.gr" className="text-[#00CFFF] hover:underline">support@cyber-vault.gr</a></p>
-        </div>
-      </div>
-    );
-  }
+  // Default view: 'list' for everyone; 'form' only for allowed users
+  const defaultView = allowed ? 'form' : 'list';
+  const activeView = view || defaultView;
 
   return (
     <div className="min-h-screen bg-[#0E1235] cyber-grid">
@@ -77,20 +68,22 @@ export default function ServiceDesk() {
 
         {/* Tab Toggle */}
         <div className="flex gap-2 mb-8">
-          <button
-            onClick={() => setView('form')}
-            className={`px-6 py-2 font-orbitron text-xs tracking-widest uppercase border transition-all ${
-              view === 'form'
-                ? 'bg-[#00CFFF] text-[#0E1235] border-[#00CFFF]'
-                : 'text-[#00CFFF] border-[#00CFFF]/30 hover:border-[#00CFFF]/60'
-            }`}
-          >
-            Νέο Ticket
-          </button>
+          {allowed && (
+            <button
+              onClick={() => setView('form')}
+              className={`px-6 py-2 font-orbitron text-xs tracking-widest uppercase border transition-all ${
+                activeView === 'form'
+                  ? 'bg-[#00CFFF] text-[#0E1235] border-[#00CFFF]'
+                  : 'text-[#00CFFF] border-[#00CFFF]/30 hover:border-[#00CFFF]/60'
+              }`}
+            >
+              Νέο Ticket
+            </button>
+          )}
           <button
             onClick={() => setView('list')}
             className={`px-6 py-2 font-orbitron text-xs tracking-widest uppercase border transition-all ${
-              view === 'list'
+              activeView === 'list'
                 ? 'bg-[#00CFFF] text-[#0E1235] border-[#00CFFF]'
                 : 'text-[#00CFFF] border-[#00CFFF]/30 hover:border-[#00CFFF]/60'
             }`}
@@ -99,7 +92,7 @@ export default function ServiceDesk() {
           </button>
         </div>
 
-        {view === 'form' ? (
+        {activeView === 'form' && allowed ? (
           <TicketForm user={user} onSaved={() => setView('list')} />
         ) : (
           <TicketList />
