@@ -384,6 +384,9 @@ function StoreTicketCard({ ticket, onEdit }) {
           {ticket.operator && (
             <span className="text-white/40 text-xs">{ticket.operator}</span>
           )}
+          {ticket.caller && (
+            <span className="text-white/50 text-xs">📞 {ticket.caller}</span>
+          )}
           {ticket.resolved && (
             <span className="px-1.5 py-0.5 text-[9px] font-mono-cyber tracking-widest border border-green-500/40 text-green-400 bg-green-500/10 whitespace-nowrap">✓ OK</span>
           )}
