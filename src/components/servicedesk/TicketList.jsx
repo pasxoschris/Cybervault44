@@ -161,15 +161,14 @@ export default function TicketList() {
                 {t.operator && <span className="text-white/40">· {t.operator}</span>}
               </div>
               <div className="flex items-center gap-2">
-                {t.priority && t.priority !== 'normal' && (
-                  <span className={`px-2 py-0.5 text-[10px] font-mono-cyber tracking-widest border ${
-                    t.priority === 'urgent' ? 'border-red-400/40 text-red-400 bg-red-500/10' :
-                    t.priority === 'high' ? 'border-yellow-400/40 text-yellow-400 bg-yellow-500/10' :
-                    'border-blue-400/40 text-blue-400 bg-blue-500/10'
-                  }`}>
-                    {t.priority === 'urgent' ? '⚡ ΕΠΕΙΓΟΥΣΑ' : t.priority === 'high' ? '▲ ΥΨΗΛΗ' : '▼ ΧΑΜΗΛΗ'}
-                  </span>
-                )}
+                <span className={`px-2 py-0.5 text-[10px] font-mono-cyber tracking-widest border ${
+                  t.priority === 'urgent' ? 'border-red-400/40 text-red-400 bg-red-500/10' :
+                  t.priority === 'high' ? 'border-yellow-400/40 text-yellow-400 bg-yellow-500/10' :
+                  t.priority === 'low' ? 'border-blue-400/40 text-blue-400 bg-blue-500/10' :
+                  'border-[#00CFFF]/40 text-[#00CFFF] bg-[#00CFFF]/5'
+                }`}>
+                  {t.priority === 'urgent' ? '⚡ ΕΠΕΙΓΟΥΣΑ' : t.priority === 'high' ? '▲ ΥΨΗΛΗ' : t.priority === 'low' ? '▼ ΧΑΜΗΛΗ' : '● ΚΑΝΟΝΙΚΗ'}
+                </span>
                 {t.resolved && (
                   <span className="px-2 py-0.5 text-[10px] font-mono-cyber tracking-widest border border-green-500/40 text-green-400 bg-green-500/10">
                     ✓ ΕΠΙΛΥΘΗΚΕ
