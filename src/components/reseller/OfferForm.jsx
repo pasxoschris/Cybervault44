@@ -349,7 +349,7 @@ export default function OfferForm({ editOffer, onSaved }) {
                     </td>
                     <td className="py-2 px-2">
                       <input type="number" min={0} step={0.01} value={l.unit_price} onChange={e => updateLine(l.id, 'unit_price', parseFloat(e.target.value) || 0)}
-                        className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-20 focus:outline-none focus:border-[#00CFFF]/40" />
+                        className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-24 focus:outline-none focus:border-[#00CFFF]/40" />
                     </td>
                     <td className="py-2 px-2">
                       <input type="number" min={0} max={100} step={0.5} value={l.discount_pct} onChange={e => updateLine(l.id, 'discount_pct', parseFloat(e.target.value) || 0)}
