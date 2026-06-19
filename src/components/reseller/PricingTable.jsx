@@ -16,6 +16,7 @@ export default function PricingTable() {
   const [quickEditId, setQuickEditId] = useState(null);
   const [quickEditVal, setQuickEditVal] = useState('');
   const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('');
   const editRef = useRef(null);
 
   const handleSort = (col) => {
@@ -28,6 +29,7 @@ export default function PricingTable() {
   };
 
   const filteredItems = items.filter(item => {
+    if (categoryFilter && item.category_id !== categoryFilter) return false;
     const q = search.trim().toLowerCase();
     if (!q) return true;
     return (
@@ -119,14 +121,26 @@ export default function PricingTable() {
 
   return (
     <div className="space-y-4">
-      {/* Search */}
-      <div className="relative">
-        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
-        <input
-          value={search} onChange={e => setSearch(e.target.value)}
-          placeholder="Αναζήτηση προϊόντος ή υπηρεσίας..."
-          className="w-full bg-[#0E1235] border border-[#2A3580] rounded-xl pl-9 pr-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20"
-        />
+      {/* Search + Category filter */}
+      <div className="flex gap-3">
+        <div className="relative flex-1">
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+          <input
+            value={search} onChange={e => setSearch(e.target.value)}
+            placeholder="Αναζήτηση προϊόντος ή υπηρεσίας..."
+            className="w-full bg-[#0E1235] border border-[#2A3580] rounded-xl pl-9 pr-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20"
+          />
+        </div>
+        <select
+          value={categoryFilter}
+          onChange={e => setCategoryFilter(e.target.value)}
+          className="bg-[#0E1235] border border-[#2A3580] rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 min-w-[160px]"
+        >
+          <option value="">Όλες οι κατηγορίες</option>
+          {categories.filter(c => c.is_active).map(c => (
+            <option key={c.id} value={c.id}>{c.name}</option>
+          ))}
+        </select>
       </div>
 
       <div className="flex justify-end">
