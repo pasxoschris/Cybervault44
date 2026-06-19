@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Plus, Edit, Trash2, Save, X, ArrowUp, ArrowDown, ArrowUpDown, Search } from 'lucide-react';
 
-const EMPTY = { name: '', description: '', category_id: '', unit_price: 0, vat_rate: 24, default_discount_percentage: 0, display_order: 0, is_active: true };
+const EMPTY = { name: '', description: '', category_id: '', unit_price: 0, vat_rate: 24, is_vat_exempt: false, default_discount_percentage: 0, display_order: 0, is_active: true };
 
 export default function PricingTable() {
   const [items, setItems] = useState([]);
@@ -150,7 +150,17 @@ export default function PricingTable() {
               </select>
             </div>
             <div><label className="text-white/40 text-xs block mb-1">Τιμή (€)</label><input type="number" min={0} step={0.01} value={form.unit_price} onChange={e => setForm(f => ({ ...f, unit_price: parseFloat(e.target.value) || 0 }))} className={inputCls} /></div>
-            <div><label className="text-white/40 text-xs block mb-1">ΦΠΑ %</label><input type="number" min={0} max={100} value={form.vat_rate} onChange={e => setForm(f => ({ ...f, vat_rate: parseFloat(e.target.value) || 24 }))} className={inputCls} /></div>
+            <div><label className="text-white/40 text-xs block mb-1">ΦΠΑ %</label><input type="number" min={0} max={100} value={form.vat_rate} onChange={e => setForm(f => ({ ...f, vat_rate: parseFloat(e.target.value) || 24 }))} className={inputCls} disabled={form.is_vat_exempt} /></div>
+            <div>
+              <label className="text-white/40 text-xs block mb-1">Απαλλαγή ΦΠΑ</label>
+              <button type="button" onClick={() => setForm(f => ({ ...f, is_vat_exempt: !f.is_vat_exempt }))}
+                className={`w-full flex items-center gap-2 px-3 py-2 rounded border text-sm transition-colors ${form.is_vat_exempt ? 'bg-amber-500/10 border-amber-500/40 text-amber-300' : 'bg-[#0E1235] border-[#2A3580] text-white/40 hover:border-[#00CFFF]/30'}`}>
+                <span className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 ${form.is_vat_exempt ? 'border-amber-400 bg-amber-400' : 'border-white/30'}`}>
+                  {form.is_vat_exempt && <span className="text-[#0E1235] text-[10px] font-bold">✓</span>}
+                </span>
+                {form.is_vat_exempt ? 'Απαλλαγή (άρθρο 39α)' : 'Χωρίς απαλλαγή'}
+              </button>
+            </div>
             <div><label className="text-white/40 text-xs block mb-1">Έκπτωση % (προεπιλογή)</label><input type="number" min={0} max={100} step={0.5} value={form.default_discount_percentage || 0} onChange={e => setForm(f => ({ ...f, default_discount_percentage: parseFloat(e.target.value) || 0 }))} className={inputCls} /></div>
             <div><label className="text-white/40 text-xs block mb-1">Σειρά Εμφάνισης</label><input type="number" min={0} value={form.display_order ?? 0} onChange={e => setForm(f => ({ ...f, display_order: parseInt(e.target.value) || 0 }))} className={inputCls} /></div>
           </div>
@@ -198,7 +208,7 @@ export default function PricingTable() {
                 <td className="px-3 py-3 text-white/50 max-w-[180px] truncate">{item.description || '—'}</td>
                 <td className="px-3 py-3 text-white/60 whitespace-nowrap">{getCategoryName(item.category_id)}</td>
                 <td className="px-3 py-3 font-mono text-[#00CFFF] whitespace-nowrap">€{Number(item.unit_price).toFixed(2)}</td>
-                <td className="px-3 py-3 text-white/60">{item.vat_rate}%</td>
+                <td className="px-3 py-3 whitespace-nowrap">{item.is_vat_exempt ? <span className="px-2 py-0.5 rounded text-xs border border-amber-500/40 bg-amber-500/10 text-amber-300">Απαλλαγή</span> : <span className="text-white/60">{item.vat_rate}%</span>}</td>
                 <td className="px-3 py-3 text-white/60">{item.default_discount_percentage || 0}%</td>
                 <td className="px-3 py-3">
                   {quickEditId === item.id ? (

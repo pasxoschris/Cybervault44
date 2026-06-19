@@ -76,7 +76,8 @@ export default function OfferForm({ editOffer, onSaved }) {
     setLines(prev => [...prev, {
       id: Date.now(), name: item.name, description: item.description || '',
       quantity: 1, unit_price: item.unit_price,
-      discount_pct: item.default_discount_percentage || 0
+      discount_pct: item.default_discount_percentage || 0,
+      is_vat_exempt: item.is_vat_exempt || false
     }]);
   };
 
@@ -95,7 +96,9 @@ export default function OfferForm({ editOffer, onSaved }) {
   const subtotalAfter = lines.reduce((s, l) => s + lineTotal(l), 0);
   const totalDiscount = subtotalBefore - subtotalAfter;
   const vatRate = settings.default_vat_rate || 24;
-  const vatAmount = subtotalAfter * vatRate / 100;
+  const vatableBase = lines.reduce((s, l) => s + (l.is_vat_exempt ? 0 : lineTotal(l)), 0);
+  const exemptBase = subtotalAfter - vatableBase;
+  const vatAmount = vatableBase * vatRate / 100;
   const finalTotal = subtotalAfter + vatAmount;
   const fmt = (n) => Number(n).toFixed(2);
 
@@ -326,7 +329,7 @@ export default function OfferForm({ editOffer, onSaved }) {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-[#2A3580]">
-                  {['Προϊόν/Υπηρεσία', 'Περιγραφή', 'Ποσότητα', 'Τιμή', 'Έκπτωση %', 'Σύνολο', ''].map(h => (
+                  {['Προϊόν/Υπηρεσία', 'Περιγραφή', 'Ποσότητα', 'Τιμή', 'Έκπτωση %', 'ΦΠΑ', 'Σύνολο', ''].map(h => (
                     <th key={h} className="text-left py-2 px-2 text-white/40 text-xs font-semibold">{h}</th>
                   ))}
                 </tr>
@@ -352,6 +355,12 @@ export default function OfferForm({ editOffer, onSaved }) {
                       <input type="number" min={0} max={100} step={0.5} value={l.discount_pct} onChange={e => updateLine(l.id, 'discount_pct', parseFloat(e.target.value) || 0)}
                         className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-16 focus:outline-none focus:border-[#00CFFF]/40" />
                     </td>
+                    <td className="py-2 px-2">
+                      <button type="button" onClick={() => updateLine(l.id, 'is_vat_exempt', !l.is_vat_exempt)}
+                        className={`px-2 py-0.5 rounded text-xs border whitespace-nowrap transition-colors ${l.is_vat_exempt ? 'bg-amber-500/10 border-amber-500/40 text-amber-300' : 'bg-[#0E1235] border-[#2A3580] text-white/50 hover:border-[#00CFFF]/40'}`}>
+                        {l.is_vat_exempt ? 'Απαλλαγή' : `${vatRate}%`}
+                      </button>
+                    </td>
                     <td className="py-2 px-2 text-[#00CFFF] font-mono text-sm">€{fmt(lineTotal(l))}</td>
                     <td className="py-2 px-2">
                       <button onClick={() => removeLine(l.id)} className="text-white/30 hover:text-red-400 transition-colors"><Trash2 size={14} /></button>
@@ -368,7 +377,10 @@ export default function OfferForm({ editOffer, onSaved }) {
               <div className="flex justify-between text-white/60"><span>Σύνολο πριν έκπτωση</span><span className="font-mono">€{fmt(subtotalBefore)}</span></div>
               <div className="flex justify-between text-red-400"><span>Έκπτωση</span><span className="font-mono">-€{fmt(totalDiscount)}</span></div>
               <div className="flex justify-between text-white/60"><span>Καθαρό ποσό</span><span className="font-mono">€{fmt(subtotalAfter)}</span></div>
-              <div className="flex justify-between text-white/60"><span>ΦΠΑ {vatRate}%</span><span className="font-mono">€{fmt(vatAmount)}</span></div>
+              {exemptBase > 0 && (
+                <div className="flex justify-between text-amber-300/80"><span>Απαλλαγή ΦΠΑ (39α)</span><span className="font-mono">€{fmt(exemptBase)}</span></div>
+              )}
+              <div className="flex justify-between text-white/60"><span>ΦΠΑ {vatRate}%{exemptBase > 0 ? ' (επί φορολογητέου)' : ''}</span><span className="font-mono">€{fmt(vatAmount)}</span></div>
               <div className="flex justify-between border-t border-[#2A3580] pt-2 text-[#00CFFF] font-bold text-base">
                 <span>Σύνολο</span><span className="font-mono">€{fmt(finalTotal)}</span>
               </div>
