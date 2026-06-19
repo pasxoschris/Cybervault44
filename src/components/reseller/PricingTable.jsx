@@ -158,7 +158,7 @@ export default function PricingTable() {
                 <span className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 ${form.is_vat_exempt ? 'border-amber-400 bg-amber-400' : 'border-white/30'}`}>
                   {form.is_vat_exempt && <span className="text-[#0E1235] text-[10px] font-bold">✓</span>}
                 </span>
-                {form.is_vat_exempt ? 'Απαλλαγή (άρθρο 39α)' : 'Χωρίς απαλλαγή'}
+                {form.is_vat_exempt ? 'Απαλλαγή (άρθρο 45 - Ν. 2859/2000)' : 'Χωρίς απαλλαγή'}
               </button>
             </div>
             <div><label className="text-white/40 text-xs block mb-1">Έκπτωση % (προεπιλογή)</label><input type="number" min={0} max={100} step={0.5} value={form.default_discount_percentage || 0} onChange={e => setForm(f => ({ ...f, default_discount_percentage: parseFloat(e.target.value) || 0 }))} className={inputCls} /></div>

@@ -378,7 +378,7 @@ export default function OfferForm({ editOffer, onSaved }) {
               <div className="flex justify-between text-red-400"><span>Έκπτωση</span><span className="font-mono">-€{fmt(totalDiscount)}</span></div>
               <div className="flex justify-between text-white/60"><span>Καθαρό ποσό</span><span className="font-mono">€{fmt(subtotalAfter)}</span></div>
               {exemptBase > 0 && (
-                <div className="flex justify-between text-amber-300/80"><span>Απαλλαγή ΦΠΑ (39α)</span><span className="font-mono">€{fmt(exemptBase)}</span></div>
+                <div className="flex justify-between text-amber-300/80"><span>Απαλλαγή ΦΠΑ (άρθρο 45)</span><span className="font-mono">€{fmt(exemptBase)}</span></div>
               )}
               <div className="flex justify-between text-white/60"><span>ΦΠΑ {vatRate}%{exemptBase > 0 ? ' (επί φορολογητέου)' : ''}</span><span className="font-mono">€{fmt(vatAmount)}</span></div>
               <div className="flex justify-between border-t border-[#2A3580] pt-2 text-[#00CFFF] font-bold text-base">

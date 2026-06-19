@@ -26,7 +26,7 @@
     "is_vat_exempt": {
       "type": "boolean",
       "default": false,
-      "description": "\u0391\u03c0\u03b1\u03bb\u03bb\u03b1\u03b3\u03ae \u03a6\u03a0\u0391 (\u03c0.\u03c7. \u03ba\u03b9\u03bd\u03b7\u03c4\u03ac, laptop - \u03ac\u03c1\u03b8\u03c1\u03bf 39\u03b1)"
+      "description": "\u0391\u03c0\u03b1\u03bb\u03bb\u03b1\u03b3\u03ae \u03a6\u03a0\u0391 (\u03c0.\u03c7. \u03ba\u03b9\u03bd\u03b7\u03c4\u03ac, laptop - \u03ac\u03c1\u03b8\u03c1\u03bf 45, \u039d. 2859/2000)"
     },
     "default_discount_percentage": {
       "type": "number",
