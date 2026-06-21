@@ -1,5 +1,5 @@
-import { useEffect, useState, useMemo, useRef } from 'react';
-import { Pencil, Search, X, Upload } from 'lucide-react';
+import { useEffect, useState, useMemo } from 'react';
+import { Pencil, Search, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import EditTicketModal from '@/components/servicedesk/EditTicketModal';
 
@@ -28,64 +28,6 @@ export default function TicketList() {
   const [statusFilter, setStatusFilter] = useState('all'); // all | resolved | unresolved
   const [categoryFilter, setCategoryFilter] = useState('');
   const [priorityFilter, setPriorityFilter] = useState('');
-  const [importing, setImporting] = useState(false);
-  const [importStatus, setImportStatus] = useState('');
-  const [sheetName, setSheetName] = useState('Support');
-  const [deleteExisting, setDeleteExisting] = useState(false);
-  const fileInputRef = useRef(null);
-
-  const handleFileImport = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setImporting(true);
-    setImportStatus('Φόρτωση αρχείου...');
-    try {
-      const uploadRes = await base44.integrations.Core.UploadFile({ file });
-      setImportStatus('Ανάλυση δεδομένων...');
-      const res = await base44.functions.invoke('importTicketsFromExcel', {
-        file_url: uploadRes.file_url,
-        sheet_name: sheetName || 'Support',
-      });
-      const data = res.data;
-      if (data.error) {
-        setImportStatus(`Σφάλμα: ${data.error}`);
-        return;
-      }
-      const tickets = data.tickets || [];
-      if (tickets.length === 0) {
-        setImportStatus('Δεν βρέθηκαν έγκυρα tickets (απαιτείται Κατάστημα & Πρόβλημα).');
-        return;
-      }
-      // Delete existing if checkbox is checked
-      if (deleteExisting) {
-        setImportStatus('Διαγραφή υπαρχόντων tickets...');
-        const deleteRes = await base44.functions.invoke('deleteAllTickets', {});
-        if (deleteRes.data?.error) {
-          setImportStatus(`Σφάλμα διαγραφής: ${deleteRes.data.error}`);
-          return;
-        }
-        setImportStatus(`Διαγράφηκαν ${deleteRes.data?.deleted || 0} tickets.`);
-      }
-      setImportStatus(`Δημιουργία ${tickets.length} tickets...`);
-      // Batch in chunks of 200
-      const batchSize = 200;
-      let imported = 0;
-      for (let i = 0; i < tickets.length; i += batchSize) {
-        const batch = tickets.slice(i, i + batchSize);
-        await base44.entities.Ticket.bulkCreate(batch);
-        imported += batch.length;
-        setImportStatus(`Δημιουργία ${imported}/${tickets.length} tickets...`);
-      }
-      setImportStatus(`✓ Εισήχθησαν ${imported} tickets! (Sheet: ${data.sheet_used})`);
-      loadTickets();
-    } catch (err) {
-      setImportStatus(`Σφάλμα: ${err.message || 'Δοκιμάστε ξανά.'}`);
-    } finally {
-      setImporting(false);
-      setTimeout(() => setImportStatus(''), 6000);
-    }
-    e.target.value = '';
-  };
 
   const loadTickets = () => {
     setLoading(true);
@@ -148,45 +90,7 @@ export default function TicketList() {
             className="cyber-input flex-1 text-sm"
             placeholder="Αναζήτηση σε κατάστημα, πρόβλημα, καλούντα, χειριστή..."
           />
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileImport}
-            accept=".xlsx,.csv,.xls,.json"
-            className="hidden"
-          />
-          <input
-            type="text"
-            value={sheetName}
-            onChange={e => setSheetName(e.target.value)}
-            className="cyber-input text-xs w-44 flex-shrink-0"
-            placeholder="Sheet name (προαιρετικό)"
-          />
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            disabled={importing}
-            className="flex items-center gap-1.5 px-3 py-2 border border-[#00CFFF]/30 text-[#00CFFF]/70 text-xs hover:bg-[#00CFFF]/10 hover:border-[#00CFFF]/60 transition-colors disabled:opacity-40 flex-shrink-0"
-          >
-            <Upload size={13} />
-            {importing ? 'Εισαγωγή...' : 'Εισαγωγή'}
-          </button>
         </div>
-        <div className="flex items-center gap-3">
-          <label className="flex items-center gap-2 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={deleteExisting}
-              onChange={e => setDeleteExisting(e.target.checked)}
-              className="w-3.5 h-3.5 accent-[#00CFFF]"
-            />
-            <span className="text-xs text-white/50">Διαγραφή υπαρχόντων πριν την εισαγωγή</span>
-          </label>
-        </div>
-        {importStatus && (
-          <div className={`text-xs px-3 py-1.5 border ${importStatus.startsWith('✓') ? 'border-green-500/30 bg-green-500/10 text-green-400' : importStatus.startsWith('Σφάλμα') ? 'border-red-500/30 bg-red-500/10 text-red-400' : 'border-[#00CFFF]/20 bg-[#00CFFF]/5 text-[#00CFFF]/70'}`}>
-            {importStatus}
-          </div>
-        )}
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-1.5 text-xs text-white/40">
             <span>ΑΠΟ</span>

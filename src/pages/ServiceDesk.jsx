@@ -3,12 +3,13 @@ import { base44 } from '@/api/base44Client';
 import Navbar from '@/components/layout/Navbar';
 import TicketForm from '@/components/servicedesk/TicketForm';
 import TicketList from '@/components/servicedesk/TicketList';
+import ImportTickets from '@/components/servicedesk/ImportTickets';
 
 export default function ServiceDesk() {
   const [user, setUser] = useState(null);
   const [allowed, setAllowed] = useState(null); // null=loading, true/false
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState('form'); // 'form' | 'list'
+  const [view, setView] = useState('form'); // 'form' | 'list' | 'import'
 
   useEffect(() => {
     const init = async () => {
@@ -97,12 +98,24 @@ export default function ServiceDesk() {
           >
             Ιστορικό
           </button>
+          <button
+            onClick={() => setView('import')}
+            className={`px-6 py-2 font-orbitron text-xs tracking-widest uppercase border transition-all ${
+              view === 'import'
+                ? 'bg-[#00CFFF] text-[#0E1235] border-[#00CFFF]'
+                : 'text-[#00CFFF] border-[#00CFFF]/30 hover:border-[#00CFFF]/60'
+            }`}
+          >
+            Εισαγωγή
+          </button>
         </div>
 
         {view === 'form' ? (
           <TicketForm user={user} onSaved={() => setView('list')} />
-        ) : (
+        ) : view === 'list' ? (
           <TicketList />
+        ) : (
+          <ImportTickets onImported={() => setView('list')} />
         )}
       </div>
     </div>

@@ -166,7 +166,6 @@ export default function TicketForm({ user, onSaved }) {
               value={storeSearch || form.store}
               onChange={(e) => {setStoreSearch(e.target.value);set('store', '');set('store_id', '');setShowDropdown(true);}}
               onFocus={() => setShowDropdown(true)}
-              onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
               className="cyber-input"
               placeholder="Αναζήτηση καταστήματος..."
               required={!form.store} />
@@ -174,20 +173,23 @@ export default function TicketForm({ user, onSaved }) {
             {form.store && !storeSearch &&
             <div className="absolute right-3 top-9 text-[#00CFFF] text-xs font-mono-cyber">{form.store}</div>
             }
-            {showDropdown && storeSearch && filteredStores.length > 0 &&
-            <div className="absolute z-50 left-0 right-0 mt-1 max-h-56 overflow-y-auto border border-[#00CFFF]/30 bg-[#0E1235] shadow-lg shadow-black/50">
-                {filteredStores.map((s) =>
-              <div
-                key={s.id}
-                onMouseDown={() => selectStore(s)}
-                className="px-4 py-2 text-white/80 hover:bg-[#00CFFF]/10 hover:text-[#00CFFF] cursor-pointer text-sm">
-                
-                    <div>{s.label}</div>
-                    {s.vat_number && <div className="text-white/30 text-xs">ΑΦΜ: {s.vat_number}</div>}
-                  </div>
-              )}
-              </div>
-            }
+            {showDropdown && storeSearch && filteredStores.length > 0 && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowDropdown(false)} />
+                <div className="absolute z-50 left-0 right-0 mt-1 max-h-56 overflow-y-auto border border-[#00CFFF]/30 bg-[#0E1235] shadow-2xl shadow-black/70">
+                  {filteredStores.map((s) =>
+                <div
+                  key={s.id}
+                  onClick={() => selectStore(s)}
+                  className="px-4 py-2 text-white/80 hover:bg-[#00CFFF]/10 hover:text-[#00CFFF] cursor-pointer text-sm">
+                  
+                      <div>{s.label}</div>
+                      {s.vat_number && <div className="text-white/30 text-xs">ΑΦΜ: {s.vat_number}</div>}
+                    </div>
+                )}
+                </div>
+              </>
+            )}
             {form.store &&
             <div className="mt-1 text-[#00CFFF] text-sm">✓ {form.store}</div>
             }
