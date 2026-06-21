@@ -59,11 +59,12 @@ export default function TicketList() {
       // Delete existing if checkbox is checked
       if (deleteExisting) {
         setImportStatus('Διαγραφή υπαρχόντων tickets...');
-        const existing = await base44.entities.Ticket.list();
-        for (let i = 0; i < existing.length; i += 200) {
-          const batch = existing.slice(i, i + 200);
-          await Promise.all(batch.map(t => base44.entities.Ticket.delete(t.id)));
+        const deleteRes = await base44.functions.invoke('deleteAllTickets', {});
+        if (deleteRes.data?.error) {
+          setImportStatus(`Σφάλμα διαγραφής: ${deleteRes.data.error}`);
+          return;
         }
+        setImportStatus(`Διαγράφηκαν ${deleteRes.data?.deleted || 0} tickets.`);
       }
       setImportStatus(`Δημιουργία ${tickets.length} tickets...`);
       // Batch in chunks of 200
