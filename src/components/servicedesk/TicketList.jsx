@@ -3,6 +3,8 @@ import { Pencil, Search, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import EditTicketModal from '@/components/servicedesk/EditTicketModal';
 
+const toGreekDate = (d) => { if (!d) return '—'; const [y, m, day] = d.split('-'); return `${day}/${m}/${y}`; };
+
 const CATEGORIES = [
   { key: 'category_not_spotlight', label: 'ΔΕΝ ΑΦΟΡΟΥΣΕ ΤΗ SPOTLIGHT' },
   { key: 'category_printers', label: 'ΕΚΤΥΠΩΤΕΣ' },
@@ -156,7 +158,7 @@ export default function TicketList() {
             {/* Header row */}
             <div className="flex flex-wrap items-center gap-3 justify-between">
               <div className="flex gap-3 font-mono-cyber text-xs text-[#00CFFF]/60">
-                <span>{t.date}</span>
+                <span>{toGreekDate(t.date)}</span>
                 {t.time && <span>{t.time}</span>}
                 {t.operator && <span className="text-white/40">· {t.operator}</span>}
               </div>

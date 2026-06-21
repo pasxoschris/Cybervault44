@@ -6,6 +6,8 @@ import EditTicketModal from '@/components/servicedesk/EditTicketModal';
 const today = () => new Date().toISOString().split('T')[0];
 const nowTime = () => new Date().toTimeString().slice(0, 5);
 
+const toGreekDate = (d) => { if (!d) return '—'; const [y, m, day] = d.split('-'); return `${day}/${m}/${y}`; };
+
 const CATEGORIES = [
   { key: 'category_not_spotlight',  label: 'ΔΕΝ ΑΦΟΡΟΥΣΕ ΤΗ SPOTLIGHT' },
   { key: 'category_printers',       label: 'ΕΚΤΥΠΩΤΕΣ' },
@@ -378,7 +380,7 @@ function StoreTicketCard({ ticket, onEdit }) {
     <div className="border border-[#00CFFF]/10 bg-[#0E1235]/80 p-3 space-y-2">
       <div className="flex items-center justify-between gap-2">
         <div className="font-mono-cyber text-xs text-[#00CFFF]/60">
-          {ticket.date || '—'}{ticket.time ? ` · ${ticket.time}` : ''}
+          {toGreekDate(ticket.date)}{ticket.time ? ` · ${ticket.time}` : ''}
         </div>
         <div className="flex items-center gap-2">
           {ticket.operator && (
