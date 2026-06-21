@@ -58,7 +58,7 @@ Deno.serve(async (req) => {
       return -1;
     };
 
-    const timeIdx = findCol(['Ώρα', 'Ωρα', 'ΩΡΑ', 'Time', 'TIME']);
+    const timeIdx = findCol(['Ώρα', 'Ωρα', 'ωρα', 'ώρα', 'ΩΡΑ', 'ΏΡΑ', 'Time', 'TIME', 'time']);
     const operatorIdx = findCol(['Χειριστής', 'ΧΕΙΡΙΣΤΗΣ', 'Operator']);
     const storeIdx = findCol(['Κατάστημα', 'ΚΑΤΑΣΤΗΜΑ', 'Επωνυμία', 'Store']);
     const callerIdx = findCol(['Ποιος κάλεσε', 'ΠΟΙΟΣ ΚΑΛΕΣΕ', 'Caller']);
@@ -100,8 +100,18 @@ Deno.serve(async (req) => {
     };
 
     const toTime = (v) => {
+      if (v === undefined || v === null || v === '') return '';
       let s = String(v).trim();
       if (!s) return '';
+      // Excel time serial number (0-1 decimal)
+      const num = parseFloat(v);
+      if (!isNaN(num) && num > 0 && num < 1) {
+        const totalMinutes = Math.round(num * 24 * 60);
+        const h = Math.floor(totalMinutes / 60);
+        const m = totalMinutes % 60;
+        return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+      }
+      // "17:51:00" → "17:51"
       s = s.replace(/:\d{2}$/, '');
       return s;
     };
