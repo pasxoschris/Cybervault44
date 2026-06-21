@@ -111,8 +111,28 @@ Deno.serve(async (req) => {
         const m = totalMinutes % 60;
         return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
       }
-      // "17:51:00" → "17:51"
-      s = s.replace(/:\d{2}$/, '');
+      // Detect Greek AM/PM marker
+      let isPM = false;
+      if (/\s?[μΜ][μΜ]\s*$/.test(s)) {
+        isPM = true;
+        s = s.replace(/\s?[μΜ][μΜ]\s*$/, '');
+      } else if (/\s?[πΠ][μΜ]\s*$/.test(s)) {
+        s = s.replace(/\s?[πΠ][μΜ]\s*$/, '');
+      }
+      // Strip seconds if present
+      s = s.replace(/:\d{2}$/, '').trim();
+      // Convert 12h to 24h
+      const parts = s.split(':');
+      if (parts.length >= 2 && isPM) {
+        let h = parseInt(parts[0], 10);
+        if (h < 12) h += 12;
+        parts[0] = String(h).padStart(2, '0');
+        s = parts[0] + ':' + parts[1];
+      } else if (parts.length >= 2 && s.match(/^\d{1,2}:\d{2}$/)) {
+        // Pad hours to 2 digits
+        parts[0] = parts[0].padStart(2, '0');
+        s = parts[0] + ':' + parts[1];
+      }
       return s;
     };
 
