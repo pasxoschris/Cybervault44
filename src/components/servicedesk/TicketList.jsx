@@ -30,7 +30,39 @@ export default function TicketList() {
   const [priorityFilter, setPriorityFilter] = useState('');
   const [importing, setImporting] = useState(false);
   const [importStatus, setImportStatus] = useState('');
+  const [sheetName, setSheetName] = useState('');
   const fileInputRef = useRef(null);
+
+  // Clean extracted data: strip time from date, strip seconds from time, stringify phone
+  const cleanTicket = (item) => {
+    let date = String(item.date || '');
+    // "2025-09-28 00:00:00" → "2025-09-28" or "2025-09-28T00:00:00" → "2025-09-28"
+    date = date.replace(/[T ].*/, '');
+    let time = String(item.time || '');
+    // "17:51:00" → "17:51"
+    time = time.replace(/:\d{2}$/, '');
+    let phone = String(item.phone || '');
+    // "6948533060.0" → "6948533060"
+    phone = phone.replace(/\.0+$/, '');
+    return {
+      date,
+      time,
+      operator: item.operator || '',
+      store: item.store || '',
+      caller: item.caller || '',
+      phone,
+      problem: item.problem || '',
+      priority: item.priority || 'normal',
+      resolved: !!item.resolved,
+      notes: item.notes || '',
+      category_not_spotlight: !!item.category_not_spotlight,
+      category_printers: !!item.category_printers,
+      category_settings: !!item.category_settings,
+      category_pos: !!item.category_pos,
+      category_pda: !!item.category_pda,
+      category_invoices: !!item.category_invoices,
+    };
+  };
 
   const handleFileImport = async (e) => {
     const file = e.target.files[0];
@@ -45,21 +77,28 @@ export default function TicketList() {
         json_schema: {
           type: 'object',
           properties: {
+            sheet_hint: { type: 'string', description: `Χρησιμοποίησε το sheet: ${sheetName || 'το πρώτο (Support)'}` },
             output: {
               type: 'array',
               items: {
                 type: 'object',
                 properties: {
-                  date: { type: 'string', description: 'Ημερομηνία (YYYY-MM-DD)' },
+                  date: { type: 'string', description: 'Ημερομηνία (στήλη 1, YYYY-MM-DD)' },
                   time: { type: 'string', description: 'Ώρα (HH:MM)' },
                   operator: { type: 'string', description: 'Χειριστής' },
-                  store: { type: 'string', description: 'Κατάστημα' },
+                  store: { type: 'string', description: 'Επωνυμία καταστήματος' },
                   caller: { type: 'string', description: 'Ποιος κάλεσε' },
-                  phone: { type: 'string', description: 'Τηλέφωνο' },
+                  phone: { type: 'string', description: 'Τηλέφωνο (αριθμός)' },
                   problem: { type: 'string', description: 'Πρόβλημα' },
                   priority: { type: 'string', description: 'Προτεραιότητα (low/normal/high/urgent)' },
-                  resolved: { type: 'boolean', description: 'Επιλύθηκε' },
-                  notes: { type: 'string', description: 'Ενέργειες/Παρατηρήσεις' },
+                  resolved: { type: 'boolean', description: 'Επιλύθηκε ή στάλθηκε στο ox.one support' },
+                  notes: { type: 'string', description: 'Παρατηρήσεις / ενέργειες' },
+                  category_not_spotlight: { type: 'boolean', description: 'ΑΣΧΕΤΟ ΜΕ SpotlightPOS ή Spotlight SW/HW' },
+                  category_printers: { type: 'boolean', description: 'ΕΚΤΥΠΩΤΕΣ' },
+                  category_settings: { type: 'boolean', description: 'ΡΥΘΜΙΣΕΙΣ ΕΦΑΡΜΟΓΗΣ' },
+                  category_pos: { type: 'boolean', description: 'POS' },
+                  category_pda: { type: 'boolean', description: 'PDA' },
+                  category_invoices: { type: 'boolean', description: 'Τιμολόγια' },
                 }
               }
             }
@@ -67,26 +106,15 @@ export default function TicketList() {
         }
       });
       const extracted = extractRes.output || [];
-      const valid = extracted.filter(item => item.store && item.problem);
+      const cleaned = extracted.map(cleanTicket);
+      const valid = cleaned.filter(item => item.store && item.problem);
       if (valid.length === 0) {
         setImportStatus('Δεν βρέθηκαν έγκυρα tickets (απαιτείται Κατάστημα & Πρόβλημα).');
         return;
       }
       setImportStatus(`Δημιουργία ${valid.length} tickets...`);
-      const toCreate = valid.map(item => ({
-        date: item.date || '',
-        time: item.time || '',
-        operator: item.operator || '',
-        store: item.store || '',
-        caller: item.caller || '',
-        phone: item.phone || '',
-        problem: item.problem || '',
-        priority: item.priority || 'normal',
-        resolved: item.resolved || false,
-        notes: item.notes || '',
-      }));
-      await base44.entities.Ticket.bulkCreate(toCreate);
-      setImportStatus(`✓ Εισήχθησαν ${toCreate.length} tickets!`);
+      await base44.entities.Ticket.bulkCreate(valid);
+      setImportStatus(`✓ Εισήχθησαν ${valid.length} tickets!`);
       loadTickets();
     } catch (err) {
       setImportStatus(`Σφάλμα: ${err.message || 'Δοκιμάστε ξανά.'}`);
@@ -164,6 +192,13 @@ export default function TicketList() {
             onChange={handleFileImport}
             accept=".xlsx,.csv,.xls,.json"
             className="hidden"
+          />
+          <input
+            type="text"
+            value={sheetName}
+            onChange={e => setSheetName(e.target.value)}
+            className="cyber-input text-xs w-44 flex-shrink-0"
+            placeholder="Sheet name (προαιρετικό)"
           />
           <button
             onClick={() => fileInputRef.current?.click()}
