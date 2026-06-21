@@ -31,6 +31,7 @@ export default function TicketList() {
   const [importing, setImporting] = useState(false);
   const [importStatus, setImportStatus] = useState('');
   const [sheetName, setSheetName] = useState('Support');
+  const [deleteExisting, setDeleteExisting] = useState(false);
   const fileInputRef = useRef(null);
 
   const handleFileImport = async (e) => {
@@ -54,6 +55,15 @@ export default function TicketList() {
       if (tickets.length === 0) {
         setImportStatus('Δεν βρέθηκαν έγκυρα tickets (απαιτείται Κατάστημα & Πρόβλημα).');
         return;
+      }
+      // Delete existing if checkbox is checked
+      if (deleteExisting) {
+        setImportStatus('Διαγραφή υπαρχόντων tickets...');
+        const existing = await base44.entities.Ticket.list();
+        for (let i = 0; i < existing.length; i += 200) {
+          const batch = existing.slice(i, i + 200);
+          await Promise.all(batch.map(t => base44.entities.Ticket.delete(t.id)));
+        }
       }
       setImportStatus(`Δημιουργία ${tickets.length} tickets...`);
       // Batch in chunks of 200
@@ -159,6 +169,17 @@ export default function TicketList() {
             <Upload size={13} />
             {importing ? 'Εισαγωγή...' : 'Εισαγωγή'}
           </button>
+        </div>
+        <div className="flex items-center gap-3">
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={deleteExisting}
+              onChange={e => setDeleteExisting(e.target.checked)}
+              className="w-3.5 h-3.5 accent-[#00CFFF]"
+            />
+            <span className="text-xs text-white/50">Διαγραφή υπαρχόντων πριν την εισαγωγή</span>
+          </label>
         </div>
         {importStatus && (
           <div className={`text-xs px-3 py-1.5 border ${importStatus.startsWith('✓') ? 'border-green-500/30 bg-green-500/10 text-green-400' : importStatus.startsWith('Σφάλμα') ? 'border-red-500/30 bg-red-500/10 text-red-400' : 'border-[#00CFFF]/20 bg-[#00CFFF]/5 text-[#00CFFF]/70'}`}>
