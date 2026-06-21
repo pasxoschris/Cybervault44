@@ -92,7 +92,7 @@ export default function TicketList() {
           />
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-1.5 text-xs font-mono-cyber text-[#00CFFF]/60 tracking-wider">
+          <div className="flex items-center gap-1.5 text-xs text-white/40">
             <span>ΑΠΟ</span>
             <input
               type="text"
@@ -102,7 +102,7 @@ export default function TicketList() {
               placeholder="ηη/μμ/εεεε"
             />
           </div>
-          <div className="flex items-center gap-1.5 text-xs font-mono-cyber text-[#00CFFF]/60 tracking-wider">
+          <div className="flex items-center gap-1.5 text-xs text-white/40">
             <span>ΕΩΣ</span>
             <input
               type="text"

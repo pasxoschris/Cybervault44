@@ -122,7 +122,7 @@ export default function TicketForm({ user, onSaved }) {
       {/* Row: Date + Time + Operator — full width */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
         <div>
-          <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ημερομηνία</label>
+          <label className="block text-white/40 text-xs mb-1.5">Ημερομηνία</label>
           <input
             type="text"
             value={toDisplayDate(form.date)}
@@ -133,7 +133,7 @@ export default function TicketForm({ user, onSaved }) {
           />
         </div>
         <div>
-          <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ώρα</label>
+          <label className="block text-white/40 text-xs mb-1.5">Ώρα</label>
           <input
             type="time"
             value={form.time}
@@ -142,7 +142,7 @@ export default function TicketForm({ user, onSaved }) {
           />
         </div>
         <div>
-          <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Χειριστής</label>
+          <label className="block text-white/40 text-xs mb-1.5">Χειριστής</label>
           <input
             type="text"
             value={form.operator}
@@ -157,7 +157,7 @@ export default function TicketForm({ user, onSaved }) {
         <div className="space-y-5">
           {/* Store searchable dropdown */}
           <div className="relative">
-            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Κατάστημα</label>
+            <label className="block text-white/40 text-xs mb-1.5">Κατάστημα</label>
             {storesError && (
               <p className="text-red-400 text-xs mb-2">{storesError}</p>
             )}
@@ -196,7 +196,7 @@ export default function TicketForm({ user, onSaved }) {
           {/* Caller + Phone */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ποιος κάλεσε</label>
+              <label className="block text-white/40 text-xs mb-1.5">Ποιος κάλεσε</label>
               <input
                 type="text"
                 value={form.caller}
@@ -206,7 +206,7 @@ export default function TicketForm({ user, onSaved }) {
               />
             </div>
             <div>
-              <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Τηλέφωνο</label>
+              <label className="block text-white/40 text-xs mb-1.5">Τηλέφωνο</label>
               <input
                 type="tel"
                 value={form.phone}
@@ -219,7 +219,7 @@ export default function TicketForm({ user, onSaved }) {
 
           {/* Problem */}
           <div>
-            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Πρόβλημα</label>
+            <label className="block text-white/40 text-xs mb-1.5">Πρόβλημα</label>
             <textarea
               value={form.problem}
               onChange={e => set('problem', e.target.value)}
@@ -232,7 +232,7 @@ export default function TicketForm({ user, onSaved }) {
 
           {/* Priority */}
           <div>
-            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Προτεραιότητα</label>
+            <label className="block text-white/40 text-xs mb-1.5">Προτεραιότητα</label>
             <div className="grid grid-cols-4 gap-2">
               {[
                 { key: 'low', label: 'ΧΑΜΗΛΗ', color: 'border-blue-400/40 text-blue-400 bg-blue-400/5' },
@@ -279,7 +279,7 @@ export default function TicketForm({ user, onSaved }) {
 
           {/* Notes / Ενέργειες */}
           <div>
-            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ενέργειες</label>
+            <label className="block text-white/40 text-xs mb-1.5">Ενέργειες</label>
             <textarea
               value={form.notes}
               onChange={e => set('notes', e.target.value)}
@@ -291,7 +291,7 @@ export default function TicketForm({ user, onSaved }) {
 
           {/* Categories */}
           <div>
-            <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-3 uppercase">Το πρόβλημα αφορούσε</label>
+            <label className="block text-white/40 text-xs mb-3">Το πρόβλημα αφορούσε</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {CATEGORIES.map(cat => (
                 <div
@@ -331,7 +331,7 @@ export default function TicketForm({ user, onSaved }) {
         {form.store && (
           <aside className="border border-[#00CFFF]/20 bg-[#131840]/80 p-5 space-y-4">
             <div>
-              <div className="font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 uppercase mb-1">Ιστορικό Καταστήματος</div>
+              <div className="text-white/40 text-xs mb-1">Ιστορικό Καταστήματος</div>
               <h3 className="font-orbitron text-white text-sm leading-snug">{form.store}</h3>
             </div>
 
