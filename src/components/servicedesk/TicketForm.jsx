@@ -135,10 +135,12 @@ export default function TicketForm({ user, onSaved }) {
         <div>
           <label className="block text-white/40 text-xs mb-1.5">Ώρα</label>
           <input
-            type="time"
+            type="text"
             value={form.time}
             onChange={(e) => set('time', e.target.value)}
-            className="cyber-input" />
+            className="cyber-input"
+            placeholder="ΩΩ:ΛΛ"
+            pattern="[0-2][0-9]:[0-5][0-9]" />
           
         </div>
         <div>

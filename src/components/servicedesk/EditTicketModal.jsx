@@ -106,8 +106,8 @@ export default function EditTicketModal({ ticket, onClose, onSaved }) {
             </div>
             <div>
               <label className="block text-white/40 text-xs mb-1">Ώρα</label>
-              <input type="time" value={form.time} onChange={e => set('time', e.target.value)}
-                className="cyber-input text-xs" />
+              <input type="text" value={form.time} onChange={e => set('time', e.target.value)}
+                className="cyber-input text-xs" placeholder="ΩΩ:ΛΛ" pattern="[0-2][0-9]:[0-5][0-9]" />
             </div>
             <div>
               <label className="block text-white/40 text-xs mb-1">Χειριστής</label>
