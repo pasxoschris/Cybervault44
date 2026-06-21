@@ -33,37 +33,6 @@ export default function TicketList() {
   const [sheetName, setSheetName] = useState('Support');
   const fileInputRef = useRef(null);
 
-  // Clean extracted data: strip time from date, strip seconds from time, stringify phone
-  const cleanTicket = (item) => {
-    let date = String(item.date || '');
-    // "2025-09-28 00:00:00" → "2025-09-28" or "2025-09-28T00:00:00" → "2025-09-28"
-    date = date.replace(/[T ].*/, '');
-    let time = String(item.time || '');
-    // "17:51:00" → "17:51"
-    time = time.replace(/:\d{2}$/, '');
-    let phone = String(item.phone || '');
-    // "6948533060.0" → "6948533060"
-    phone = phone.replace(/\.0+$/, '');
-    return {
-      date,
-      time,
-      operator: item.operator || '',
-      store: item.store || '',
-      caller: item.caller || '',
-      phone,
-      problem: item.problem || '',
-      priority: item.priority || 'normal',
-      resolved: !!item.resolved,
-      notes: item.notes || '',
-      category_not_spotlight: !!item.category_not_spotlight,
-      category_printers: !!item.category_printers,
-      category_settings: !!item.category_settings,
-      category_pos: !!item.category_pos,
-      category_pda: !!item.category_pda,
-      category_invoices: !!item.category_invoices,
-    };
-  };
-
   const handleFileImport = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -72,49 +41,31 @@ export default function TicketList() {
     try {
       const uploadRes = await base44.integrations.Core.UploadFile({ file });
       setImportStatus('Ανάλυση δεδομένων...');
-      const extractRes = await base44.integrations.Core.ExtractDataFromUploadedFile({
+      const res = await base44.functions.invoke('importTicketsFromExcel', {
         file_url: uploadRes.file_url,
-        json_schema: {
-          type: 'object',
-          properties: {
-            sheet_hint: { type: 'string', description: `Χρησιμοποίησε το sheet: ${sheetName || 'το πρώτο (Support)'}` },
-            output: {
-              type: 'array',
-              items: {
-                type: 'object',
-                properties: {
-                  date: { type: 'string', description: 'Ημερομηνία (στήλη 1, YYYY-MM-DD)' },
-                  time: { type: 'string', description: 'Ώρα (HH:MM)' },
-                  operator: { type: 'string', description: 'Χειριστής' },
-                  store: { type: 'string', description: 'Επωνυμία καταστήματος' },
-                  caller: { type: 'string', description: 'Ποιος κάλεσε' },
-                  phone: { type: 'string', description: 'Τηλέφωνο (αριθμός)' },
-                  problem: { type: 'string', description: 'Πρόβλημα' },
-                  priority: { type: 'string', description: 'Προτεραιότητα (low/normal/high/urgent)' },
-                  resolved: { type: 'boolean', description: 'Επιλύθηκε ή στάλθηκε στο ox.one support' },
-                  notes: { type: 'string', description: 'Παρατηρήσεις / ενέργειες' },
-                  category_not_spotlight: { type: 'boolean', description: 'ΑΣΧΕΤΟ ΜΕ SpotlightPOS ή Spotlight SW/HW' },
-                  category_printers: { type: 'boolean', description: 'ΕΚΤΥΠΩΤΕΣ' },
-                  category_settings: { type: 'boolean', description: 'ΡΥΘΜΙΣΕΙΣ ΕΦΑΡΜΟΓΗΣ' },
-                  category_pos: { type: 'boolean', description: 'POS' },
-                  category_pda: { type: 'boolean', description: 'PDA' },
-                  category_invoices: { type: 'boolean', description: 'Τιμολόγια' },
-                }
-              }
-            }
-          }
-        }
+        sheet_name: sheetName || 'Support',
       });
-      const extracted = extractRes.output || [];
-      const cleaned = extracted.map(cleanTicket);
-      const valid = cleaned.filter(item => item.store && item.problem);
-      if (valid.length === 0) {
+      const data = res.data;
+      if (data.error) {
+        setImportStatus(`Σφάλμα: ${data.error}`);
+        return;
+      }
+      const tickets = data.tickets || [];
+      if (tickets.length === 0) {
         setImportStatus('Δεν βρέθηκαν έγκυρα tickets (απαιτείται Κατάστημα & Πρόβλημα).');
         return;
       }
-      setImportStatus(`Δημιουργία ${valid.length} tickets...`);
-      await base44.entities.Ticket.bulkCreate(valid);
-      setImportStatus(`✓ Εισήχθησαν ${valid.length} tickets!`);
+      setImportStatus(`Δημιουργία ${tickets.length} tickets...`);
+      // Batch in chunks of 200
+      const batchSize = 200;
+      let imported = 0;
+      for (let i = 0; i < tickets.length; i += batchSize) {
+        const batch = tickets.slice(i, i + batchSize);
+        await base44.entities.Ticket.bulkCreate(batch);
+        imported += batch.length;
+        setImportStatus(`Δημιουργία ${imported}/${tickets.length} tickets...`);
+      }
+      setImportStatus(`✓ Εισήχθησαν ${imported} tickets! (Sheet: ${data.sheet_used})`);
       loadTickets();
     } catch (err) {
       setImportStatus(`Σφάλμα: ${err.message || 'Δοκιμάστε ξανά.'}`);
