@@ -157,7 +157,7 @@ export default function TicketForm({ user, onSaved }) {
         <div className="space-y-5">
           {/* Store searchable dropdown */}
           <div className="relative">
-            <label className="block text-white/40 text-xs mb-1.5">Κατάστημα </label>
+            <label className="block text-white/40 text-xs mb-1.5">Κατάστημα (Υποχρεωτικό Πεδίο</label>
             {storesError &&
             <p className="text-red-400 text-xs mb-2">{storesError}</p>
             }
