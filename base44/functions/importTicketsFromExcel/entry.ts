@@ -5,14 +5,14 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
-    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!user) return Response.json({ error: 'Unauthorized' });
 
     const { file_url, sheet_name } = await req.json();
-    if (!file_url) return Response.json({ error: 'Missing file_url' }, { status: 400 });
+    if (!file_url) return Response.json({ error: 'Missing file_url' });
 
     // Fetch the uploaded Excel file
     const fileRes = await fetch(file_url);
-    if (!fileRes.ok) return Response.json({ error: 'Failed to fetch file' }, { status: 400 });
+    if (!fileRes.ok) return Response.json({ error: `Αδυναμία λήψης αρχείου (HTTP ${fileRes.status})` });
     const arrayBuffer = await fileRes.arrayBuffer();
     const data = new Uint8Array(arrayBuffer);
 
@@ -23,12 +23,14 @@ Deno.serve(async (req) => {
       : workbook.Sheets[workbook.SheetNames[0]];
 
     if (!sheet) {
-      return Response.json({ error: `Sheet "${sheet_name}" not found. Available: ${workbook.SheetNames.join(', ')}` }, { status: 400 });
+      return Response.json({
+        error: `Το sheet "${sheet_name}" δεν βρέθηκε. Διαθέσιμα: ${workbook.SheetNames.join(', ')}`
+      });
     }
 
     // Convert to JSON (header row = 1)
     const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
-    if (rows.length < 2) return Response.json({ error: 'No data rows found' }, { status: 400 });
+    if (rows.length < 2) return Response.json({ error: 'Δεν βρέθηκαν γραμμές δεδομένων στο αρχείο' });
 
     const headers = rows[0].map(h => String(h || '').trim());
     const dataRows = rows.slice(1);
@@ -37,20 +39,17 @@ Deno.serve(async (req) => {
     const hIdx = {};
     headers.forEach((h, i) => { hIdx[h] = i; });
 
-    // Find date column (first column with dates, usually "Στήλη 1")
-    const dateColIdx = 0; // First column is always date
+    // Find date column (first column is always date)
+    const dateColIdx = 0;
     const findCol = (names) => {
-      // Exact match first
       for (const n of names) {
         if (hIdx[n] !== undefined) return hIdx[n];
       }
-      // Partial match (starts with)
       for (const n of names) {
         for (const [k, v] of Object.entries(hIdx)) {
           if (k.startsWith(n)) return v;
         }
       }
-      // Partial match (contains)
       for (const n of names) {
         for (const [k, v] of Object.entries(hIdx)) {
           if (k.includes(n)) return v;
@@ -61,7 +60,7 @@ Deno.serve(async (req) => {
 
     const timeIdx = findCol(['Ώρα', 'Ωρα', 'ΩΡΑ', 'Time', 'TIME']);
     const operatorIdx = findCol(['Χειριστής', 'ΧΕΙΡΙΣΤΗΣ', 'Operator']);
-    const storeIdx = findCol(['Κατάστημα', 'Κατάστημα', 'ΚΑΤΑΣΤΗΜΑ', 'Επωνυμία', 'Store']);
+    const storeIdx = findCol(['Κατάστημα', 'ΚΑΤΑΣΤΗΜΑ', 'Επωνυμία', 'Store']);
     const callerIdx = findCol(['Ποιος κάλεσε', 'ΠΟΙΟΣ ΚΑΛΕΣΕ', 'Caller']);
     const phoneIdx = findCol(['Τηλέφωνο', 'ΤΗΛΕΦΩΝΟ', 'Phone', 'Τηλ']);
     const problemIdx = findCol(['Πρόβλημα', 'ΠΡΟΒΛΗΜΑ', 'Problem']);
@@ -79,7 +78,7 @@ Deno.serve(async (req) => {
     if (storeIdx === -1 || problemIdx === -1) {
       return Response.json({
         error: `Απαιτούνται στήλες "Κατάστημα" και "Πρόβλημα". Βρέθηκαν: ${headers.join(', ')}`
-      }, { status: 400 });
+      });
     }
 
     const toBool = (v) => {
@@ -90,14 +89,10 @@ Deno.serve(async (req) => {
     const toDate = (v) => {
       let s = String(v).trim();
       if (!s) return '';
-      // If it's a datetime like "2025-09-28 00:00:00" or "2025-09-28T00:00:00"
       s = s.replace(/[T ].*/, '');
-      // If it looks like a date already (YYYY-MM-DD)
       if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
-      // Try to parse as Excel date number
       const num = parseFloat(v);
       if (!isNaN(num) && num > 40000 && num < 80000) {
-        // Excel date serial number
         const dt = new Date((num - 25569) * 86400000);
         return dt.toISOString().split('T')[0];
       }
@@ -107,16 +102,13 @@ Deno.serve(async (req) => {
     const toTime = (v) => {
       let s = String(v).trim();
       if (!s) return '';
-      // "17:51:00" → "17:51"
       s = s.replace(/:\d{2}$/, '');
       return s;
     };
 
     const toPhone = (v) => {
       let s = String(v).trim();
-      // "6948533060.0" → "6948533060"
       s = s.replace(/\.0+$/, '');
-      // Remove spaces
       s = s.replace(/\s/g, '');
       return s;
     };
@@ -155,8 +147,14 @@ Deno.serve(async (req) => {
       });
     }
 
-    return Response.json({ count: tickets.length, tickets, sheet_used: sheet_name || workbook.SheetNames[0], available_sheets: workbook.SheetNames });
+    return Response.json({
+      count: tickets.length,
+      tickets,
+      headers_found: headers,
+      sheet_used: sheet_name || workbook.SheetNames[0],
+      available_sheets: workbook.SheetNames,
+    });
   } catch (error) {
-    return Response.json({ error: error.message }, { status: 500 });
+    return Response.json({ error: error.message });
   }
 });
