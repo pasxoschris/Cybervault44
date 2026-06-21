@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
+const toDisplayDate = (d) => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y}`; };
+const toStorageDate = (d) => { const p = d.split('/'); if (p.length !== 3) return d; return `${p[2]}-${p[1]}-${p[0]}`; };
+
 const CATEGORIES = [
   { key: 'category_not_spotlight', label: 'ΔΕΝ ΑΦΟΡΟΥΣΕ ΤΗ SPOTLIGHT' },
   { key: 'category_printers', label: 'ΕΚΤΥΠΩΤΕΣ' },
@@ -98,8 +101,8 @@ export default function EditTicketModal({ ticket, onClose, onSaved }) {
           <div className="grid grid-cols-3 gap-3">
             <div>
               <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Ημερομηνία</label>
-              <input type="date" value={form.date} onChange={e => set('date', e.target.value)}
-                className="cyber-input text-xs" style={{ colorScheme: 'dark' }} />
+              <input type="text" value={toDisplayDate(form.date)} onChange={e => set('date', toStorageDate(e.target.value))}
+                className="cyber-input text-xs" placeholder="ηη/μμ/εεεε" />
             </div>
             <div>
               <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1 uppercase">Ώρα</label>

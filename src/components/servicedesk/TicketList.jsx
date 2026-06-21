@@ -3,6 +3,8 @@ import { Pencil, Search, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import EditTicketModal from '@/components/servicedesk/EditTicketModal';
 
+const toDisplayDate = (d) => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y}`; };
+const toStorageDate = (d) => { const p = d.split('/'); if (p.length !== 3) return d; return `${p[2]}-${p[1]}-${p[0]}`; };
 const toGreekDate = (d) => { if (!d) return '—'; const [y, m, day] = d.split('-'); return `${day}/${m}/${y}`; };
 
 const CATEGORIES = [
@@ -93,21 +95,21 @@ export default function TicketList() {
           <div className="flex items-center gap-1.5 text-xs font-mono-cyber text-[#00CFFF]/60 tracking-wider">
             <span>ΑΠΟ</span>
             <input
-              type="date"
-              value={dateFrom}
-              onChange={e => setDateFrom(e.target.value)}
+              type="text"
+              value={toDisplayDate(dateFrom)}
+              onChange={e => setDateFrom(toStorageDate(e.target.value))}
               className="cyber-input text-xs w-36"
-              style={{ colorScheme: 'dark' }}
+              placeholder="ηη/μμ/εεεε"
             />
           </div>
           <div className="flex items-center gap-1.5 text-xs font-mono-cyber text-[#00CFFF]/60 tracking-wider">
             <span>ΕΩΣ</span>
             <input
-              type="date"
-              value={dateTo}
-              onChange={e => setDateTo(e.target.value)}
+              type="text"
+              value={toDisplayDate(dateTo)}
+              onChange={e => setDateTo(toStorageDate(e.target.value))}
               className="cyber-input text-xs w-36"
-              style={{ colorScheme: 'dark' }}
+              placeholder="ηη/μμ/εεεε"
             />
           </div>
           <select

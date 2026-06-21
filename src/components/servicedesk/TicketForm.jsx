@@ -3,7 +3,10 @@ import { Pencil } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import EditTicketModal from '@/components/servicedesk/EditTicketModal';
 
+const toDisplayDate = (d) => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y}`; };
+const toStorageDate = (d) => { const p = d.split('/'); if (p.length !== 3) return d; return `${p[2]}-${p[1]}-${p[0]}`; };
 const today = () => new Date().toISOString().split('T')[0];
+const todayDisplay = () => toDisplayDate(today());
 const nowTime = () => new Date().toTimeString().slice(0, 5);
 
 const toGreekDate = (d) => { if (!d) return '—'; const [y, m, day] = d.split('-'); return `${day}/${m}/${y}`; };
@@ -121,12 +124,11 @@ export default function TicketForm({ user, onSaved }) {
         <div>
           <label className="block font-mono-cyber text-xs tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Ημερομηνία</label>
           <input
-            type="date"
-            value={form.date}
-            onChange={e => set('date', e.target.value)}
+            type="text"
+            value={toDisplayDate(form.date)}
+            onChange={e => set('date', toStorageDate(e.target.value))}
             className="cyber-input"
             required
-            style={{ colorScheme: 'dark' }}
             placeholder="ηη/μμ/εεεε"
           />
         </div>
