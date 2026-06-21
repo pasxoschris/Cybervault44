@@ -18,8 +18,9 @@ const CATEGORIES = [
 
 export default function TicketList() {
   const [tickets, setTickets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [editingTicket, setEditingTicket] = useState(null);
+  const [searched, setSearched] = useState(false); // true once user has searched at least once
 
   // Filters
   const [searchText, setSearchText] = useState('');
@@ -37,8 +38,11 @@ export default function TicketList() {
   };
 
   useEffect(() => {
-    loadTickets();
-  }, []);
+    if (hasFilters) {
+      if (!searched) setSearched(true);
+      loadTickets();
+    }
+  }, [searchText, dateFrom, dateTo, statusFilter, categoryFilter, priorityFilter]);
 
   const filteredTickets = useMemo(() => {
     return tickets.filter(t => {
@@ -69,6 +73,8 @@ export default function TicketList() {
     setStatusFilter('all');
     setCategoryFilter('');
     setPriorityFilter('');
+    setSearched(false);
+    setTickets([]);
   };
 
   const hasFilters = searchText || dateFrom || dateTo || statusFilter !== 'all' || categoryFilter || priorityFilter;
@@ -150,7 +156,15 @@ export default function TicketList() {
         </div>
       </div>
 
-      {tickets.length === 0 ? (
+      {!searched ? (
+        <div className="text-center py-20 font-mono-cyber text-[#00CFFF]/30 text-sm tracking-widest space-y-2">
+          <Search size={40} className="mx-auto mb-4 text-[#00CFFF]/20" />
+          <div>ΕΦΑΡΜΟΣΤΕ ΦΙΛΤΡΑ ΓΙΑ ΑΝΑΖΗΤΗΣΗ</div>
+          <div className="text-white/15 text-xs tracking-wider">Χρησιμοποιήστε την αναζήτηση ή τα φίλτρα για να δείτε tickets</div>
+        </div>
+      ) : loading ? (
+        <div className="text-center py-16 font-mono-cyber text-[#00CFFF]/40 text-sm tracking-widest">ΦΟΡΤΩΣΗ...</div>
+      ) : tickets.length === 0 ? (
         <div className="text-center py-16 font-mono-cyber text-white/20 text-sm tracking-widest">ΔΕΝ ΥΠΑΡΧΟΥΝ TICKETS</div>
       ) : filteredTickets.length === 0 ? (
         <div className="text-center py-16 font-mono-cyber text-white/30 text-sm tracking-widest">ΔΕΝ ΒΡΕΘΗΚΑΝ ΑΠΟΤΕΛΕΣΜΑΤΑ</div>
