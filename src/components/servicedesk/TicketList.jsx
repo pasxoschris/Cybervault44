@@ -1,5 +1,5 @@
-import { useEffect, useState, useMemo } from 'react';
-import { Pencil, Search, X } from 'lucide-react';
+import { useEffect, useState, useMemo, useRef } from 'react';
+import { Pencil, Search, X, Upload } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import EditTicketModal from '@/components/servicedesk/EditTicketModal';
 
@@ -28,6 +28,74 @@ export default function TicketList() {
   const [statusFilter, setStatusFilter] = useState('all'); // all | resolved | unresolved
   const [categoryFilter, setCategoryFilter] = useState('');
   const [priorityFilter, setPriorityFilter] = useState('');
+  const [importing, setImporting] = useState(false);
+  const [importStatus, setImportStatus] = useState('');
+  const fileInputRef = useRef(null);
+
+  const handleFileImport = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setImporting(true);
+    setImportStatus('Φόρτωση αρχείου...');
+    try {
+      const uploadRes = await base44.integrations.Core.UploadFile({ file });
+      setImportStatus('Ανάλυση δεδομένων...');
+      const extractRes = await base44.integrations.Core.ExtractDataFromUploadedFile({
+        file_url: uploadRes.file_url,
+        json_schema: {
+          type: 'object',
+          properties: {
+            output: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  date: { type: 'string', description: 'Ημερομηνία (YYYY-MM-DD)' },
+                  time: { type: 'string', description: 'Ώρα (HH:MM)' },
+                  operator: { type: 'string', description: 'Χειριστής' },
+                  store: { type: 'string', description: 'Κατάστημα' },
+                  caller: { type: 'string', description: 'Ποιος κάλεσε' },
+                  phone: { type: 'string', description: 'Τηλέφωνο' },
+                  problem: { type: 'string', description: 'Πρόβλημα' },
+                  priority: { type: 'string', description: 'Προτεραιότητα (low/normal/high/urgent)' },
+                  resolved: { type: 'boolean', description: 'Επιλύθηκε' },
+                  notes: { type: 'string', description: 'Ενέργειες/Παρατηρήσεις' },
+                }
+              }
+            }
+          }
+        }
+      });
+      const extracted = extractRes.output || [];
+      const valid = extracted.filter(item => item.store && item.problem);
+      if (valid.length === 0) {
+        setImportStatus('Δεν βρέθηκαν έγκυρα tickets (απαιτείται Κατάστημα & Πρόβλημα).');
+        return;
+      }
+      setImportStatus(`Δημιουργία ${valid.length} tickets...`);
+      const toCreate = valid.map(item => ({
+        date: item.date || '',
+        time: item.time || '',
+        operator: item.operator || '',
+        store: item.store || '',
+        caller: item.caller || '',
+        phone: item.phone || '',
+        problem: item.problem || '',
+        priority: item.priority || 'normal',
+        resolved: item.resolved || false,
+        notes: item.notes || '',
+      }));
+      await base44.entities.Ticket.bulkCreate(toCreate);
+      setImportStatus(`✓ Εισήχθησαν ${toCreate.length} tickets!`);
+      loadTickets();
+    } catch (err) {
+      setImportStatus(`Σφάλμα: ${err.message || 'Δοκιμάστε ξανά.'}`);
+    } finally {
+      setImporting(false);
+      setTimeout(() => setImportStatus(''), 6000);
+    }
+    e.target.value = '';
+  };
 
   const loadTickets = () => {
     setLoading(true);
@@ -90,7 +158,27 @@ export default function TicketList() {
             className="cyber-input flex-1 text-sm"
             placeholder="Αναζήτηση σε κατάστημα, πρόβλημα, καλούντα, χειριστή..."
           />
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileImport}
+            accept=".xlsx,.csv,.xls,.json"
+            className="hidden"
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={importing}
+            className="flex items-center gap-1.5 px-3 py-2 border border-[#00CFFF]/30 text-[#00CFFF]/70 text-xs hover:bg-[#00CFFF]/10 hover:border-[#00CFFF]/60 transition-colors disabled:opacity-40 flex-shrink-0"
+          >
+            <Upload size={13} />
+            {importing ? 'Εισαγωγή...' : 'Εισαγωγή'}
+          </button>
         </div>
+        {importStatus && (
+          <div className={`text-xs px-3 py-1.5 border ${importStatus.startsWith('✓') ? 'border-green-500/30 bg-green-500/10 text-green-400' : importStatus.startsWith('Σφάλμα') ? 'border-red-500/30 bg-red-500/10 text-red-400' : 'border-[#00CFFF]/20 bg-[#00CFFF]/5 text-[#00CFFF]/70'}`}>
+            {importStatus}
+          </div>
+        )}
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-1.5 text-xs text-white/40">
             <span>ΑΠΟ</span>
