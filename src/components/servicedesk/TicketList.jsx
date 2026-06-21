@@ -30,7 +30,7 @@ export default function TicketList() {
   const [priorityFilter, setPriorityFilter] = useState('');
   const [importing, setImporting] = useState(false);
   const [importStatus, setImportStatus] = useState('');
-  const [sheetName, setSheetName] = useState('');
+  const [sheetName, setSheetName] = useState('Support');
   const fileInputRef = useRef(null);
 
   // Clean extracted data: strip time from date, strip seconds from time, stringify phone
