@@ -153,10 +153,8 @@ export default function TicketForm({ user, onSaved }) {
 
   const selectResolutionStatus = (id) => {
     const s = masterData.resolutionStatuses.find(x => x.id === id);
-    setForm(f => ({ ...f, resolution_status_id: id, resolution_status: s?.name || '', escalated_to: s?.name === 'Escalated' ? f.escalated_to : '' }));
+    setForm(f => ({ ...f, resolution_status_id: id, resolution_status: s?.name || '' }));
   };
-
-  const isEscalated = form.resolution_status === 'Escalated';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -346,14 +344,12 @@ export default function TicketForm({ user, onSaved }) {
                 {masterData.resolutionStatuses.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
               </CyberSelect>
             </div>
-            {isEscalated && (
-              <div>
-                <label className="block text-white/40 text-xs mb-1 font-mono-cyber tracking-widest">ΚΛΙΜΑΚΩΘΗΚΕ ΣΕ</label>
-                <CyberSelect value={form.escalated_to} onChange={v => set('escalated_to', v)} placeholder="Επιλέξτε...">
-                  {ESCALATED_TO_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
-                </CyberSelect>
-              </div>
-            )}
+            <div>
+              <label className="block text-white/40 text-xs mb-1 font-mono-cyber tracking-widest">ΚΛΙΜΑΚΩΘΗΚΕ ΣΕ</label>
+              <CyberSelect value={form.escalated_to} onChange={v => set('escalated_to', v)} placeholder="Επιλέξτε (προαιρετικό)...">
+                {ESCALATED_TO_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
+              </CyberSelect>
+            </div>
           </SectionCard>
 
           {/* SECTION: Description & Actions */}
