@@ -229,7 +229,7 @@ export default function TicketForm({ user, onSaved }) {
               onChange={(e) => set('problem', e.target.value)}
               className="cyber-input resize-none"
               rows={3}
-              placeholder="Περιγραφή προβλήματος..."
+              placeholder="Περιγραφή προβλήματος όπως το αντιλαμβάνεται ο χρήστης..."
               required />
             
           </div>
