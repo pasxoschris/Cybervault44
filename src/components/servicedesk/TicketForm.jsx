@@ -344,12 +344,7 @@ export default function TicketForm({ user, onSaved }) {
                 {masterData.resolutionStatuses.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
               </CyberSelect>
             </div>
-            <div>
-              <label className="block text-white/40 text-xs mb-1 font-mono-cyber tracking-widest">ΚΛΙΜΑΚΩΘΗΚΕ ΣΕ</label>
-              <CyberSelect value={form.escalated_to} onChange={v => set('escalated_to', v)} placeholder="Επιλέξτε (προαιρετικό)...">
-                {ESCALATED_TO_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
-              </CyberSelect>
-            </div>
+
           </SectionCard>
 
           {/* SECTION: Description & Actions */}

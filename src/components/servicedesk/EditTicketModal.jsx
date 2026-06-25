@@ -245,13 +245,7 @@ export default function EditTicketModal({ ticket, onClose, onSaved }) {
             </CyberSelect>
           </div>
 
-          {/* Escalated To */}
-          <div>
-            <label className="block text-white/40 text-xs mb-1 font-mono-cyber tracking-widest">ΚΛΙΜΑΚΩΘΗΚΕ ΣΕ</label>
-            <CyberSelect value={form.escalated_to} onChange={v => set('escalated_to', v)} placeholder="Επιλέξτε (προαιρετικό)...">
-              {ESCALATED_TO_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
-            </CyberSelect>
-          </div>
+
 
           {/* Problem */}
           <div>
