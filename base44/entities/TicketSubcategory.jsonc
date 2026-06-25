@@ -1,0 +1,36 @@
+{
+  "name": "TicketSubcategory",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "\u038c\u03bd\u03bf\u03bc\u03b1 \u03c5\u03c0\u03bf\u03ba\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1\u03c2"
+    },
+    "category_id": {
+      "type": "string",
+      "description": "ID \u03ba\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1\u03c2 (TicketCategory)"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "category_id"
+  ],
+  "rls": {
+    "create": {},
+    "read": {},
+    "update": {},
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
