@@ -122,7 +122,7 @@ export default function TicketForm({ user, onSaved }) {
       {/* Row: Date + Time + Operator — full width */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
         <div>
-          <label className="block text-white/40 text-xs mb-1.5">Ημερομηνία</label>
+          <label className="block text-white/40 text-lg mb-1.5">Ημερομηνία</label>
           <input
             type="text"
             value={toDisplayDate(form.date)}
@@ -133,7 +133,7 @@ export default function TicketForm({ user, onSaved }) {
           
         </div>
         <div>
-          <label className="block text-white/40 text-xs mb-1.5">Ώρα</label>
+          <label className="block text-white/40 text-lg mb-1.5">Ώρα</label>
           <input
             type="text"
             value={form.time}
@@ -144,7 +144,7 @@ export default function TicketForm({ user, onSaved }) {
           
         </div>
         <div>
-          <label className="block text-white/40 text-xs mb-1.5">Χειριστής</label>
+          <label className="block text-white/40 text-lg mb-1.5">Χειριστής</label>
           <input
             type="text"
             value={form.operator}
@@ -159,7 +159,7 @@ export default function TicketForm({ user, onSaved }) {
         <div className="space-y-5">
           {/* Store searchable dropdown */}
           <div className="relative">
-            <label className="block text-white/40 text-xs mb-1.5">Κατάστημα *</label>
+            <label className="block text-white/40 text-lg mb-1.5">Κατάστημα *</label>
             {storesError &&
             <p className="text-red-400 text-xs mb-2">{storesError}</p>
             }
@@ -200,7 +200,7 @@ export default function TicketForm({ user, onSaved }) {
           {/* Caller + Phone */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-white/40 text-xs mb-1.5">Ποιος κάλεσε</label>
+              <label className="block text-white/40 text-lg mb-1.5">Ποιος κάλεσε</label>
               <input
                 type="text"
                 value={form.caller}
@@ -210,7 +210,7 @@ export default function TicketForm({ user, onSaved }) {
               
             </div>
             <div>
-              <label className="block text-white/40 text-xs mb-1.5">Τηλέφωνο</label>
+              <label className="block text-white/40 text-lg mb-1.5">Τηλέφωνο</label>
               <input
                 type="tel"
                 value={form.phone}
@@ -223,7 +223,7 @@ export default function TicketForm({ user, onSaved }) {
 
           {/* Problem */}
           <div>
-            <label className="block text-white/40 text-xs mb-1.5">Πρόβλημα</label>
+            <label className="block text-white/40 text-lg mb-1.5">Πρόβλημα</label>
             <textarea
               value={form.problem}
               onChange={(e) => set('problem', e.target.value)}
@@ -236,7 +236,7 @@ export default function TicketForm({ user, onSaved }) {
 
           {/* Priority */}
           <div>
-            <label className="block text-white/40 text-xs mb-1.5">Προτεραιότητα</label>
+            <label className="block text-white/40 text-lg mb-1.5">Προτεραιότητα</label>
             <div className="grid grid-cols-4 gap-2">
               {[
               { key: 'low', label: 'ΧΑΜΗΛΗ', color: 'border-blue-400/40 text-blue-400 bg-blue-400/5' },
@@ -283,7 +283,7 @@ export default function TicketForm({ user, onSaved }) {
 
           {/* Notes / Ενέργειες */}
           <div>
-            <label className="block text-white/40 text-xs mb-1.5">Ενέργειες</label>
+            <label className="block text-white/40 text-lg mb-1.5">Ενέργειες</label>
             <textarea
               value={form.notes}
               onChange={(e) => set('notes', e.target.value)}
@@ -295,7 +295,7 @@ export default function TicketForm({ user, onSaved }) {
 
           {/* Categories */}
           <div>
-            <label className="block text-white/40 text-xs mb-3">Το πρόβλημα αφορούσε</label>
+            <label className="block text-white/40 text-lg mb-3">Το πρόβλημα αφορούσε</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {CATEGORIES.map((cat) =>
               <div
