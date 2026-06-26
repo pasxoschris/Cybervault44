@@ -39,6 +39,7 @@ export default function Navbar() {
 
   const contactLink = { label: 'Επικοινωνία', to: '/contact' };
   const adminLink = { label: 'Whitelist', to: '/admin/whitelist' };
+  const sdeskAdminLink = { label: 'SD Admin', to: '/admin/service-desk-admin' };
   const storesLink = { label: 'Καταστήματα', to: '/stores' };
   const resellerLink = { label: 'Reseller Console', to: '/reseller-console' };
 
@@ -83,6 +84,11 @@ export default function Navbar() {
           {isAdmin && (
             <Link to={adminLink.to} className="nav-link">
               {adminLink.label}
+            </Link>
+          )}
+          {isAdmin && (
+            <Link to={sdeskAdminLink.to} className="nav-link">
+              {sdeskAdminLink.label}
             </Link>
           )}
           <Link to={contactLink.to} className="cyber-btn !py-2 !px-5 text-xs">
@@ -137,6 +143,15 @@ export default function Navbar() {
               className="nav-link text-left text-sm"
             >
               {adminLink.label}
+            </Link>
+          )}
+          {isAdmin && (
+            <Link
+              to={sdeskAdminLink.to}
+              onClick={() => setMobileOpen(false)}
+              className="nav-link text-left text-sm"
+            >
+              {sdeskAdminLink.label}
             </Link>
           )}
           <Link
