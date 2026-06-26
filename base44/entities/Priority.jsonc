@@ -1,0 +1,43 @@
+{
+  "name": "Priority",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "\u038c\u03bd\u03bf\u03bc\u03b1 \u03c0\u03c1\u03bf\u03c4\u03b5\u03c1\u03b1\u03b9\u03cc\u03c4\u03b7\u03c4\u03b1\u03c2"
+    },
+    "color": {
+      "type": "string",
+      "description": "\u03a7\u03c1\u03ce\u03bc\u03b1 (hex \u03ae tailwind class)"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
