@@ -6,6 +6,14 @@
       "type": "string",
       "description": "\u038c\u03bd\u03bf\u03bc\u03b1 \u03ba\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1\u03c2"
     },
+    "icon": {
+      "type": "string",
+      "description": "Lucide icon name"
+    },
+    "color": {
+      "type": "string",
+      "description": "\u03a7\u03c1\u03ce\u03bc\u03b1 (hex)"
+    },
     "display_order": {
       "type": "number",
       "default": 0
@@ -19,9 +27,17 @@
     "name"
   ],
   "rls": {
-    "create": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
     "read": {},
-    "update": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
     "delete": {
       "user_condition": {
         "role": "admin"
