@@ -47,7 +47,9 @@ async function buildOfferPdf(offer, customer, lines, totals, settings) {
   const ref = offer?.reference_number || '';
   const today = new Date().toLocaleDateString('el-GR');
   const validityDays = settings?.offer_validity_days || 30;
-  const expiresDate = new Date(Date.now() + validityDays * 86400000).toLocaleDateString('el-GR');
+  const expiresDate = offer?.expires_at
+    ? new Date(offer.expires_at).toLocaleDateString('el-GR')
+    : new Date(Date.now() + validityDays * 86400000).toLocaleDateString('el-GR');
 
   if (ref) {
     const refW = boldFont.widthOfTextAtSize(ref, 10);
@@ -173,73 +175,192 @@ async function buildOfferPdf(offer, customer, lines, totals, settings) {
   return btoa(binary);
 }
 
+// Build HTML email body from stored offer data (ensures totals are always correct)
+function buildHtmlBody(offer, lines, totals, settings, origin) {
+  const intro = settings?.default_email_body
+    ? settings.default_email_body.replace(/\n/g, '<br>')
+    : `Αγαπητέ/ή ${offer?.contact_person || ''},<br><br>Σας αποστέλλουμε την προσφορά μας για το σύστημα Spotlight POS.`;
+
+  const fmt = (n) => Number(n).toFixed(2);
+  const ref = offer?.reference_number || '';
+  const expires = offer?.expires_at ? new Date(offer.expires_at).toLocaleDateString('el-GR') : '';
+
+  const itemRows = (lines || []).map(l => {
+    const sub = l.quantity * l.unit_price;
+    const total = sub * (1 - l.discount_pct / 100);
+    return `
+      <tr>
+        <td style="padding:8px 12px;border-bottom:1px solid #eee;">
+          <strong>${l.name || ''}</strong>${l.description ? `<br><span style="color:#888;font-size:12px;">${l.description}</span>` : ''}
+        </td>
+        <td style="padding:8px 12px;border-bottom:1px solid #eee;text-align:center;">${l.quantity}</td>
+        <td style="padding:8px 12px;border-bottom:1px solid #eee;text-align:right;">€${fmt(l.unit_price)}</td>
+        <td style="padding:8px 12px;border-bottom:1px solid #eee;text-align:center;">${l.discount_pct > 0 ? l.discount_pct + '%' : '—'}</td>
+        <td style="padding:8px 12px;border-bottom:1px solid #eee;text-align:right;font-weight:bold;color:#0099cc;">€${fmt(total)}</td>
+      </tr>`;
+  }).join('');
+
+  const t = totals || {};
+  const totalsHtml = `
+    <tr><td colspan="4" style="padding:6px 12px;text-align:right;color:#666;">Σύνολο πριν έκπτωση</td><td style="padding:6px 12px;text-align:right;font-family:monospace;">€${fmt(t.subtotalBefore||0)}</td></tr>
+    ${(t.totalDiscount||0) > 0 ? `<tr><td colspan="4" style="padding:6px 12px;text-align:right;color:#e55;">Έκπτωση</td><td style="padding:6px 12px;text-align:right;font-family:monospace;color:#e55;">-€${fmt(t.totalDiscount||0)}</td></tr>` : ''}
+    <tr><td colspan="4" style="padding:6px 12px;text-align:right;color:#666;">Καθαρό ποσό</td><td style="padding:6px 12px;text-align:right;font-family:monospace;">€${fmt(t.subtotalAfter||0)}</td></tr>
+    <tr><td colspan="4" style="padding:6px 12px;text-align:right;color:#666;">ΦΠΑ ${t.vatRate||24}%</td><td style="padding:6px 12px;text-align:right;font-family:monospace;">€${fmt(t.vatAmount||0)}</td></tr>
+    <tr style="background:#0E1235;"><td colspan="4" style="padding:10px 12px;text-align:right;color:#fff;font-weight:bold;">ΣΥΝΟΛΟ</td><td style="padding:10px 12px;text-align:right;font-family:monospace;font-weight:bold;color:#00cfff;font-size:16px;">€${fmt(t.finalTotal||0)}</td></tr>`;
+
+  return `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;color:#333;max-width:700px;margin:0 auto;padding:20px;">
+    <div style="background:#0E1235;padding:20px 30px;border-radius:8px 8px 0 0;">
+      <h1 style="margin:0;font-size:22px;color:#fff;"><span style="color:#fff;">CYBER</span><span style="color:#0099cc;">VAULT</span></h1>
+      ${settings?.company_name ? `<p style="margin:4px 0 0;color:#aaa;font-size:13px;">${settings.company_name}</p>` : ''}
+    </div>
+    <div style="background:#f9f9f9;padding:20px 30px;border:1px solid #eee;">
+      <p style="margin:0 0 16px;">${intro}</p>
+      ${ref ? `<p style="margin:4px 0;"><strong>Αριθμός Προσφοράς:</strong> <span style="color:#0099cc;font-family:monospace;">${ref}</span></p>` : ''}
+      ${expires ? `<p style="margin:4px 0;"><strong>Ισχύς έως:</strong> ${expires}</p>` : ''}
+    </div>
+    <table style="width:100%;border-collapse:collapse;margin-top:0;">
+      <thead>
+        <tr style="background:#0E1235;color:#fff;">
+          <th style="padding:10px 12px;text-align:left;font-size:12px;">Περιγραφή</th>
+          <th style="padding:10px 12px;text-align:center;font-size:12px;">Ποσότητα</th>
+          <th style="padding:10px 12px;text-align:right;font-size:12px;">Τιμή Μον.</th>
+          <th style="padding:10px 12px;text-align:center;font-size:12px;">Έκπτωση</th>
+          <th style="padding:10px 12px;text-align:right;font-size:12px;">Σύνολο</th>
+        </tr>
+      </thead>
+      <tbody>${itemRows}${totalsHtml}</tbody>
+    </table>
+    ${offer?.public_token ? `
+    <div style="margin-top:24px;padding:24px;background:#f0f9ff;border:2px solid #0099cc;border-radius:8px;text-align:center;">
+      <p style="margin:0 0 8px;font-size:15px;color:#0E1235;font-weight:bold;">Αποδοχή ή Απόρριψη Προσφοράς</p>
+      <p style="margin:0 0 16px;font-size:13px;color:#666;">Κάντε κλικ στον παρακάτω σύνδεσμο για να δείτε και να αποδεχτείτε ηλεκτρονικά την προσφορά:</p>
+      <a href="${origin}/offers/${offer.public_token}" style="display:inline-block;background:#0099cc;color:#fff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:15px;">Προβολή &amp; Αποδοχή Προσφοράς</a>
+    </div>` : ''}
+    ${settings?.default_terms ? `<div style="margin-top:20px;padding:16px;background:#f5f5f5;border-radius:6px;font-size:11px;color:#888;"><strong>Όροι & Προϋποθέσεις</strong><br>${settings.default_terms.replace(/\n/g, '<br>')}</div>` : ''}
+    <div style="margin-top:20px;padding:16px;border-top:2px solid #0099cc;font-size:12px;color:#888;">
+      ${settings?.public_phone ? `Τηλ: ${settings.public_phone} &nbsp;|&nbsp; ` : ''}
+      ${settings?.public_email ? `Email: ${settings.public_email}` : ''}
+    </div>
+  </body></html>`;
+}
+
 Deno.serve(async (req) => {
-  const base44 = createClientFromRequest(req);
-  const user = await base44.auth.me();
-  if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+  try {
+    const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me();
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const body = await req.json();
-  const { to, cc, subject, html_body, offer_id, offer_data } = body;
+    const body = await req.json();
+    const { to, cc, subject, offer_id } = body;
 
-  if (!to || !subject || !html_body) {
-    return Response.json({ error: 'Missing required fields: to, subject, html_body' }, { status: 400 });
-  }
+    if (!to || !subject) {
+      return Response.json({ error: 'Missing required fields: to, subject' }, { status: 400 });
+    }
 
-  const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
+    if (!offer_id) {
+      return Response.json({ error: 'Missing offer_id' }, { status: 400 });
+    }
 
-  // Build PDF on backend
-  let pdfBase64 = null;
-  let pdfFilename = null;
-  if (offer_data) {
-    const { offer, customer, lines, totals, settings } = offer_data;
-    pdfBase64 = await buildOfferPdf(offer, customer, lines, totals, settings);
-    pdfFilename = offer?.reference_number ? `Προσφορά-${offer.reference_number}.pdf` : 'Προσφορά.pdf';
-  }
+    // ─── Fetch offer from DB (source of truth, same as acceptOffer) ───
+    const offers = await base44.asServiceRole.entities.ResellerOffer.filter({ id: offer_id });
+    if (!offers || offers.length === 0) {
+      return Response.json({ error: 'Offer not found' }, { status: 404 });
+    }
+    const offer = offers[0];
 
-  const sendViaResend = async (recipient) => {
-    const payload = {
-      from: 'CyberVault <offers@cybervault.gr>',
-      to: [recipient],
-      subject,
-      html: html_body,
+    // ─── Fetch settings from DB ───
+    const settingsList = await base44.asServiceRole.entities.ResellerSettings.list();
+    const settings = settingsList[0] || {};
+
+    // ─── Parse items from stored offer ───
+    let lines = [];
+    try { lines = JSON.parse(offer.items || '[]'); } catch {}
+
+    // ─── Use stored financial fields (always correct) ───
+    const totals = {
+      subtotalBefore: offer.subtotal_before_discount || 0,
+      subtotalAfter: offer.subtotal_after_discount || 0,
+      totalDiscount: offer.total_discount || 0,
+      vatRate: offer.vat_rate || settings.default_vat_rate || 24,
+      vatAmount: offer.vat_amount || 0,
+      finalTotal: offer.final_total || 0,
     };
-    if (pdfBase64 && pdfFilename) {
-      payload.attachments = [{ filename: pdfFilename, content: pdfBase64 }];
-    }
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || 'Resend error');
-    }
-    return res.json();
-  };
 
-  await sendViaResend(to);
-  if (cc) await sendViaResend(cc);
+    const customer = {
+      company_legal_name: offer.company_legal_name,
+      store_name: offer.store_name,
+      vat_number: offer.vat_number,
+      address: offer.address,
+      contact_person: offer.contact_person,
+      email: offer.email,
+      phone: offer.phone,
+    };
 
-  // Update offer status and log
-  if (offer_id) {
-    const now = new Date().toISOString();
+    // ─── Build HTML body on backend (uses stored totals) ───
+    let origin = req.headers.get('origin');
+    if (!origin) {
+      const referer = req.headers.get('referer');
+      if (referer) {
+        try { origin = new URL(referer).origin; } catch {}
+      }
+    }
+    origin = origin || 'https://app.base44.com';
+    const htmlBody = buildHtmlBody(offer, lines, totals, settings, origin);
+
+    const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
+
+    // ─── Build PDF on backend ───
+    let pdfBase64 = null;
+    let pdfFilename = null;
     try {
-      const found = await base44.asServiceRole.entities.ResellerOffer.get(offer_id);
-      let history = [];
-      try { history = JSON.parse(found.email_history || '[]'); } catch {}
-      history.push({ sent_at: now, to, cc: cc || null, subject });
-      await base44.asServiceRole.entities.ResellerOffer.update(offer_id, {
-        status: 'sent',
-        last_sent_at: now,
-        last_sent_to: to,
-        email_history: JSON.stringify(history),
-      });
-    } catch { /* offer not found */ }
-  }
+      pdfBase64 = await buildOfferPdf(offer, customer, lines, totals, settings);
+      pdfFilename = offer?.reference_number ? `Προσφορά-${offer.reference_number}.pdf` : 'Προσφορά.pdf';
+    } catch (e) {
+      console.error('PDF build error:', e.message);
+    }
 
-  return Response.json({ success: true });
+    const sendViaResend = async (recipient) => {
+      const payload = {
+        from: 'CyberVault <offers@cybervault.gr>',
+        to: [recipient],
+        subject,
+        html: htmlBody,
+      };
+      if (pdfBase64 && pdfFilename) {
+        payload.attachments = [{ filename: pdfFilename, content: pdfBase64 }];
+      }
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || 'Resend error');
+      }
+      return res.json();
+    };
+
+    await sendViaResend(to);
+    if (cc) await sendViaResend(cc);
+
+    // Update offer status and log
+    const now = new Date().toISOString();
+    let history = [];
+    try { history = JSON.parse(offer.email_history || '[]'); } catch {}
+    history.push({ sent_at: now, to, cc: cc || null, subject });
+    await base44.asServiceRole.entities.ResellerOffer.update(offer_id, {
+      status: 'sent',
+      last_sent_at: now,
+      last_sent_to: to,
+      email_history: JSON.stringify(history),
+    });
+
+    return Response.json({ success: true });
+  } catch (error) {
+    return Response.json({ error: error.message }, { status: 500 });
+  }
 });

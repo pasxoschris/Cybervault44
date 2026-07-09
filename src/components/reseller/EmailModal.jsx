@@ -98,20 +98,14 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
 
   const handleSend = async () => {
     if (!to) { setError('Εισάγετε email παραλήπτη.'); return; }
+    if (!offer?.id) { setError('Αποθηκεύστε πρώτα την προσφορά.'); return; }
     setSending(true);
     setError('');
-    const htmlBody = buildHtmlBody();
+    // Backend fetches offer + settings from DB and builds both HTML and PDF
+    // using the stored financial fields (same source of truth as acceptOffer)
     const res = await base44.functions.invoke('sendResellerEmail', {
       to, cc, subject,
-      html_body: htmlBody,
-      offer_id: offer?.id,
-      offer_data: {
-        offer,
-        customer,
-        lines,
-        totals,
-        settings: defaultSettings,
-      },
+      offer_id: offer.id,
     });
     if (res.data?.success) {
       setSent(true);
