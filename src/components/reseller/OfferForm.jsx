@@ -1,11 +1,11 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { base44 } from '@/api/base44Client';
 import { usePricingItems } from '@/hooks/usePricingItems';
 import { usePricingCategories } from '@/hooks/usePricingCategories';
 import { useResellerSettings } from '@/hooks/useResellerSettings';
 import { useOfferTotals } from '@/hooks/useOfferTotals';
 import { useOfferValidation } from '@/hooks/useOfferValidation';
 import { useCreateOffer, useUpdateOffer } from '@/hooks/useOffers';
+import { useReorderPricingItems } from '@/hooks/usePricingItems';
 import {
   sortItems,
   createLineFromItem,
@@ -38,6 +38,7 @@ export default function OfferForm({ editOffer, onSaved }) {
 
   const createOffer = useCreateOffer();
   const updateOffer = useUpdateOffer();
+  const reorderPricingItems = useReorderPricingItems();
   const { validateOffer } = useOfferValidation();
 
   // ─── Load edit offer ────────────────────────────────────────────
@@ -105,9 +106,7 @@ export default function OfferForm({ editOffer, onSaved }) {
     reordered.splice(result.destination.index, 0, moved);
 
     const updates = reordered.map((item, idx) => ({ id: item.id, display_order: idx * 10 }));
-    await Promise.all(updates.map(u =>
-      base44.entities.ResellerPricingItem.update(u.id, { display_order: u.display_order })
-    ));
+    await reorderPricingItems.mutateAsync(updates);
   };
 
   // ─── Customer change ─────────────────────────────────────────────
