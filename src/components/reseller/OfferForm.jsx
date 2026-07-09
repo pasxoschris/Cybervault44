@@ -217,7 +217,7 @@ export default function OfferForm({ editOffer, onSaved }) {
             settings={settings} refNumber={editOffer?.reference_number || savedOffer?.reference_number}
             savedOffer={savedOffer}
             onClose={() => setShowPreview(false)}
-            onSaveBeforeEmail={async () => { await handleSave('draft'); }}
+            onSaveBeforeEmail={async () => { return await handleSave('draft'); }}
           />
         </Suspense>
       )}

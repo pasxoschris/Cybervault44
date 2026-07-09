@@ -13,12 +13,14 @@ const fmt = (n) => Number(n).toFixed(2);
 export default function OfferPreviewModal({ customer, lines, totals, settings, refNumber, savedOffer, onClose, onSaveBeforeEmail }) {
   const [showEmail, setShowEmail] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [localSavedOffer, setLocalSavedOffer] = useState(null);
 
   const handleEmailClick = async () => {
     if (!savedOffer && onSaveBeforeEmail) {
       setSaving(true);
-      await onSaveBeforeEmail();
+      const saved = await onSaveBeforeEmail();
       setSaving(false);
+      if (saved) setLocalSavedOffer(saved);
     }
     setShowEmail(true);
   };
@@ -150,7 +152,7 @@ export default function OfferPreviewModal({ customer, lines, totals, settings, r
       </div>
       {showEmail && (
         <EmailModal
-          offer={savedOffer}
+          offer={localSavedOffer || savedOffer}
           customer={customer}
           lines={lines}
           totals={totals}
