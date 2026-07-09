@@ -87,6 +87,16 @@ export default function OfferForm({ editOffer, onSaved }) {
 
   const removeLine = (id) => setLines(prev => prev.filter(l => l.id !== id));
 
+  const handleLineDragEnd = (result) => {
+    if (!result.destination) return;
+    setLines(prev => {
+      const reordered = [...prev];
+      const [moved] = reordered.splice(result.source.index, 1);
+      reordered.splice(result.destination.index, 0, moved);
+      return reordered;
+    });
+  };
+
   const lineTotal = (l) => {
     const sub = l.quantity * l.unit_price;
     return sub * (1 - l.discount_pct / 100);
@@ -253,7 +263,7 @@ export default function OfferForm({ editOffer, onSaved }) {
                 <div key={cat.id} className="border border-[#2A3580] rounded-xl overflow-hidden">
                   <button
                     onClick={() => toggleCategory(cat.id)}
-                    className="w-full flex items-center justify-between px-4 py-2.5 bg-[#0E1235] hover:bg-[#131840] transition-colors"
+                    className={`w-full flex items-center justify-between px-4 py-2.5 transition-colors ${openCategories[cat.id] ? 'bg-[#00CFFF]/10 border-l-2 border-[#00CFFF]' : 'bg-[#0E1235] hover:bg-[#131840]'}`}
                   >
                     <div className="flex items-center gap-2">
                       {openCategories[cat.id] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
@@ -287,7 +297,7 @@ export default function OfferForm({ editOffer, onSaved }) {
                 <div className="border border-[#2A3580] rounded-xl overflow-hidden">
                   <button
                     onClick={() => toggleCategory('__uncategorized__')}
-                    className="w-full flex items-center justify-between px-4 py-2.5 bg-[#0E1235] hover:bg-[#131840] transition-colors"
+                    className={`w-full flex items-center justify-between px-4 py-2.5 transition-colors ${openCategories['__uncategorized__'] ? 'bg-[#00CFFF]/10 border-l-2 border-[#00CFFF]' : 'bg-[#0E1235] hover:bg-[#131840]'}`}
                   >
                     <div className="flex items-center gap-2">
                       {openCategories['__uncategorized__'] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
@@ -325,18 +335,27 @@ export default function OfferForm({ editOffer, onSaved }) {
       {lines.length > 0 && (
         <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
           <h3 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">Γραμμές Προσφοράς</h3>
+          <DragDropContext onDragEnd={handleLineDragEnd}>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-[#2A3580]">
+                  <th className="py-2 px-1 w-6"></th>
                   {['Προϊόν/Υπηρεσία', 'Περιγραφή', 'Ποσότητα', 'Τιμή', 'Έκπτωση %', 'ΦΠΑ', 'Σύνολο', ''].map(h => (
                     <th key={h} className="text-left py-2 px-2 text-white/40 text-xs font-semibold">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody>
-                {lines.map(l => (
-                  <tr key={l.id} className="border-b border-[#2A3580]/40">
+              <Droppable droppableId="offer-lines">
+                {(provided) => (
+              <tbody ref={provided.innerRef} {...provided.droppableProps}>
+                {lines.map((l, index) => (
+                  <Draggable key={l.id} draggableId={String(l.id)} index={index}>
+                    {(drag) => (
+                  <tr ref={drag.innerRef} {...drag.draggableProps} className="border-b border-[#2A3580]/40">
+                    <td {...drag.dragHandleProps} className="py-2 px-1 cursor-grab active:cursor-grabbing text-white/20 hover:text-white/50 transition-colors align-middle">
+                      <GripVertical size={14} />
+                    </td>
                     <td className="py-2 px-2">
                       <input value={l.name} onChange={e => updateLine(l.id, 'name', e.target.value)} className="bg-transparent text-white text-sm focus:outline-none w-32 border-b border-transparent focus:border-[#00CFFF]/30" />
                     </td>
@@ -366,10 +385,16 @@ export default function OfferForm({ editOffer, onSaved }) {
                       <button onClick={() => removeLine(l.id)} className="text-white/30 hover:text-red-400 transition-colors"><Trash2 size={14} /></button>
                     </td>
                   </tr>
+                    )}
+                  </Draggable>
                 ))}
+                {provided.placeholder}
               </tbody>
+                )}
+              </Droppable>
             </table>
           </div>
+          </DragDropContext>
 
           {/* Totals */}
           <div className="mt-4 flex justify-end">
