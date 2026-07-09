@@ -200,7 +200,7 @@ export default function OfferForm({ editOffer, onSaved }) {
 
       {showEmail && (
         <Suspense fallback={<div className="text-center py-12 text-white/30 text-sm">Φόρτωση...</div>}>
-          <EmailModal offer={savedOffer} customer={customer} defaultSettings={settings} onClose={() => setShowEmail(false)} />
+          <EmailModal offer={savedOffer} customer={customer} lines={lines} totals={totals} defaultSettings={settings} onClose={() => setShowEmail(false)} />
         </Suspense>
       )}
       {showPreview && (
