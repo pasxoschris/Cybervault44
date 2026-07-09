@@ -153,10 +153,13 @@ export default function OfferForm({ editOffer, onSaved }) {
       }
       setSavedOffer(saved);
       if (onSaved) onSaved(saved);
+      return saved;
     } catch (err) {
       console.error('Save error:', err);
+      return null;
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
   };
 
   const handleClear = () => {
@@ -194,11 +197,14 @@ export default function OfferForm({ editOffer, onSaved }) {
         hasSavedOffer={!!savedOffer}
         onSaveDraft={() => handleSave('draft')}
         onPreview={() => setShowPreview(true)}
-        onSendEmail={async () => { await handleSave('draft'); setShowEmail(true); }}
+        onSendEmail={async () => {
+          const saved = await handleSave('draft');
+          if (saved) setShowEmail(true);
+        }}
         onClear={handleClear}
       />
 
-      {showEmail && (
+      {showEmail && savedOffer && (
         <Suspense fallback={<div className="text-center py-12 text-white/30 text-sm">Φόρτωση...</div>}>
           <EmailModal offer={savedOffer} customer={customer} lines={lines} totals={totals} defaultSettings={settings} onClose={() => setShowEmail(false)} />
         </Suspense>
