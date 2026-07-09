@@ -104,12 +104,12 @@ export function lineTotal(line) {
 /**
  * Create a new offer line from a pricing item.
  */
-export function createLineFromItem(item) {
+export function createLineFromItem(item, quantity = 1) {
   return {
     id: Date.now() + Math.random(),
     name: item.name,
     description: item.description || '',
-    quantity: 1,
+    quantity: Math.max(1, parseInt(quantity) || 1),
     unit_price: item.unit_price,
     discount_pct: item.default_discount_percentage || 0,
     is_vat_exempt: item.is_vat_exempt || false,

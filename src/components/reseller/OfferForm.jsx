@@ -71,7 +71,7 @@ export default function OfferForm({ editOffer, onSaved }) {
   const totals = useOfferTotals(lines, settings);
 
   // ─── Line operations ────────────────────────────────────────────
-  const addLine = (item) => setLines(prev => [...prev, createLineFromItem(item)]);
+  const addLine = (item, quantity) => setLines(prev => [...prev, createLineFromItem(item, quantity)]);
   const updateLine = (id, field, val) => setLines(prev => prev.map(l => l.id === id ? { ...l, [field]: val } : l));
   const removeLine = (id) => setLines(prev => prev.filter(l => l.id !== id));
 
