@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { useQueryClient } from '@tanstack/react-query';
 import { X, Send } from 'lucide-react';
 
 export default function EmailModal({ offer, customer, lines: linesProp, totals: totalsProp, defaultSettings, onClose }) {
+  const qc = useQueryClient();
   // If lines/totals not passed directly, derive them from the saved offer object
   const lines = linesProp && linesProp.length > 0
     ? linesProp
@@ -113,6 +115,7 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
     });
     if (res.data?.success) {
       setSent(true);
+      qc.invalidateQueries({ queryKey: ['reseller', 'offers'] });
     } else {
       setError(res.data?.error || 'Σφάλμα αποστολής.');
     }

@@ -227,9 +227,8 @@ Deno.serve(async (req) => {
   // Update offer status and log
   if (offer_id) {
     const now = new Date().toISOString();
-    const offers = await base44.asServiceRole.entities.ResellerOffer.list();
-    const found = offers.find(o => o.id === offer_id);
-    if (found) {
+    try {
+      const found = await base44.asServiceRole.entities.ResellerOffer.get(offer_id);
       let history = [];
       try { history = JSON.parse(found.email_history || '[]'); } catch {}
       history.push({ sent_at: now, to, cc: cc || null, subject });
@@ -239,7 +238,7 @@ Deno.serve(async (req) => {
         last_sent_to: to,
         email_history: JSON.stringify(history),
       });
-    }
+    } catch { /* offer not found */ }
   }
 
   return Response.json({ success: true });
