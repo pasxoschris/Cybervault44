@@ -194,7 +194,7 @@ export default function OfferForm({ editOffer, onSaved }) {
         hasSavedOffer={!!savedOffer}
         onSaveDraft={() => handleSave('draft')}
         onPreview={() => setShowPreview(true)}
-        onSendEmail={() => { handleSave('draft'); setShowEmail(true); }}
+        onSendEmail={async () => { await handleSave('draft'); setShowEmail(true); }}
         onClear={handleClear}
       />
 
