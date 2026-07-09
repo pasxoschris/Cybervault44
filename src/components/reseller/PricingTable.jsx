@@ -1,22 +1,27 @@
-import { useState, useEffect, useRef } from 'react';
-import { base44 } from '@/api/base44Client';
+import { useState, useRef } from 'react';
 import { Plus, Edit, Trash2, Save, X, ArrowUp, ArrowDown, ArrowUpDown, Search } from 'lucide-react';
+import { usePricingItems, useCreatePricingItem, useUpdatePricingItem, useTogglePricingItemActive } from '@/hooks/usePricingItems';
+import { usePricingCategories } from '@/hooks/usePricingCategories';
+import { validate, pricingItemSchema } from '@/lib/validation/reseller.schemas';
 
 const EMPTY = { name: '', description: '', category_id: '', unit_price: 0, vat_rate: 24, is_vat_exempt: false, default_discount_percentage: 0, display_order: 0, is_active: true };
 
 export default function PricingTable() {
-  const [items, setItems] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data: items = [], isLoading } = usePricingItems();
+  const { data: categories = [] } = usePricingCategories({ activeOnly: false });
+  const createItem = useCreatePricingItem();
+  const updateItem = useUpdatePricingItem();
+  const toggleActive = useTogglePricingItemActive();
+
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState(EMPTY);
-  const [saving, setSaving] = useState(false);
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState('asc');
   const [quickEditId, setQuickEditId] = useState(null);
   const [quickEditVal, setQuickEditVal] = useState('');
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
+  const [error, setError] = useState('');
   const editRef = useRef(null);
 
   const handleSort = (col) => {
@@ -32,10 +37,7 @@ export default function PricingTable() {
     if (categoryFilter && item.category_id !== categoryFilter) return false;
     const q = search.trim().toLowerCase();
     if (!q) return true;
-    return (
-      (item.name || '').toLowerCase().includes(q) ||
-      (item.description || '').toLowerCase().includes(q)
-    );
+    return (item.name || '').toLowerCase().includes(q) || (item.description || '').toLowerCase().includes(q);
   });
 
   const sortedItems = [...filteredItems].sort((a, b) => {
@@ -55,52 +57,40 @@ export default function PricingTable() {
 
   const getCategoryName = (id) => categories.find(c => c.id === id)?.name || '—';
 
-  const load = async () => {
-    const [itemList, catList] = await Promise.all([
-      base44.entities.ResellerPricingItem.list(),
-      base44.entities.ResellerCategory.list('display_order'),
-    ]);
-    setItems(itemList);
-    setCategories(catList);
-    setLoading(false);
-  };
-
-  useEffect(() => { load(); }, []);
-
   const startEdit = (item) => {
     setEditing(item.id);
     setForm({ ...item, display_order: item.display_order ?? 0 });
+    setError('');
     setTimeout(() => editRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   };
   const startNew = () => {
     setEditing('new');
     setForm({ ...EMPTY, category_id: categories[0]?.id || '' });
+    setError('');
     setTimeout(() => editRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   };
   const cancel = () => setEditing(null);
 
   const save = async () => {
-    setSaving(true);
+    setError('');
+    const { success, data: valid, errors } = validate(pricingItemSchema, form);
+    if (!success) {
+      setError(Object.values(errors)[0] || 'Σφάλμα validation');
+      return;
+    }
     if (editing === 'new') {
-      const created = await base44.entities.ResellerPricingItem.create(form);
-      setItems(p => [...p, created]);
+      await createItem.mutateAsync(valid);
     } else {
-      const updated = await base44.entities.ResellerPricingItem.update(editing, form);
-      setItems(p => p.map(x => x.id === editing ? updated : x));
+      await updateItem.mutateAsync({ id: editing, data: valid });
     }
     setEditing(null);
-    setSaving(false);
-  };
-
-  const toggle = async (item) => {
-    const updated = await base44.entities.ResellerPricingItem.update(item.id, { is_active: !item.is_active });
-    setItems(p => p.map(x => x.id === item.id ? updated : x));
   };
 
   const remove = async (id) => {
-    if (!window.confirm('Διαγραφή;')) return;
-    await base44.entities.ResellerPricingItem.delete(id);
-    setItems(p => p.filter(x => x.id !== id));
+    if (!window.confirm('Απενεργοποίηση προϊόντος; (Δεν διαγράφεται — παραμένει στα υπάρχοντα offers)')) return;
+    // Soft delete: set is_active = false
+    const item = items.find(i => i.id === id);
+    if (item) await toggleActive.mutateAsync(item);
   };
 
   const startQuickEdit = (item) => {
@@ -110,18 +100,16 @@ export default function PricingTable() {
 
   const saveQuickEdit = async (id) => {
     const val = parseInt(quickEditVal) || 0;
-    const updated = await base44.entities.ResellerPricingItem.update(id, { display_order: val });
-    setItems(p => p.map(x => x.id === id ? updated : x));
+    await updateItem.mutateAsync({ id, data: { display_order: val } });
     setQuickEditId(null);
   };
 
   const inputCls = "bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1.5 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 w-full";
 
-  if (loading) return <div className="text-center py-12 text-white/30 text-sm">Φόρτωση...</div>;
+  if (isLoading) return <div className="text-center py-12 text-white/30 text-sm">Φόρτωση...</div>;
 
   return (
     <div className="space-y-4">
-      {/* Search + Category filter */}
       <div className="flex gap-3">
         <div className="relative flex-1">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
@@ -178,10 +166,11 @@ export default function PricingTable() {
             <div><label className="text-white/40 text-xs block mb-1">Έκπτωση % (προεπιλογή)</label><input type="number" min={0} max={100} step={0.5} value={form.default_discount_percentage || 0} onChange={e => setForm(f => ({ ...f, default_discount_percentage: parseFloat(e.target.value) || 0 }))} className={inputCls} /></div>
             <div><label className="text-white/40 text-xs block mb-1">Σειρά Εμφάνισης</label><input type="number" min={0} value={form.display_order ?? 0} onChange={e => setForm(f => ({ ...f, display_order: parseInt(e.target.value) || 0 }))} className={inputCls} /></div>
           </div>
+          {error && <p className="text-red-400 text-xs mt-3">{error}</p>}
           <div className="flex gap-3 mt-4">
-            <button onClick={save} disabled={saving}
+            <button onClick={save} disabled={createItem.isPending || updateItem.isPending}
               className="flex items-center gap-2 px-4 py-2 bg-[#00CFFF] text-[#0E1235] rounded-lg text-sm font-bold disabled:opacity-40">
-              <Save size={13} /> {saving ? 'Αποθήκευση...' : 'Αποθήκευση'}
+              <Save size={13} /> {(createItem.isPending || updateItem.isPending) ? 'Αποθήκευση...' : 'Αποθήκευση'}
             </button>
             <button onClick={cancel} className="flex items-center gap-2 px-4 py-2 border border-[#2A3580] rounded-lg text-white/60 text-sm hover:border-[#00CFFF]/30 transition-colors">
               <X size={13} /> Ακύρωση
@@ -195,15 +184,9 @@ export default function PricingTable() {
           <thead>
             <tr className="bg-[#131840] border-b border-[#2A3580]">
               {[
-                ['name', 'Όνομα'],
-                ['description', 'Περιγραφή'],
-                ['category_id', 'Κατηγορία'],
-                ['unit_price', 'Τιμή'],
-                ['vat_rate', 'ΦΠΑ %'],
-                ['default_discount_percentage', 'Έκπτωση %'],
-                ['display_order', 'Σειρά'],
-                ['is_active', 'Ενεργό'],
-                [null, '']
+                ['name', 'Όνομα'], ['description', 'Περιγραφή'], ['category_id', 'Κατηγορία'],
+                ['unit_price', 'Τιμή'], ['vat_rate', 'ΦΠΑ %'], ['default_discount_percentage', 'Έκπτωση %'],
+                ['display_order', 'Σειρά'], ['is_active', 'Ενεργό'], [null, '']
               ].map(([col, h]) => (
                 <th key={h} className="text-left px-3 py-3 text-white/40 text-xs font-semibold uppercase tracking-wide whitespace-nowrap">
                   {col ? (
@@ -227,8 +210,7 @@ export default function PricingTable() {
                 <td className="px-3 py-3">
                   {quickEditId === item.id ? (
                     <div className="flex items-center gap-1">
-                      <input
-                        type="number" value={quickEditVal}
+                      <input type="number" value={quickEditVal}
                         onChange={e => setQuickEditVal(e.target.value)}
                         onKeyDown={e => { if (e.key === 'Enter') saveQuickEdit(item.id); if (e.key === 'Escape') setQuickEditId(null); }}
                         autoFocus
@@ -245,7 +227,7 @@ export default function PricingTable() {
                   )}
                 </td>
                 <td className="px-3 py-3">
-                  <button onClick={() => toggle(item)} className={`px-2 py-0.5 rounded-full text-xs font-medium border ${item.is_active ? 'bg-green-100 text-green-700 border-green-200' : 'bg-gray-100 text-gray-500 border-gray-200'}`}>
+                  <button onClick={() => toggleActive.mutateAsync(item)} className={`px-2 py-0.5 rounded-full text-xs font-medium border ${item.is_active ? 'bg-green-100 text-green-700 border-green-200' : 'bg-gray-100 text-gray-500 border-gray-200'}`}>
                     {item.is_active ? 'Ναι' : 'Όχι'}
                   </button>
                 </td>

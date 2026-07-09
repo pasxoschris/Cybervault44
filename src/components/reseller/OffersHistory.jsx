@@ -1,61 +1,28 @@
-import { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { useState, lazy, Suspense } from 'react';
 import { Eye, Edit, Copy, Trash2, Mail, CheckCircle, XCircle, Search, ExternalLink, Filter } from 'lucide-react';
-import EmailModal from './EmailModal';
+import { useOffers, useUpdateOfferStatus, useDuplicateOffer, useDeleteOffer } from '@/hooks/useOffers';
+import { useResellerSettings } from '@/hooks/useResellerSettings';
+import { formatEuro, formatDate, formatDateTime, STATUS_LABELS, STATUS_COLORS, ALL_STATUSES } from '@/lib/resellerUtils';
 
-const STATUS_LABELS = { draft: 'Draft', sent: 'Sent', viewed: 'Viewed', accepted: 'Accepted', rejected: 'Rejected', expired: 'Expired' };
-const STATUS_COLORS = {
-  draft:    'bg-gray-100 text-gray-600 border-gray-200',
-  sent:     'bg-blue-100 text-blue-700 border-blue-200',
-  viewed:   'bg-purple-100 text-purple-700 border-purple-200',
-  accepted: 'bg-green-100 text-green-700 border-green-200',
-  rejected: 'bg-red-100 text-red-600 border-red-200',
-  expired:  'bg-amber-100 text-amber-700 border-amber-200',
-};
-const ALL_STATUSES = ['draft', 'sent', 'viewed', 'accepted', 'rejected', 'expired'];
+const EmailModal = lazy(() => import('./EmailModal'));
 
 export default function OffersHistory({ onEdit }) {
-  const [offers, setOffers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data: offers = [], isLoading } = useOffers();
+  const { data: settings } = useResellerSettings();
+  const updateStatus = useUpdateOfferStatus();
+  const duplicate = useDuplicateOffer();
+  const remove = useDeleteOffer();
+
   const [emailOffer, setEmailOffer] = useState(null);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [settings, setSettings] = useState({});
 
-  const load = () => Promise.all([
-    base44.entities.ResellerOffer.list('-created_date', 200),
-    base44.entities.ResellerSettings.list(),
-  ]).then(([offerList, settingsList]) => {
-    setOffers(offerList);
-    if (settingsList[0]) setSettings(settingsList[0]);
-  }).finally(() => setLoading(false));
-
-  useEffect(() => { load(); }, []);
-
-  const updateStatus = async (id, status) => {
-    await base44.entities.ResellerOffer.update(id, { status });
-    setOffers(o => o.map(x => x.id === id ? { ...x, status } : x));
-  };
-
-  const duplicate = async (offer) => {
-    const { id, reference_number, public_token, created_date, updated_date, accepted_at, rejected_at, viewed_at, otp_hash, otp_expires_at, otp_attempts, otp_last_sent_at, verification_details, audit_log, accepted_pdf_url, ...rest } = offer;
-    const d = new Date();
-    const date = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
-    const newRef = `CYV-SPOT-${date}-${String(Math.floor(Math.random() * 900) + 100)}`;
-    const newToken = crypto.randomUUID ? crypto.randomUUID() : String(Date.now());
-    const created = await base44.entities.ResellerOffer.create({ ...rest, reference_number: newRef, public_token: newToken, status: 'draft' });
-    setOffers(o => [created, ...o]);
-  };
-
-  const remove = async (id) => {
+  const handleUpdateStatus = (id, status) => updateStatus.mutateAsync({ id, status });
+  const handleDuplicate = (offer) => duplicate.mutateAsync(offer);
+  const handleRemove = (id) => {
     if (!window.confirm('Διαγραφή προσφοράς;')) return;
-    await base44.entities.ResellerOffer.delete(id);
-    setOffers(o => o.filter(x => x.id !== id));
+    remove.mutateAsync(id);
   };
-
-  const fmt = (n) => n ? `€${Number(n).toFixed(2)}` : '—';
-  const fmtDate = (s) => s ? new Date(s).toLocaleDateString('el-GR') : '—';
-  const fmtDateTime = (s) => s ? new Date(s).toLocaleString('el-GR', { dateStyle: 'short', timeStyle: 'short' }) : '—';
 
   const filteredOffers = offers.filter(o => {
     const q = search.trim().toLowerCase();
@@ -70,17 +37,15 @@ export default function OffersHistory({ onEdit }) {
     return matchSearch && matchStatus;
   });
 
-  // Counts per status for filter buttons
   const statusCounts = ALL_STATUSES.reduce((acc, s) => {
     acc[s] = offers.filter(o => o.status === s).length;
     return acc;
   }, {});
 
-  if (loading) return <div className="text-center py-12 text-white/30 text-sm">Φόρτωση...</div>;
+  if (isLoading) return <div className="text-center py-12 text-white/30 text-sm">Φόρτωση...</div>;
 
   return (
     <div className="space-y-4">
-      {/* Filters row */}
       <div className="flex flex-wrap items-center gap-2">
         <div className="relative flex-1 min-w-48">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
@@ -138,10 +103,10 @@ export default function OffersHistory({ onEdit }) {
                       )}
                     </div>
                   </td>
-                  <td className="px-3 py-3 text-white/60 whitespace-nowrap text-xs">{fmtDate(o.created_date)}</td>
+                  <td className="px-3 py-3 text-white/60 whitespace-nowrap text-xs">{formatDate(o.created_date)}</td>
                   <td className="px-3 py-3 whitespace-nowrap text-xs">
                     <span className={o.expires_at && new Date(o.expires_at) < new Date() ? 'text-red-400' : 'text-white/60'}>
-                      {fmtDate(o.expires_at)}
+                      {formatDate(o.expires_at)}
                     </span>
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap max-w-[150px]">
@@ -149,22 +114,22 @@ export default function OffersHistory({ onEdit }) {
                     {o.contact_person && <div className="text-white/40 text-xs truncate">{o.contact_person}</div>}
                   </td>
                   <td className="px-3 py-3 text-white/50 whitespace-nowrap max-w-[150px] truncate text-xs">{o.email || '—'}</td>
-                  <td className="px-3 py-3 font-mono text-[#00CFFF] whitespace-nowrap text-sm">{fmt(o.final_total)}</td>
+                  <td className="px-3 py-3 font-mono text-[#00CFFF] whitespace-nowrap text-sm">{formatEuro(o.final_total)}</td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${STATUS_COLORS[o.status] || STATUS_COLORS.draft}`}>
                       {STATUS_LABELS[o.status] || o.status}
                     </span>
                   </td>
-                  <td className="px-3 py-3 text-white/40 whitespace-nowrap text-xs">{o.viewed_at ? fmtDateTime(o.viewed_at) : '—'}</td>
+                  <td className="px-3 py-3 text-white/40 whitespace-nowrap text-xs">{o.viewed_at ? formatDateTime(o.viewed_at) : '—'}</td>
                   <td className="px-3 py-3 whitespace-nowrap text-xs">
                     {o.accepted_at
-                      ? <span className="text-green-400">{fmtDateTime(o.accepted_at)}</span>
+                      ? <span className="text-green-400">{formatDateTime(o.accepted_at)}</span>
                       : <span className="text-white/20">—</span>}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     <div className="flex items-center gap-1">
                       <button title="Επεξεργασία" onClick={() => onEdit(o)} className="p-1 rounded hover:bg-blue-500/10 text-white/40 hover:text-blue-400 transition-colors"><Edit size={13} /></button>
-                      <button title="Αντιγραφή" onClick={() => duplicate(o)} className="p-1 rounded hover:bg-[#00CFFF]/10 text-white/40 hover:text-[#00CFFF] transition-colors"><Copy size={13} /></button>
+                      <button title="Αντιγραφή" onClick={() => handleDuplicate(o)} className="p-1 rounded hover:bg-[#00CFFF]/10 text-white/40 hover:text-[#00CFFF] transition-colors"><Copy size={13} /></button>
                       <button title="Αποστολή email" onClick={() => setEmailOffer(o)} className="p-1 rounded hover:bg-purple-500/10 text-white/40 hover:text-purple-400 transition-colors"><Mail size={13} /></button>
                       {o.public_token && (
                         <a href={`/offers/${o.public_token}`} target="_blank" rel="noopener noreferrer"
@@ -174,11 +139,11 @@ export default function OffersHistory({ onEdit }) {
                       )}
                       {!['accepted', 'rejected', 'expired'].includes(o.status) && (
                         <>
-                          <button title="Αποδοχή" onClick={() => updateStatus(o.id, 'accepted')} className="p-1 rounded hover:bg-green-500/10 text-white/40 hover:text-green-400 transition-colors"><CheckCircle size={13} /></button>
-                          <button title="Απόρριψη" onClick={() => updateStatus(o.id, 'rejected')} className="p-1 rounded hover:bg-red-500/10 text-white/40 hover:text-red-400 transition-colors"><XCircle size={13} /></button>
+                          <button title="Αποδοχή" onClick={() => handleUpdateStatus(o.id, 'accepted')} className="p-1 rounded hover:bg-green-500/10 text-white/40 hover:text-green-400 transition-colors"><CheckCircle size={13} /></button>
+                          <button title="Απόρριψη" onClick={() => handleUpdateStatus(o.id, 'rejected')} className="p-1 rounded hover:bg-red-500/10 text-white/40 hover:text-red-400 transition-colors"><XCircle size={13} /></button>
                         </>
                       )}
-                      <button title="Διαγραφή" onClick={() => remove(o.id)} className="p-1 rounded hover:bg-red-500/10 text-white/40 hover:text-red-400 transition-colors"><Trash2 size={13} /></button>
+                      <button title="Διαγραφή" onClick={() => handleRemove(o.id)} className="p-1 rounded hover:bg-red-500/10 text-white/40 hover:text-red-400 transition-colors"><Trash2 size={13} /></button>
                     </div>
                   </td>
                 </tr>
@@ -188,12 +153,14 @@ export default function OffersHistory({ onEdit }) {
         </div>
       )}
       {emailOffer && (
-        <EmailModal
-          offer={emailOffer}
-          customer={{ email: emailOffer.email, contact_person: emailOffer.contact_person, store_name: emailOffer.store_name, company_legal_name: emailOffer.company_legal_name, vat_number: emailOffer.vat_number, address: emailOffer.address, phone: emailOffer.phone }}
-          defaultSettings={settings}
-          onClose={() => setEmailOffer(null)}
-        />
+        <Suspense fallback={<div className="text-center py-12 text-white/30 text-sm">Φόρτωση...</div>}>
+          <EmailModal
+            offer={emailOffer}
+            customer={{ email: emailOffer.email, contact_person: emailOffer.contact_person, store_name: emailOffer.store_name, company_legal_name: emailOffer.company_legal_name, vat_number: emailOffer.vat_number, address: emailOffer.address, phone: emailOffer.phone }}
+            defaultSettings={settings || {}}
+            onClose={() => setEmailOffer(null)}
+          />
+        </Suspense>
       )}
     </div>
   );

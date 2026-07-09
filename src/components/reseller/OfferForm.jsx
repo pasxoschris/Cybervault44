@@ -1,64 +1,47 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Plus, Trash2, Save, Eye, Mail, RotateCcw, Search, ChevronDown, ChevronRight, GripVertical } from 'lucide-react';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import EmailModal from './EmailModal';
-import OfferPreviewModal from './OfferPreviewModal';
+import { usePricingItems } from '@/hooks/usePricingItems';
+import { usePricingCategories } from '@/hooks/usePricingCategories';
+import { useResellerSettings } from '@/hooks/useResellerSettings';
+import { useOfferTotals } from '@/hooks/useOfferTotals';
+import { useOfferValidation } from '@/hooks/useOfferValidation';
+import { useCreateOffer, useUpdateOffer } from '@/hooks/useOffers';
+import {
+  sortItems,
+  createLineFromItem,
+  addDays,
+  generatePublicToken,
+} from '@/lib/resellerUtils';
+import CustomerForm, { EMPTY_CUSTOMER } from './offer/CustomerForm';
+import EquipmentSelector from './offer/EquipmentSelector';
+import OfferLinesTable from './offer/OfferLinesTable';
+import OfferActions from './offer/OfferActions';
 
-function generateRef() {
-  const d = new Date();
-  const date = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
-  const seq = String(Math.floor(Math.random() * 900) + 100);
-  return `CYV-SPOT-${date}-${seq}`;
-}
-
-function generatePublicToken() {
-  // Use crypto.randomUUID if available, else fallback to random hex
-  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-    return crypto.randomUUID();
-  }
-  return Array.from(crypto.getRandomValues(new Uint8Array(16)))
-    .map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-const EMPTY_CUSTOMER = { store_name: '', company_legal_name: '', vat_number: '', address: '', contact_person: '', email: '', phone: '', notes: '' };
-
-// Sort items within a category: by display_order (nulls last), then by name
-const sortItems = (items) => [...items].sort((a, b) => {
-  const ao = a.display_order == null ? 99999 : a.display_order;
-  const bo = b.display_order == null ? 99999 : b.display_order;
-  if (ao !== bo) return ao - bo;
-  return (a.name || '').localeCompare(b.name || '');
-});
+// Lazy load heavy modals
+const EmailModal = lazy(() => import('./EmailModal'));
+const OfferPreviewModal = lazy(() => import('./OfferPreviewModal'));
 
 export default function OfferForm({ editOffer, onSaved }) {
   const [customer, setCustomer] = useState(EMPTY_CUSTOMER);
-  const [pricingItems, setPricingItems] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [lines, setLines] = useState([]);
   const [saving, setSaving] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [savedOffer, setSavedOffer] = useState(null);
-  const [settings, setSettings] = useState({ vat_rate: 24, offer_validity_days: 30 });
-  const [search, setSearch] = useState('');
   const [openCategories, setOpenCategories] = useState({});
 
+  // ─── Data (React Query cached) ──────────────────────────────────
+  const { data: pricingItems = [] } = usePricingItems({ activeOnly: true });
+  const { data: categories = [] } = usePricingCategories({ activeOnly: true });
+  const { data: settingsData } = useResellerSettings();
+  const settings = settingsData || { vat_rate: 24, offer_validity_days: 30, default_vat_rate: 24 };
+
+  const createOffer = useCreateOffer();
+  const updateOffer = useUpdateOffer();
+  const { validateOffer } = useOfferValidation();
+
+  // ─── Load edit offer ────────────────────────────────────────────
   useEffect(() => {
-    Promise.all([
-      base44.entities.ResellerPricingItem.filter({ is_active: true }),
-      base44.entities.ResellerCategory.list('display_order'),
-      base44.entities.ResellerSettings.list(),
-    ]).then(([items, cats, settingsList]) => {
-      setPricingItems(items);
-      setCategories(cats.filter(c => c.is_active));
-      if (settingsList[0]) setSettings(settingsList[0]);
-      const openState = {};
-      const activeCats = cats.filter(c => c.is_active);
-      activeCats.forEach((c, idx) => { openState[c.id] = idx === 0; });
-      openState['__uncategorized__'] = false;
-      setOpenCategories(openState);
-    });
     if (editOffer) {
       setCustomer({
         store_name: editOffer.store_name || '', company_legal_name: editOffer.company_legal_name || '',
@@ -67,24 +50,29 @@ export default function OfferForm({ editOffer, onSaved }) {
         phone: editOffer.phone || '', notes: editOffer.notes || ''
       });
       try { setLines(JSON.parse(editOffer.items || '[]')); } catch { }
+    } else {
+      setCustomer(EMPTY_CUSTOMER);
+      setLines([]);
+      setSavedOffer(null);
     }
   }, [editOffer]);
 
-  const toggleCategory = (id) => setOpenCategories(prev => ({ ...prev, [id]: !prev[id] }));
+  // ─── Initialize open categories (first one open) ────────────────
+  useEffect(() => {
+    if (categories.length > 0) {
+      const openState = {};
+      categories.forEach((c, idx) => { openState[c.id] = idx === 0; });
+      openState['__uncategorized__'] = false;
+      setOpenCategories(openState);
+    }
+  }, [categories]);
 
-  const addLine = (item) => {
-    setLines(prev => [...prev, {
-      id: Date.now(), name: item.name, description: item.description || '',
-      quantity: 1, unit_price: item.unit_price,
-      discount_pct: item.default_discount_percentage || 0,
-      is_vat_exempt: item.is_vat_exempt || false
-    }]);
-  };
+  // ─── Memoized totals ────────────────────────────────────────────
+  const totals = useOfferTotals(lines, settings);
 
-  const updateLine = (id, field, val) => {
-    setLines(prev => prev.map(l => l.id === id ? { ...l, [field]: val } : l));
-  };
-
+  // ─── Line operations ────────────────────────────────────────────
+  const addLine = (item) => setLines(prev => [...prev, createLineFromItem(item)]);
+  const updateLine = (id, field, val) => setLines(prev => prev.map(l => l.id === id ? { ...l, [field]: val } : l));
   const removeLine = (id) => setLines(prev => prev.filter(l => l.id !== id));
 
   const handleLineDragEnd = (result) => {
@@ -97,75 +85,15 @@ export default function OfferForm({ editOffer, onSaved }) {
     });
   };
 
-  const lineTotal = (l) => {
-    const sub = l.quantity * l.unit_price;
-    return sub * (1 - l.discount_pct / 100);
-  };
+  // ─── Category toggle ────────────────────────────────────────────
+  const toggleCategory = (id) => setOpenCategories(prev => ({ ...prev, [id]: !prev[id] }));
 
-  const subtotalBefore = lines.reduce((s, l) => s + l.quantity * l.unit_price, 0);
-  const subtotalAfter = lines.reduce((s, l) => s + lineTotal(l), 0);
-  const totalDiscount = subtotalBefore - subtotalAfter;
-  const vatRate = settings.default_vat_rate || 24;
-  const vatableBase = lines.reduce((s, l) => s + (l.is_vat_exempt ? 0 : lineTotal(l)), 0);
-  const exemptBase = subtotalAfter - vatableBase;
-  const vatAmount = vatableBase * vatRate / 100;
-  const finalTotal = subtotalAfter + vatAmount;
-  const fmt = (n) => Number(n).toFixed(2);
-
-  const handleSave = async (status = 'draft') => {
-    setSaving(true);
-    const validityDays = settings.offer_validity_days || 30;
-    const expiresAt = new Date(Date.now() + validityDays * 86400000).toISOString().split('T')[0];
-    const now = new Date().toISOString();
-    const refNum = editOffer?.reference_number || generateRef();
-    const token = editOffer?.public_token || generatePublicToken();
-
-    // Build/update audit log
-    let auditLog = [];
-    try { auditLog = JSON.parse(editOffer?.audit_log || '[]'); } catch {}
-    if (!editOffer) {
-      auditLog.push({ action: 'created', timestamp: now, actor: 'admin', details: { reference_number: refNum } });
-    }
-
-    const data = {
-      ...customer,
-      reference_number: refNum,
-      public_token: token,
-      status,
-      items: JSON.stringify(lines),
-      subtotal_before_discount: subtotalBefore,
-      total_discount: totalDiscount,
-      subtotal_after_discount: subtotalAfter,
-      vat_rate: vatRate,
-      vat_amount: vatAmount,
-      final_total: finalTotal,
-      expires_at: expiresAt,
-      audit_log: JSON.stringify(auditLog),
-    };
-    let saved;
-    if (editOffer) {
-      saved = await base44.entities.ResellerOffer.update(editOffer.id, data);
-    } else {
-      saved = await base44.entities.ResellerOffer.create(data);
-    }
-    setSavedOffer(saved);
-    setSaving(false);
-    if (onSaved) onSaved(saved);
-  };
-
-  const handleClear = () => {
-    setCustomer(EMPTY_CUSTOMER);
-    setLines([]);
-    setSavedOffer(null);
-  };
-
-  // Drag-and-drop handler: reorder items within the same category and persist display_order
-  const handleDragEnd = async (result) => {
+  // ─── Equipment DnD (reorder within catalog) ─────────────────────
+  const handleCatalogDragEnd = async (result) => {
     if (!result.destination) return;
     const catId = result.source.droppableId;
     if (catId !== result.destination.droppableId) return;
 
-    // Get current items for this category, sorted
     const catItems = sortItems(pricingItems.filter(i =>
       catId === '__uncategorized__'
         ? (!i.category_id || !categories.find(c => c.id === i.category_id))
@@ -176,301 +104,118 @@ export default function OfferForm({ editOffer, onSaved }) {
     const [moved] = reordered.splice(result.source.index, 1);
     reordered.splice(result.destination.index, 0, moved);
 
-    // Assign new display_order values
     const updates = reordered.map((item, idx) => ({ id: item.id, display_order: idx * 10 }));
-
-    // Optimistic update
-    setPricingItems(prev => prev.map(item => {
-      const upd = updates.find(u => u.id === item.id);
-      return upd ? { ...item, display_order: upd.display_order } : item;
-    }));
-
-    // Persist to backend
     await Promise.all(updates.map(u =>
       base44.entities.ResellerPricingItem.update(u.id, { display_order: u.display_order })
     ));
   };
 
-  const inputCls = "w-full bg-[#0E1235] border border-[#2A3580] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20";
+  // ─── Customer change ─────────────────────────────────────────────
+  const handleCustomerChange = (key, val) => setCustomer(c => ({ ...c, [key]: val }));
 
-  // Filter items
-  const q = search.trim().toLowerCase();
-  const filteredItems = q
-    ? pricingItems.filter(i => i.name.toLowerCase().includes(q) || (i.description || '').toLowerCase().includes(q))
-    : pricingItems;
+  // ─── Save ────────────────────────────────────────────────────────
+  const handleSave = async (status = 'draft') => {
+    setSaving(true);
+    try {
+      const validityDays = settings.offer_validity_days || 30;
+      const expiresAt = addDays(validityDays);
 
-  // Build grouped structure: ordered categories, sorted items within each
-  const grouped = categories.map(cat => ({
-    cat,
-    items: sortItems(filteredItems.filter(i => i.category_id === cat.id)),
-  })).filter(g => g.items.length > 0);
+      const offerData = {
+        ...customer,
+        status,
+        items: lines,
+        expires_at: expiresAt,
+        subtotal_before_discount: totals.subtotalBefore,
+        total_discount: totals.totalDiscount,
+        subtotal_after_discount: totals.subtotalAfter,
+        vat_rate: totals.vatRate,
+        vat_amount: totals.vatAmount,
+        final_total: totals.finalTotal,
+      };
 
-  const uncategorized = sortItems(filteredItems.filter(i => !i.category_id || !categories.find(c => c.id === i.category_id)));
+      // Validate
+      const { success, errors } = validateOffer(offerData, { allowEmptyLines: true });
+      if (!success) {
+        console.error('Validation errors:', errors);
+        setSaving(false);
+        return;
+      }
+
+      let saved;
+      if (editOffer) {
+        saved = await updateOffer.mutateAsync({
+          id: editOffer.id,
+          data: offerData,
+          auditAction: 'updated',
+          auditDetails: { status },
+        });
+      } else {
+        saved = await createOffer.mutateAsync(offerData);
+      }
+      setSavedOffer(saved);
+      if (onSaved) onSaved(saved);
+    } catch (err) {
+      console.error('Save error:', err);
+    }
+    setSaving(false);
+  };
+
+  const handleClear = () => {
+    setCustomer(EMPTY_CUSTOMER);
+    setLines([]);
+    setSavedOffer(null);
+  };
 
   return (
     <div className="space-y-6">
-      {/* Customer */}
-      <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
-        <h3 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">Στοιχεία Πελάτη</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {[
-            ['store_name', 'Κατάστημα', 'text'], ['company_legal_name', 'Επωνυμία', 'text'],
-            ['vat_number', 'ΑΦΜ', 'text'], ['address', 'Διεύθυνση', 'text'],
-            ['contact_person', 'Υπεύθυνος', 'text'], ['email', 'Email', 'email'],
-            ['phone', 'Τηλέφωνο', 'tel']
-          ].map(([key, label, type]) => (
-            <div key={key}>
-              <label className="block text-white/40 text-xs mb-1">{label}</label>
-              <input type={type} value={customer[key]} onChange={e => setCustomer(c => ({ ...c, [key]: e.target.value }))} className={inputCls} />
-            </div>
-          ))}
-          <div className="md:col-span-2">
-            <label className="block text-white/40 text-xs mb-1">Σημειώσεις</label>
-            <textarea value={customer.notes} onChange={e => setCustomer(c => ({ ...c, notes: e.target.value }))} rows={2} className={inputCls} />
-          </div>
-        </div>
-      </div>
+      <CustomerForm customer={customer} onChange={handleCustomerChange} />
 
-      {/* Item selector — categorized with DnD */}
-      <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xs font-semibold text-[#00CFFF] uppercase tracking-widest">Επιλογή Εξοπλισμού / Υπηρεσιών</h3>
-          {lines.length > 0 && (
-            <span className="text-xs text-white/40" style={{ fontFamily: 'Inter,sans-serif' }}>{lines.length} επιλεγμένα</span>
-          )}
-        </div>
+      <EquipmentSelector
+        pricingItems={pricingItems}
+        categories={categories}
+        openCategories={openCategories}
+        onToggleCategory={toggleCategory}
+        onAddItem={addLine}
+        onReorderItems={handleCatalogDragEnd}
+      />
 
-        {pricingItems.length === 0 ? (
-          <p className="text-white/30 text-sm">Δεν υπάρχουν ενεργά προϊόντα. Προσθέστε τιμές στον Τιμοκατάλογο.</p>
-        ) : (
-          <div className="space-y-3">
-            {/* Search */}
-            <div className="relative">
-              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
-              <input
-                value={search} onChange={e => setSearch(e.target.value)}
-                placeholder="Αναζήτηση προϊόντος..."
-                className="w-full bg-[#0E1235] border border-[#2A3580] rounded-lg pl-9 pr-4 py-2 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20"
-              />
-            </div>
-
-            {grouped.length === 0 && uncategorized.length === 0 && (
-              <p className="text-white/30 text-sm text-center py-6">Δεν βρέθηκαν αποτελέσματα.</p>
-            )}
-
-            <DragDropContext onDragEnd={handleDragEnd}>
-              {grouped.map(({ cat, items }) => (
-                <div key={cat.id} className="border border-[#2A3580] rounded-xl overflow-hidden">
-                  <button
-                    onClick={() => toggleCategory(cat.id)}
-                    className={`w-full flex items-center justify-between px-4 py-2.5 transition-colors ${openCategories[cat.id] ? 'bg-[#00CFFF]/10 border-l-2 border-[#00CFFF]' : 'bg-[#0E1235] hover:bg-[#131840]'}`}
-                  >
-                    <div className="flex items-center gap-2">
-                      {openCategories[cat.id] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
-                      <span className="text-xs font-medium text-white">{cat.name}</span>
-                      <span className="text-xs text-white/30 font-mono">({items.length})</span>
-                    </div>
-                  </button>
-                  {openCategories[cat.id] && (
-                    <Droppable droppableId={cat.id} isDropDisabled={!!q}>
-                      {(provided) => (
-                        <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col p-3 gap-1.5 bg-[#0a0d28]/40">
-                          {items.map((item, index) => (
-                            <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={!!q}>
-                              {(drag, snapshot) => (
-                                <div ref={drag.innerRef} {...drag.draggableProps}
-                                  className={`${snapshot.isDragging ? 'opacity-80 shadow-lg shadow-[#00CFFF]/10' : ''}`}>
-                                  <ItemCard item={item} onAdd={addLine} fmt={fmt} dragHandleProps={drag.dragHandleProps} />
-                                </div>
-                              )}
-                            </Draggable>
-                          ))}
-                          {provided.placeholder}
-                        </div>
-                      )}
-                    </Droppable>
-                  )}
-                </div>
-              ))}
-
-              {uncategorized.length > 0 && (
-                <div className="border border-[#2A3580] rounded-xl overflow-hidden">
-                  <button
-                    onClick={() => toggleCategory('__uncategorized__')}
-                    className={`w-full flex items-center justify-between px-4 py-2.5 transition-colors ${openCategories['__uncategorized__'] ? 'bg-[#00CFFF]/10 border-l-2 border-[#00CFFF]' : 'bg-[#0E1235] hover:bg-[#131840]'}`}
-                  >
-                    <div className="flex items-center gap-2">
-                      {openCategories['__uncategorized__'] ? <ChevronDown size={14} className="text-[#00CFFF]" /> : <ChevronRight size={14} className="text-white/40" />}
-                      <span className="text-xs font-medium text-white/60">Χωρίς κατηγορία</span>
-                      <span className="text-xs text-white/30 font-mono">({uncategorized.length})</span>
-                    </div>
-                  </button>
-                  {openCategories['__uncategorized__'] && (
-                    <Droppable droppableId="__uncategorized__" isDropDisabled={!!q}>
-                      {(provided) => (
-                        <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col p-3 gap-1.5 bg-[#0a0d28]/40">
-                          {uncategorized.map((item, index) => (
-                            <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={!!q}>
-                              {(drag, snapshot) => (
-                                <div ref={drag.innerRef} {...drag.draggableProps}
-                                  className={`${snapshot.isDragging ? 'opacity-80 shadow-lg shadow-[#00CFFF]/10' : ''}`}>
-                                  <ItemCard item={item} onAdd={addLine} fmt={fmt} dragHandleProps={drag.dragHandleProps} />
-                                </div>
-                              )}
-                            </Draggable>
-                          ))}
-                          {provided.placeholder}
-                        </div>
-                      )}
-                    </Droppable>
-                  )}
-                </div>
-              )}
-            </DragDropContext>
-          </div>
-        )}
-      </div>
-
-      {/* Lines table */}
       {lines.length > 0 && (
-        <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
-          <h3 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">Γραμμές Προσφοράς</h3>
-          <DragDropContext onDragEnd={handleLineDragEnd}>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-[#2A3580]">
-                  <th className="py-2 px-1 w-6"></th>
-                  {['Προϊόν/Υπηρεσία', 'Περιγραφή', 'Ποσότητα', 'Τιμή', 'Έκπτωση %', 'ΦΠΑ', 'Σύνολο', ''].map(h => (
-                    <th key={h} className="text-left py-2 px-2 text-white/40 text-xs font-semibold">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <Droppable droppableId="offer-lines">
-                {(provided) => (
-              <tbody ref={provided.innerRef} {...provided.droppableProps}>
-                {lines.map((l, index) => (
-                  <Draggable key={l.id} draggableId={String(l.id)} index={index}>
-                    {(drag) => (
-                  <tr ref={drag.innerRef} {...drag.draggableProps} className="border-b border-[#2A3580]/40">
-                    <td {...drag.dragHandleProps} className="py-2 px-1 cursor-grab active:cursor-grabbing text-white/20 hover:text-white/50 transition-colors align-middle">
-                      <GripVertical size={14} />
-                    </td>
-                    <td className="py-2 px-2">
-                      <input value={l.name} onChange={e => updateLine(l.id, 'name', e.target.value)} className="bg-transparent text-white text-sm focus:outline-none w-32 border-b border-transparent focus:border-[#00CFFF]/30" />
-                    </td>
-                    <td className="py-2 px-2">
-                      <input value={l.description} onChange={e => updateLine(l.id, 'description', e.target.value)} className="bg-transparent text-white/50 text-xs focus:outline-none w-28 border-b border-transparent focus:border-[#00CFFF]/30" />
-                    </td>
-                    <td className="py-2 px-2">
-                      <input type="number" min={1} value={l.quantity} onChange={e => updateLine(l.id, 'quantity', parseFloat(e.target.value) || 1)}
-                        className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-16 focus:outline-none focus:border-[#00CFFF]/40" />
-                    </td>
-                    <td className="py-2 px-2">
-                      <input type="number" min={0} step={0.01} value={l.unit_price} onChange={e => updateLine(l.id, 'unit_price', parseFloat(e.target.value) || 0)}
-                        className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-24 focus:outline-none focus:border-[#00CFFF]/40" />
-                    </td>
-                    <td className="py-2 px-2">
-                      <input type="number" min={0} max={100} step={0.5} value={l.discount_pct} onChange={e => updateLine(l.id, 'discount_pct', parseFloat(e.target.value) || 0)}
-                        className="bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm w-16 focus:outline-none focus:border-[#00CFFF]/40" />
-                    </td>
-                    <td className="py-2 px-2">
-                      <button type="button" onClick={() => updateLine(l.id, 'is_vat_exempt', !l.is_vat_exempt)}
-                        className={`px-2 py-0.5 rounded text-xs border whitespace-nowrap transition-colors ${l.is_vat_exempt ? 'bg-amber-500/10 border-amber-500/40 text-amber-300' : 'bg-[#0E1235] border-[#2A3580] text-white/50 hover:border-[#00CFFF]/40'}`}>
-                        {l.is_vat_exempt ? 'Απαλλαγή' : `${vatRate}%`}
-                      </button>
-                    </td>
-                    <td className="py-2 px-2 text-[#00CFFF] font-mono text-sm">€{fmt(lineTotal(l))}</td>
-                    <td className="py-2 px-2">
-                      <button onClick={() => removeLine(l.id)} className="text-white/30 hover:text-red-400 transition-colors"><Trash2 size={14} /></button>
-                    </td>
-                  </tr>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </tbody>
-                )}
-              </Droppable>
-            </table>
-          </div>
-          </DragDropContext>
-
-          {/* Totals */}
-          <div className="mt-4 flex justify-end">
-            <div className="w-64 space-y-1.5 text-sm">
-              <div className="flex justify-between text-white/60"><span>Σύνολο πριν έκπτωση</span><span className="font-mono">€{fmt(subtotalBefore)}</span></div>
-              <div className="flex justify-between text-red-400"><span>Έκπτωση</span><span className="font-mono">-€{fmt(totalDiscount)}</span></div>
-              <div className="flex justify-between text-white/60"><span>Καθαρό ποσό</span><span className="font-mono">€{fmt(subtotalAfter)}</span></div>
-              {exemptBase > 0 && (
-                <div className="flex justify-between text-amber-300/80"><span>Απαλλαγή ΦΠΑ (άρθρο 45)</span><span className="font-mono">€{fmt(exemptBase)}</span></div>
-              )}
-              <div className="flex justify-between text-white/60"><span>ΦΠΑ {vatRate}%{exemptBase > 0 ? ' (επί φορολογητέου)' : ''}</span><span className="font-mono">€{fmt(vatAmount)}</span></div>
-              <div className="flex justify-between border-t border-[#2A3580] pt-2 text-[#00CFFF] font-bold text-base">
-                <span>Σύνολο</span><span className="font-mono">€{fmt(finalTotal)}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Actions */}
-      <div className="flex flex-wrap gap-3">
-        <button onClick={() => handleSave('draft')} disabled={saving}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#131840] border border-[#2A3580] rounded-xl text-white text-sm hover:border-[#00CFFF]/40 transition-colors disabled:opacity-40">
-          <Save size={15} /> {saving ? 'Αποθήκευση...' : 'Αποθήκευση Draft'}
-        </button>
-        <button onClick={() => setShowPreview(true)} disabled={lines.length === 0}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#00CFFF]/10 border border-[#00CFFF]/30 rounded-xl text-[#00CFFF] text-sm hover:bg-[#00CFFF]/20 transition-colors disabled:opacity-40">
-          <Eye size={15} /> Preview
-        </button>
-        <button onClick={() => { handleSave('draft'); setShowEmail(true); }} disabled={!savedOffer && lines.length === 0}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#131840] border border-[#2A3580] rounded-xl text-white text-sm hover:border-[#00CFFF]/40 transition-colors disabled:opacity-40">
-          <Mail size={15} /> Αποστολή Email
-        </button>
-        <button onClick={handleClear}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#131840] border border-red-500/20 rounded-xl text-red-400/70 text-sm hover:border-red-400/50 transition-colors">
-          <RotateCcw size={15} /> Καθαρισμός
-        </button>
-      </div>
-
-      {showEmail && (
-        <EmailModal offer={savedOffer} customer={customer} defaultSettings={settings} onClose={() => setShowEmail(false)} />
-      )}
-      {showPreview && (
-        <OfferPreviewModal
-          customer={customer} lines={lines}
-          totals={{ subtotalBefore, subtotalAfter, totalDiscount, vatRate, vatAmount, finalTotal }}
-          settings={settings} refNumber={editOffer?.reference_number || savedOffer?.reference_number}
-          savedOffer={savedOffer}
-          onClose={() => setShowPreview(false)}
-          onSaveBeforeEmail={async () => { await handleSave('draft'); }}
+        <OfferLinesTable
+          lines={lines}
+          onUpdateLine={updateLine}
+          onRemoveLine={removeLine}
+          onReorderLines={handleLineDragEnd}
+          totals={totals}
         />
       )}
-    </div>
-  );
-}
 
-function ItemCard({ item, onAdd, fmt, dragHandleProps }) {
-  return (
-    <div className="w-full flex items-center bg-[#0E1235] border border-[#2A3580] rounded-lg hover:border-[#00CFFF]/40 hover:bg-[#00CFFF]/5 transition-all group">
-      {/* Drag handle */}
-      <div {...dragHandleProps} className="flex-shrink-0 px-2 py-3 cursor-grab active:cursor-grabbing text-white/20 hover:text-white/50 transition-colors">
-        <GripVertical size={14} />
-      </div>
-      {/* Clickable area */}
-      <button onClick={() => onAdd(item)} className="flex items-center justify-between flex-1 pr-4 py-3 text-left min-w-0">
-        <div className="min-w-0 flex-1">
-          <div className="text-white text-sm group-hover:text-[#00CFFF]">{item.name}</div>
-          {item.description && <div className="text-white/30 text-xs mt-0.5">{item.description}</div>}
-        </div>
-        <div className="flex items-center gap-3 ml-4 flex-shrink-0">
-          <span className="text-[#00CFFF] font-mono text-sm">€{fmt(item.unit_price)}</span>
-          <div className="w-6 h-6 flex items-center justify-center rounded border border-[#2A3580] group-hover:border-[#00CFFF]/60 group-hover:bg-[#00CFFF]/10 transition-all">
-            <Plus size={13} className="text-white/40 group-hover:text-[#00CFFF]" />
-          </div>
-        </div>
-      </button>
+      <OfferActions
+        saving={saving}
+        linesCount={lines.length}
+        hasSavedOffer={!!savedOffer}
+        onSaveDraft={() => handleSave('draft')}
+        onPreview={() => setShowPreview(true)}
+        onSendEmail={() => { handleSave('draft'); setShowEmail(true); }}
+        onClear={handleClear}
+      />
+
+      {showEmail && (
+        <Suspense fallback={<div className="text-center py-12 text-white/30 text-sm">Φόρτωση...</div>}>
+          <EmailModal offer={savedOffer} customer={customer} defaultSettings={settings} onClose={() => setShowEmail(false)} />
+        </Suspense>
+      )}
+      {showPreview && (
+        <Suspense fallback={<div className="text-center py-12 text-white/30 text-sm">Φόρτωση...</div>}>
+          <OfferPreviewModal
+            customer={customer} lines={lines}
+            totals={totals}
+            settings={settings} refNumber={editOffer?.reference_number || savedOffer?.reference_number}
+            savedOffer={savedOffer}
+            onClose={() => setShowPreview(false)}
+            onSaveBeforeEmail={async () => { await handleSave('draft'); }}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }
