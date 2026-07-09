@@ -113,7 +113,7 @@ export default function OfferForm({ editOffer, onSaved }) {
   const handleCustomerChange = (key, val) => setCustomer(c => ({ ...c, [key]: val }));
 
   // ─── Save ────────────────────────────────────────────────────────
-  const handleSave = async (status = 'draft') => {
+  const handleSave = async (status = 'draft', { skipOnSaved = false } = {}) => {
     setSaving(true);
     try {
       const validityDays = settings.offer_validity_days || 30;
@@ -152,7 +152,7 @@ export default function OfferForm({ editOffer, onSaved }) {
         saved = await createOffer.mutateAsync(offerData);
       }
       setSavedOffer(saved);
-      if (onSaved) onSaved(saved);
+      if (onSaved && !skipOnSaved) onSaved(saved);
       return saved;
     } catch (err) {
       console.error('Save error:', err);
@@ -198,7 +198,7 @@ export default function OfferForm({ editOffer, onSaved }) {
         onSaveDraft={() => handleSave('draft')}
         onPreview={() => setShowPreview(true)}
         onSendEmail={async () => {
-          const saved = await handleSave('draft');
+          const saved = await handleSave('draft', { skipOnSaved: true });
           if (saved) setShowEmail(true);
         }}
         onClear={handleClear}
@@ -217,7 +217,7 @@ export default function OfferForm({ editOffer, onSaved }) {
             settings={settings} refNumber={editOffer?.reference_number || savedOffer?.reference_number}
             savedOffer={savedOffer}
             onClose={() => setShowPreview(false)}
-            onSaveBeforeEmail={async () => { return await handleSave('draft'); }}
+            onSaveBeforeEmail={async () => { return await handleSave('draft', { skipOnSaved: true }); }}
           />
         </Suspense>
       )}

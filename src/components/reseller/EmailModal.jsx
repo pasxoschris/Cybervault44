@@ -101,19 +101,22 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
     if (!offer?.id) { setError('Αποθηκεύστε πρώτα την προσφορά.'); return; }
     setSending(true);
     setError('');
-    // Backend fetches offer + settings from DB and builds both HTML and PDF
-    // using the stored financial fields (same source of truth as acceptOffer)
-    const res = await base44.functions.invoke('sendResellerEmail', {
-      to, cc, subject,
-      offer_id: offer.id,
-    });
-    if (res.data?.success) {
-      setSent(true);
-      qc.invalidateQueries({ queryKey: ['reseller', 'offers'] });
-    } else {
-      setError(res.data?.error || 'Σφάλμα αποστολής.');
+    try {
+      const res = await base44.functions.invoke('sendResellerEmail', {
+        to, cc, subject,
+        offer_id: offer.id,
+      });
+      if (res.data?.success) {
+        setSent(true);
+        qc.invalidateQueries({ queryKey: ['reseller', 'offers'] });
+      } else {
+        setError(res.data?.error || 'Σφάλμα αποστολής.');
+      }
+    } catch (err) {
+      setError(err?.response?.data?.error || err?.message || 'Σφάλμα αποστολής.');
+    } finally {
+      setSending(false);
     }
-    setSending(false);
   };
 
   const inputCls = "w-full bg-[#0E1235] border border-[#2A3580] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20";

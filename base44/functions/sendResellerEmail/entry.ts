@@ -337,14 +337,15 @@ Deno.serve(async (req) => {
         },
         body: JSON.stringify(payload),
       });
+      const resBody = await res.json();
+      console.log('Resend response status:', res.status, 'body:', JSON.stringify(resBody));
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || 'Resend error');
+        throw new Error(resBody.message || 'Resend error');
       }
-      return res.json();
+      return resBody;
     };
 
-    await sendViaResend(to);
+    const sendResult = await sendViaResend(to);
     if (cc) await sendViaResend(cc);
 
     // Update offer status and log
@@ -359,7 +360,7 @@ Deno.serve(async (req) => {
       email_history: JSON.stringify(history),
     });
 
-    return Response.json({ success: true });
+    return Response.json({ success: true, resend_id: sendResult?.id });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
