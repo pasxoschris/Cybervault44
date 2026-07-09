@@ -49,9 +49,17 @@
     "unit_price"
   ],
   "rls": {
-    "create": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
     "read": {},
-    "update": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
     "delete": {
       "user_condition": {
         "role": "admin"
