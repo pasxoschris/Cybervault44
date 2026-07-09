@@ -24,6 +24,12 @@ export const offerSchema = z.object({
   items: z.array(offerLineSchema).default([]),
   status: z.enum(['draft', 'sent', 'viewed', 'accepted', 'rejected', 'expired']).default('draft'),
   expires_at: z.string().optional(),
+  subtotal_before_discount: z.number().optional(),
+  total_discount: z.number().optional(),
+  subtotal_after_discount: z.number().optional(),
+  vat_rate: z.number().optional(),
+  vat_amount: z.number().optional(),
+  final_total: z.number().optional(),
 });
 
 // ─── Pricing Item ────────────────────────────────────────────────
