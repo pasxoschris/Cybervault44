@@ -52,7 +52,7 @@ export default function CreateOrder() {
       </InfoBox>
 
       <InfoBox icon="✅" variant="success">
-        Το κάτω μέρος της οθόνης δείχνει τον αριθμό ατόμων, το τραπέζι και το σύνολο. Βεβαιώσου ότι είναι σωστά πριν αποστείλεις!
+        Η παραγγελία έχει αποσταλεί. Στο μενού που βρίσκεται στην κορυφή από τις <strong>Νέες </strong>έχει περάσει στις <strong>Aνοικτές</strong>. Στο κάτω μέρος της οθόνης πρέπει να σου βγάζει το μήνυμα <strong> All synced </strong> 
       </InfoBox>
 
     </TutorialLayout>
