@@ -52,7 +52,9 @@ export default function CreateOrder() {
       </InfoBox>
 
       <InfoBox icon="✅" variant="success">
-        Η παραγγελία έχει αποσταλεί. Στο μενού που βρίσκεται στην κορυφή από τις <strong>Νέες </strong>έχει περάσει στις <strong>Aνοικτές</strong>. Στο κάτω μέρος της οθόνης πρέπει να σου βγάζει το μήνυμα <strong> All synced </strong> 
+        Η παραγγελία έχει αποσταλεί! 
+        <p>Στο μενού που βρίσκεται στην κορυφή της οθόνης από τις <strong>«Nέες» </strong>έχει περάσει στις <strong>«Aνοικτές»</strong>. </p>
+        <p>Στο κάτω μέρος της οθόνης πρέπει να σου βγάζει το μήνυμα <strong> All synced </strong> </p>
       </InfoBox>
 
     </TutorialLayout>
