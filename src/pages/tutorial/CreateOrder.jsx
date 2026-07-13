@@ -8,6 +8,7 @@ export default function CreateOrder() {
 
       <ScreenshotGallery
         images={[
+          "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/985de6f3d_5.JPG",
           "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/cb21985f8_6.JPG",
         ]}
         caption="Οθόνες δημιουργίας παραγγελίας"
