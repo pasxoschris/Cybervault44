@@ -9,11 +9,8 @@ export function ScreenshotGallery({ images, caption }) {
     <div className="border border-[#00D4FF]/10 bg-[#0D1526]/70 p-4 flex flex-col gap-3">
       {/* Main image */}
       <div className="relative overflow-hidden bg-[#080c20] flex items-center justify-center min-h-48 rounded-sm">
-        
+        <img src={images[active]} alt={caption || `screenshot ${active + 1}`} className="w-full h-auto object-contain rounded-sm" />
 
-
-        
-        
       </div>
 
       {/* Thumbnails */}
