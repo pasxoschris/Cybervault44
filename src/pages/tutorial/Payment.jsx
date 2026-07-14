@@ -29,6 +29,12 @@ export default function Payment() {
   return (
     <TutorialLayout title="Πληρωμή" subtitle="Διαδικασία πληρωμής παραγγελίας">
 
+      <ScreenshotGallery images={["https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/d0678fb01_anyviewer_screenshot_20260714103348.png"]} caption="Σύνολο παραγγελίας" />
+
+      <StepCard number="1" title="Πάτα το εικονίδιο Κέρματα">
+        <p>Από τα στοιχεία παραγγελίας, πάτα το εικονίδιο <strong>Κέρματα</strong> στο κάτω μενού για να ανοίξει το μενού πληρωμής.</p>
+      </StepCard>
+
       <ScreenshotGallery images={["https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/195dd216c_Screenshot2026-07-14101523.png"]} caption="Μενού επιλογής τρόπου πληρωμής" />
 
       <div className="flex flex-wrap gap-2">
