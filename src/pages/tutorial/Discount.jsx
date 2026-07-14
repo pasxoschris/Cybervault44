@@ -52,10 +52,12 @@ export default function Discount() {
           </StepCard>
           <StepCard number="4" title="Ρύθμισε την έκπτωση">
             <p>Στην οθόνη έκπτωσης:</p>
-            <ul className="list-disc list-inside mt-2 space-y-1">
-              <li>Επίλεξε <strong>Είδος έκπτωσης</strong>: Γενική Έκπτωση, Ιδιο Κατανάλωση, Άλλες Εκπτώσεις</li>
+             <ul className="list-disc list-inside ml-6 mt-2 space-y-1">
+      <li>Γενική Έκπτωση</li>
+      <li>Ίδια Κατανάλωση</li>
+      <li>Άλλες Εκπτώσεις</li>
               <li>Κύλησε τη μπάρα <strong>Έκπτωση %</strong> από 0% έως 100%</li>
-              <li>Επίλεξε τα <strong>προϊόντα</strong> που θέλεις να επηρεαστούν</li>
+              
             </ul>
           </StepCard>
           <StepCard number="5" title="Επιβεβαίωση">
