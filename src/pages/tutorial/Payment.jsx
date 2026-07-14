@@ -115,7 +115,12 @@ export default function Payment() {
         <>
           <SectionTitle>Ηλεκτρονική Πληρωμή</SectionTitle>
           <InfoBox icon="⚙️" title="Προαπαιτούμενο" variant="purple">
-            Η <strong>Ηλεκτρονική Πληρωμή</strong> πρέπει πρώτα να ενεργοποιηθεί στις <strong>Ρυθμίσεις του χρήστη</strong>. Πήγαινε στις Ρυθμίσεις και άνοιξε το διακόπτη <strong>«Ηλεκτρονική Πληρωμή»</strong>.
+            <p>Η <strong>Ηλεκτρονική Πληρωμή</strong> πρέπει πρώτα να ενεργοποιηθεί στις <strong>Ρυθμίσεις του χρήστη</strong>.</p>
+            <ul className="list-disc pl-5 mt-2 space-y-1.5">
+              <li>Πήγαινε στις <strong>Ρυθμίσεις</strong>.</li>
+              <li>Βρες τη γραμμή <strong>«Ηλεκτρονική Πληρωμή»</strong>.</li>
+              <li>Άνοιξε το διακόπτη (γίνεται <strong>πράσινο</strong>).</li>
+            </ul>
           </InfoBox>
           <div className="flex justify-center">
             <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/b098d52d1_anyviewer_screenshot_20260714104819.png" alt="Ενεργοποίηση Ηλεκτρονικής Πληρωμής στις Ρυθμίσεις" className="w-44 h-auto rounded-lg border border-gray-200" />
