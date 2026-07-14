@@ -50,16 +50,24 @@ export default function Discount() {
           <StepCard number="3" title="Εισήγαγε Κωδικό Διαχειριστή">
             <p>Για να εφαρμόσεις συνολική έκπτωση, θα σου ζητηθεί ο <strong>Κωδικός Διαχειριστή</strong>. Βάλε τον κωδικό ή σκάναρε QR.</p>
           </StepCard>
-          <StepCard number="4" title="Ρύθμισε την έκπτωση">
-            <p>Στην οθόνη έκπτωσης:</p>
-             <ul className="list-disc list-inside ml-6 mt-2 space-y-1">
-      <li>Γενική Έκπτωση</li>
-      <li>Ίδια Κατανάλωση</li>
-      <li>Άλλες Εκπτώσεις</li>
-              <li>Κύλησε τη μπάρα <strong>Έκπτωση %</strong> από 0% έως 100%</li>
-              
-            </ul>
-          </StepCard>
+         <StepCard number="4" title="Ρύθμισε την έκπτωση">
+  <p>Στην οθόνη <strong>Έκπτωση</strong>:</p>
+
+  <ul className="list-disc list-inside mt-2 space-y-2">
+    <li>
+      Επίλεξε το <strong>Είδος έκπτωσης</strong>:
+      <ul className="list-disc list-inside ml-6 mt-2 space-y-1">
+        <li>Γενική Έκπτωση</li>
+        <li>Ίδια Κατανάλωση</li>
+        <li>Άλλες Εκπτώσεις</li>
+      </ul>
+    </li>
+
+    <li>
+      Κύλησε τη μπάρα <strong>Έκπτωση %</strong> από <strong>0%</strong> έως <strong>100%</strong>.
+    </li>
+  </ul>
+</StepCard>
           <StepCard number="5" title="Επιβεβαίωση">
             <p>Πάτα <strong>✓</strong> για να εφαρμόσεις την έκπτωση. Η νέα τιμή εμφανίζεται αμέσως.</p>
           </StepCard>
