@@ -20,6 +20,8 @@ export default function Payment() {
   return (
     <TutorialLayout title="Πληρωμή" subtitle="Διαδικασία πληρωμής παραγγελίας">
 
+      <ScreenshotGallery images={["https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/195dd216c_Screenshot2026-07-14101523.png"]} caption="Μενού επιλογής τρόπου πληρωμής" />
+
       <div className="flex flex-wrap gap-2">
         {methods.map(m => (
           <button
