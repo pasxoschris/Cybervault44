@@ -6,7 +6,7 @@ import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
 const types = [
   { id: "general", label: "Γενική Έκπτωση", icon: "🏷️" },
   { id: "own", label: "Ιδιοκατανάλωση", icon: "🎁" },
-  { id: "cancel", label: "Άλλες Εκπτώσεις", icon: "🗑️" },
+  { id: "cancel", label: "Άλλες Εκπτώσεις", icon: "🏷️" },
 ];
 
 export default function Discount() {
