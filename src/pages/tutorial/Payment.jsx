@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
@@ -12,6 +12,10 @@ const methods = [
 
 export default function Payment() {
   const [active, setActive] = useState("cash");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [active]);
 
   return (
     <TutorialLayout title="Πληρωμή" subtitle="Διαδικασία πληρωμής παραγγελίας">

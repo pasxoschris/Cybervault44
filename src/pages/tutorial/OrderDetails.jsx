@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
@@ -23,6 +23,10 @@ const overviewRows = [
 
 export default function OrderDetails() {
   const [active, setActive] = useState("overview");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [active]);
 
   return (
     <TutorialLayout title="Στοιχεία Παραγγελίας" subtitle="Διαχείριση ανοικτής παραγγελίας">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
@@ -11,6 +11,10 @@ const types = [
 
 export default function Discount() {
   const [active, setActive] = useState("general");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [active]);
 
   return (
     <TutorialLayout title="Έκπτωση" subtitle="Τύποι εκπτώσεων και πώς να τις εφαρμόσεις">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 
@@ -100,6 +100,10 @@ const scenarios = [
 export default function Scenarios() {
   const [active, setActive] = useState(scenarios[0].id);
   const current = scenarios.find(s => s.id === active);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [active]);
 
   return (
     <TutorialLayout title="Σενάρια" subtitle="Πρακτικά παραδείγματα για συχνές καταστάσεις">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
@@ -11,6 +11,10 @@ const tabs = [
 
 export default function Shift() {
   const [active, setActive] = useState("view");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [active]);
 
   return (
     <TutorialLayout title="Παραγγελίες Βάρδιας" subtitle="Διαχείριση και ανάλυση της βάρδιας">

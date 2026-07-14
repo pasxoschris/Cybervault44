@@ -30,6 +30,7 @@ export default function TutorialLayout({ children, title, subtitle }) {
 
   useEffect(() => {
     if (location.pathname) markVisited(location.pathname);
+    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   return (
