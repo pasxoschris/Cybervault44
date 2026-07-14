@@ -128,15 +128,20 @@ export default function Payment() {
           <StepCard number="1" title="Επίλεξε «Ηλεκτρονική Πληρωμή»">
             <p>Στο μενού πληρωμής, πάτα <strong>«Ηλεκτρονική Πληρωμή»</strong>.</p>
           </StepCard>
-          <StepCard number="2" title="Αποστολή πληρωμής">
-            <p>Το σύστημα δημιουργεί σύνδεσμο ηλεκτρονικής πληρωμής ή QR code που ο πελάτης μπορεί να σκανάρει / ανοίξει.</p>
+          <StepCard number="2" title="Εμφάνιση παραθύρου «Επιλέξτε ενέργεια»">
+            <p>Εμφανίζεται παράθυρο με τρεις επιλογές:</p>
+            <ul className="list-disc pl-5 mt-2 space-y-1.5">
+              <li><strong>Κλείσιμο</strong> — κλείνει την παραγγελία χωρίς εκτύπωση.</li>
+              <li><strong>Εκτύπωση Απόδειξης και Κλείσιμο</strong> — εκτυπώνει απόδειξη και κλείνει.</li>
+              <li><strong>Ακύρωση</strong> — ακυρώνει την ενέργεια.</li>
+            </ul>
           </StepCard>
-          <StepCard number="3" title="Αναμονή επιβεβαίωσης">
-            <p>Όταν ο πελάτης ολοκληρώσει την πληρωμή, η παραγγελία κλείνει αυτόματα και εκτυπώνεται η απόδειξη.</p>
+          <div className="flex justify-center">
+            <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/40daaac78_.png" alt="Παράθυρο Επιλέξτε ενέργεια" className="w-40 h-auto rounded-lg border border-gray-200" />
+          </div>
+          <StepCard number="3" title="Επίλεξε ενέργεια">
+            <p>Πάτα <strong>«Εκτύπωση Απόδειξης και Κλείσιμο»</strong> για να εκτυπωθεί η απόδειξη και να κλείσει η παραγγελία.</p>
           </StepCard>
-          <InfoBox icon="💡" variant="info">
-            Ιδανικό για παραγγελίες που δεν εξυπηρετούνται στο κατάστημα (delivery, preorder).
-          </InfoBox>
         </>
       )}
 
