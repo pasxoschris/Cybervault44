@@ -33,7 +33,9 @@ export default function Payment() {
         <p>Από τα στοιχεία παραγγελίας, πάτα το εικονίδιο <strong>Κέρματα</strong> στο κάτω μενού για να ανοίξει το μενού πληρωμής.</p>
       </StepCard>
 
-      <ScreenshotGallery images={["https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/195dd216c_Screenshot2026-07-14101523.png"]} caption="Μενού επιλογής τρόπου πληρωμής" />
+      <div className="flex justify-center">
+        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/195dd216c_Screenshot2026-07-14101523.png" alt="Μενού επιλογής τρόπου πληρωμής" className="w-40 h-auto rounded-lg border border-gray-200" />
+      </div>
 
       <div className="flex flex-wrap gap-2">
         {methods.map(m => (
