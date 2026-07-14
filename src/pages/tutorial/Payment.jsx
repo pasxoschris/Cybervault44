@@ -71,7 +71,7 @@ export default function Payment() {
         <>
           <SectionTitle>Πληρωμή με Κάρτα</SectionTitle>
           <StepCard number="1" title="Επίλεξε «Πληρωμή με Κάρτα»">
-            <p>Στο μενού πληρωμής, επίλεξε <strong>«Πληρωμή με Κάρτα (Nexi)»</strong> ή το τερματικό που έχεις ρυθμίσει.</p>
+            <p>Στο μενού πληρωμής, επίλεξε <strong>«Πληρωμή με Κάρτα (POS που έχεις επιλέξει)»</strong>.</p>
           </StepCard>
           <StepCard number="2" title="Χρέωσε στο POS terminal">
             <p>Το ποσό θα σταλεί αυτόματα στο τερματικό POS. Ζήτα από τον πελάτη να πληρώσει στο τερματικό.</p>
