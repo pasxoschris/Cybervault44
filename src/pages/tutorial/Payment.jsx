@@ -36,7 +36,6 @@ export default function Payment() {
 
       {active === "cash" && (
         <>
-          <ScreenshotGallery images={["https://media.base44.com/images/public/69f588f4590b173a2970ddb4/6f89d5a83_11.JPG"]} caption="Μενού πληρωμής" />
           <SectionTitle>Πληρωμή με Μετρητά</SectionTitle>
           <StepCard number="1" title="Άνοιξε την παραγγελία">
             <p>Πάτα στην παραγγελία για να δεις τα στοιχεία της.</p>
@@ -73,7 +72,6 @@ export default function Payment() {
 
       {active === "split" && (
         <>
-          <ScreenshotGallery images={["https://media.base44.com/images/public/69f588f4590b173a2970ddb4/be30649b8_12.JPG"]} caption="Split Payments οθόνη" />
           <SectionTitle>Split Payments — Διαίρεση Πληρωμής</SectionTitle>
           <StepCard number="1" title="Επίλεξε «Split Payments»">
             <p>Στο μενού πληρωμής, πάτα <strong>«Split Payments»</strong>.</p>
