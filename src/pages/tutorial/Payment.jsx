@@ -4,14 +4,23 @@ import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepC
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
 
 const methods = [
-  { id: "cash", label: "Μετρητά", icon: "💵" },
-  { id: "card", label: "Κάρτα", icon: "💳" },
+  { id: "cash", label: "Πληρωμή με Μετρητά", icon: "💵" },
+  { id: "card", label: "Πληρωμή με Κάρτα", icon: "💳" },
+  { id: "online", label: "Ηλεκτρονική Πληρωμή", icon: "🌐" },
   { id: "split", label: "Split Payments", icon: "✂️" },
-  { id: "credit", label: "Επί Πιστώσει", icon: "📝" },
+  { id: "iris", label: "Πληρωμή με IRIS", icon: "🔵" },
 ];
 
 export default function Payment() {
   const [active, setActive] = useState("cash");
+
+  const methodLabels = {
+    cash: "Πληρωμή με Μετρητά",
+    card: "Πληρωμή με Κάρτα",
+    online: "Ηλεκτρονική Πληρωμή",
+    split: "Split Payments",
+    iris: "Πληρωμή με IRIS",
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -91,21 +100,39 @@ export default function Payment() {
         </>
       )}
 
-      {active === "credit" && (
+      {active === "online" && (
         <>
-          <SectionTitle>Επί Πιστώσει</SectionTitle>
-          <InfoBox icon="📝" title="Τι σημαίνει Επί Πιστώσει;" variant="info">
-            Η παραγγελία καταχωρείται ως οφειλή. Ο πελάτης δεν πληρώνει άμεσα — η χρέωση γίνεται αργότερα.
-          </InfoBox>
-          <StepCard number="1" title="Επίλεξε «Επί Πιστώσει»">
-            <p>Στο μενού πληρωμής επίλεξε <strong>«Επί Πιστώσει»</strong>.</p>
+          <SectionTitle>Ηλεκτρονική Πληρωμή</SectionTitle>
+          <StepCard number="1" title="Επίλεξε «Ηλεκτρονική Πληρωμή»">
+            <p>Στο μενού πληρωμής, πάτα <strong>«Ηλεκτρονική Πληρωμή»</strong>.</p>
           </StepCard>
-          <StepCard number="2" title="Επιβεβαίωση">
-            <p>Επιβεβαίωσε. Η παραγγελία θα καταχωρηθεί ως ανεξόφλητη στο σύστημα.</p>
+          <StepCard number="2" title="Αποστολή πληρωμής">
+            <p>Το σύστημα δημιουργεί σύνδεσμο ηλεκτρονικής πληρωμής ή QR code που ο πελάτης μπορεί να σκανάρει / ανοίξει.</p>
+          </StepCard>
+          <StepCard number="3" title="Αναμονή επιβεβαίωσης">
+            <p>Όταν ο πελάτης ολοκληρώσει την πληρωμή, η παραγγελία κλείνει αυτόματα και εκτυπώνεται η απόδειξη.</p>
           </StepCard>
           <InfoBox icon="💡" variant="info">
-            Η λίστα παραγγελιών Επί Πιστώσει διαχειρίζεται από το διαχειριστικό (Secure).
+            Ιδανικό για παραγγελίες που δεν εξυπηρετούνται στο κατάστημα (delivery, preorder).
           </InfoBox>
+        </>
+      )}
+
+      {active === "iris" && (
+        <>
+          <SectionTitle>Πληρωμή με IRIS</SectionTitle>
+          <InfoBox icon="🔵" title="Τι είναι το IRIS;" variant="info">
+            Το IRIS είναι το σύστημα άμεσων πληρωμών της Ελληνικής Τράπεζας — ο πελάτης πληρώνει με κωδικό IRIS από την τραπεζική του εφαρμογή.
+          </InfoBox>
+          <StepCard number="1" title="Επίλεξε «Πληρωμή με IRIS»">
+            <p>Στο μενού πληρωμής, πάτα <strong>«Πληρωμή με IRIS»</strong>.</p>
+          </StepCard>
+          <StepCard number="2" title="Εμφάνιση κωδικού">
+            <p>Το σύστημα εμφανίζει τον κωδικό IRIS ή QR που ο πελάτης σκανάρει / εισάγει στην τραπεζική εφαρμογή του.</p>
+          </StepCard>
+          <StepCard number="3" title="Επιβεβαίωση πληρωμής">
+            <p>Όταν η πληρωμή ολοκληρωθεί, η παραγγελία κλείνει αυτόματα και η απόδειξη εκτυπώνεται.</p>
+          </StepCard>
         </>
       )}
     </TutorialLayout>
