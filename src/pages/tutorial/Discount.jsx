@@ -55,13 +55,13 @@ export default function Discount() {
 
   <ul className="list-disc list-inside mt-2 space-y-2">
     <li>
-      Επίλεξε το <strong>Είδος έκπτωσης</strong>:
-      <ul className="list-disc list-inside ml-6 mt-2 space-y-1">
-        <li>Γενική Έκπτωση</li>
-        <li>Ίδια Κατανάλωση</li>
-        <li>Άλλες Εκπτώσεις</li>
-      </ul>
-    </li>
+  Επίλεξε το <strong>Είδος έκπτωσης</strong>:
+  <div className="ml-6 mt-2 flex flex-wrap gap-2">
+    <span className="rounded bg-gray-100 px-2 py-1 text-sm">Γενική Έκπτωση</span>
+    <span className="rounded bg-gray-100 px-2 py-1 text-sm">Ίδια Κατανάλωση</span>
+    <span className="rounded bg-gray-100 px-2 py-1 text-sm">Άλλες Εκπτώσεις</span>
+  </div>
+</li>
 
     <li>
       Κύλησε τη μπάρα <strong>Έκπτωση %</strong> από <strong>0%</strong> έως <strong>100%</strong>.
