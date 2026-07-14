@@ -35,7 +35,6 @@ export default function Discount() {
         <>
           <ScreenshotGallery
             images={[
-              "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/2e9750a56_13.JPG",
               "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/188cb6052_14.JPG",
             ]}
             caption="Οθόνη έκπτωσης"
