@@ -36,6 +36,14 @@ export default function TransferOrder() {
         <p>Από το μενού που εμφανίζεται, πάτα <strong>«Μεταφορά παραγγελίας»</strong>.</p>
       </StepCard>
 
+      <InfoBox icon="☰" title="Εναλλακτικός τρόπος" variant="info">
+        <p>Η μεταφορά γίνεται επίσης και από το <strong>μενού</strong> που ανοίγει πατώντας τις <strong>τρεις γραμμές πάνω αριστερά</strong>. Εμφανίζεται λίστα με επιλογές — πάτα <strong>«Μεταφορά παραγγελιών»</strong>.</p>
+      </InfoBox>
+
+      <div className="flex justify-center">
+        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/b196f278d_.png" alt="Μενού από τις τρεις γραμμές — Μεταφορά παραγγελιών" className="w-52 h-auto rounded-lg border border-gray-200" />
+      </div>
+
       <StepCard number="3" title="Εισήγαγε κωδικό διαχειριστή">
         <p>Το σύστημα ζητάει <strong>κωδικό διαχειριστή</strong> για επιβεβαίωση. Εισήγαγε τον κωδικό και πάτα επιβεβαίωση.</p>
       </StepCard>
