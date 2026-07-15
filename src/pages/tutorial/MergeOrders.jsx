@@ -19,19 +19,23 @@ export default function MergeOrders() {
         <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/16d53fc19_.png" alt="Μενού από τις τρεις γραμμές — Συγχώνευση παραγγελιών" className="w-52 h-auto rounded-lg border border-gray-200" />
       </div>
 
-      <StepCard number="1" title="Άνοιξε την πρώτη παραγγελία">
+      <StepCard number="1" title="Εισήγαγε κωδικό διαχειριστή">
+        <p>Το σύστημα ζητάει <strong>κωδικό διαχειριστή</strong> για επιβεβαίωση. Εισήγαγε τον κωδικό και πάτα επιβεβαίωση.</p>
+      </StepCard>
+
+      <StepCard number="2" title="Άνοιξε την πρώτη παραγγελία">
         <p>Βρες την παραγγελία που θέλεις να απορροφήσει την άλλη και πάτα πάνω της.</p>
       </StepCard>
 
-      <StepCard number="2" title="Πάτα «Συγχώνευση»">
+      <StepCard number="3" title="Πάτα «Συγχώνευση»">
         <p>Από τα εργαλεία παραγγελίας, πάτα <strong>«Συγχώνευση»</strong> (εικονίδιο ένωσης).</p>
       </StepCard>
 
-      <StepCard number="3" title="Επίλεξε τη δεύτερη παραγγελία">
+      <StepCard number="4" title="Επίλεξε τη δεύτερη παραγγελία">
         <p>Εμφανίζεται λίστα με τις υπόλοιπες ανοιχτές παραγγελίες. Επίλεξε ποια παραγγελία θα ενωθεί με την τρέχουσα.</p>
       </StepCard>
 
-      <StepCard number="4" title="Επιβεβαίωση συγχώνευσης">
+      <StepCard number="5" title="Επιβεβαίωση συγχώνευσης">
         <p>Πάτα <strong>«Επιβεβαίωση»</strong>. Τα είδη της δεύτερης παραγγελίας προστίθενται στην πρώτη και η δεύτερη παραγγελία κλείνει.</p>
       </StepCard>
 
