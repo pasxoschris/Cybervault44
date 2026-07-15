@@ -11,6 +11,14 @@ export default function MergeOrders() {
     <TutorialLayout title="Συγχώνευση Παραγγελιών" subtitle="Συνένωση δύο παραγγελιών σε μία">
       <SectionTitle>Συγχώνευση Παραγγελιών</SectionTitle>
 
+      <InfoBox icon="☰" title="Πώς να ανοίξεις τη Συγχώνευση" variant="info">
+        <p>Η συγχώνευση γίνεται από το <strong>μενού</strong> που ανοίγει πατώντας τις <strong>τρεις γραμμές πάνω αριστερά</strong>. Εμφανίζεται λίστα με επιλογές — πάτα <strong>«Συγχώνευση παραγγελιών»</strong>.</p>
+      </InfoBox>
+
+      <div className="flex justify-center">
+        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/16d53fc19_.png" alt="Μενού από τις τρεις γραμμές — Συγχώνευση παραγγελιών" className="w-52 h-auto rounded-lg border border-gray-200" />
+      </div>
+
       <StepCard number="1" title="Άνοιξε την πρώτη παραγγελία">
         <p>Βρες την παραγγελία που θέλεις να απορροφήσει την άλλη και πάτα πάνω της.</p>
       </StepCard>
