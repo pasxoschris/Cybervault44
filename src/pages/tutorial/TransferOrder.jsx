@@ -11,6 +11,19 @@ export default function TransferOrder() {
     <TutorialLayout title="Μεταφορά Παραγγελίας" subtitle="Μεταφορά παραγγελίας από σερβιτόρο σε σερβιτόρο">
       <SectionTitle>Μεταφορά Παραγγελίας (από σερβιτόρο σε σερβιτόρο)</SectionTitle>
 
+      <InfoBox icon="⚙️" title="Προαπαιτούμενο" variant="purple">
+        <p>Ο διαχειριστής του καταστήματος πρέπει πρώτα να επιτρέψει τη μεταφορά παραγγελιών στον χρήστη, από το <strong>Διαχειριστικό</strong>.</p>
+        <ul className="list-disc pl-5 mt-2 space-y-1.5">
+          <li>Μπες στο <strong>Διαχειριστικό (Secure)</strong>.</li>
+          <li>Πήγαιν στα <strong>«Δικαιώματα Διαχειριστικού Κωδικού»</strong>.</li>
+          <li>Βρες τη γραμμή <strong>«Μεταφορά Παραγγελιών»</strong> και άνοιξε το διακόπτη (γίνεται <strong>πράσινο / ON</strong>).</li>
+        </ul>
+      </InfoBox>
+
+      <div className="flex justify-center">
+        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/8e9ad91bc_Screenshot2026-07-15131416.png" alt="Δικαιώματα Διαχειριστικού Κωδικού — Μεταφορά Παραγγελιών" className="w-52 h-auto rounded-lg border border-gray-200" />
+      </div>
+
       <StepCard number="1" title="Κράτα πατημένη την παραγγελία">
         <p>Από τη λίστα παραγγελιών, <strong>κράτα πατημένη</strong> την παραγγελία που θέλεις να μεταφέρεις. Εμφανίζεται μενού ενεργειών.</p>
       </StepCard>
