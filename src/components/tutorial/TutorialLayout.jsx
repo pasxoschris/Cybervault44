@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Edit3, Receipt, Layers, Monitor, ArrowLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Edit3, Receipt, Layers, Monitor, ArrowLeft, ArrowLeftRight, GitMerge } from "lucide-react";
 import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
@@ -16,6 +16,8 @@ const sections = [
   { title: "Πληρωμή", path: "/tutorial/payment", icon: CreditCard },
   { title: "Επεξεργασία", path: "/tutorial/edit-order", icon: Edit3 },
   { title: "Τιμολόγιο", path: "/tutorial/invoice", icon: Receipt },
+  { title: "Μεταφορά Παραγγελίας", path: "/tutorial/transfer-order", icon: ArrowLeftRight },
+  { title: "Συγχώνευση Παραγγελιών", path: "/tutorial/merge-orders", icon: GitMerge },
   { title: "Βάρδια", path: "/tutorial/shift", icon: Layers },
   { title: "Σενάρια", path: "/tutorial/scenarios", icon: Monitor },
 ];

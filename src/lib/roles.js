@@ -18,6 +18,8 @@ export const ROLES = [
       { title: 'Πληρωμή', href: '/tutorial/payment' },
       { title: 'Επεξεργασία Παραγγελίας', href: '/tutorial/edit-order' },
       { title: 'Έκδοση Τιμολογίου', href: '/tutorial/invoice' },
+      { title: 'Μεταφορά Παραγγελίας', href: '/tutorial/transfer-order' },
+      { title: 'Συγχώνευση Παραγγελιών', href: '/tutorial/merge-orders' },
       { title: 'Παραγγελίες Βάρδιας', href: '/tutorial/shift' },
       { title: 'Σενάρια', href: '/tutorial/scenarios' },
     ],
