@@ -27,17 +27,25 @@ export default function MergeOrders() {
         <p>Βρες την παραγγελία που θέλεις να απορροφήσει την άλλη και πάτα πάνω της.</p>
       </StepCard>
 
-      <StepCard number="3" title="Πάτα «Συγχώνευση»">
-        <p>Από τα εργαλεία παραγγελίας, πάτα <strong>«Συγχώνευση»</strong> (εικονίδιο ένωσης).</p>
+      <StepCard number="3" title="Επίλεξε τη δεύτερη παραγγελία">
+        <p>Εμφανίζεται λίστα με τις υπόλοιπες ανοιχτές παραγγελίες. Επίλεξε ποια παραγγελία θα ενωθεί με την τρέχουσα πατώντας τον <strong>κύκλο επιλογής</strong> αριστερά.</p>
       </StepCard>
 
-      <StepCard number="4" title="Επίλεξε τη δεύτερη παραγγελία">
-        <p>Εμφανίζεται λίστα με τις υπόλοιπες ανοιχτές παραγγελίες. Επίλεξε ποια παραγγελία θα ενωθεί με την τρέχουσα.</p>
+      <div className="flex justify-center">
+        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/e43e6c563_.png" alt="Λίστα παραγγελιών για συγχώνευση" className="w-56 h-auto rounded-lg border border-gray-200" />
+      </div>
+
+      <StepCard number="4" title="Έλεγξε το άθροισμα και πάτα το τικ">
+        <p>Κάτω αριστερά εμφανίζεται το <strong>άθροισμα του ποσού</strong> των παραγγελιών. Κάτω δεξιά πάτα το <strong>εικονίδιο τικ</strong> (λευκός κύκλος) για να επιβεβαιώσεις.</p>
       </StepCard>
 
-      <StepCard number="5" title="Επιβεβαίωση συγχώνευσης">
-        <p>Πάτα <strong>«Επιβεβαίωση»</strong>. Τα είδη της δεύτερης παραγγελίας προστίθενται στην πρώτη και η δεύτερη παραγγελία κλείνει.</p>
+      <StepCard number="5" title="Μήνυμα επιβεβαίωσης">
+        <p>Εμφανίζεται μήνυμα: <strong>«1 παραγγελία θα συγχωνευτεί με την παραγγελία του τραπεζιού: A2 — Επιβεβαίωση;»</strong>. Πάτα <strong>«OK»</strong> για να ολοκληρωθεί η συγχώνευση ή <strong>«Ακύρωση»</strong> για να ματαιώσεις.</p>
       </StepCard>
+
+      <div className="flex justify-center">
+        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/88e60433d_anyviewer_screenshot_20260715135221.png" alt="Μήνυμα επιβεβαίωσης συγχώνευσης" className="w-56 h-auto rounded-lg border border-gray-200" />
+      </div>
 
       <InfoBox icon="⚠️" title="Σημαντικό!" variant="warning">
         <ul className="list-disc pl-5 mt-1 space-y-1.5">
