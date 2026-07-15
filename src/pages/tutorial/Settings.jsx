@@ -22,7 +22,7 @@ export default function Settings() {
     <TutorialLayout title="Ρυθμίσεις Χρήστη" subtitle="Παραμετροποίηση της εφαρμογής για κάθε χρήστη">
 
       <InfoBox icon="⚙️" title="Πού βρίσκονται οι ρυθμίσεις;" variant="info">
-        Οι ρυθμίσεις χρήστη βρίσκονται <strong>πάνω αριστερά</strong> στο εικονίδιο <strong>☰</strong> (hamburger menu). Πάτα το και επίλεξε <strong>«Ρυθμίσεις (όνομα χρήστη)»</strong> από το μενού που εμφανίζεται.
+        Οι ρυθμίσεις χρήστη βρίσκονται <strong>πάνω αριστερά</strong> στις τρεις γραμμές <strong>☰</strong>. Πάτα το και επίλεξε <strong>«Ρυθμίσεις (όνομα χρήστη)»</strong> από το μενού που εμφανίζεται.
       </InfoBox>
 
       <ScreenshotGallery
