@@ -16,6 +16,7 @@ export const cashierSections = [
   { title: "Split Payments", path: "/tutorial/cashier/split", icon: Home },
   { title: "Έκδοση Τιμολογίου", path: "/tutorial/cashier/invoice", icon: Home },
   { title: "Ρυθμίσεις Χρήστη", path: "/tutorial/cashier/settings", icon: Home },
+  { title: "Παραγγελία Delivery", path: "/tutorial/cashier/delivery", icon: Home },
 ];
 
 export default function CashierTutorialLayout({ children, title, subtitle }) {

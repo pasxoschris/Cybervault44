@@ -76,6 +76,7 @@ export const ROLES = [
       { title: 'Έκδοση Τιμολογίου', href: '/tutorial/cashier/invoice' },
       { title: 'Ρυθμίσεις Χρήστη', href: '/tutorial/cashier/settings' },
       { title: 'Κλείσιμο Ταμείου', href: '/tutorial/cashier/close' },
+      { title: 'Παραγγελία Delivery', href: '/tutorial/cashier/delivery' },
     ],
   },
   {
