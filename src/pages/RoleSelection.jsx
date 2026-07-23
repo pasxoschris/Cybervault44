@@ -56,16 +56,16 @@ export default function RoleSelection() {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       {/* Header */}
-      <div className="pt-24 pb-12 cyber-grid" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
+      <div className="pt-24 pb-12" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
         <div className="max-w-4xl mx-auto px-6">
-          <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 border font-mono-cyber text-[10px] tracking-widest uppercase animate-pulse-glow"
-            style={{ borderColor: "rgba(0,207,255,0.3)", color: "rgba(0,207,255,0.7)", background: "rgba(0,207,255,0.05)" }}>
+          <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 border text-[10px] tracking-widest uppercase"
+            style={{ borderColor: "rgba(255,255,255,0.3)", color: "rgba(255,255,255,0.8)", background: "rgba(255,255,255,0.05)", fontFamily: 'Inter, sans-serif' }}>
             ✦ CYBERVAULT ACADEMY · SPOTLIGHTPOS<span className="text-white/50">App</span>
           </div>
-          <h1 className="font-orbitron font-black text-3xl md:text-4xl mb-3 text-white">
-            ΕΠΙΛΕΞΕ <span className="glow-cyan" style={{ color: "#00CFFF" }}>ΡΟΛΟ</span>
+          <h1 className="font-bold text-3xl md:text-4xl mb-3 text-white" style={{ fontFamily: 'Inter, sans-serif' }}>
+            Επίλεξε Ρόλο
           </h1>
-          <p className="font-rajdhani text-base text-white/45 max-w-lg">
+          <p className="text-base text-white/70 max-w-lg" style={{ fontFamily: 'Inter, sans-serif' }}>
             Επίλεξε τον ρόλο σου για να δεις το εκπαιδευτικό υλικό που σε αφορά.
           </p>
         </div>

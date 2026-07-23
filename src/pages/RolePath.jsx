@@ -38,34 +38,34 @@ export default function RolePath() {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       {/* Header */}
-      <div className="pt-24 pb-12 cyber-grid" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
+      <div className="pt-24 pb-12" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
         <div className="max-w-3xl mx-auto px-6">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 mb-5 font-rajdhani text-sm text-white/40">
-            <Link to="/spotlight-pos-guide" className="hover:text-[#00CFFF] transition-colors">Εκπαίδευση</Link>
+          <div className="flex items-center gap-2 mb-5 text-sm text-white/60" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <Link to="/spotlight-pos-guide" className="hover:text-white transition-colors">Εκπαίδευση</Link>
             <ChevronRight className="w-3 h-3" />
-            <span className="text-white/70">{role.title}</span>
+            <span className="text-white/80">{role.title}</span>
           </div>
 
           <div
             className="w-16 h-16 flex items-center justify-center rounded-2xl text-3xl mb-5"
-            style={{ background: role.colorLight, border: `1px solid ${role.colorBorder}` }}
+            style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.15)" }}
           >
             {role.emoji}
           </div>
-          <h1 className="font-orbitron font-black text-2xl md:text-3xl text-white mb-2">{role.title}</h1>
-          <p className="font-rajdhani text-white/50 text-base mb-5">{role.subtitle}</p>
+          <h1 className="font-bold text-2xl md:text-3xl text-white mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>{role.title}</h1>
+          <p className="text-white/70 text-base mb-5" style={{ fontFamily: 'Inter, sans-serif' }}>{role.subtitle}</p>
 
           {/* Progress */}
           <div className="max-w-xs">
             <div className="flex justify-between mb-1.5">
-              <span className="font-mono-cyber text-[10px] tracking-widest text-white/40 uppercase">Πρόοδος</span>
-              <span className="font-mono-cyber text-[10px] text-white/60">{completed}/{total}</span>
+              <span className="text-[10px] tracking-widest text-white/50 uppercase" style={{ fontFamily: 'Inter, sans-serif' }}>Πρόοδος</span>
+              <span className="text-[10px] text-white/70" style={{ fontFamily: 'Inter, sans-serif' }}>{completed}/{total}</span>
             </div>
-            <div className="w-full h-1 rounded-full bg-white/10">
+            <div className="w-full h-1 rounded-full bg-white/15">
               <div
                 className="h-1 rounded-full transition-all duration-500"
-                style={{ width: `${pct}%`, background: role.color }}
+                style={{ width: `${pct}%`, background: "rgba(255,255,255,0.9)" }}
               />
             </div>
           </div>
