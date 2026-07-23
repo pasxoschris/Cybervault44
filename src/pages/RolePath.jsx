@@ -51,12 +51,12 @@ export default function RolePath() {
             <span className="text-white/80">{role.title}</span>
           </div>
 
-          <div
-            className="w-16 h-16 flex items-center justify-center rounded-2xl text-3xl mb-5 hidden"
-            style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.15)" }}>
-            
-            {role.emoji}
-          </div>
+          
+
+
+
+
+          
           <h1 className="font-bold text-2xl md:text-3xl text-white mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>{role.title}</h1>
           <p className="text-white/70 text-base mb-5" style={{ fontFamily: 'Inter, sans-serif' }}>{role.subtitle}</p>
 
