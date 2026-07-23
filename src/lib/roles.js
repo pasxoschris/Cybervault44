@@ -70,7 +70,7 @@ export const ROLES = [
       { title: 'Συνοδευτικά Προϊόντος', href: '/tutorial/cashier/accompaniments' },
       { title: 'Προϊόντα Παραγγελίας', href: '/tutorial/cashier/order-items' },
       { title: 'Διαγραφή & Έκπτωση Είδους', href: '/tutorial/cashier/swipe-actions' },
-      { title: 'Άνοιγμα Ταμείου', href: '/tutorial/cashier/open' },
+      { title: 'Έναρξη Βάρδιας', href: '/tutorial/cashier/open' },
       { title: 'Πληρωμές', href: '/tutorial/cashier/payments' },
       { title: 'Split Payments', href: '/tutorial/cashier/split' },
       { title: 'Έκδοση Τιμολογίου', href: '/tutorial/cashier/invoice' },
