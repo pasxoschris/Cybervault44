@@ -1,113 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import CashierTutorialLayout from "@/components/tutorial/CashierTutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "@/components/tutorial/StepCard";
 import { ScreenshotGallery } from "@/components/tutorial/ScreenshotGallery";
 
-const tabs = [
-  { id: "view", label: "Παραγγελίες Βάρδιας", icon: "📋" },
-  { id: "analysis", label: "Ανάλυση Βάρδιας", icon: "📊" },
-  { id: "close", label: "Κλείσιμο Βάρδιας", icon: "🔒" },
-];
-
 export default function CloseCashier() {
-  const [active, setActive] = useState("view");
-
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [active]);
+  }, []);
 
   return (
-    <CashierTutorialLayout title="Κλείσιμο Βάρδιας" subtitle="Διαχείριση και ανάλυση της βάρδιας">
+    <CashierTutorialLayout title="Κλείσιμο Βάρδιας" subtitle="Ανάλυση και κλείσιμο της βάρδιας">
 
-      <InfoBox icon="⚙️" title="Απαιτείται ενεργοποίηση" variant="warning">
-        Για να εμφανίζεται η λειτουργία <strong>Παραγγελίες Βάρδιας</strong>, πρέπει να είναι ενεργοποιημένη στις ρυθμίσεις του διαχειριστικού: <em>Διαχειριστής → Κατάστημα → Άλλες Υπηρεσίες → Παραγγελίες Βάρδιας: ON</em>
+      <InfoBox icon="⚠️" title="Προσοχή" variant="warning">
+        Το κλείσιμο βάρδιας είναι <strong>μη αναστρέψιμη ενέργεια</strong>. Βεβαιώσου ότι όλες οι παραγγελίες έχουν ολοκληρωθεί πριν προχωρήσεις.
       </InfoBox>
 
-      <div className="flex flex-wrap gap-2">
-        {tabs.map(t => (
-          <button
-            key={t.id}
-            onClick={() => setActive(t.id)}
-            className={`px-4 py-2 text-sm font-medium transition-all border rounded-lg ${
-              active === t.id
-                ? "border-amber-500/60 bg-amber-100 text-amber-900"
-                : "border-gray-200 bg-white text-gray-500 hover:text-gray-800 hover:border-amber-300"
-            }`}
-            style={{ fontFamily: 'Inter, sans-serif' }}
-          >
-            {t.icon} <span>{t.label}</span>
-          </button>
-        ))}
-      </div>
+      <ScreenshotGallery
+        images={["https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/d1e36c530_image.png"]}
+        caption="Ανάλυση Βάρδιας — σύνοψη και κλείσιμο"
+      />
 
-      {active === "view" && (
-        <>
-          <ScreenshotGallery images={["https://media.base44.com/images/public/69f588f4590b173a2970ddb4/ecc8a9261_20.JPG"]} caption="Παραγγελίες βάρδιας — ρύθμιση ενεργοποίησης" />
-          <SectionTitle>Προβολή Παραγγελιών Βάρδιας</SectionTitle>
-          <StepCard number="1" title="Άνοιξε την οθόνη Βάρδιας">
-            <p>Από το μενού της εφαρμογής, επίλεξε <strong>«Παραγγελίες Βάρδιας»</strong>.</p>
-          </StepCard>
-          <StepCard number="2" title="Βλέπεις τις παραγγελίες">
-            <p>Εμφανίζεται λίστα με όλες τις παραγγελίες της βάρδιας. Για κάθε παραγγελία βλέπεις:</p>
-            <ul className="list-disc list-inside mt-2 space-y-1">
-              <li>Τραπέζι &amp; αριθμός</li>
-              <li>Ώρα παραγγελίας</li>
-              <li>Αριθμός ατόμων &amp; προϊόντων</li>
-              <li>Κατάσταση (ολοκληρωμένη ✓ / ανοικτή)</li>
-            </ul>
-          </StepCard>
-          <StepCard number="3" title="Φιλτράρισμα">
-            <p>Χρησιμοποίησε το εικονίδιο <strong>φίλτρου (▽)</strong> για να βλέπεις μόνο συγκεκριμένες παραγγελίες.</p>
-          </StepCard>
-          <StepCard number="4" title="Επαναφορά παραγγελίας">
-            <p>Αν θέλεις να επαναφέρεις μια ολοκληρωμένη παραγγελία, επίλεξέ την και πάτα <strong>«Επαναφορά»</strong>.</p>
-          </StepCard>
-          <StepCard number="5" title="Επανεκτύπωση Απόδειξης">
-            <p>Επίλεξε παραγγελία και πάτα <strong>«Επανεκτύπωση Απόδειξης»</strong> για να ξαναεκτυπώσεις.</p>
-          </StepCard>
-        </>
-      )}
+      <SectionTitle>Άνοιγμα Ανάλυσης Βάρδιας</SectionTitle>
+      <StepCard number="1" title="Άνοιξε το μενού Βάρδιας">
+        <p>Από το μενού της εφαρμογής, επίλεξε <strong>«Ανάλυση Βάρδιας»</strong>. Ανοίγει ένα modal με τη σύνοψη της βάρδιας του τρέχοντος χρήστη.</p>
+      </StepCard>
 
-      {active === "analysis" && (
-        <>
-          <SectionTitle>Ανάλυση Βάρδιας</SectionTitle>
-          <StepCard number="1" title="Άνοιξε Ανάλυση Βάρδιας">
-            <p>Από τις Παραγγελίες Βάρδιας, επίλεξε <strong>«Ανάλυση Βάρδιας»</strong>.</p>
-          </StepCard>
-          <InfoBox icon="📊" title="Τι περιλαμβάνει η ανάλυση;" variant="info">
-            <ul className="space-y-1">
-              <li>• Σύνολο πωλήσεων ανά κατηγορία</li>
-              <li>• Αριθμός παραγγελιών</li>
-              <li>• Ανάλυση ανά τρόπο πληρωμής</li>
-              <li>• Εκπτώσεις που δόθηκαν</li>
-            </ul>
-          </InfoBox>
-          <StepCard number="2" title="Εκτύπωση Αναφοράς">
-            <p>Πάτα <strong>«Εκτύπωση Αναφοράς Βάρδιας»</strong> για να εκτυπώσεις αναλυτική αναφορά.</p>
-          </StepCard>
-        </>
-      )}
+      <SectionTitle>Σύνοψη Βάρδιας</SectionTitle>
+      <StepCard number="2" title="Έλεγξε τα δεδομένα βάρδιας">
+        <p>Στο modal «Ανάλυση Βάρδιας» βλέπεις:</p>
+        <ul className="list-disc list-inside mt-2 space-y-1">
+          <li><strong>Συνολικό Ποσό</strong> — το σύνολο πωλήσεων της βάρδιας</li>
+          <li><strong>Παραγγελίες</strong> — αριθμός παραγγελιών</li>
+          <li><strong>Μετρητά</strong> — τα μετρητά που συλλέχθηκαν</li>
+          <li><strong>In-house &amp; Delivery</strong> — ανάλυση ανά τύπο παραγγελίας</li>
+          <li><strong>Χρήστης</strong> — πωλήσεις ανά χρήστη (π.χ. ChrisS)</li>
+          <li><strong>Tips Παραγγελιών</strong> — συνολικά φιλοδωρήματα</li>
+        </ul>
+      </StepCard>
+      <InfoBox icon="💡" variant="info">
+        Πάτα στο <strong>«Συνολικό Ποσό»</strong> ή σε κάποιον <strong>χρήστη</strong> για να δεις αναλυτικά στοιχεία.
+      </InfoBox>
 
-      {active === "close" && (
-        <>
-          <SectionTitle>Κλείσιμο Βάρδιας</SectionTitle>
-          <InfoBox icon="⚠️" title="Προσοχή" variant="warning">
-            Το κλείσιμο βάρδιας είναι <strong>μη αναστρέψιμη ενέργεια</strong>. Βεβαιώσου ότι όλες οι παραγγελίες έχουν ολοκληρωθεί.
-          </InfoBox>
-          <StepCard number="1" title="Έλεγξε ανοικτές παραγγελίες">
-            <p>Βεβαιώσου ότι δεν υπάρχουν ανοικτές παραγγελίες. Αν υπάρχουν, ολοκλήρωσέ τες πρώτα.</p>
-          </StepCard>
-          <StepCard number="2" title="Πάτα «Κλείσιμο Βάρδιας»">
-            <p>Από τις Παραγγελίες Βάρδιας, επίλεξε <strong>«Κλείσιμο Βάρδιας»</strong>.</p>
-          </StepCard>
-          <StepCard number="3" title="Επιβεβαίωση">
-            <p>Επιβεβαίωσε το κλείσιμο. Η βάρδια κλείνει και μπορείς να αποσυνδεθείς ή να ξεκινήσεις νέα βάρδια.</p>
-          </StepCard>
-          <InfoBox icon="💡" variant="info">
-            Μετά το κλείσιμο βάρδιας, μπορείς να <strong>Αποσυνδεθείς</strong> από το μενού της εφαρμογής για να την ελευθερώσεις για άλλο χρήστη.
-          </InfoBox>
-        </>
-      )}
+      <SectionTitle>Εκτύπωση Αναφοράς</SectionTitle>
+      <StepCard number="3" title="Εκτύπωσε την αναφορά">
+        <p>Από το εικονίδιο <strong>εκτύπωσης</strong> (πάνω δεξιά στο modal) μπορείς να εκτυπώσεις την αναφορά βάρδιας.</p>
+      </StepCard>
+
+      <SectionTitle>Κλείσιμο Βάρδιας</SectionTitle>
+      <StepCard number="4" title="Έλεγξε ανοικτές παραγγελίες">
+        <p>Βεβαιώσου ότι δεν υπάρχουν ανοικτές παραγγελίες. Αν υπάρχουν, ολοκλήρωσέ τες πρώτα.</p>
+      </StepCard>
+      <StepCard number="5" title="Πάτα «Κλείσιμο Βάρδιας»">
+        <p>Στο κάτω μέρος του modal, πάτα το κουμπί <strong>«Κλείσιμο Βάρδιας»</strong>.</p>
+      </StepCard>
+      <StepCard number="6" title="Επιβεβαίωση">
+        <p>Επιβεβαίωσε το κλείσιμο. Η βάρδια κλείνει και μπορείς να αποσυνδεθείς ή να ξεκινήσεις νέα βάρδια.</p>
+      </StepCard>
+      <InfoBox icon="💡" variant="info">
+        Μετά το κλείσιμο βάρδιας, μπορείς να <strong>Αποσυνδεθείς</strong> από το μενού της εφαρμογής για να την ελευθερώσεις για άλλο χρήστη.
+      </InfoBox>
     </CashierTutorialLayout>
   );
 }
