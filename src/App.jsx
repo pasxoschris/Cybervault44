@@ -37,6 +37,7 @@ import InvoiceCashier from './pages/tutorial/cashier/Invoice';
 import SplitCashier from './pages/tutorial/cashier/Split';
 import DeliveryCashier from './pages/tutorial/cashier/Delivery';
 import OpenCashier from './pages/tutorial/cashier/Open';
+import CloseCashier from './pages/tutorial/cashier/Close';
 import Payment from './pages/tutorial/Payment';
 import Assistant from './pages/academy/Assistant';
 import Stores from './pages/stores/Stores';
@@ -119,6 +120,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/cashier/split" element={<SplitCashier />} />
       <Route path="/tutorial/cashier/delivery" element={<DeliveryCashier />} />
       <Route path="/tutorial/cashier/open" element={<OpenCashier />} />
+      <Route path="/tutorial/cashier/close" element={<CloseCashier />} />
       <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
       <Route path="*" element={<PageNotFound />} />
