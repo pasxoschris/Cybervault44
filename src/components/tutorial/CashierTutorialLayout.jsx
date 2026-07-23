@@ -32,7 +32,7 @@ export default function CashierTutorialLayout({ children, title, subtitle }) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Nav */}
-      <div className="sticky top-0 z-10 border-b border-white/10" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
+      <div className="sticky top-0 z-10 border-b border-white/10" style={{ background: "#1E1B3A" }}>
         <div className="max-w-3xl mx-auto px-4 py-2.5 flex items-center gap-3">
           <img
             src="https://media.base44.com/images/public/69f588f4590b173a2970ddb4/c5b6c58e9_SpotlightPos_icon.png"
@@ -72,7 +72,7 @@ export default function CashierTutorialLayout({ children, title, subtitle }) {
       </div>
 
       {/* Page Header */}
-      <div className="text-white" style={{ background: "linear-gradient(135deg, #7C2D12 0%, #1E1B3A 50%, #92400E 100%)" }}>
+      <div className="text-white" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
         <div className="max-w-3xl mx-auto px-6 py-9">
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
             {SectionIcon && (
