@@ -12,6 +12,7 @@ export const cashierSections = [
   { title: "Συνοδευτικά Προϊόντος", path: "/tutorial/cashier/accompaniments", icon: Home },
   { title: "Προϊόντα Παραγγελίας", path: "/tutorial/cashier/order-items", icon: Home },
   { title: "Διαγραφή & Έκπτωση Είδους", path: "/tutorial/cashier/swipe-actions", icon: Home },
+  { title: "Άνοιγμα Ταμείου", path: "/tutorial/cashier/open", icon: Home },
   { title: "Πληρωμές", path: "/tutorial/cashier/payments", icon: Home },
   { title: "Split Payments", path: "/tutorial/cashier/split", icon: Home },
   { title: "Έκδοση Τιμολογίου", path: "/tutorial/cashier/invoice", icon: Home },
