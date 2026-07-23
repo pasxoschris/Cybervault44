@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
 import SpotlightBrand from "@/components/SpotlightBrand";
+import Navbar from "@/components/layout/Navbar";
 
 // Cashier-mode lessons (extended as new pages are added)
 export const cashierSections = [
@@ -35,9 +36,10 @@ export default function CashierTutorialLayout({ children, title, subtitle }) {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-16">
+      <Navbar />
       {/* Top Nav */}
-      <div className="sticky top-0 z-10 border-b border-white/10" style={{ background: "#1E1B3A" }}>
+      <div className="sticky top-16 z-10 border-b border-white/10" style={{ background: "#1E1B3A" }}>
         <div className="max-w-3xl mx-auto px-4 py-2.5 flex items-center gap-3">
           <img
             src="https://media.base44.com/images/public/69f588f4590b173a2970ddb4/c5b6c58e9_SpotlightPos_icon.png"
