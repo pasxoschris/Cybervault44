@@ -12,7 +12,7 @@ export const cashierSections = [
   { title: "Αρχική Οθόνη", path: "/tutorial/cashier/initial-screen", icon: Home },
   { title: "Συνοδευτικά Προϊόντος", path: "/tutorial/cashier/accompaniments", icon: Home },
   { title: "Προϊόντα Παραγγελίας", path: "/tutorial/cashier/order-items", icon: Home },
-  { title: "Διαγραφή & Έκπτωση Είδους", path: "/tutorial/cashier/swipe-actions", icon: Home },
+  { title: "Διαγραφή & Έκπτωση", path: "/tutorial/cashier/swipe-actions", icon: Home },
   { title: "Έναρξη Βάρδιας", path: "/tutorial/cashier/open", icon: Home },
   { title: "Πληρωμές", path: "/tutorial/cashier/payments", icon: Home },
   { title: "Split Payments", path: "/tutorial/cashier/split", icon: Home },
