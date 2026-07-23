@@ -136,7 +136,7 @@ export default function CashierTutorialLayout({ children, title, subtitle }) {
             <Link
               to={next.path}
               className="flex items-center gap-2 rounded-xl px-5 py-3 hover:opacity-90 hover:shadow-md transition-all text-sm ml-auto text-white font-semibold"
-              style={{ fontFamily: 'Inter, sans-serif', background: "linear-gradient(135deg, #D97706, #7C2D12)" }}
+              style={{ fontFamily: 'Inter, sans-serif', background: "linear-gradient(135deg, #00CFFF, #0E1235)" }}
             >
               <span>{next.title}</span>
               <ChevronRight size={15} />
@@ -145,7 +145,7 @@ export default function CashierTutorialLayout({ children, title, subtitle }) {
             <Link
               to="/tutorial/cashier/initial-screen"
               className="flex items-center gap-2 rounded-xl px-5 py-3 hover:opacity-90 transition-all text-sm ml-auto text-white font-semibold"
-              style={{ fontFamily: 'Inter, sans-serif', background: "linear-gradient(135deg, #D97706, #7C2D12)" }}
+              style={{ fontFamily: 'Inter, sans-serif', background: "linear-gradient(135deg, #00CFFF, #0E1235)" }}
             >
               <Home size={15} /> Αρχική
             </Link>
