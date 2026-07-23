@@ -84,9 +84,9 @@ export default function CashierTutorialLayout({ children, title, subtitle }) {
               <SpotlightBrand size={24} />
             </div>
             {SectionIcon && (
-              <div className="w-12 h-12 rounded-2xl mb-4 flex items-center justify-center" style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.15)" }}>
+              <Link to="/tutorial/cashier/initial-screen" className="w-12 h-12 rounded-2xl mb-4 flex items-center justify-center transition-all hover:scale-105" style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.15)" }} title="Αρχική Οθόνη">
                 <SectionIcon size={24} className="text-white" />
-              </div>
+              </Link>
             )}
             <h1 className="font-bold text-2xl md:text-3xl" style={{ fontFamily: 'Inter, sans-serif' }}>{title}</h1>
             {subtitle && <p className="text-white/60 mt-1.5 text-base" style={{ fontFamily: 'Inter, sans-serif' }}>{subtitle}</p>}
