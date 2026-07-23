@@ -43,9 +43,9 @@ export default function CashierTutorialLayout({ children, title, subtitle }) {
             alt="SpotlightPOS"
             className="w-7 h-7 rounded-lg flex-shrink-0"
           />
-          <Link to="/spotlight-pos-guide" className="flex items-center gap-1 text-white/50 hover:text-white transition-colors text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <Link to="/" className="flex items-center gap-1 text-white/50 hover:text-white transition-colors text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
             <Home size={12} />
-            <span className="hidden sm:inline">Εκπαίδευση</span>
+            <span className="hidden sm:inline">Αρχική</span>
           </Link>
           {role && (
             <>
