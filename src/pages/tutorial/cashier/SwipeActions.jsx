@@ -32,7 +32,7 @@ export default function SwipeActions() {
         />
       </div>
 
-      <StepCard number="1" title="Σούρε το είδος αριστερά">
+      <StepCard number="1" title="Σύρε το είδος αριστερά">
         <p>Στη λίστα «Προϊόντα», <strong>κράτα και σούρε αριστερά</strong> τη γραμμή του είδους που θέλεις να επεξεργαστείς (π.χ. Double Espresso).</p>
       </StepCard>
 
@@ -190,7 +190,7 @@ export default function SwipeActions() {
       </InfoBox>
 
       <InfoBox icon="💡" title="Συνοπτικά" variant="info">
-        <p><strong>Σούρε αριστερά → Έκπτωση (είδος) ή Διαγραφή (είδος)</strong>. Γρήγορος τρόπος να διορθώσεις μια παραγγελία χωρίς να ανοίξεις το παράθυρο επεξεργασίας.</p>
+        <p><strong>Σύρε αριστερά → Έκπτωση (είδος) ή Διαγραφή (είδος)</strong>. Γρήγορος τρόπος να διορθώσεις μια παραγγελία χωρίς να ανοίξεις το παράθυρο επεξεργασίας.</p>
       </InfoBox>
     </CashierTutorialLayout>
   );
