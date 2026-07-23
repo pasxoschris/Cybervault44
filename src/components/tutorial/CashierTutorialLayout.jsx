@@ -46,7 +46,7 @@ export default function CashierTutorialLayout({ children, title, subtitle }) {
             alt="SpotlightPOS"
             className="w-7 h-7 rounded-lg flex-shrink-0"
           />
-          <Link to="/tutorial/cashier/initial-screen" className="flex items-center gap-1 text-white/50 hover:text-white transition-colors text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <Link to="/academy/cashier" className="flex items-center gap-1 text-white/50 hover:text-white transition-colors text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
             <Home size={12} />
             <span className="hidden sm:inline">Cashier</span>
           </Link>
@@ -145,7 +145,7 @@ export default function CashierTutorialLayout({ children, title, subtitle }) {
             </Link>
           ) : (
             <Link
-              to="/tutorial/cashier/initial-screen"
+              to="/academy/cashier"
               className="flex items-center gap-2 rounded-xl px-5 py-3 hover:opacity-90 transition-all text-sm ml-auto text-white font-semibold"
               style={{ fontFamily: 'Inter, sans-serif', background: "linear-gradient(135deg, #00CFFF, #0E1235)" }}
             >
