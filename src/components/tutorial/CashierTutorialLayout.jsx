@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Home, ArrowLeft, Tablet } from "lucide-react
 import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
+import SpotlightBrand from "@/components/SpotlightBrand";
 
 // Cashier-mode lessons (extended as new pages are added)
 export const cashierSections = [
@@ -75,6 +76,9 @@ export default function CashierTutorialLayout({ children, title, subtitle }) {
       <div className="text-white" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
         <div className="max-w-3xl mx-auto px-6 py-9">
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+            <div className="mb-4">
+              <SpotlightBrand size={24} />
+            </div>
             {SectionIcon && (
               <div className="w-12 h-12 rounded-2xl mb-4 flex items-center justify-center" style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.15)" }}>
                 <SectionIcon size={24} className="text-white" />

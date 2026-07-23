@@ -6,6 +6,7 @@ import { ROLES } from '@/lib/roles';
 import { getCompletedCount } from '@/lib/tutorialProgress';
 import { ChevronRight } from 'lucide-react';
 import AssistantFloatingButton from '@/components/academy/AssistantFloatingButton';
+import SpotlightBrand from '@/components/SpotlightBrand';
 
 export default function RoleSelection() {
   const [allowed, setAllowed] = useState(null);
@@ -58,9 +59,8 @@ export default function RoleSelection() {
       {/* Header */}
       <div className="pt-24 pb-12" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
         <div className="max-w-4xl mx-auto px-6">
-          <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 border text-[10px] tracking-widest uppercase"
-            style={{ borderColor: "rgba(255,255,255,0.3)", color: "rgba(255,255,255,0.8)", background: "rgba(255,255,255,0.05)", fontFamily: 'Inter, sans-serif' }}>
-            ✦ CYBERVAULT ACADEMY · SPOTLIGHTPOS<span className="text-white/50">App</span>
+          <div className="mb-5">
+            <SpotlightBrand size={26} />
           </div>
           <h1 className="font-bold text-3xl md:text-4xl mb-3 text-white" style={{ fontFamily: 'Inter, sans-serif' }}>
             Επίλεξε Ρόλο

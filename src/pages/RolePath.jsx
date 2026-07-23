@@ -5,6 +5,7 @@ import { getRoleById } from '@/lib/roles';
 import { getCompletedCount, isVisited } from '@/lib/tutorialProgress';
 import { ChevronRight, CheckCircle2, ArrowLeft } from 'lucide-react';
 import AssistantFloatingButton from '@/components/academy/AssistantFloatingButton';
+import SpotlightBrand from '@/components/SpotlightBrand';
 
 export default function RolePath() {
   const { roleId } = useParams();
@@ -40,6 +41,9 @@ export default function RolePath() {
       {/* Header */}
       <div className="pt-24 pb-12" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
         <div className="max-w-3xl mx-auto px-6">
+          <div className="mb-5">
+            <SpotlightBrand size={24} />
+          </div>
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 mb-5 text-sm text-white/60" style={{ fontFamily: 'Inter, sans-serif' }}>
             <Link to="/spotlight-pos-guide" className="hover:text-white transition-colors">Εκπαίδευση</Link>
