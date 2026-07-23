@@ -59,7 +59,7 @@ export const ROLES = [
   },
   {
     id: 'cashier',
-    emoji: '💰',
+    emoji: '🧑‍💻',
     title: 'Cashier Mode',
     subtitle: 'Ταμείο και πληρωμές',
     color: '#D97706',
