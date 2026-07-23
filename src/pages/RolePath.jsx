@@ -15,7 +15,7 @@ export default function RolePath() {
   useEffect(() => {
     if (!role) return;
     const obj = {};
-    role.lessons.forEach(l => { obj[l.href] = isVisited(l.href); });
+    role.lessons.forEach((l) => {obj[l.href] = isVisited(l.href);});
     setVisited(obj);
   }, [role]);
 
@@ -26,14 +26,14 @@ export default function RolePath() {
           <p className="font-orbitron text-white mb-4">Ο ρόλος δεν βρέθηκε.</p>
           <Link to="/spotlight-pos-guide" className="text-[#00CFFF] hover:underline font-rajdhani">← Πίσω</Link>
         </div>
-      </div>
-    );
+      </div>);
+
   }
 
-  const paths = role.lessons.map(l => l.href);
+  const paths = role.lessons.map((l) => l.href);
   const completed = getCompletedCount(paths);
   const total = paths.length;
-  const pct = Math.round((completed / total) * 100);
+  const pct = Math.round(completed / total * 100);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -52,9 +52,9 @@ export default function RolePath() {
           </div>
 
           <div
-            className="w-16 h-16 flex items-center justify-center rounded-2xl text-3xl mb-5"
-            style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.15)" }}
-          >
+            className="w-16 h-16 flex items-center justify-center rounded-2xl text-3xl mb-5 hidden"
+            style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.15)" }}>
+            
             {role.emoji}
           </div>
           <h1 className="font-bold text-2xl md:text-3xl text-white mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>{role.title}</h1>
@@ -69,8 +69,8 @@ export default function RolePath() {
             <div className="w-full h-1 rounded-full bg-white/15">
               <div
                 className="h-1 rounded-full transition-all duration-500"
-                style={{ width: `${pct}%`, background: "rgba(255,255,255,0.9)" }}
-              />
+                style={{ width: `${pct}%`, background: "rgba(255,255,255,0.9)" }} />
+              
             </div>
           </div>
         </div>
@@ -89,8 +89,8 @@ export default function RolePath() {
               <Link
                 key={lesson.href}
                 to={lesson.href}
-                className={`group bg-white rounded-xl border px-5 py-4 flex items-center gap-4 hover:shadow-md transition-all duration-200 ${done ? 'border-green-200' : 'border-gray-100 hover:border-purple-200'}`}
-              >
+                className={`group bg-white rounded-xl border px-5 py-4 flex items-center gap-4 hover:shadow-md transition-all duration-200 ${done ? 'border-green-200' : 'border-gray-100 hover:border-purple-200'}`}>
+                
                 {/* Step number / check */}
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold ${done ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400 group-hover:bg-purple-100 group-hover:text-purple-600'} transition-colors`} style={{ fontFamily: 'Inter, sans-serif' }}>
                   {done ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : i + 1}
@@ -99,12 +99,12 @@ export default function RolePath() {
                   {lesson.title}
                 </span>
                 <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-purple-400 transition-colors" />
-              </Link>
-            );
+              </Link>);
+
           })}
         </div>
       </div>
       <AssistantFloatingButton />
-    </div>
-  );
+    </div>);
+
 }
