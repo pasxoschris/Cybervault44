@@ -33,7 +33,7 @@ export default function SwipeActions() {
       </div>
 
       <StepCard number="1" title="Σύρε το είδος αριστερά">
-        <p>Στη λίστα «Προϊόντα», <strong>κράτα και σούρε αριστερά</strong> τη γραμμή του είδους που θέλεις να επεξεργαστείς (π.χ. Double Espresso).</p>
+        <p>Στη λίστα «Προϊόντα», <strong>κράτα και σύρε αριστερά</strong> τη γραμμή του είδους που θέλεις να επεξεργαστείς (π.χ. Double Espresso).</p>
       </StepCard>
 
       <StepCard number="2" title="Εμφανίζονται δύο κουμπιά">
