@@ -66,6 +66,7 @@ export const ROLES = [
     colorLight: 'rgba(217,119,6,0.12)',
     colorBorder: 'rgba(217,119,6,0.3)',
     lessons: [
+      { title: 'Αρχική Οθόνη', href: '/tutorial/cashier/initial-screen' },
       { title: 'Άνοιγμα Ταμείου', href: '/tutorial/cashier/open' },
       { title: 'Πληρωμές', href: '/tutorial/cashier/payments' },
       { title: 'Split Payments', href: '/tutorial/cashier/split' },

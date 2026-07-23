@@ -27,6 +27,7 @@ import Whitelist from './pages/admin/Whitelist';
 import RoleSelection from './pages/RoleSelection';
 import RolePath from './pages/RolePath';
 import PlaceholderLesson from './pages/tutorial/PlaceholderLesson';
+import InitialScreenCashier from './pages/tutorial/cashier/InitialScreen';
 import Payment from './pages/tutorial/Payment';
 import Assistant from './pages/academy/Assistant';
 import Stores from './pages/stores/Stores';
@@ -99,6 +100,7 @@ const AuthenticatedApp = () => {
       {/* Placeholder lessons for all other roles */}
       <Route path="/tutorial/maitre-service/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/maitre-mode/*" element={<PlaceholderLesson />} />
+      <Route path="/tutorial/cashier/initial-screen" element={<InitialScreenCashier />} />
       <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
       <Route path="*" element={<PageNotFound />} />
