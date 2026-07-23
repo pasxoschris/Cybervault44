@@ -72,6 +72,7 @@ export const ROLES = [
       { title: 'Διαγραφή & Έκπτωση Είδους', href: '/tutorial/cashier/swipe-actions' },
       { title: 'Άνοιγμα Ταμείου', href: '/tutorial/cashier/open' },
       { title: 'Πληρωμές', href: '/tutorial/cashier/payments' },
+      { title: 'Έκδοση Τιμολογίου', href: '/tutorial/cashier/invoice' },
       { title: 'Ρυθμίσεις Χρήστη', href: '/tutorial/cashier/settings' },
       { title: 'Split Payments', href: '/tutorial/cashier/split' },
       { title: 'Πιστώσεις', href: '/tutorial/cashier/credits' },

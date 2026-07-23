@@ -33,6 +33,7 @@ import OrderItemsCashier from './pages/tutorial/cashier/OrderItems';
 import SwipeActionsCashier from './pages/tutorial/cashier/SwipeActions';
 import PaymentsCashier from './pages/tutorial/cashier/Payments';
 import SettingsCashier from './pages/tutorial/cashier/Settings';
+import InvoiceCashier from './pages/tutorial/cashier/Invoice';
 import Payment from './pages/tutorial/Payment';
 import Assistant from './pages/academy/Assistant';
 import Stores from './pages/stores/Stores';
@@ -111,6 +112,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/cashier/swipe-actions" element={<SwipeActionsCashier />} />
       <Route path="/tutorial/cashier/payments" element={<PaymentsCashier />} />
       <Route path="/tutorial/cashier/settings" element={<SettingsCashier />} />
+      <Route path="/tutorial/cashier/invoice" element={<InvoiceCashier />} />
       <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
       <Route path="*" element={<PageNotFound />} />
