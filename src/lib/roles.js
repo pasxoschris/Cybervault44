@@ -68,6 +68,8 @@ export const ROLES = [
     lessons: [
       { title: 'Αρχική Οθόνη', href: '/tutorial/cashier/initial-screen' },
       { title: 'Συνοδευτικά Προϊόντος', href: '/tutorial/cashier/accompaniments' },
+      { title: 'Προϊόντα Παραγγελίας', href: '/tutorial/cashier/order-items' },
+      { title: 'Διαγραφή & Έκπτωση Είδους', href: '/tutorial/cashier/swipe-actions' },
       { title: 'Άνοιγμα Ταμείου', href: '/tutorial/cashier/open' },
       { title: 'Πληρωμές', href: '/tutorial/cashier/payments' },
       { title: 'Split Payments', href: '/tutorial/cashier/split' },

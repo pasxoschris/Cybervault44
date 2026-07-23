@@ -9,6 +9,9 @@ import { getRoleByPath } from "@/lib/roles";
 export const cashierSections = [
   { title: "Αρχική Οθόνη", path: "/tutorial/cashier/initial-screen", icon: Home },
   { title: "Συνοδευτικά Προϊόντος", path: "/tutorial/cashier/accompaniments", icon: Home },
+  { title: "Προϊόντα Παραγγελίας", path: "/tutorial/cashier/order-items", icon: Home },
+  { title: "Διαγραφή & Έκπτωση Είδους", path: "/tutorial/cashier/swipe-actions", icon: Home },
+  { title: "Πληρωμές", path: "/tutorial/cashier/payments", icon: Home },
 ];
 
 export default function CashierTutorialLayout({ children, title, subtitle }) {
