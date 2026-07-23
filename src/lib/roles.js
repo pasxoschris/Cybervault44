@@ -75,8 +75,8 @@ export const ROLES = [
       { title: 'Split Payments', href: '/tutorial/cashier/split' },
       { title: 'Έκδοση Τιμολογίου', href: '/tutorial/cashier/invoice' },
       { title: 'Ρυθμίσεις Χρήστη', href: '/tutorial/cashier/settings' },
-      { title: 'Κλείσιμο Ταμείου', href: '/tutorial/cashier/close' },
       { title: 'Παραγγελία Delivery', href: '/tutorial/cashier/delivery' },
+      { title: 'Κλείσιμο Ταμείου', href: '/tutorial/cashier/close' },
     ],
   },
   {

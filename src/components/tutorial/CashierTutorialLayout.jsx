@@ -17,6 +17,7 @@ export const cashierSections = [
   { title: "Έκδοση Τιμολογίου", path: "/tutorial/cashier/invoice", icon: Home },
   { title: "Ρυθμίσεις Χρήστη", path: "/tutorial/cashier/settings", icon: Home },
   { title: "Παραγγελία Delivery", path: "/tutorial/cashier/delivery", icon: Home },
+  { title: "Κλείσιμο Ταμείου", path: "/tutorial/cashier/close", icon: Home },
 ];
 
 export default function CashierTutorialLayout({ children, title, subtitle }) {
