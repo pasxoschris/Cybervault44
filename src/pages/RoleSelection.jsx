@@ -56,7 +56,7 @@ export default function RoleSelection() {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       {/* Header */}
-      <div className="pt-24 pb-12 cyber-grid" style={{ background: "#0E1235" }}>
+      <div className="pt-24 pb-12 cyber-grid" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
         <div className="max-w-4xl mx-auto px-6">
           <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 border font-mono-cyber text-[10px] tracking-widest uppercase animate-pulse-glow"
             style={{ borderColor: "rgba(0,207,255,0.3)", color: "rgba(0,207,255,0.7)", background: "rgba(0,207,255,0.05)" }}>

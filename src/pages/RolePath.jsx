@@ -38,7 +38,7 @@ export default function RolePath() {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       {/* Header */}
-      <div className="pt-24 pb-12 cyber-grid" style={{ background: "#0E1235" }}>
+      <div className="pt-24 pb-12 cyber-grid" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
         <div className="max-w-3xl mx-auto px-6">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 mb-5 font-rajdhani text-sm text-white/40">
