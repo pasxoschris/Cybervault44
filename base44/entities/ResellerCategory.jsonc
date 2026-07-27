@@ -21,17 +21,9 @@
     "name"
   ],
   "rls": {
-    "create": {
-      "user_condition": {
-        "role": "admin"
-      }
-    },
+    "create": {},
     "read": {},
-    "update": {
-      "user_condition": {
-        "role": "admin"
-      }
-    },
+    "update": {},
     "delete": {
       "user_condition": {
         "role": "admin"
