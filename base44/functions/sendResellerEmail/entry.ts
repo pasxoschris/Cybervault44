@@ -347,7 +347,10 @@ Deno.serve(async (req) => {
     };
 
     const sendResult = await sendViaResend(to);
-    if (cc) await sendViaResend(cc);
+    const ccList = cc ? String(cc).split(',').map(e => e.trim()).filter(Boolean) : [];
+    for (const ccAddr of ccList) {
+      try { await sendViaResend(ccAddr); } catch (e) { console.error('CC send failed:', ccAddr, e.message); }
+    }
 
     // Update offer status and log
     const now = new Date().toISOString();

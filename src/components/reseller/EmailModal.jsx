@@ -146,8 +146,8 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
               <input value={to} onChange={e=>setTo(e.target.value)} className={inputCls} placeholder="email@example.com" />
             </div>
             <div>
-              <label className="text-white/40 text-xs block mb-1">CC</label>
-              <input value={cc} onChange={e=>setCc(e.target.value)} className={inputCls} placeholder="cc@example.com" />
+              <label className="text-white/40 text-xs block mb-1">CC <span className="text-white/25">(διαχωρίστε με κόμμα για πολλαπλά)</span></label>
+              <input value={cc} onChange={e=>setCc(e.target.value)} className={inputCls} placeholder="cc1@example.com, cc2@example.com" />
             </div>
             <div>
               <label className="text-white/40 text-xs block mb-1">Θέμα</label>
