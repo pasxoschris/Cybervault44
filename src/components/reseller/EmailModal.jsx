@@ -158,7 +158,7 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
               <textarea
                 value={body}
                 onChange={e=>setBody(e.target.value)}
-                rows={6}
+                rows={12}
                 className={inputCls + ' resize-y'}
                 placeholder="Εισάγετε το κείμενο του email..."
               />
