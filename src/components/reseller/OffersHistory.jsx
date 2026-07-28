@@ -113,7 +113,22 @@ export default function OffersHistory({ onEdit }) {
                     <div className="text-white text-xs truncate">{o.company_legal_name || o.store_name || '—'}</div>
                     {o.contact_person && <div className="text-white/40 text-xs truncate">{o.contact_person}</div>}
                   </td>
-                  <td className="px-3 py-3 text-white/50 whitespace-nowrap max-w-[150px] truncate text-xs">{o.email || '—'}</td>
+                  <td className="px-3 py-3 whitespace-nowrap max-w-[150px] truncate text-xs">
+                    {(() => {
+                      try {
+                        const v = JSON.parse(o.verification_details || '{}');
+                        if (o.status === 'accepted' && v.verified_email) {
+                          return (
+                            <div>
+                              <div className="text-green-400 truncate" title={v.verified_email}>{v.verified_email}</div>
+                              <div className="text-white/30 text-[10px]">αποδεκτή από</div>
+                            </div>
+                          );
+                        }
+                      } catch {}
+                      return <span className="text-white/50 truncate block" title={o.email}>{o.email || '—'}</span>;
+                    })()}
+                  </td>
                   <td className="px-3 py-3 font-mono text-[#00CFFF] whitespace-nowrap text-sm">{formatEuro(o.final_total)}</td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${STATUS_COLORS[o.status] || STATUS_COLORS.draft}`}>
@@ -122,19 +137,9 @@ export default function OffersHistory({ onEdit }) {
                   </td>
                   <td className="px-3 py-3 text-white/40 whitespace-nowrap text-xs">{o.viewed_at ? formatDateTime(o.viewed_at) : '—'}</td>
                   <td className="px-3 py-3 whitespace-nowrap text-xs">
-                    {o.accepted_at ? (
-                      <div>
-                        <span className="text-green-400">{formatDateTime(o.accepted_at)}</span>
-                        {(() => {
-                          try {
-                            const v = JSON.parse(o.verification_details || '{}');
-                            return v.verified_email ? (
-                              <div className="text-green-400/70 text-[11px] truncate max-w-[150px]" title={v.verified_email}>από {v.verified_email}</div>
-                            ) : null;
-                          } catch { return null; }
-                        })()}
-                      </div>
-                    ) : <span className="text-white/20">—</span>}
+                    {o.accepted_at
+                      ? <span className="text-green-400">{formatDateTime(o.accepted_at)}</span>
+                      : <span className="text-white/20">—</span>}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     <div className="flex items-center gap-1">
