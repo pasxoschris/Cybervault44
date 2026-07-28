@@ -24,8 +24,8 @@ export default function ResellerConsole() {
     setTab('offer');
   };
 
-  const handleSaved = () => {
-    setEditOffer(null);
+  const handleSaved = (saved) => {
+    if (saved) setEditOffer(saved);
   };
 
   return (
