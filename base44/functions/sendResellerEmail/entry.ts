@@ -176,9 +176,10 @@ async function buildOfferPdf(offer, customer, lines, totals, settings) {
 }
 
 // Build HTML email body from stored offer data (ensures totals are always correct)
-function buildHtmlBody(offer, lines, totals, settings, origin) {
-  const intro = settings?.default_email_body
-    ? settings.default_email_body.replace(/\n/g, '<br>')
+function buildHtmlBody(offer, lines, totals, settings, origin, customBody) {
+  const introSource = customBody || settings?.default_email_body || '';
+  const intro = introSource
+    ? introSource.replace(/\n/g, '<br>')
     : `Αγαπητέ/ή ${offer?.contact_person || ''},<br><br>Σας αποστέλλουμε την προσφορά μας για το σύστημα Spotlight POS.`;
 
   const fmt = (n) => Number(n).toFixed(2);
@@ -251,7 +252,7 @@ Deno.serve(async (req) => {
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
     const body = await req.json();
-    const { to, cc, subject, offer_id } = body;
+    const { to, cc, subject, offer_id, custom_body } = body;
 
     if (!to || !subject) {
       return Response.json({ error: 'Missing required fields: to, subject' }, { status: 400 });
@@ -305,7 +306,7 @@ Deno.serve(async (req) => {
       }
     }
     origin = origin || 'https://app.base44.com';
-    const htmlBody = buildHtmlBody(offer, lines, totals, settings, origin);
+    const htmlBody = buildHtmlBody(offer, lines, totals, settings, origin, custom_body);
 
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 

@@ -22,6 +22,7 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
   const [to, setTo] = useState(customer?.email || offer?.email || '');
   const [cc, setCc] = useState('');
   const [subject, setSubject] = useState(defaultSettings?.default_email_subject || 'Προσφορά Spotlight POS – CyberVault');
+  const [body, setBody] = useState(defaultSettings?.default_email_body || '');
 
   const buildHtmlBody = () => {
     const intro = defaultSettings?.default_email_body
@@ -105,6 +106,7 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
       const res = await base44.functions.invoke('sendResellerEmail', {
         to, cc, subject,
         offer_id: offer.id,
+        custom_body: body,
       });
       if (res.data?.success) {
         setSent(true);
@@ -150,6 +152,17 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
             <div>
               <label className="text-white/40 text-xs block mb-1">Θέμα</label>
               <input value={subject} onChange={e=>setSubject(e.target.value)} className={inputCls} />
+            </div>
+            <div>
+              <label className="text-white/40 text-xs block mb-1">Σώμα Email</label>
+              <textarea
+                value={body}
+                onChange={e=>setBody(e.target.value)}
+                rows={6}
+                className={inputCls + ' resize-y'}
+                placeholder="Εισάγετε το κείμενο του email..."
+              />
+              <p className="text-white/30 text-[10px] mt-1">Επεξεργαστείτε το κείμενο για να στείλετε ένα custom μήνυμα. Αφήστε το όπως είναι για τις προεπιλογές.</p>
             </div>
             <div className="text-xs text-white/30 bg-[#0E1235] border border-[#2A3580] rounded-lg px-3 py-2">
               📄 Το email θα περιλαμβάνει αναλυτικά τη προσφορά, {offer?.public_token ? 'κουμπί ηλεκτρονικής αποδοχής,' : ''} και το PDF ως συνημμένο αρχείο.
