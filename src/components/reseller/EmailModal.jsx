@@ -124,8 +124,8 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
   const inputCls = "w-full bg-[#0E1235] border border-[#2A3580] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20";
 
   return (
-    <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
-      <div className="bg-[#131840] border border-[#2A3580] rounded-2xl w-full max-w-lg">
+    <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="bg-[#131840] border border-[#2A3580] rounded-2xl w-full max-w-lg" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between p-5 border-b border-[#2A3580]">
           <h3 className="text-white text-sm font-semibold">Αποστολή Email</h3>
           <button onClick={onClose} className="text-white/40 hover:text-white"><X size={18} /></button>
