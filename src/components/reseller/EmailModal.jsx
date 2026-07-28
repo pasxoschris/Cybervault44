@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQueryClient } from '@tanstack/react-query';
 import { X, Send } from 'lucide-react';
 
-export default function EmailModal({ offer, customer, lines: linesProp, totals: totalsProp, defaultSettings, onClose }) {
+export default function EmailModal({ offer, customer, lines: linesProp, totals: totalsProp, defaultSettings, onClose, onCloseAfterSent }) {
   const qc = useQueryClient();
   // If lines/totals not passed directly, derive them from the saved offer object
   const lines = linesProp && linesProp.length > 0
@@ -137,7 +137,7 @@ export default function EmailModal({ offer, customer, lines: linesProp, totals: 
             </div>
             <p className="text-white text-sm font-semibold">Το email εστάλη!</p>
             <p className="text-white/40 text-xs mt-1">Στάλθηκε σε: {to}</p>
-            <button onClick={onClose} className="mt-4 px-6 py-2 bg-[#00CFFF] text-[#0E1235] rounded-xl font-semibold text-sm">Κλείσιμο</button>
+            <button onClick={() => (onCloseAfterSent ? onCloseAfterSent() : onClose())} className="mt-4 px-6 py-2 bg-[#00CFFF] text-[#0E1235] rounded-xl font-semibold text-sm">Κλείσιμο</button>
           </div>
         ) : (
           <div className="p-5 space-y-3">

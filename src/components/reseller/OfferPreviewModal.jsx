@@ -158,6 +158,7 @@ export default function OfferPreviewModal({ customer, lines, totals, settings, r
           totals={totals}
           defaultSettings={settings}
           onClose={() => setShowEmail(false)}
+          onCloseAfterSent={() => { setShowEmail(false); onClose(); }}
         />
       )}
     </div>
