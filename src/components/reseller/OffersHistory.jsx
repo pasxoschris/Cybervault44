@@ -122,9 +122,19 @@ export default function OffersHistory({ onEdit }) {
                   </td>
                   <td className="px-3 py-3 text-white/40 whitespace-nowrap text-xs">{o.viewed_at ? formatDateTime(o.viewed_at) : '—'}</td>
                   <td className="px-3 py-3 whitespace-nowrap text-xs">
-                    {o.accepted_at
-                      ? <span className="text-green-400">{formatDateTime(o.accepted_at)}</span>
-                      : <span className="text-white/20">—</span>}
+                    {o.accepted_at ? (
+                      <div>
+                        <span className="text-green-400">{formatDateTime(o.accepted_at)}</span>
+                        {(() => {
+                          try {
+                            const v = JSON.parse(o.verification_details || '{}');
+                            return v.verified_email ? (
+                              <div className="text-green-400/70 text-[11px] truncate max-w-[150px]" title={v.verified_email}>από {v.verified_email}</div>
+                            ) : null;
+                          } catch { return null; }
+                        })()}
+                      </div>
+                    ) : <span className="text-white/20">—</span>}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     <div className="flex items-center gap-1">
