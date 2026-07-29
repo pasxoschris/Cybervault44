@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import TutorialLayout from "../../components/tutorial/TutorialLayout";
-import { StepCard, InfoBox, SectionTitle, FieldRow } from "../../components/tutorial/StepCard";
-import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
+import CashierTutorialLayout from "../../../components/tutorial/CashierTutorialLayout";
+import { StepCard, InfoBox, SectionTitle, FieldRow } from "../../../components/tutorial/StepCard";
+import { ScreenshotGallery } from "../../../components/tutorial/ScreenshotGallery";
 
 const zoomOverlay = (src) => {
   const overlay = document.createElement('div');
@@ -18,7 +18,7 @@ export default function Login() {
   const [tab, setTab] = useState("device");
 
   return (
-    <TutorialLayout title="Σύνδεση Χρήστη" subtitle="Πώς να συνδεθείς στην εφαρμογή">
+    <CashierTutorialLayout title="Σύνδεση Χρήστη" subtitle="Πώς να συνδεθείς στην εφαρμογή">
 
       <InfoBox icon="⚠️" title="Προαπαιτούμενα" variant="warning">
         Πριν συνδεθείς, ο διαχειριστής πρέπει να έχει κάνει τα εξής στο <strong>Secure (Διαχειριστικό)</strong>:
@@ -124,6 +124,6 @@ export default function Login() {
           </InfoBox>
         </>
       )}
-    </TutorialLayout>
+    </CashierTutorialLayout>
   );
 }

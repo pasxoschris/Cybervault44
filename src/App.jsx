@@ -37,6 +37,7 @@ import SettingsCashier from './pages/tutorial/cashier/Settings';
 import InvoiceCashier from './pages/tutorial/cashier/Invoice';
 import SplitCashier from './pages/tutorial/cashier/Split';
 import DeliveryCashier from './pages/tutorial/cashier/Delivery';
+import LoginCashier from './pages/tutorial/cashier/Login';
 import OpenCashier from './pages/tutorial/cashier/Open';
 import SyncStatusCashier from './pages/tutorial/cashier/SyncStatus';
 import CloseCashier from './pages/tutorial/cashier/Close';
@@ -122,6 +123,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/cashier/invoice" element={<InvoiceCashier />} />
       <Route path="/tutorial/cashier/split" element={<SplitCashier />} />
       <Route path="/tutorial/cashier/delivery" element={<DeliveryCashier />} />
+      <Route path="/tutorial/cashier/login" element={<LoginCashier />} />
       <Route path="/tutorial/cashier/open" element={<OpenCashier />} />
       <Route path="/tutorial/cashier/sync-status" element={<SyncStatusCashier />} />
       <Route path="/tutorial/cashier/close" element={<CloseCashier />} />

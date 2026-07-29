@@ -71,6 +71,7 @@ export const ROLES = [
       { title: 'Συνοδευτικά Προϊόντος', href: '/tutorial/cashier/accompaniments' },
       { title: 'Προϊόντα Παραγγελίας', href: '/tutorial/cashier/order-items' },
       { title: 'Διαγραφή & Έκπτωση', href: '/tutorial/cashier/swipe-actions' },
+      { title: 'Σύνδεση Χρήστη', href: '/tutorial/cashier/login' },
       { title: 'Έναρξη Βάρδιας', href: '/tutorial/cashier/open' },
       { title: 'Δείκτης Σύνδεσης & Συγχρονισμού', href: '/tutorial/cashier/sync-status' },
       { title: 'Πληρωμές', href: '/tutorial/cashier/payments' },
