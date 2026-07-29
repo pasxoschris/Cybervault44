@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Home, ArrowLeft, Tablet } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, ArrowLeft, Tablet, Cloud } from "lucide-react";
 import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
@@ -14,6 +14,7 @@ export const cashierSections = [
   { title: "Προϊόντα Παραγγελίας", path: "/tutorial/cashier/order-items", icon: Home },
   { title: "Διαγραφή & Έκπτωση", path: "/tutorial/cashier/swipe-actions", icon: Home },
   { title: "Έναρξη Βάρδιας", path: "/tutorial/cashier/open", icon: Home },
+  { title: "Δείκτης Σύνδεσης", path: "/tutorial/cashier/sync-status", icon: Cloud },
   { title: "Πληρωμές", path: "/tutorial/cashier/payments", icon: Home },
   { title: "Split Payments", path: "/tutorial/cashier/split", icon: Home },
   { title: "Έκδοση Τιμολογίου", path: "/tutorial/cashier/invoice", icon: Home },

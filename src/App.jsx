@@ -21,6 +21,7 @@ import OrderDetails from './pages/tutorial/OrderDetails';
 import Scenarios from './pages/tutorial/Scenarios';
 import Shift from './pages/tutorial/Shift';
 import StartShift from './pages/tutorial/StartShift';
+import SyncStatus from './pages/tutorial/SyncStatus';
 import Settings from './pages/tutorial/Settings';
 import ServiceDesk from './pages/ServiceDesk';
 import Whitelist from './pages/admin/Whitelist';
@@ -37,6 +38,7 @@ import InvoiceCashier from './pages/tutorial/cashier/Invoice';
 import SplitCashier from './pages/tutorial/cashier/Split';
 import DeliveryCashier from './pages/tutorial/cashier/Delivery';
 import OpenCashier from './pages/tutorial/cashier/Open';
+import SyncStatusCashier from './pages/tutorial/cashier/SyncStatus';
 import CloseCashier from './pages/tutorial/cashier/Close';
 import Payment from './pages/tutorial/Payment';
 import Assistant from './pages/academy/Assistant';
@@ -89,6 +91,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/order-details" element={<OrderDetails />} />
       <Route path="/tutorial/scenarios" element={<Scenarios />} />
       <Route path="/tutorial/start-shift" element={<StartShift />} />
+      <Route path="/tutorial/sync-status" element={<SyncStatus />} />
       <Route path="/tutorial/settings" element={<Settings />} />
       <Route path="/service-desk" element={<ServiceDesk />} />
       <Route path="/admin/whitelist" element={<Whitelist />} />
@@ -120,6 +123,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/cashier/split" element={<SplitCashier />} />
       <Route path="/tutorial/cashier/delivery" element={<DeliveryCashier />} />
       <Route path="/tutorial/cashier/open" element={<OpenCashier />} />
+      <Route path="/tutorial/cashier/sync-status" element={<SyncStatusCashier />} />
       <Route path="/tutorial/cashier/close" element={<CloseCashier />} />
       <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />

@@ -1,7 +1,6 @@
 import React from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
-import SyncStatusInfo from "../../components/tutorial/SyncStatusInfo";
 
 export default function StartShift() {
   return (
@@ -29,8 +28,6 @@ export default function StartShift() {
       <StepCard number="4" title="Έναρξη βάρδιας">
         <p>Ξεκινάει επίσημα η βάρδια σου. Μπορείς πλέον να δέχεσαι παραγγελίες.</p>
       </StepCard>
-
-      <SyncStatusInfo number="5" />
 
       <InfoBox icon="💡" title="Σημείωση" variant="info">
         Κάθε χρήστης ανοίγει τη δική του βάρδια. Αν εργάζονται παράλληλα πολλοί σερβιτόροι, ο καθένας κάνει έναρξη βάρδιας χωριστά από τη δική του συσκευή.
