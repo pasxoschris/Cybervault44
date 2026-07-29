@@ -170,26 +170,6 @@ export default function Assistant() {
         </div>
       </div>
 
-      {/* Input (top) */}
-      <div className="px-4 pt-4 pb-2 max-w-3xl mx-auto w-full flex-shrink-0">
-        <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ρώτησε οτιδήποτε για το Spotlight POS..."
-            className="cyber-input flex-1 text-sm"
-            disabled={loading}
-          />
-          <button
-            type="submit"
-            disabled={!input.trim() || loading}
-            className="cyber-btn !py-0 !px-4 disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
-          >
-            <Send className="w-4 h-4" />
-          </button>
-        </form>
-      </div>
-
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 max-w-3xl mx-auto w-full">
         {messages.length === 0 && !loading && (
@@ -198,7 +178,25 @@ export default function Assistant() {
               <Bot className="w-8 h-8 text-[#00CFFF]" />
             </div>
             <h2 className="font-orbitron text-white text-lg mb-2">Spotlight POS Assistant</h2>
-            <p className="font-rajdhani text-white/50 text-sm mb-8">Επίλεξε μια ερώτηση ή γράψε τη δική σου παρακάτω</p>
+            <p className="font-rajdhani text-white/50 text-sm mb-6">Επίλεξε μια ερώτηση ή γράψε τη δική σου παρακάτω</p>
+            <div className="max-w-3xl mx-auto w-full mb-8">
+              <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
+                <input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Ρώτησε οτιδήποτε για το Spotlight POS..."
+                  className="cyber-input flex-1 text-sm"
+                  disabled={loading}
+                />
+                <button
+                  type="submit"
+                  disabled={!input.trim() || loading}
+                  className="cyber-btn !py-0 !px-4 disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+              </form>
+            </div>
             <div className="space-y-4 text-left">
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-1.5 h-5 bg-[#00CFFF] rounded-full" />
@@ -274,6 +272,27 @@ export default function Assistant() {
         </div>
       )}
 
+      {/* Input (when chatting) */}
+      {messages.length > 0 && (
+        <div className="px-4 pb-6 pt-2 max-w-3xl mx-auto w-full flex-shrink-0">
+          <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ρώτησε οτιδήποτε για το Spotlight POS..."
+              className="cyber-input flex-1 text-sm"
+              disabled={loading}
+            />
+            <button
+              type="submit"
+              disabled={!input.trim() || loading}
+              className="cyber-btn !py-0 !px-4 disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }
