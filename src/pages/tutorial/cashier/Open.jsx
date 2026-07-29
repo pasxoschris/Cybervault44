@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import CashierTutorialLayout from "@/components/tutorial/CashierTutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "@/components/tutorial/StepCard";
+import SyncStatusInfo from "@/components/tutorial/SyncStatusInfo";
 
 export default function Open() {
   useEffect(() => {
@@ -32,6 +33,8 @@ export default function Open() {
       <StepCard number="4" title="Έναρξη βάρδιας">
         <p>Ξεκινάει επίσημα η βάρδια σου. Μπορείς πλέον να δέχεσαι παραγγελίες και πληρωμές.</p>
       </StepCard>
+
+      <SyncStatusInfo number="5" />
 
       <InfoBox icon="💡" title="Σημείωση" variant="info">
         Κάθε χρήστης ανοίγει τη δική του βάρδια. Αν εργάζονται παράλληλα πολλοί ταμίες, ο καθένας κάνει έναρξη βάρδιας χωριστά από τη δική του συσκευή.

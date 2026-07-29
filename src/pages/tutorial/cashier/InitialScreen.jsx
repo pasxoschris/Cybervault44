@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import CashierTutorialLayout from "@/components/tutorial/CashierTutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "@/components/tutorial/StepCard";
-import SyncStatusInfo from "@/components/tutorial/SyncStatusInfo";
 
 export default function InitialScreen() {
   useEffect(() => {
@@ -68,7 +67,9 @@ export default function InitialScreen() {
 
       <SectionTitle>4. Footer Μπάρα</SectionTitle>
 
-      <SyncStatusInfo />
+      <StepCard number="1" title="Κατάσταση Συγχρονισμού">
+        <p>Στο κάτω μέρος, αριστερά, η ένδειξη <strong>«All synced»</strong> με εικονίδιο σύννεφου επιβεβαιώνει ότι η συσκευή είναι συνδεδεμένη και συγχρονισμένη με τον server.</p>
+      </StepCard>
 
       <StepCard number="2" title="Συντομεύσεις Footer">
         <p>Στη μέση και δεξιά του footer υπάρχουν εικονίδια για <strong>Delivery</strong> (scooter), <strong>Ιστορικό</strong> (ρολόι) και <strong>POS/Έγγραφα</strong>. Χρησιμοποιούνται για γρήγορη πρόσβαση σε παραγγελίες παράδοσης, ιστορικό και λειτουργίες ταμείου.</p>

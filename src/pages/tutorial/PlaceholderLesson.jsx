@@ -1,13 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, ChevronRight, Construction } from 'lucide-react';
 import { getRoleByPath } from '@/lib/roles';
-import SyncStatusInfo from '@/components/tutorial/SyncStatusInfo';
 
 export default function PlaceholderLesson() {
   const location = useLocation();
   const role = getRoleByPath(location.pathname);
   const lesson = role?.lessons.find(l => l.href === location.pathname);
-  const isFirstLesson = role?.lessons[0]?.href === location.pathname;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -66,12 +64,6 @@ export default function PlaceholderLesson() {
             Θα είναι σύντομα διαθέσιμο.
           </p>
         </div>
-
-        {isFirstLesson && (
-          <div className="mt-6">
-            <SyncStatusInfo />
-          </div>
-        )}
 
         {role && (
           <Link

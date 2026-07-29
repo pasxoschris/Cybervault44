@@ -1,7 +1,6 @@
 import React from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
-import SyncStatusInfo from "../../components/tutorial/SyncStatusInfo";
 
 export default function Installation() {
   return (
@@ -76,8 +75,6 @@ export default function Installation() {
           />
         </div>
       </InfoBox>
-
-      <SyncStatusInfo />
     </TutorialLayout>
   );
 }
