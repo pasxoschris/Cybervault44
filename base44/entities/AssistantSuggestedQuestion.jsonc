@@ -6,6 +6,23 @@
       "type": "string",
       "description": "\u03a0\u03c1\u03bf\u03c4\u03b5\u03b9\u03bd\u03cc\u03bc\u03b5\u03bd\u03b7 \u03b5\u03c1\u03ce\u03c4\u03b7\u03c3\u03b7 assistant"
     },
+    "category": {
+      "type": "string",
+      "enum": [
+        "general",
+        "login",
+        "shift",
+        "sync",
+        "order",
+        "payment",
+        "invoice",
+        "transfer",
+        "cashier",
+        "delivery"
+      ],
+      "default": "general",
+      "description": "\u0395\u03bd\u03cc\u03c4\u03b7\u03c4\u03b1/\u03ba\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1 \u03b5\u03c1\u03ce\u03c4\u03b7\u03c3\u03b7\u03c2"
+    },
     "display_order": {
       "type": "number",
       "default": 0,

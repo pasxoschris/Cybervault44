@@ -4,21 +4,34 @@ import { base44 } from '@/api/base44Client';
 import { Send, ChevronLeft, Bot } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
+const CATEGORY_LABELS = {
+  general: 'Γενικά',
+  login: 'Σύνδεση',
+  shift: 'Βάρδια',
+  sync: 'Σύνδεση & Συγχρονισμός',
+  order: 'Παραγγελία',
+  payment: 'Πληρωμή',
+  invoice: 'Τιμολόγιο',
+  transfer: 'Μεταφορά Παραγγελίας',
+  cashier: 'Cashier Mode',
+  delivery: 'Delivery',
+};
+
 const FALLBACK_SUGGESTED = [
-  'Πώς εγκαθιστώ την εφαρμογή Spotlight POS;',
-  'Πώς ξεκινάω βάρδια;',
-  'Τι σημαίνει η πράσινη ή κόκκινη κουκίδα σύνδεσης;',
-  'Πώς δημιουργώ νέα παραγγελία στο Service Mode;',
-  'Πώς βάζω έκπτωση σε προϊόν ή παραγγελία;',
-  'Πώς κάνω πληρωμή στο Service Mode;',
-  'Πώς εκδίδω τιμολόγιο;',
-  'Πώς μεταφέρω παραγγελία σε άλλο σερβιτόρο;',
-  'Τι κάνω αν χαθεί μια μεταφορά παραγγελίας;',
-  'Πώς συγχωνεύω παραγγελίες;',
-  'Πώς κάνω split payment στο Cashier Mode;',
-  'Πώς δέχομαι παραγγελία delivery;',
-  'Πώς κλείνω βάρδια στο Cashier Mode;',
-  'Πώς προσθέτω συνοδευτικά σε προϊόν στο Cashier Mode;',
+  { category: 'general', question: 'Πώς εγκαθιστώ την εφαρμογή Spotlight POS;' },
+  { category: 'shift', question: 'Πώς ξεκινάω βάρδια;' },
+  { category: 'sync', question: 'Τι σημαίνει η πράσινη ή κόκκινη κουκίδα σύνδεσης;' },
+  { category: 'order', question: 'Πώς δημιουργώ νέα παραγγελία στο Service Mode;' },
+  { category: 'order', question: 'Πώς βάζω έκπτωση σε προϊόν ή παραγγελία;' },
+  { category: 'payment', question: 'Πώς κάνω πληρωμή στο Service Mode;' },
+  { category: 'invoice', question: 'Πώς εκδίδω τιμολόγιο;' },
+  { category: 'transfer', question: 'Πώς μεταφέρω παραγγελία σε άλλο σερβιτόρο;' },
+  { category: 'transfer', question: 'Τι κάνω αν χαθεί μια μεταφορά παραγγελίας;' },
+  { category: 'order', question: 'Πώς συγχωνεύω παραγγελίες;' },
+  { category: 'cashier', question: 'Πώς κάνω split payment στο Cashier Mode;' },
+  { category: 'delivery', question: 'Πώς δέχομαι παραγγελία delivery;' },
+  { category: 'cashier', question: 'Πώς κλείνω βάρδια στο Cashier Mode;' },
+  { category: 'cashier', question: 'Πώς προσθέτω συνοδευτικά σε προϊόν στο Cashier Mode;' },
 ];
 
 function MessageBubble({ message }) {
@@ -99,8 +112,10 @@ export default function Assistant() {
       const authed = await base44.auth.isAuthenticated();
       if (!authed) { base44.auth.redirectToLogin(window.location.href); return; }
       try {
-        const list = await base44.entities.AssistantSuggestedQuestion.list('display_order', 100);
-        const active = list.filter(q => q.is_active).map(q => q.question);
+        const list = await base44.entities.AssistantSuggestedQuestion.list('display_order', 200);
+        const active = list
+          .filter(q => q.is_active)
+          .map(q => ({ category: q.category || 'general', question: q.question }));
         if (active.length > 0) setSuggested(active);
       } catch {}
       const conv = await base44.agents.createConversation({ agent_name: 'spotlight_pos_assistant', metadata: { name: 'Spotlight Assistant' } });
@@ -164,15 +179,34 @@ export default function Assistant() {
             </div>
             <h2 className="font-orbitron text-white text-lg mb-2">Spotlight POS Assistant</h2>
             <p className="font-rajdhani text-white/50 text-sm mb-8">Ρώτησέ με οτιδήποτε για το Spotlight POS</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left">
-              {suggested.map((q) => (
-                <button
-                  key={q}
-                  onClick={() => send(q)}
-                  className="p-3 border border-[#00CFFF]/15 bg-[#131840]/60 hover:border-[#00CFFF]/40 hover:bg-[#00CFFF]/5 transition-all text-left"
-                >
-                  <span className="font-rajdhani text-white/70 text-sm">{q}</span>
-                </button>
+            <div className="space-y-4 text-left">
+              {Object.entries(
+                suggested.reduce((acc, item) => {
+                  const cat = item.category || 'general';
+                  if (!acc[cat]) acc[cat] = [];
+                  acc[cat].push(item.question);
+                  return acc;
+                }, {})
+              ).map(([cat, qs]) => (
+                <div key={cat}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-1 h-3 bg-[#00CFFF]/60 rounded-full" />
+                    <span className="font-orbitron text-xs font-semibold text-[#00CFFF]/70 uppercase tracking-wider">
+                      {CATEGORY_LABELS[cat] || cat}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {qs.map((q) => (
+                      <button
+                        key={q}
+                        onClick={() => send(q)}
+                        className="p-3 border border-[#00CFFF]/15 bg-[#131840]/60 hover:border-[#00CFFF]/40 hover:bg-[#00CFFF]/5 transition-all text-left"
+                      >
+                        <span className="font-rajdhani text-white/70 text-sm">{q}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -202,14 +236,14 @@ export default function Assistant() {
       {messages.length > 0 && (
         <div className="px-4 pb-2 max-w-3xl mx-auto w-full">
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-            {suggested.slice(0, 4).map((q) => (
+            {suggested.slice(0, 4).map((item) => (
               <button
-                key={q}
-                onClick={() => send(q)}
+                key={item.question}
+                onClick={() => send(item.question)}
                 disabled={loading}
                 className="whitespace-nowrap px-3 py-1.5 border border-[#00CFFF]/20 bg-[#131840]/60 hover:border-[#00CFFF]/40 text-white/60 hover:text-white/90 text-xs font-rajdhani transition-all flex-shrink-0 disabled:opacity-40"
               >
-                {q}
+                {item.question}
               </button>
             ))}
           </div>
