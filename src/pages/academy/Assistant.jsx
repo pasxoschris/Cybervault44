@@ -176,7 +176,7 @@ export default function Assistant() {
             className="flex items-center gap-1.5 text-sm text-white/90 hover:text-white border border-[#00CFFF]/20 hover:border-[#00CFFF]/50 px-3 py-1.5 rounded-lg transition-all disabled:opacity-40 flex-shrink-0"
           >
             <RotateCcw className="w-4 h-4" />
-            <span>Ερωτήσεις</span>
+            <span>Επιστροφή στις Ερωτήσεις</span>
           </button>
         )}
         <div className="w-9 h-9 rounded-full bg-[#00CFFF]/10 border border-[#00CFFF]/30 flex items-center justify-center">
