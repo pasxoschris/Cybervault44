@@ -170,6 +170,26 @@ export default function Assistant() {
         </div>
       </div>
 
+      {/* Input (top) */}
+      <div className="px-4 pt-4 pb-2 max-w-3xl mx-auto w-full flex-shrink-0">
+        <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ρώτησε οτιδήποτε για το Spotlight POS..."
+            className="cyber-input flex-1 text-sm"
+            disabled={loading}
+          />
+          <button
+            type="submit"
+            disabled={!input.trim() || loading}
+            className="cyber-btn !py-0 !px-4 disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
+          >
+            <Send className="w-4 h-4" />
+          </button>
+        </form>
+      </div>
+
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 max-w-3xl mx-auto w-full">
         {messages.length === 0 && !loading && (
@@ -254,25 +274,6 @@ export default function Assistant() {
         </div>
       )}
 
-      {/* Input */}
-      <div className="px-4 pb-6 pt-2 max-w-3xl mx-auto w-full flex-shrink-0">
-        <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ρώτησε οτιδήποτε για το Spotlight POS..."
-            className="cyber-input flex-1 text-sm"
-            disabled={loading}
-          />
-          <button
-            type="submit"
-            disabled={!input.trim() || loading}
-            className="cyber-btn !py-0 !px-4 disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
-          >
-            <Send className="w-4 h-4" />
-          </button>
-        </form>
-      </div>
     </div>
   );
 }
