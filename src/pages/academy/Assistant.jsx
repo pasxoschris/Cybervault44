@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Send, ChevronLeft, Bot, ChevronRight } from 'lucide-react';
+import { Send, ChevronLeft, Bot, ChevronRight, RotateCcw } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 const CATEGORY_LABELS = {
@@ -146,6 +146,14 @@ export default function Assistant() {
     await base44.agents.addMessage(conversation, { role: 'user', content: msg });
   };
 
+  const resetToQuestions = async () => {
+    setMessages([]);
+    setInput('');
+    setLoading(false);
+    const conv = await base44.agents.createConversation({ agent_name: 'spotlight_pos_assistant', metadata: { name: 'Spotlight Assistant' } });
+    setConversation(conv);
+  };
+
   if (init) {
     return (
       <div className="min-h-screen bg-[#0E1235] flex items-center justify-center">
@@ -164,10 +172,20 @@ export default function Assistant() {
         <div className="w-9 h-9 rounded-full bg-[#00CFFF]/10 border border-[#00CFFF]/30 flex items-center justify-center">
           <Bot className="w-5 h-5 text-[#00CFFF]" />
         </div>
-        <div>
-          <div className="font-orbitron text-sm font-bold text-white tracking-wider">Spotlight POS Assistant</div>
+        <div className="flex-1 min-w-0">
+          <div className="font-orbitron text-sm font-bold text-white tracking-wider truncate">Spotlight POS Assistant</div>
           <div className="text-[11px] text-[#00CFFF]/60">Ρώτησέ με οτιδήποτε για το Spotlight POS</div>
         </div>
+        {messages.length > 0 && (
+          <button
+            onClick={resetToQuestions}
+            disabled={loading}
+            className="flex items-center gap-1.5 text-xs text-[#00CFFF]/70 hover:text-[#00CFFF] border border-[#00CFFF]/20 hover:border-[#00CFFF]/50 px-3 py-1.5 rounded-lg transition-all disabled:opacity-40 flex-shrink-0"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Ερωτήσεις</span>
+          </button>
+        )}
       </div>
 
       {/* Messages */}
