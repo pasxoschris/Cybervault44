@@ -166,7 +166,7 @@ export default function Assistant() {
         </div>
         <div>
           <div className="font-orbitron text-sm font-bold text-white tracking-wider">Spotlight POS Assistant</div>
-          <div className="text-[10px] font-mono-cyber text-[#00CFFF]/50 tracking-widest">CyberVault Academy AI</div>
+          <div className="text-[11px] text-[#00CFFF]/60">Ρώτησέ με οτιδήποτε για το Spotlight POS</div>
         </div>
       </div>
 
@@ -178,8 +178,12 @@ export default function Assistant() {
               <Bot className="w-8 h-8 text-[#00CFFF]" />
             </div>
             <h2 className="font-orbitron text-white text-lg mb-2">Spotlight POS Assistant</h2>
-            <p className="font-rajdhani text-white/50 text-sm mb-8">Ρώτησέ με οτιδήποτε για το Spotlight POS</p>
+            <p className="font-rajdhani text-white/50 text-sm mb-8">Επίλεξε μια ερώτηση ή γράψε τη δική σου παρακάτω</p>
             <div className="space-y-4 text-left">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-1.5 h-5 bg-[#00CFFF] rounded-full" />
+                <h3 className="font-orbitron text-sm font-semibold text-white/80 uppercase tracking-wider">Προτεινόμενες Ερωτήσεις</h3>
+              </div>
               {Object.entries(
                 suggested.reduce((acc, item) => {
                   const cat = item.category || 'general';
