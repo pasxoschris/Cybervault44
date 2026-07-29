@@ -64,6 +64,22 @@ export default function TransferOrder() {
         <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/1e9cf1dd3_3.png" alt="Παράθυρο επιβεβαίωσης μεταφοράς" className="w-52 h-auto rounded-lg border border-gray-200" />
       </div>
 
+      <StepCard number="6" title="Το PDA του παραλήπτη πρέπει να είναι ενεργό" variant="warning">
+        <p>
+          <strong>Είναι απολύτως απαραίτητο και σημαντικό</strong> το PDA του σερβιτόρου που <strong>δέχεται</strong> τη μεταφορά να έχει την εφαρμογή <strong>ανοιχτή και active</strong> (στο προσκήνιο) εκείνη τη στιγμή. Αν η εφαρμογή του παραλήπτη είναι κλειστή, σε παρασκήνιο ή οθόνη στάσης, η μεταφορά <strong>δεν ολοκληρώνεται σωστά</strong>.
+        </p>
+      </StepCard>
+
+      <InfoBox icon="🚫" title="Χαμένες Μεταφορές — Διαχειριστικό" variant="warning">
+        <p>
+          Όταν μια μεταφορά <strong>δεν ολοκληρώνεται σωστά</strong> (π.χ. ο παραλήπτης δεν είχε ανοιχτή/active την εφαρμογή), καταγράφεται στο <strong>Διαχειριστικό</strong> ως <strong>«χαμένη μεταφορά»</strong> και φαίνεται με <strong>κόκκινο χρώμα</strong>. Στο χρονολόγιο μεταφορών, οι χαμένες εμφανίζονται με <strong>κόκκινο</strong> δείκτη (όνομα σερβιτόρου με λουκέτο και βέλος από→προς σε κόκκινο), ενώ στο παράθυρο «Μετακινήσεις Παραγγελίας» η γραμμή φέρει <strong>κόκκινο Χ</strong> δεξιά.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+          <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/addf40367_Screenshot2026-07-29104534.png" alt="Μετακινήσεις Παραγγελίας — χαμένη μεταφορά με κόκκινο Χ" className="w-full h-auto rounded-lg border border-gray-200" />
+          <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/64923452b_Screenshot2026-07-29104754.png" alt="Χρονολόγιο — χαμένες μεταφορές με κόκκινο δείκτη" className="w-full h-auto rounded-lg border border-gray-200" />
+        </div>
+      </InfoBox>
+
       <InfoBox icon="⚠️" title="Σημαντικό!" variant="warning">
         <ul className="list-disc pl-5 mt-1 space-y-1.5">
           <li>Χρειάζεται <strong>κωδικό διαχειριστή</strong> για να ξεκινήσει η μεταφορά.</li>
