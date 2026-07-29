@@ -169,6 +169,16 @@ export default function Assistant() {
         <Link to="/spotlight-pos-guide/roles" className="text-[#00CFFF]/60 hover:text-[#00CFFF] transition-colors">
           <ChevronLeft className="w-5 h-5" />
         </Link>
+        {messages.length > 0 && (
+          <button
+            onClick={resetToQuestions}
+            disabled={loading}
+            className="flex items-center gap-1.5 text-sm text-white/90 hover:text-white border border-[#00CFFF]/20 hover:border-[#00CFFF]/50 px-3 py-1.5 rounded-lg transition-all disabled:opacity-40 flex-shrink-0"
+          >
+            <RotateCcw className="w-4 h-4" />
+            <span>Ερωτήσεις</span>
+          </button>
+        )}
         <div className="w-9 h-9 rounded-full bg-[#00CFFF]/10 border border-[#00CFFF]/30 flex items-center justify-center">
           <Bot className="w-5 h-5 text-[#00CFFF]" />
         </div>
@@ -176,16 +186,6 @@ export default function Assistant() {
           <div className="font-orbitron text-sm font-bold text-white tracking-wider truncate">Spotlight POS Assistant</div>
           <div className="text-[11px] text-[#00CFFF]/60">Ρώτησέ με οτιδήποτε για το Spotlight POS</div>
         </div>
-        {messages.length > 0 && (
-          <button
-            onClick={resetToQuestions}
-            disabled={loading}
-            className="flex items-center gap-1.5 text-xs text-[#00CFFF]/70 hover:text-[#00CFFF] border border-[#00CFFF]/20 hover:border-[#00CFFF]/50 px-3 py-1.5 rounded-lg transition-all disabled:opacity-40 flex-shrink-0"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Ερωτήσεις</span>
-          </button>
-        )}
       </div>
 
       {/* Messages */}
