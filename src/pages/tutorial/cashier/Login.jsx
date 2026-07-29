@@ -15,7 +15,8 @@ const zoomOverlay = (src) => {
 };
 
 export default function Login() {
-  const [tab, setTab] = useState("device");
+  const urlParams = new URLSearchParams(window.location.search);
+  const [tab, setTab] = useState(urlParams.get("tab") === "user" ? "user" : "device");
 
   return (
     <CashierTutorialLayout title="Σύνδεση Χρήστη" subtitle="Πώς να συνδεθείς στην εφαρμογή">
