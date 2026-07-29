@@ -1,0 +1,41 @@
+{
+  "name": "AssistantSuggestedQuestion",
+  "type": "object",
+  "properties": {
+    "question": {
+      "type": "string",
+      "description": "\u03a0\u03c1\u03bf\u03c4\u03b5\u03b9\u03bd\u03cc\u03bc\u03b5\u03bd\u03b7 \u03b5\u03c1\u03ce\u03c4\u03b7\u03c3\u03b7 assistant"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0,
+      "description": "\u03a3\u03b5\u03b9\u03c1\u03ac \u03b5\u03bc\u03c6\u03ac\u03bd\u03b9\u03c3\u03b7\u03c2"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "\u0395\u03bd\u03b5\u03c1\u03b3\u03ae"
+    }
+  },
+  "required": [
+    "question"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

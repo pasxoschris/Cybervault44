@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Send, ChevronLeft, Bot } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
-const SUGGESTED = [
+const FALLBACK_SUGGESTED = [
   'Πώς εγκαθιστώ την εφαρμογή Spotlight POS;',
   'Πώς ξεκινάω βάρδια;',
   'Τι σημαίνει η πράσινη ή κόκκινη κουκίδα σύνδεσης;',
@@ -91,12 +91,18 @@ export default function Assistant() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [init, setInit] = useState(true);
+  const [suggested, setSuggested] = useState(FALLBACK_SUGGESTED);
   const bottomRef = useRef(null);
 
   useEffect(() => {
     const start = async () => {
       const authed = await base44.auth.isAuthenticated();
       if (!authed) { base44.auth.redirectToLogin(window.location.href); return; }
+      try {
+        const list = await base44.entities.AssistantSuggestedQuestion.list('display_order', 100);
+        const active = list.filter(q => q.is_active).map(q => q.question);
+        if (active.length > 0) setSuggested(active);
+      } catch {}
       const conv = await base44.agents.createConversation({ agent_name: 'spotlight_pos_assistant', metadata: { name: 'Spotlight Assistant' } });
       setConversation(conv);
       setInit(false);
@@ -159,7 +165,7 @@ export default function Assistant() {
             <h2 className="font-orbitron text-white text-lg mb-2">Spotlight POS Assistant</h2>
             <p className="font-rajdhani text-white/50 text-sm mb-8">Ρώτησέ με οτιδήποτε για το Spotlight POS</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left">
-              {SUGGESTED.map((q) => (
+              {suggested.map((q) => (
                 <button
                   key={q}
                   onClick={() => send(q)}
@@ -196,7 +202,7 @@ export default function Assistant() {
       {messages.length > 0 && (
         <div className="px-4 pb-2 max-w-3xl mx-auto w-full">
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-            {SUGGESTED.slice(0, 4).map((q) => (
+            {suggested.slice(0, 4).map((q) => (
               <button
                 key={q}
                 onClick={() => send(q)}

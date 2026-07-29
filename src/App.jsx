@@ -50,6 +50,7 @@ import StoreEdit from './pages/stores/StoreEdit';
 import ResellerConsole from './pages/ResellerConsole';
 import PublicOfferPage from './pages/PublicOfferPage';
 import ServiceDeskAdmin from './pages/admin/ServiceDeskAdmin';
+import AssistantQuestions from './pages/admin/AssistantQuestions';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -111,6 +112,7 @@ const AuthenticatedApp = () => {
       <Route path="/reseller-console" element={<ResellerConsole />} />
       <Route path="/offers/:publicToken" element={<PublicOfferPage />} />
       <Route path="/admin/service-desk-admin" element={<ServiceDeskAdmin />} />
+      <Route path="/admin/assistant-questions" element={<AssistantQuestions />} />
       {/* Placeholder lessons for all other roles */}
       <Route path="/tutorial/maitre-service/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/maitre-mode/*" element={<PlaceholderLesson />} />
