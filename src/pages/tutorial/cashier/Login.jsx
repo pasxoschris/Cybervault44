@@ -20,6 +20,10 @@ export default function Login() {
   return (
     <CashierTutorialLayout title="Σύνδεση Χρήστη" subtitle="Πώς να συνδεθείς στην εφαρμογή">
 
+      <InfoBox icon="📱" title="Συμβατότητα Συσκευής" variant="info">
+        Η εφαρμογή Spotlight POS (όχι το διαχειριστικό Secure) τρέχει <strong>μόνο σε iOS συσκευές</strong> — <strong>iPhone</strong> και <strong>iPad</strong>. Βεβαιώσου ότι χρησιμοποιείς συμβατή συσκευή.
+      </InfoBox>
+
       <InfoBox icon="⚠️" title="Προαπαιτούμενα" variant="warning">
         Πριν συνδεθείς, ο διαχειριστής πρέπει να έχει κάνει τα εξής στο <strong>Secure (Διαχειριστικό)</strong>:
         <ul className="list-disc list-inside mt-2 space-y-1">
