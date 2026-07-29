@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Send, ChevronLeft, Bot } from 'lucide-react';
+import { Send, ChevronLeft, Bot, ChevronRight } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 const CATEGORY_LABELS = {
@@ -217,14 +217,15 @@ export default function Assistant() {
                       {CATEGORY_LABELS[cat] || cat}
                     </span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {qs.map((q) => (
                       <button
                         key={q}
                         onClick={() => send(q)}
-                        className="p-3 border border-[#00CFFF]/15 bg-[#131840]/60 hover:border-[#00CFFF]/40 hover:bg-[#00CFFF]/5 transition-all text-left"
+                        className="flex items-start gap-2.5 p-3.5 rounded-lg border border-[#00CFFF]/15 bg-[#131840]/60 hover:border-[#00CFFF]/50 hover:bg-[#00CFFF]/10 transition-all text-left group"
                       >
-                        <span className="font-rajdhani text-white/70 text-sm">{q}</span>
+                        <ChevronRight className="w-4 h-4 text-[#00CFFF]/40 group-hover:text-[#00CFFF] transition-colors flex-shrink-0 mt-0.5" />
+                        <span className="text-white/85 text-sm leading-snug">{q}</span>
                       </button>
                     ))}
                   </div>
