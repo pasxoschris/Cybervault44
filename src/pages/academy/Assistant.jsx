@@ -156,14 +156,14 @@ export default function Assistant() {
 
   if (init) {
     return (
-      <div className="min-h-screen bg-[#1E1B3A] flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "linear-gradient(160deg, #2D1B4E 0%, #1E1B3A 40%, #3D1B5E 100%)" }}>
         <div className="w-8 h-8 border-4 border-[#8B5CF6]/30 border-t-[#8B5CF6] rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#1E1B3A]  flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(160deg, #2D1B4E 0%, #1E1B3A 40%, #3D1B5E 100%)" }}>
       {/* Header */}
       <div className="bg-[#15123A]/95 border-b border-[#8B5CF6]/10 px-4 py-3 flex items-center gap-4 flex-shrink-0">
         <Link to="/spotlight-pos-guide/roles" className="text-[#8B5CF6]/60 hover:text-[#8B5CF6] transition-colors">
