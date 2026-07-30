@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Send, ChevronLeft, Bot, ChevronRight, RotateCcw } from 'lucide-react';
+import Navbar from '@/components/layout/Navbar';
+import SpotlightBrand from '@/components/SpotlightBrand';
+import { Send, ChevronLeft, Bot, ChevronRight, RotateCcw, ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 const CATEGORY_LABELS = {
@@ -39,25 +41,24 @@ function MessageBubble({ message }) {
   return (
     <div className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
       {!isUser && (
-        <div className="w-8 h-8 rounded-full bg-[#8B5CF6]/10 border border-[#8B5CF6]/30 flex items-center justify-center flex-shrink-0 mt-1">
-          <Bot className="w-4 h-4 text-[#8B5CF6]" />
+        <div className="w-8 h-8 rounded-full bg-purple-100 border border-purple-200 flex items-center justify-center flex-shrink-0 mt-1">
+          <Bot className="w-4 h-4 text-purple-600" />
         </div>
       )}
       <div className={`max-w-[85%] ${isUser ? 'flex flex-col items-end' : ''}`}>
         <div className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
           isUser
-            ? 'bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-white'
-            : 'bg-[#2D2B55] border border-[#4A3B7A] text-white/90'
+            ? 'bg-purple-600 text-white'
+            : 'bg-white border border-gray-200 text-gray-800 shadow-sm'
         }`}>
           {isUser ? (
             <p>{message.content}</p>
           ) : (
             <ReactMarkdown
-              className="prose prose-invert prose-sm max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+              className="prose prose-sm max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
               components={{
                 a: ({ children, href }) => {
                   const url = href || '#';
-                  // Convert absolute URLs to relative for internal navigation
                   let to = url;
                   try {
                     const parsed = new URL(url);
@@ -67,11 +68,11 @@ function MessageBubble({ message }) {
                   } catch {}
                   const isRelative = to.startsWith('/');
                   return isRelative ? (
-                    <Link to={to} className="text-[#8B5CF6] underline hover:text-[#8B5CF6]/80">
+                    <Link to={to} className="text-purple-600 underline hover:text-purple-800">
                       {children}
                     </Link>
                   ) : (
-                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-[#8B5CF6] underline hover:text-[#8B5CF6]/80">
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-purple-600 underline hover:text-purple-800">
                       {children}
                     </a>
                   );
@@ -80,7 +81,7 @@ function MessageBubble({ message }) {
                 ul: ({ children }) => <ul className="my-1 ml-4 list-disc">{children}</ul>,
                 ol: ({ children }) => <ol className="my-1 ml-4 list-decimal">{children}</ol>,
                 li: ({ children }) => <li className="my-0.5">{children}</li>,
-                strong: ({ children }) => <strong className="text-[#8B5CF6]">{children}</strong>,
+                strong: ({ children }) => <strong className="text-purple-700">{children}</strong>,
               }}
             >
               {message.content}
@@ -88,8 +89,8 @@ function MessageBubble({ message }) {
           )}
         </div>
         {message.tool_calls?.map((tc, i) => tc.status === 'running' && (
-          <div key={i} className="mt-1 text-xs text-[#8B5CF6]/50 font-sans flex items-center gap-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]/50 animate-pulse" />
+          <div key={i} className="mt-1 text-xs text-purple-500 flex items-center gap-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <div className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
             Αναζήτηση στη βάση γνώσης...
           </div>
         ))}
@@ -156,162 +157,184 @@ export default function Assistant() {
 
   if (init) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "linear-gradient(160deg, #2D1B4E 0%, #1E1B3A 40%, #3D1B5E 100%)" }}>
-        <div className="w-8 h-8 border-4 border-[#8B5CF6]/30 border-t-[#8B5CF6] rounded-full animate-spin" />
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(160deg, #2D1B4E 0%, #1E1B3A 40%, #3D1B5E 100%)" }}>
-      {/* Header */}
-      <div className="bg-[#15123A]/95 border-b border-[#8B5CF6]/10 px-4 py-3 flex items-center gap-4 flex-shrink-0">
-        <Link to="/spotlight-pos-guide/roles" className="text-[#8B5CF6]/60 hover:text-[#8B5CF6] transition-colors">
-          <ChevronLeft className="w-5 h-5" />
-        </Link>
-        {messages.length > 0 && (
-          <button
-            onClick={resetToQuestions}
-            disabled={loading}
-            className="flex items-center gap-1.5 text-sm text-white/90 hover:text-white border border-[#8B5CF6]/20 hover:border-[#8B5CF6]/50 px-3 py-1.5 rounded-lg transition-all disabled:opacity-40 flex-shrink-0"
-          >
-            <RotateCcw className="w-4 h-4" />
-            <span>Επιστροφή στις Ερωτήσεις</span>
-          </button>
-        )}
-        <div className="w-9 h-9 rounded-full bg-[#8B5CF6]/10 border border-[#8B5CF6]/30 flex items-center justify-center">
-          <Bot className="w-5 h-5 text-[#8B5CF6]" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="font-sans text-sm font-bold text-white tracking-wider truncate">Spotlight POS Assistant</div>
-          <div className="text-[11px] text-[#8B5CF6]/60">Ρώτησέ με οτιδήποτε για το Spotlight POS</div>
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      {/* Hero Header */}
+      <div className="pt-24 pb-10" style={{ background: "linear-gradient(135deg, #6a2b9e 0%, #b32483 100%)" }}>
+        <div className="max-w-3xl mx-auto px-6">
+          <div className="mb-4">
+            <SpotlightBrand size={26} />
+          </div>
+          <h1 className="font-bold text-3xl md:text-4xl mb-2 text-white" style={{ fontFamily: 'Inter, sans-serif' }}>
+            Spotlight POS Assistant
+          </h1>
+          <p className="text-base text-white/70" style={{ fontFamily: 'Inter, sans-serif' }}>
+            Ρώτησέ με οτιδήποτε για το Spotlight POS
+          </p>
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 max-w-3xl mx-auto w-full">
-        {messages.length === 0 && !loading && (
-          <div className="text-center py-8">
-            <div className="w-16 h-16 rounded-full bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 flex items-center justify-center mx-auto mb-4">
-              <Bot className="w-8 h-8 text-[#8B5CF6]" />
-            </div>
-            <h2 className="font-sans text-white text-lg mb-2">Spotlight POS Assistant</h2>
-            <p className="font-sans text-white/50 text-sm mb-6">Επίλεξε μια ερώτηση ή γράψε τη δική σου παρακάτω</p>
-            <div className="max-w-3xl mx-auto w-full mb-8">
-              <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
-                <input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ρώτησε οτιδήποτε για το Spotlight POS..."
-                  className="spotlight-input flex-1 text-sm"
-                  disabled={loading}
-                />
-                <button
-                  type="submit"
-                  disabled={!input.trim() || loading}
-                  className="spotlight-btn !py-0 !px-4 disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
-                >
-                  <Send className="w-4 h-4" />
-                </button>
-              </form>
-            </div>
-            <div className="space-y-4 text-left">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-1.5 h-5 bg-[#8B5CF6] rounded-full" />
-                <h3 className="font-sans text-sm font-semibold text-white/80 uppercase tracking-wider">Προτεινόμενες Ερωτήσεις</h3>
+      {/* Chat Content */}
+      <div className="max-w-3xl mx-auto px-6 py-8">
+        {/* Sub-header: back + reset */}
+        <div className="flex items-center justify-between mb-6">
+          <Link
+            to="/spotlight-pos-guide/roles"
+            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-purple-600 transition-colors"
+            style={{ fontFamily: 'Inter, sans-serif' }}
+          >
+            <ArrowLeft size={14} /> Επιστροφή στους Ρόλους
+          </Link>
+          {messages.length > 0 && (
+            <button
+              onClick={resetToQuestions}
+              disabled={loading}
+              className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-purple-600 border border-gray-200 hover:border-purple-300 px-3 py-1.5 rounded-lg transition-all disabled:opacity-40"
+              style={{ fontFamily: 'Inter, sans-serif' }}
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span>Επιστροφή στις Ερωτήσεις</span>
+            </button>
+          )}
+        </div>
+
+        {/* Messages / Empty state */}
+        <div className="space-y-4">
+          {messages.length === 0 && !loading && (
+            <div className="text-center py-6">
+              <div className="w-16 h-16 rounded-full bg-purple-100 border border-purple-200 flex items-center justify-center mx-auto mb-4">
+                <Bot className="w-8 h-8 text-purple-600" />
               </div>
-              {Object.entries(
-                suggested.reduce((acc, item) => {
-                  const cat = item.category || 'general';
-                  if (!acc[cat]) acc[cat] = [];
-                  acc[cat].push(item.question);
-                  return acc;
-                }, {})
-              ).map(([cat, qs]) => (
-                <div key={cat}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-1 h-3 bg-[#8B5CF6]/60 rounded-full" />
-                    <span className="font-sans text-xs font-semibold text-[#8B5CF6]/70 uppercase tracking-wider">
-                      {CATEGORY_LABELS[cat] || cat}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {qs.map((q) => (
-                      <button
-                        key={q}
-                        onClick={() => send(q)}
-                        className="flex items-start gap-2.5 p-3.5 rounded-lg border border-[#8B5CF6]/15 bg-[#2D2B55]/60 hover:border-[#8B5CF6]/50 hover:bg-[#8B5CF6]/10 transition-all text-left group"
-                      >
-                        <ChevronRight className="w-4 h-4 text-[#8B5CF6]/40 group-hover:text-[#8B5CF6] transition-colors flex-shrink-0 mt-0.5" />
-                        <span className="text-white/85 text-sm leading-snug">{q}</span>
-                      </button>
-                    ))}
-                  </div>
+              <h2 className="text-gray-900 text-lg mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>Spotlight POS Assistant</h2>
+              <p className="text-gray-500 text-sm mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>Επίλεξε μια ερώτηση ή γράψε τη δική σου παρακάτω</p>
+              <div className="max-w-3xl mx-auto w-full mb-8">
+                <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
+                  <input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Ρώτησε οτιδήποτε για το Spotlight POS..."
+                    className="flex-1 text-sm rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition-all focus:border-purple-400 focus:ring-2 focus:ring-purple-100"
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                    disabled={loading}
+                  />
+                  <button
+                    type="submit"
+                    disabled={!input.trim() || loading}
+                    className="rounded-lg px-4 py-3 text-white disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0 transition-all hover:opacity-90"
+                    style={{ fontFamily: 'Inter, sans-serif', background: "linear-gradient(135deg, #5B21B6, #b32483)" }}
+                  >
+                    <Send className="w-4 h-4" />
+                  </button>
+                </form>
+              </div>
+              <div className="space-y-4 text-left">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-1.5 h-5 bg-purple-600 rounded-full" />
+                  <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wider" style={{ fontFamily: 'Inter, sans-serif' }}>Προτεινόμενες Ερωτήσεις</h3>
                 </div>
+                {Object.entries(
+                  suggested.reduce((acc, item) => {
+                    const cat = item.category || 'general';
+                    if (!acc[cat]) acc[cat] = [];
+                    acc[cat].push(item.question);
+                    return acc;
+                  }, {})
+                ).map(([cat, qs]) => (
+                  <div key={cat}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1 h-3 bg-purple-400 rounded-full" />
+                      <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider" style={{ fontFamily: 'Inter, sans-serif' }}>
+                        {CATEGORY_LABELS[cat] || cat}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {qs.map((q) => (
+                        <button
+                          key={q}
+                          onClick={() => send(q)}
+                          className="flex items-start gap-2.5 p-3.5 rounded-xl border border-gray-200 bg-white hover:border-purple-300 hover:shadow-sm transition-all text-left group"
+                        >
+                          <ChevronRight className="w-4 h-4 text-purple-300 group-hover:text-purple-600 transition-colors flex-shrink-0 mt-0.5" />
+                          <span className="text-gray-700 text-sm leading-snug" style={{ fontFamily: 'Inter, sans-serif' }}>{q}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {messages.filter(m => m.role !== 'system').map((m, i) => (
+            <MessageBubble key={i} message={m} />
+          ))}
+
+          {loading && messages[messages.length - 1]?.role === 'user' && (
+            <div className="flex gap-3 justify-start">
+              <div className="w-8 h-8 rounded-full bg-purple-100 border border-purple-200 flex items-center justify-center flex-shrink-0">
+                <Bot className="w-4 h-4 text-purple-600" />
+              </div>
+              <div className="bg-white border border-gray-200 shadow-sm rounded-2xl px-4 py-3 flex gap-1.5 items-center">
+                <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
+            </div>
+          )}
+
+          <div ref={bottomRef} />
+        </div>
+
+        {/* Suggested (when chatting) */}
+        {messages.length > 0 && (
+          <div className="mt-4">
+            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+              {suggested.slice(0, 4).map((item) => (
+                <button
+                  key={item.question}
+                  onClick={() => send(item.question)}
+                  disabled={loading}
+                  className="whitespace-nowrap px-3 py-1.5 border border-gray-200 bg-white hover:border-purple-300 text-gray-600 hover:text-purple-600 text-xs transition-all flex-shrink-0 disabled:opacity-40 rounded-lg"
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                >
+                  {item.question}
+                </button>
               ))}
             </div>
           </div>
         )}
 
-        {messages.filter(m => m.role !== 'system').map((m, i) => (
-          <MessageBubble key={i} message={m} />
-        ))}
-
-        {loading && messages[messages.length - 1]?.role === 'user' && (
-          <div className="flex gap-3 justify-start">
-            <div className="w-8 h-8 rounded-full bg-[#8B5CF6]/10 border border-[#8B5CF6]/30 flex items-center justify-center flex-shrink-0">
-              <Bot className="w-4 h-4 text-[#8B5CF6]" />
-            </div>
-            <div className="bg-[#2D2B55] border border-[#4A3B7A] rounded-2xl px-4 py-3 flex gap-1.5 items-center">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]/60 animate-bounce" style={{ animationDelay: '0ms' }} />
-              <div className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]/60 animate-bounce" style={{ animationDelay: '150ms' }} />
-              <div className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]/60 animate-bounce" style={{ animationDelay: '300ms' }} />
-            </div>
+        {/* Input (when chatting) */}
+        {messages.length > 0 && (
+          <div className="mt-4">
+            <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ρώτησε οτιδήποτε για το Spotlight POS..."
+                className="flex-1 text-sm rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition-all focus:border-purple-400 focus:ring-2 focus:ring-purple-100"
+                style={{ fontFamily: 'Inter, sans-serif' }}
+                disabled={loading}
+              />
+              <button
+                type="submit"
+                disabled={!input.trim() || loading}
+                className="rounded-lg px-4 py-3 text-white disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0 transition-all hover:opacity-90"
+                style={{ fontFamily: 'Inter, sans-serif', background: "linear-gradient(135deg, #5B21B6, #b32483)" }}
+              >
+                <Send className="w-4 h-4" />
+              </button>
+            </form>
           </div>
         )}
-
-        <div ref={bottomRef} />
       </div>
-
-      {/* Suggested (when chatting) */}
-      {messages.length > 0 && (
-        <div className="px-4 pb-2 max-w-3xl mx-auto w-full">
-          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-            {suggested.slice(0, 4).map((item) => (
-              <button
-                key={item.question}
-                onClick={() => send(item.question)}
-                disabled={loading}
-                className="whitespace-nowrap px-3 py-1.5 border border-[#8B5CF6]/20 bg-[#2D2B55]/60 hover:border-[#8B5CF6]/40 text-white/60 hover:text-white/90 text-xs font-sans transition-all flex-shrink-0 disabled:opacity-40"
-              >
-                {item.question}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Input (when chatting) */}
-      {messages.length > 0 && (
-        <div className="px-4 pb-6 pt-2 max-w-3xl mx-auto w-full flex-shrink-0">
-          <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ρώτησε οτιδήποτε για το Spotlight POS..."
-              className="spotlight-input flex-1 text-sm"
-              disabled={loading}
-            />
-            <button
-              type="submit"
-              disabled={!input.trim() || loading}
-              className="spotlight-btn !py-0 !px-4 disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
-            >
-              <Send className="w-4 h-4" />
-            </button>
-          </form>
-        </div>
-      )}
     </div>
   );
 }
