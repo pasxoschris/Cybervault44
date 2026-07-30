@@ -18,6 +18,9 @@ import TransferOrder from './pages/tutorial/TransferOrder';
 import MergeOrders from './pages/tutorial/MergeOrders';
 import Login from './pages/tutorial/Login';
 import OrderDetails from './pages/tutorial/OrderDetails';
+import CancelProduct from './pages/tutorial/CancelProduct';
+import CancelOrder from './pages/tutorial/CancelOrder';
+import AddSimilar from './pages/tutorial/AddSimilar';
 import Scenarios from './pages/tutorial/Scenarios';
 import Shift from './pages/tutorial/Shift';
 import StartShift from './pages/tutorial/StartShift';
@@ -91,6 +94,9 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/merge-orders" element={<MergeOrders />} />
       <Route path="/tutorial/login" element={<Login />} />
       <Route path="/tutorial/order-details" element={<OrderDetails />} />
+      <Route path="/tutorial/cancel-product" element={<CancelProduct />} />
+      <Route path="/tutorial/cancel-order" element={<CancelOrder />} />
+      <Route path="/tutorial/add-similar" element={<AddSimilar />} />
       <Route path="/tutorial/scenarios" element={<Scenarios />} />
       <Route path="/tutorial/start-shift" element={<StartShift />} />
       <Route path="/tutorial/sync-status" element={<SyncStatus />} />
