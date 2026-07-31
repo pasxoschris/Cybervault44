@@ -49,6 +49,11 @@ export default function Invoice() {
       </StepCard>
 
       <StepCard number="5" title="Συμπλήρωσε τα στοιχεία">
+        <img
+          src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/2f3e213d5_image.png"
+          alt="Στοιχεία Τιμολογίου πριν και μετά την αναζήτηση ΑΦΜ στην ΑΑΔΕ"
+          className="w-full rounded-xl border border-gray-200 mb-4"
+        />
         <div className="bg-[#080c20] border border-[#00D4FF]/10 rounded-sm overflow-hidden mt-2 px-3">
           {fields.map((f, i) => (
             <FieldRow key={i} label={f.label} value={f.value} />
