@@ -44,7 +44,11 @@ export default function Invoice() {
         <p>Αν ο πελάτης είναι ήδη αποθηκευμένος στο Spotlight, πάτα <strong>«Αναζήτηση σε Spotlight»</strong> και αναζήτησε με τηλέφωνο, email ή ΑΦΜ.</p>
       </StepCard>
 
-      <StepCard number="4" title="Συμπλήρωσε τα στοιχεία">
+      <StepCard number="4" title="Αναζήτηση ΑΦΜ">
+        <p>Μπορείς να πατήσεις το εικονίδιο <strong>📖</strong> δίπλα στο πεδίο ΑΦΜ για αυτόματη αναζήτηση στην ΑΑΔΕ. Τα στοιχεία της εταιρείας θα συμπληρωθούν αυτόματα.</p>
+      </StepCard>
+
+      <StepCard number="5" title="Συμπλήρωσε τα στοιχεία">
         <div className="bg-[#080c20] border border-[#00D4FF]/10 rounded-sm overflow-hidden mt-2 px-3">
           {fields.map((f, i) => (
             <FieldRow key={i} label={f.label} value={f.value} />
@@ -52,17 +56,13 @@ export default function Invoice() {
         </div>
       </StepCard>
 
-      <StepCard number="5" title="Πάτα «Έκδοση»">
+      <StepCard number="6" title="Πάτα «Έκδοση»">
         <p>Μόλις συμπληρώσεις όλα τα υποχρεωτικά πεδία (*), πάτα <strong>«Έκδοση»</strong> και επιβεβαίωσε.</p>
       </StepCard>
 
       <InfoBox icon="⚠️" title="Σημαντικό — Ακύρωση Τιμολογίου" variant="warning">
         <p className="font-semibold">Το τιμολόγιο ακυρώνεται ΜΟΝΟ από το διαχειριστικό (Secure).</p>
         <p className="mt-1">Αν θέλεις να ακυρώσεις τιμολόγιο <em>από την εφαρμογή</em>, θα πρέπει να <strong>ακυρώσεις ολόκληρη την παραγγελία</strong>.</p>
-      </InfoBox>
-
-      <InfoBox icon="💡" title="Αναζήτηση ΑΦΜ" variant="info">
-        Μπορείς να πατήσεις το εικονίδιο 📖 δίπλα στο πεδίο ΑΦΜ για αυτόματη αναζήτηση στην ΑΑΔΕ. Τα στοιχεία της εταιρείας θα συμπληρωθούν αυτόματα.
       </InfoBox>
     </TutorialLayout>
   );
