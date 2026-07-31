@@ -44,7 +44,7 @@ export default function Invoice() {
         <p>Αν ο πελάτης είναι ήδη αποθηκευμένος στο Spotlight, πάτα <strong>«Αναζήτηση σε Spotlight»</strong> και αναζήτησε με τηλέφωνο, email ή ΑΦΜ.</p>
       </StepCard>
 
-      <StepCard number="4" title="Αναζήτηση ΑΦΜ">
+      <StepCard number="4" title="Αναζήτηση στοιχείων πελάτη μέσω ΑΑΔΕ">
         <p>Μπορείς να πατήσεις το εικονίδιο <strong>📖</strong> δίπλα στο πεδίο ΑΦΜ για αυτόματη αναζήτηση στην ΑΑΔΕ. Τα στοιχεία της εταιρείας θα συμπληρωθούν αυτόματα.</p>
       </StepCard>
 
