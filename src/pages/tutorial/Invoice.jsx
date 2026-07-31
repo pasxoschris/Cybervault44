@@ -40,7 +40,7 @@ export default function Invoice() {
         <p>Στη γραμμή εργαλείων (κάτω μέρος), βρες και πάτα το εικονίδιο <strong>τιμολογίου 🧾</strong>.</p>
       </StepCard>
 
-      <StepCard number="3" title="Αναζήτηση πελάτη (προαιρετικό)">
+      <StepCard number="3" title="Αναζήτηση πελάτη για τον οποίο έχει ξαναεκδοθεί τιμολόγιο">
         <p>Αν ο πελάτης είναι ήδη αποθηκευμένος στο Spotlight, πάτα <strong>«Αναζήτηση σε Spotlight»</strong> και αναζήτησε με τηλέφωνο, email ή ΑΦΜ.</p>
       </StepCard>
 
