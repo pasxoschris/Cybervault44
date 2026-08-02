@@ -133,7 +133,7 @@ export default function OfferForm({ editOffer, onSaved }) {
       };
 
       // Validate
-      const { success, errors } = validateOffer(offerData, { allowEmptyLines: true });
+      const { success, errors } = validateOffer(offerData, { allowEmptyLines: true, isDraft: status === 'draft' });
       if (!success) {
         console.error('Validation errors:', errors);
         setSaving(false);

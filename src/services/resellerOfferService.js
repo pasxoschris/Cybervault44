@@ -4,7 +4,9 @@ import {
   appendAuditLog,
   buildAuditEntry,
 } from '@/lib/resellerUtils';
-import { validate, offerSchema } from '@/lib/validation/reseller.schemas';
+import { validate, offerSchema, draftOfferSchema } from '@/lib/validation/reseller.schemas';
+
+const DRAFT_COMPANY_DEFAULT = 'Πρόχειρη Προσφορά';
 
 /**
  * Reseller Offer Service — centralizes all ResellerOffer operations.
@@ -30,8 +32,14 @@ export async function getOffer(id) {
  * and initializes the audit log.
  */
 export async function createOffer(data) {
+  const isDraft = data.status === 'draft';
+  const schema = isDraft ? draftOfferSchema : offerSchema;
+  // Ensure company_legal_name has a value (DB requires it)
+  const dataWithDefault = isDraft && !data.company_legal_name
+    ? { ...data, company_legal_name: DRAFT_COMPANY_DEFAULT }
+    : data;
   // Validate
-  const { success, data: valid, errors } = validate(offerSchema, data);
+  const { success, data: valid, errors } = validate(schema, dataWithDefault);
   if (!success) throw new ValidationError('Validation failed', errors);
 
   // Generate deterministic reference number via backend function
@@ -62,8 +70,14 @@ export async function createOffer(data) {
  * System fields (reference_number, public_token, created_by, created_date) are protected.
  */
 export async function updateOffer(id, data, auditAction = 'updated', auditDetails = {}) {
+  const isDraft = data.status === 'draft';
+  const schema = isDraft ? draftOfferSchema : offerSchema;
+  // Ensure company_legal_name has a value (DB requires it)
+  const dataWithDefault = isDraft && !data.company_legal_name
+    ? { ...data, company_legal_name: DRAFT_COMPANY_DEFAULT }
+    : data;
   // Validate
-  const { success, data: valid, errors } = validate(offerSchema, data);
+  const { success, data: valid, errors } = validate(schema, dataWithDefault);
   if (!success) throw new ValidationError('Validation failed', errors);
 
   // Fetch existing to append audit log

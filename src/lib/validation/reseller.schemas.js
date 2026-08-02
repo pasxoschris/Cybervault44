@@ -32,6 +32,12 @@ export const offerSchema = z.object({
   final_total: z.number().optional(),
 });
 
+// ─── Offer Draft (lenient — allows saving with minimal data) ───────
+export const draftOfferSchema = offerSchema.extend({
+  company_legal_name: z.string().optional().default(''),
+  email: z.string().optional().default(''),
+});
+
 // ─── Pricing Item ────────────────────────────────────────────────
 export const pricingItemSchema = z.object({
   name: z.string().min(1, 'Το όνομα είναι υποχρεωτικό'),

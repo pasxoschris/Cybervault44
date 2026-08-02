@@ -1,16 +1,17 @@
 import { useCallback } from 'react';
-import { validate, offerSchema, validateOfferLines } from '@/lib/validation/reseller.schemas';
+import { validate, offerSchema, draftOfferSchema, validateOfferLines } from '@/lib/validation/reseller.schemas';
 
 /**
  * Returns validation helpers for offers.
  */
 export function useOfferValidation() {
-  const validateOffer = useCallback((data, { allowEmptyLines = true } = {}) => {
+  const validateOffer = useCallback((data, { allowEmptyLines = true, isDraft = false } = {}) => {
     const lineResult = validateOfferLines(data.items || [], { allowEmpty: allowEmptyLines });
     if (!lineResult.success) {
       return { success: false, errors: { ...lineResult.errors } };
     }
-    const result = validate(offerSchema, { ...data, items: lineResult.data || [] });
+    const schema = isDraft ? draftOfferSchema : offerSchema;
+    const result = validate(schema, { ...data, items: lineResult.data || [] });
     return result;
   }, []);
 
