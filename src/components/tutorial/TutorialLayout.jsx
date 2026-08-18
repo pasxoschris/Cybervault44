@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Edit3, Receipt, Layers, Monitor, ArrowLeft, ArrowLeftRight, GitMerge, Cloud, XCircle, Ban, CopyPlus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Edit3, Receipt, Layers, Monitor, ArrowLeft, ArrowLeftRight, GitMerge, Cloud, XCircle, Ban, CopyPlus, AlertTriangle } from "lucide-react";
 import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
@@ -25,6 +25,7 @@ const sections = [
   { title: "Συγχώνευση Παραγγελιών", path: "/tutorial/merge-orders", icon: GitMerge },
   { title: "Βάρδια", path: "/tutorial/shift", icon: Layers },
   { title: "Σενάρια", path: "/tutorial/scenarios", icon: Monitor },
+  { title: "Προειδοποιητικό Τρίγωνο", path: "/tutorial/printer-warning", icon: AlertTriangle },
 ];
 
 export default function TutorialLayout({ children, title, subtitle }) {

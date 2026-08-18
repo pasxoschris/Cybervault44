@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Home, ArrowLeft, Tablet, Cloud, LogIn } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, ArrowLeft, Tablet, Cloud, LogIn, AlertTriangle } from "lucide-react";
 import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
@@ -22,6 +22,7 @@ export const cashierSections = [
   { title: "Ρυθμίσεις Χρήστη", path: "/tutorial/cashier/settings", icon: Home },
   { title: "Παραγγελία Delivery", path: "/tutorial/cashier/delivery", icon: Home },
   { title: "Κλείσιμο Βάρδιας", path: "/tutorial/cashier/close", icon: Home },
+  { title: "Προειδοποιητικό Τρίγωνο", path: "/tutorial/cashier/printer-warning", icon: AlertTriangle },
 ];
 
 export default function CashierTutorialLayout({ children, title, subtitle }) {

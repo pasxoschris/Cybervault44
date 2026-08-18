@@ -44,6 +44,8 @@ import LoginCashier from './pages/tutorial/cashier/Login';
 import OpenCashier from './pages/tutorial/cashier/Open';
 import SyncStatusCashier from './pages/tutorial/cashier/SyncStatus';
 import CloseCashier from './pages/tutorial/cashier/Close';
+import PrinterWarning from './pages/tutorial/PrinterWarning';
+import PrinterWarningCashier from './pages/tutorial/cashier/PrinterWarning';
 import Payment from './pages/tutorial/Payment';
 import Assistant from './pages/academy/Assistant';
 import Stores from './pages/stores/Stores';
@@ -100,6 +102,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/scenarios" element={<Scenarios />} />
       <Route path="/tutorial/start-shift" element={<StartShift />} />
       <Route path="/tutorial/sync-status" element={<SyncStatus />} />
+      <Route path="/tutorial/printer-warning" element={<PrinterWarning />} />
       <Route path="/tutorial/settings" element={<Settings />} />
       <Route path="/service-desk" element={<ServiceDesk />} />
       <Route path="/admin/whitelist" element={<Whitelist />} />
@@ -135,6 +138,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/cashier/open" element={<OpenCashier />} />
       <Route path="/tutorial/cashier/sync-status" element={<SyncStatusCashier />} />
       <Route path="/tutorial/cashier/close" element={<CloseCashier />} />
+      <Route path="/tutorial/cashier/printer-warning" element={<PrinterWarningCashier />} />
       <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
       <Route path="*" element={<PageNotFound />} />
