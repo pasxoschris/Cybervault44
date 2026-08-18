@@ -55,6 +55,10 @@ export default function Invoice() {
       <InfoBox icon="💡" title="Συνοπτικά" variant="info">
         <p><strong>Μενού → Έκδοση Τιμολογίου</strong> (εμφανίζεται με παραγγελία + ενεργοποιημένο iPad). Η ενεργοποίηση γίνεται <strong>ανά iPad από το Διαχειριστικό</strong>.</p>
       </InfoBox>
+
+      <InfoBox icon="🧾" title="Απόδειξη πριν Τιμολόγιο" variant="warning">
+        <p>Αν έχεις εκδώσει <strong>απόδειξη</strong> και θέλεις να εκδώσεις <strong>τιμολόγιο</strong>, πρέπει πρώτα να <strong>ακυρώσεις την απόδειξη</strong> ώστε να μην αποδοθεί διπλό ΑΦΜ.</p>
+      </InfoBox>
     </CashierTutorialLayout>
   );
 }

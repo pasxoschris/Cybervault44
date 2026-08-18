@@ -69,6 +69,10 @@ export default function Invoice() {
         <p className="font-semibold">Το τιμολόγιο ακυρώνεται ΜΟΝΟ από το διαχειριστικό (Secure).</p>
         <p className="mt-1">Αν θέλεις να ακυρώσεις τιμολόγιο <em>από την εφαρμογή</em>, θα πρέπει να <strong>ακυρώσεις ολόκληρη την παραγγελία</strong>.</p>
       </InfoBox>
+
+      <InfoBox icon="🧾" title="Απόδειξη πριν Τιμολόγιο" variant="warning">
+        <p>Αν έχεις εκδώσει <strong>απόδειξη</strong> και θέλεις να εκδώσεις <strong>τιμολόγιο</strong>, πρέπει πρώτα να <strong>ακυρώσεις την απόδειξη</strong> ώστε να μην αποδοθεί διπλό ΑΦΜ.</p>
+      </InfoBox>
     </TutorialLayout>
   );
 }
