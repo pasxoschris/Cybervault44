@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { base44 } from '@/api/base44Client';
 import Navbar from '@/components/layout/Navbar';
 import { getRoleById } from '@/lib/roles';
 import { getCompletedCount, isVisited } from '@/lib/tutorialProgress';
@@ -11,13 +12,50 @@ export default function RolePath() {
   const { roleId } = useParams();
   const role = getRoleById(roleId);
   const [visited, setVisited] = useState({});
+  const [access, setAccess] = useState(null); // null=loading, true=allowed, false=denied
 
   useEffect(() => {
-    if (!role) return;
+    const check = async () => {
+      if (!role) { setAccess(true); return; }
+      const u = await base44.auth.me().catch(() => null);
+      if (!u) { setAccess(false); return; }
+      if (u.role === 'admin') { setAccess(true); return; }
+      const list = await base44.entities.AllowedUserGuide.filter({ email: u.email.toLowerCase() });
+      if (list.length === 0) { setAccess(false); return; }
+      const modes = list[0].modes || '';
+      if (!modes.trim()) { setAccess(true); return; }
+      setAccess(modes.split(',').map(m => m.trim()).includes(roleId));
+    };
+    check();
+  }, [role, roleId]);
+
+  useEffect(() => {
+    if (!role || access !== true) return;
     const obj = {};
     role.lessons.forEach((l) => {obj[l.href] = isVisited(l.href);});
     setVisited(obj);
-  }, [role]);
+  }, [role, access]);
+
+  if (access === null) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-[#0E1235]">
+        <div className="w-8 h-8 border-4 border-[#00CFFF]/30 border-t-[#00CFFF] rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (access === false) {
+    return (
+      <div className="min-h-screen bg-[#0E1235] cyber-grid flex items-center justify-center">
+        <div className="text-center p-10 border border-red-500/30 bg-[#131840]/80 max-w-md">
+          <div className="font-mono-cyber text-red-400 text-xs tracking-widest mb-3">ACCESS DENIED</div>
+          <h2 className="font-orbitron text-white text-xl mb-2">Δεν έχεις πρόσβαση σε αυτό το mode</h2>
+          <p className="font-rajdhani text-white/40 text-sm">Δεν έχεις εξουσιοδοτηθεί για αυτό το εκπαιδευτικό mode.</p>
+          <Link to="/spotlight-pos-guide/roles" className="inline-block mt-5 text-[#00CFFF] hover:underline font-mono-cyber text-sm">← Επιστροφή στους Ρόλους</Link>
+        </div>
+      </div>
+    );
+  }
 
   if (!role) {
     return (

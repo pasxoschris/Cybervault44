@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import Navbar from '@/components/layout/Navbar';
+import { ROLES } from '@/lib/roles';
 
-function WhitelistSection({ entityName, title, description }) {
+const parseModes = (modes) => (modes ? modes.split(',').map(m => m.trim()).filter(Boolean) : []);
+
+function WhitelistSection({ entityName, title, description, modeOptions }) {
   const [allowed, setAllowed] = useState([]);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [selectedModes, setSelectedModes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -19,16 +23,28 @@ function WhitelistSection({ entityName, title, description }) {
     e.preventDefault();
     if (!email.trim()) return;
     setSaving(true);
-    const created = await base44.entities[entityName].create({ email: email.trim().toLowerCase(), name: name.trim() });
+    const payload = { email: email.trim().toLowerCase(), name: name.trim() };
+    if (modeOptions) payload.modes = selectedModes.join(',');
+    const created = await base44.entities[entityName].create(payload);
     setAllowed(prev => [...prev, created]);
     setEmail('');
     setName('');
+    setSelectedModes([]);
     setSaving(false);
   };
 
   const handleDelete = async (id) => {
     await base44.entities[entityName].delete(id);
     setAllowed(prev => prev.filter(a => a.id !== id));
+  };
+
+  const handleToggleMode = async (record, modeId) => {
+    const current = parseModes(record.modes);
+    const next = current.includes(modeId)
+      ? current.filter(m => m !== modeId)
+      : [...current, modeId];
+    const updated = await base44.entities[entityName].update(record.id, { modes: next.join(',') });
+    setAllowed(prev => prev.map(a => a.id === record.id ? updated : a));
   };
 
   if (loading) {
@@ -64,6 +80,31 @@ function WhitelistSection({ entityName, title, description }) {
             />
           </div>
         </div>
+
+        {modeOptions && (
+          <div>
+            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-2 uppercase">
+              Εξουσιοδοτημένα Modes <span className="text-white/30 normal-case tracking-normal">(κενό = όλα)</span>
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {modeOptions.map(m => {
+                const active = selectedModes.includes(m.id);
+                return (
+                  <button
+                    type="button"
+                    key={m.id}
+                    onClick={() => setSelectedModes(prev => active ? prev.filter(x => x !== m.id) : [...prev, m.id])}
+                    className={`px-3 py-1.5 text-xs border transition-all ${active ? 'bg-[#00CFFF] text-[#0E1235] border-[#00CFFF]' : 'text-[#00CFFF]/70 border-[#00CFFF]/25 hover:border-[#00CFFF]/50'}`}
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
+                    {m.emoji} {m.title}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         <button type="submit" disabled={saving} className="cyber-btn !py-2 !px-6 disabled:opacity-50">
           {saving ? 'ΠΡΟΣΘΗΚΗ...' : '+ ΠΡΟΣΘΗΚΗ'}
         </button>
@@ -74,20 +115,59 @@ function WhitelistSection({ entityName, title, description }) {
         {allowed.length === 0 && (
           <div className="text-center py-8 font-mono-cyber text-white/20 text-sm tracking-widest">ΚΑΝΕΝΑ EMAIL</div>
         )}
-        {allowed.map(a => (
-          <div key={a.id} className="flex items-center justify-between border border-[#00CFFF]/15 bg-[#131840]/60 px-4 py-3">
-            <div>
-              <div className="font-rajdhani text-[#00CFFF] text-sm">{a.email}</div>
-              {a.name && <div className="font-rajdhani text-white/40 text-xs">{a.name}</div>}
+        {allowed.map(a => {
+          const userModes = parseModes(a.modes);
+          const hasAllModes = modeOptions && userModes.length === 0;
+          return (
+            <div key={a.id} className="border border-[#00CFFF]/15 bg-[#131840]/60 px-4 py-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="font-rajdhani text-[#00CFFF] text-sm">{a.email}</div>
+                  {a.name && <div className="font-rajdhani text-white/40 text-xs">{a.name}</div>}
+                </div>
+                <button
+                  onClick={() => handleDelete(a.id)}
+                  className="font-mono-cyber text-[10px] text-red-400/70 hover:text-red-400 border border-red-400/20 hover:border-red-400/50 px-3 py-1 transition-all tracking-widest"
+                >
+                  ΔΙΑΓΡΑΦΗ
+                </button>
+              </div>
+
+              {modeOptions && (
+                <div className="mt-3 pt-3 border-t border-[#00CFFF]/10">
+                  <div className="font-mono-cyber text-[9px] tracking-widest text-[#00CFFF]/40 mb-2 uppercase">Modes</div>
+                  {hasAllModes ? (
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-green-400/80" style={{ fontFamily: 'Inter, sans-serif' }}>Όλα τα modes (πλήρη πρόσβαση)</span>
+                      <button
+                        onClick={() => modeOptions.forEach(m => handleToggleMode(a, m.id))}
+                        className="font-mono-cyber text-[9px] text-[#00CFFF]/60 hover:text-[#00CFFF] border border-[#00CFFF]/20 hover:border-[#00CFFF]/50 px-2 py-0.5 transition-all tracking-widest"
+                      >
+                        ΠΕΡΙΟΡΙΣΜΟΣ
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap gap-1.5">
+                      {modeOptions.map(m => {
+                        const active = userModes.includes(m.id);
+                        return (
+                          <button
+                            key={m.id}
+                            onClick={() => handleToggleMode(a, m.id)}
+                            className={`px-2.5 py-1 text-xs border transition-all ${active ? 'bg-[#00CFFF]/15 text-[#00CFFF] border-[#00CFFF]/50' : 'text-white/30 border-white/10 hover:border-white/25'}`}
+                            style={{ fontFamily: 'Inter, sans-serif' }}
+                          >
+                            {m.emoji} {m.title}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
-            <button
-              onClick={() => handleDelete(a.id)}
-              className="font-mono-cyber text-[10px] text-red-400/70 hover:text-red-400 border border-red-400/20 hover:border-red-400/50 px-3 py-1 transition-all tracking-widest"
-            >
-              ΔΙΑΓΡΑΦΗ
-            </button>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -95,7 +175,7 @@ function WhitelistSection({ entityName, title, description }) {
 
 const TABS = [
   { key: 'AllowedUser', label: 'Service Desk', description: 'Διαχείριση πρόσβασης στο Service Desk' },
-  { key: 'AllowedUserGuide', label: 'SpotlightPOS Guide', description: 'Διαχείριση πρόσβασης στον Οδηγό Εκπαίδευσης' },
+  { key: 'AllowedUserGuide', label: 'SpotlightPOS Guide', description: 'Διαχείριση πρόσβασης στον Οδηγό Εκπαίδευσης. Εξουσιοδότησε κάθε χρήστη για συγκεκριμένα modes (κενό = όλα).' },
   { key: 'AllowedUserReseller', label: 'Reseller Console', description: 'Διαχείριση πρόσβασης στο Reseller Console' },
 ];
 
@@ -122,6 +202,7 @@ export default function Whitelist() {
   }
 
   const activeTabData = TABS.find(t => t.key === activeTab);
+  const modeOptions = activeTab === 'AllowedUserGuide' ? ROLES : null;
 
   return (
     <div className="min-h-screen bg-[#0E1235] cyber-grid">
@@ -159,6 +240,7 @@ export default function Whitelist() {
           entityName={activeTabData.key}
           title={activeTabData.label}
           description={activeTabData.description}
+          modeOptions={modeOptions}
         />
       </div>
     </div>

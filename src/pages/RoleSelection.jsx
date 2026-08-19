@@ -10,6 +10,7 @@ import SpotlightBrand from '@/components/SpotlightBrand';
 
 export default function RoleSelection() {
   const [allowed, setAllowed] = useState(null);
+  const [allowedModes, setAllowedModes] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,9 +23,15 @@ export default function RoleSelection() {
       const u = await base44.auth.me();
       if (u.role === 'admin') {
         setAllowed(true);
+        setAllowedModes('');
       } else {
         const list = await base44.entities.AllowedUserGuide.filter({ email: u.email.toLowerCase() });
-        setAllowed(list.length > 0);
+        if (list.length > 0) {
+          setAllowed(true);
+          setAllowedModes(list[0].modes || '');
+        } else {
+          setAllowed(false);
+        }
       }
       setLoading(false);
     };
@@ -74,7 +81,10 @@ export default function RoleSelection() {
       {/* Role Cards */}
       <div className="max-w-4xl mx-auto px-6 py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {ROLES.map((role) => {
+          {ROLES.filter(role => {
+            if (!allowedModes || !allowedModes.trim()) return true;
+            return allowedModes.split(',').map(m => m.trim()).includes(role.id);
+          }).map((role) => {
             const paths = role.lessons.map(l => l.href);
             const completed = getCompletedCount(paths);
             const total = paths.length;
