@@ -9,8 +9,8 @@ import SpotlightBrand from "@/components/SpotlightBrand";
 const sections = [
   { title: "Εγκατάσταση", path: "/tutorial/installation", icon: Download },
   { title: "Σύνδεση", path: "/tutorial/login", icon: LogIn },
-  { title: "Έναρξη Βάρδιας", path: "/tutorial/start-shift", icon: Clock },
   { title: "Δείκτης Σύνδεσης", path: "/tutorial/sync-status", icon: Cloud },
+  { title: "Έναρξη Βάρδιας", path: "/tutorial/start-shift", icon: Clock },
   { title: "Ρυθμίσεις", path: "/tutorial/settings", icon: Settings },
   { title: "Νέα Παραγγελία", path: "/tutorial/create-order", icon: Package },
   { title: "Στοιχεία Παραγγελίας", path: "/tutorial/order-details", icon: FileText },
