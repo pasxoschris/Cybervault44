@@ -21,6 +21,10 @@ export default function Invoice() {
   return (
     <TutorialLayout title="Έκδοση Τιμολογίου" subtitle="Πώς να εκδώσεις τιμολόγιο από την εφαρμογή">
 
+      <InfoBox icon="⚙️" title="Προαπαιτούμενο — Ενεργοποίηση από Διαχειριστή" variant="warning">
+        <p>Για να εμφανιστεί η επιλογή <strong>«Έκδοση Τιμολογίου»</strong>, πρέπει να την έχει <strong>ενεργοποιήσει ο διαχειριστής</strong> (από το <strong>Secure / Back Office</strong>) για το συγκεκριμένο <strong>Point of Sale (συσκευή)</strong>. Αν δεν είναι ενεργοποιημένη, η επιλογή δεν εμφανίζεται καθόλου.</p>
+      </InfoBox>
+
       <ScreenshotGallery
         images={[
           "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/1c2d5c355_17.JPG",

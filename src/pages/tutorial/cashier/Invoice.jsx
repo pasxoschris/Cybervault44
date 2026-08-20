@@ -9,6 +9,10 @@ export default function Invoice() {
 
   return (
     <CashierTutorialLayout title="Έκδοση Τιμολογίου" subtitle="Εκτύπωση τιμολογίου από το μενού του Cashier">
+      <InfoBox icon="⚙️" title="Προαπαιτούμενο — Ενεργοποίηση από Διαχειριστή" variant="warning">
+        <p>Για να εμφανιστεί η επιλογή <strong>«Έκδοση Τιμολογίου»</strong>, πρέπει να την έχει <strong>ενεργοποιήσει ο διαχειριστής</strong> (από το <strong>Secure / Back Office</strong>) για το συγκεκριμένο <strong>Point of Sale (iPad)</strong>. Αν δεν είναι ενεργοποιημένη, η επιλογή δεν εμφανίζεται στο μενού.</p>
+      </InfoBox>
+
       <InfoBox icon="📄" title="Τι θα μάθεις" variant="purple">
         <p>Στο Cashier Mode η <strong>Έκδοση Τιμολογίου</strong> βρίσκεται στο <strong>μενού</strong> (τρεις γραμμές πάνω αριστερά). Εμφανίζεται <strong>μόνο αφού φτιάξεις παραγγελία</strong> και <strong>μόνο αν είναι ενεργοποιημένη</strong> για το συγκεκριμένο iPad.</p>
       </InfoBox>
