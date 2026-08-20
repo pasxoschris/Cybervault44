@@ -173,7 +173,7 @@ export default function Assistant() {
             <SpotlightBrand size={26} />
           </div>
           <h1 className="font-bold text-3xl md:text-4xl mb-2 text-white" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Spotlight POS Assistant
+            SpotlightPOS Assistant
           </h1>
           <p className="text-base text-white/70" style={{ fontFamily: 'Inter, sans-serif' }}>
             Ρώτησέ με οτιδήποτε για το Spotlight POS
@@ -212,7 +212,7 @@ export default function Assistant() {
               <div className="w-16 h-16 rounded-full bg-purple-100 border border-purple-200 flex items-center justify-center mx-auto mb-4">
                 <Bot className="w-8 h-8 text-purple-600" />
               </div>
-              <h2 className="text-gray-900 text-lg mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>Spotlight POS Assistant</h2>
+              <h2 className="text-gray-900 text-lg mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>SpotlightPOS Assistant</h2>
               <p className="text-gray-500 text-sm mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>Επίλεξε μια ερώτηση ή γράψε τη δική σου παρακάτω</p>
               <div className="max-w-3xl mx-auto w-full mb-8">
                 <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
