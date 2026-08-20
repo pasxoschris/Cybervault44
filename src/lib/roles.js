@@ -26,6 +26,8 @@ export const ROLES = [
       { title: 'Μεταφορά Παραγγελίας', href: '/tutorial/transfer-order' },
       { title: 'Συγχώνευση Παραγγελιών', href: '/tutorial/merge-orders' },
       { title: 'Παραγγελίες Βάρδιας', href: '/tutorial/shift' },
+      { title: 'Ανάλυση Βάρδιας', href: '/tutorial/shift-analysis' },
+      { title: 'Κλείσιμο Βάρδιας', href: '/tutorial/shift-close' },
       { title: 'Σενάρια', href: '/tutorial/scenarios' },
     ],
   },

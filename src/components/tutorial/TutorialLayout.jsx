@@ -24,7 +24,9 @@ const sections = [
   { title: "Τιμολόγιο", path: "/tutorial/invoice", icon: Receipt },
   { title: "Μεταφορά Παραγγελίας", path: "/tutorial/transfer-order", icon: ArrowLeftRight },
   { title: "Συγχώνευση Παραγγελιών", path: "/tutorial/merge-orders", icon: GitMerge },
-  { title: "Βάρδια", path: "/tutorial/shift", icon: Layers },
+  { title: "Παραγγελίες Βάρδιας", path: "/tutorial/shift", icon: Layers },
+  { title: "Ανάλυση Βάρδιας", path: "/tutorial/shift-analysis", icon: Monitor },
+  { title: "Κλείσιμο Βάρδιας", path: "/tutorial/shift-close", icon: Layers },
   { title: "Σενάρια", path: "/tutorial/scenarios", icon: Monitor },
   { title: "Προειδοποιητικό Τρίγωνο", path: "/tutorial/printer-warning", icon: AlertTriangle },
 ];
