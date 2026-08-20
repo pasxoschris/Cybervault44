@@ -6,6 +6,7 @@ Deno.serve(async (req) => {
     { loc: "/",         priority: "1.0", changefreq: "weekly",  lastmod: now },
     { loc: "/services", priority: "0.9", changefreq: "monthly", lastmod: now },
     { loc: "/contact",  priority: "0.8", changefreq: "monthly", lastmod: now },
+    { loc: "/spotlight-pos-guide", priority: "0.9", changefreq: "monthly", lastmod: now },
   ];
 
   const urls = pages.map(({ loc, priority, changefreq, lastmod }) => `
