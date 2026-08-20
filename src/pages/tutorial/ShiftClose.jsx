@@ -10,10 +10,6 @@ export default function ShiftClose() {
   return (
     <TutorialLayout title="Κλείσιμο Βάρδιας" subtitle="Ολοκλήρωση και κλείσιμο της τρέχουσας βάρδιας">
 
-      <InfoBox icon="⚙️" title="Απαιτείται ενεργοποίηση" variant="warning">
-        Για να εμφανίζεται η λειτουργία <strong>Παραγγελίες Βάρδιας</strong>, πρέπει να είναι ενεργοποιημένη στις ρυθμίσεις του διαχειριστικού: <em>Διαχειριστής → Κατάστημα → Άλλες Υπηρεσίες → Παραγγελίες Βάρδιας: ON</em>
-      </InfoBox>
-
       <SectionTitle>Κλείσιμο Βάρδιας</SectionTitle>
       <InfoBox icon="⚠️" title="Προσοχή" variant="warning">
         Το κλείσιμο βάρδιας είναι <strong>μη αναστρέψιμη ενέργεια</strong>. Βεβαιώσου ότι όλες οι παραγγελίες έχουν ολοκληρωθεί.
