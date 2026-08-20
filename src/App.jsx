@@ -17,6 +17,7 @@ import Invoice from './pages/tutorial/Invoice';
 import TransferOrder from './pages/tutorial/TransferOrder';
 import MergeOrders from './pages/tutorial/MergeOrders';
 import Login from './pages/tutorial/Login';
+import LoginDevice from './pages/tutorial/LoginDevice';
 import OrderDetails from './pages/tutorial/OrderDetails';
 import CancelProduct from './pages/tutorial/CancelProduct';
 import CancelOrder from './pages/tutorial/CancelOrder';
@@ -98,6 +99,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/transfer-order" element={<TransferOrder />} />
       <Route path="/tutorial/merge-orders" element={<MergeOrders />} />
       <Route path="/tutorial/login" element={<Login />} />
+      <Route path="/tutorial/login-device" element={<LoginDevice />} />
       <Route path="/tutorial/order-details" element={<OrderDetails />} />
       <Route path="/tutorial/cancel-product" element={<CancelProduct />} />
       <Route path="/tutorial/cancel-order" element={<CancelOrder />} />

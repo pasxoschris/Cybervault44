@@ -9,8 +9,8 @@ export const ROLES = [
     colorBorder: 'rgba(124,58,237,0.3)',
     lessons: [
       { title: 'Εγκατάσταση Εφαρμογής', href: '/tutorial/installation' },
-      { title: 'Σύνδεση από νέα συσκευή', href: '/tutorial/login?tab=device' },
-      { title: 'Σύνδεση Χρήστη', href: '/tutorial/login?tab=user' },
+      { title: 'Σύνδεση από νέα συσκευή', href: '/tutorial/login-device' },
+      { title: 'Σύνδεση Χρήστη', href: '/tutorial/login' },
       { title: 'Δείκτης Σύνδεσης & Συγχρονισμού', href: '/tutorial/sync-status' },
       { title: 'Έναρξη Βάρδιας', href: '/tutorial/start-shift' },
       { title: 'Ρυθμίσεις Χρήστη', href: '/tutorial/settings' },
