@@ -10,10 +10,6 @@ export default function ShiftAnalysis() {
   return (
     <TutorialLayout title="Ανάλυση Βάρδιας" subtitle="Αναλυτική αναφορά πωλήσεων και πληρωμών βάρδιας">
 
-      <InfoBox icon="⚙️" title="Απαιτείται ενεργοποίηση" variant="warning">
-        Για να εμφανίζεται η λειτουργία <strong>Παραγγελίες Βάρδιας</strong>, πρέπει να είναι ενεργοποιημένη στις ρυθμίσεις του διαχειριστικού: <em>Διαχειριστής → Κατάστημα → Άλλες Υπηρεσίες → Παραγγελίες Βάρδιας: ON</em>
-      </InfoBox>
-
       <SectionTitle>Ανάλυση Βάρδιας</SectionTitle>
       <StepCard number="1" title="Άνοιξε Ανάλυση Βάρδιας">
         <p>Από τις Παραγγελίες Βάρδιας, επίλεξε <strong>«Ανάλυση Βάρδιας»</strong>.</p>
