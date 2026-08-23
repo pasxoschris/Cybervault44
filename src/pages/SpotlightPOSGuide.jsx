@@ -128,7 +128,7 @@ export default function SpotlightPOSGuide() {
           {[
             { icon: Smartphone, t: 'iOS App', d: 'iPhone & iPad' },
             { icon: ShieldCheck, t: 'Official Support', d: 'CyberVault συνεργάτης' },
-            { icon: GraduationCap, t: 'Ανά ρόλο', d: 'Service · Cashier · Back Office' },
+            { icon: GraduationCap, t: 'Ανά ρόλο', d: 'Service · Cashier · Διαχειριστικό' },
           ].map(f => (
             <div key={f.t} className="bg-white border border-gray-100 rounded-2xl p-5">
               <f.icon size={20} className="text-purple-600 mb-2" />
