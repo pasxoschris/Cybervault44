@@ -74,7 +74,7 @@ export default function SpotlightPOSGuide() {
             SpotlightPOS Εκπαίδευση & Οδηγός Χρήσης
           </h1>
           <p className="text-base md:text-lg text-white/80 max-w-2xl leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Ολοκληρωμένο εκπαιδευτικό υλικό για το SpotlightPOS — το σύστημα POS εστιατορίου &amp; hospitality για iPhone &amp; iPad. Μαθήματα ανά ρόλο (σερβιτόρος, ταμίας, back office), βήματα, σενάρια σερβιρίσματος και AI assistant.
+            Ολοκληρωμένο εκπαιδευτικό υλικό για το SpotlightPOS — για iPhone &amp; iPad. Μαθήματα ανά ρόλο, βήματα, σενάρια και AI assistant.
           </p>
           <div className="flex flex-wrap items-center gap-3 mt-6">
             {status === 'allowed' ? (
