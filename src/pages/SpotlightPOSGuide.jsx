@@ -122,7 +122,7 @@ export default function SpotlightPOSGuide() {
       <section className="max-w-4xl mx-auto px-6 py-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>Τι είναι το SpotlightPOS</h2>
         <p className="text-gray-600 leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
-          Το <strong>SpotlightPOS</strong> είναι σύστημα Point of Sale (POS) σχεδιασμένο για εστιατόρια, καφέ, μπαρ και ξενοδοχεία. Τρέχει αποκλειστικά σε iOS (iPhone &amp; iPad) και καλύπτει παραγγελιοληψία, ταμείο, έκδοση αποδείξεων &amp; τιμολογίων, διαχείριση βάρδιας και συγχρονισμό στο cloud. Η CyberVault, ως επίσημος συνεργάτης υποστήριξης, παρέχει οργανωμένο εκπαιδευτικό υλικό για κάθε ρόλο.
+          Το <strong>SpotlightPOS</strong> είναι σχεδιασμένο για εστιατόρια, καφέ, μπαρ και ξενοδοχεία. Τρέχει αποκλειστικά σε iOS (iPhone &amp; iPad) και καλύπτει παραγγελιοληψία, ταμείο, έκδοση αποδείξεων &amp; τιμολογίων, διαχείριση βάρδιας και συγχρονισμό στο cloud. Η CyberVault, ως επίσημος συνεργάτης υποστήριξης, παρέχει οργανωμένο εκπαιδευτικό υλικό για κάθε ρόλο.
         </p>
         <div className="grid sm:grid-cols-3 gap-4 mt-6">
           {[
@@ -167,7 +167,7 @@ export default function SpotlightPOSGuide() {
         <div className="max-w-4xl mx-auto px-6 py-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>Σε ποιον απευθύνεται</h2>
           <p className="text-gray-600 leading-relaxed mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Η εκπαίδευση αφορά προσωπικό καταστημάτων που χρησιμοποιούν SpotlightPOS — σερβιτόρους, ταμίες, υπεύθυνους καταστήματος και ιδιοκτήτες (Διαχειριστικό/Secure). Πρόσβαση δίνεται σε εξουσιοδοτημένους χρήστες κατόπιν αιτήματος.
+            Η εκπαίδευση αφορά προσωπικό καταστημάτων που χρησιμοποιούν SpotlightPOS — σερβιτόρους, ταμίες, κεντρικό ταμείο (maitre mode), υπεύθυνους καταστήματος και ιδιοκτήτες (Διαχειριστικό/Secure). Πρόσβαση δίνεται σε εξουσιοδοτημένους χρήστες κατόπιν αιτήματος.
           </p>
           <div className="flex flex-wrap gap-2">
             {['Σερβιτόρος', 'Ταμίας', 'Maitre', 'Διαχειριστής καταστήματος', 'Reseller'].map(t => (
