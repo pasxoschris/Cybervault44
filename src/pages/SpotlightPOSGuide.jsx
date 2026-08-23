@@ -5,7 +5,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import SeoHead from '@/components/SeoHead';
 import SpotlightBrand from '@/components/SpotlightBrand';
-import { Utensils, Calculator, MonitorCog, ShieldCheck, Smartphone, GraduationCap, LogIn, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Utensils, Calculator, MonitorCog, ShieldCheck, Smartphone, GraduationCap, LogIn, ArrowRight, CheckCircle2, ConciergeBell, Users } from 'lucide-react';
 
 const MODULES = [
   {
@@ -19,6 +19,18 @@ const MODULES = [
     title: 'Cashier Mode',
     desc: 'Εκπαίδευση ταμιά: αρχική οθόνη ταμείου, συνοδευτικά προϊόντα, swipe actions, πληρωμές & split payments, έκδοση τιμολογίου, παραγγελία delivery, κλείσιμο βάρδιας.',
     points: ['Πληρωμές & split payments', 'Παραγγελία delivery', 'Δείκτης σύνδεσης & συγχρονισμού', 'Κλείσιμο βάρδιας'],
+  },
+  {
+    icon: ConciergeBell,
+    title: 'Maitre Service',
+    desc: 'Εκπαίδευση maitre service: διαχείριση τραπεζιών, κατανομή σερβιτόρων, οργάνωση αίθουσας, υποδοχή πελατών, ροή παραγγελιών ανά σερβιτόρο.',
+    points: ['Διαχείριση τραπεζιών', 'Κατανομή σερβιτόρων', 'Υποδοχή & οργάνωση αίθουσας'],
+  },
+  {
+    icon: Users,
+    title: 'Maitre Mode',
+    desc: 'Εκπαίδευση maitre mode: εποπτεία λειτουργίας, μετακίνηση/συγχώνευση τραπεζιών, ελέγχος ροής, συνολική εικόνα παραγγελιών & βάρδιας.',
+    points: ['Εποπτεία παραγγελιών', 'Μετακίνηση & συγχώνευση τραπεζιών', 'Έλεγχος ροής αίθουσας'],
   },
   {
     icon: MonitorCog,
@@ -130,7 +142,7 @@ export default function SpotlightPOSGuide() {
       {/* Modules */}
       <section className="max-w-4xl mx-auto px-6 pb-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>Εκπαιδευτικά Modules ανά Ρόλο</h2>
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-5">
           {MODULES.map(m => (
             <div key={m.title} className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
               <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-3" style={{ background: 'rgba(139,92,246,0.1)' }}>
