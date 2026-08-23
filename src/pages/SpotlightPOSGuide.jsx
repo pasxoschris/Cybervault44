@@ -122,7 +122,7 @@ export default function SpotlightPOSGuide() {
       <section className="max-w-4xl mx-auto px-6 py-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>Τι είναι το SpotlightPOS</h2>
         <p className="text-gray-600 leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
-          Το <strong>SpotlightPOS</strong> είναι σύστημα Point of Sale (POS) σχεδιασμένο για εστιατόρια, καφέ, μπαρ και καταστήματα hospitality. Τρέχει αποκλειστικά σε iOS (iPhone &amp; iPad) και καλύπτει παραγγελιοληψία, ταμείο, έκδοση αποδείξεων &amp; τιμολογίων, διαχείριση βάρδιας και συγχρονισμό στο cloud. Η CyberVault, ως επίσημος συνεργάτης υποστήριξης, παρέχει οργανωμένο εκπαιδευτικό υλικό για κάθε ρόλο.
+          Το <strong>SpotlightPOS</strong> είναι σύστημα Point of Sale (POS) σχεδιασμένο για εστιατόρια, καφέ, μπαρ και ξενοδοχεία. Τρέχει αποκλειστικά σε iOS (iPhone &amp; iPad) και καλύπτει παραγγελιοληψία, ταμείο, έκδοση αποδείξεων &amp; τιμολογίων, διαχείριση βάρδιας και συγχρονισμό στο cloud. Η CyberVault, ως επίσημος συνεργάτης υποστήριξης, παρέχει οργανωμένο εκπαιδευτικό υλικό για κάθε ρόλο.
         </p>
         <div className="grid sm:grid-cols-3 gap-4 mt-6">
           {[
