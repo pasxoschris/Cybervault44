@@ -232,7 +232,7 @@ export default function Whitelist() {
   }, []);
 
   useEffect(() => {
-    base44.entities.Store.list()
+    base44.entities.Store.list('-created_date', 1000)
       .then(setStores)
       .catch(() => {});
   }, []);
