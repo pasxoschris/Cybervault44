@@ -5,10 +5,11 @@ import { ROLES } from '@/lib/roles';
 
 const parseModes = (modes) => (modes ? modes.split(',').map(m => m.trim()).filter(Boolean) : []);
 
-function WhitelistSection({ entityName, title, description, modeOptions }) {
+function WhitelistSection({ entityName, title, description, modeOptions, storeOptions }) {
   const [allowed, setAllowed] = useState([]);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [storeId, setStoreId] = useState('');
   const [selectedModes, setSelectedModes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -25,12 +26,25 @@ function WhitelistSection({ entityName, title, description, modeOptions }) {
     setSaving(true);
     const payload = { email: email.trim().toLowerCase(), name: name.trim() };
     if (modeOptions) payload.modes = selectedModes.join(',');
+    if (storeOptions) {
+      payload.store_id = storeId || '';
+      const store = storeOptions.find(s => s.id === storeId);
+      payload.store_name = store ? (store.store_name || store.business_name || '') : '';
+    }
     const created = await base44.entities[entityName].create(payload);
     setAllowed(prev => [...prev, created]);
     setEmail('');
     setName('');
+    setStoreId('');
     setSelectedModes([]);
     setSaving(false);
+  };
+
+  const handleStoreChange = async (record, newStoreId) => {
+    const store = storeOptions.find(s => s.id === newStoreId);
+    const storeName = store ? (store.store_name || store.business_name || '') : '';
+    const updated = await base44.entities[entityName].update(record.id, { store_id: newStoreId, store_name: storeName });
+    setAllowed(prev => prev.map(a => a.id === record.id ? updated : a));
   };
 
   const handleDelete = async (id) => {
@@ -80,6 +94,22 @@ function WhitelistSection({ entityName, title, description, modeOptions }) {
             />
           </div>
         </div>
+
+        {storeOptions && (
+          <div>
+            <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Κατάστημα</label>
+            <select
+              value={storeId}
+              onChange={e => setStoreId(e.target.value)}
+              className="cyber-input"
+            >
+              <option value="">— Χωρίς κατάστημα —</option>
+              {storeOptions.map(s => (
+                <option key={s.id} value={s.id}>{s.store_name || s.business_name}</option>
+              ))}
+            </select>
+          </div>
+        )}
 
         {modeOptions && (
           <div>
@@ -133,6 +163,22 @@ function WhitelistSection({ entityName, title, description, modeOptions }) {
                 </button>
               </div>
 
+              {storeOptions && (
+                <div className="mt-3 pt-3 border-t border-[#00CFFF]/10">
+                  <div className="font-mono-cyber text-[9px] tracking-widest text-[#00CFFF]/40 mb-2 uppercase">Κατάστημα</div>
+                  <select
+                    value={a.store_id || ''}
+                    onChange={e => handleStoreChange(a, e.target.value)}
+                    className="cyber-input !py-1.5 !text-xs"
+                  >
+                    <option value="">— Χωρίς κατάστημα —</option>
+                    {storeOptions.map(s => (
+                      <option key={s.id} value={s.id}>{s.store_name || s.business_name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               {modeOptions && (
                 <div className="mt-3 pt-3 border-t border-[#00CFFF]/10">
                   <div className="font-mono-cyber text-[9px] tracking-widest text-[#00CFFF]/40 mb-2 uppercase">Modes</div>
@@ -182,6 +228,7 @@ const TABS = [
 export default function Whitelist() {
   const [activeTab, setActiveTab] = useState('AllowedUser');
   const [loading, setLoading] = useState(true);
+  const [stores, setStores] = useState([]);
 
   useEffect(() => {
     base44.auth.me()
@@ -191,6 +238,12 @@ export default function Whitelist() {
         }
       })
       .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    base44.entities.Store.list()
+      .then(setStores)
+      .catch(() => {});
   }, []);
 
   if (loading) {
@@ -203,6 +256,7 @@ export default function Whitelist() {
 
   const activeTabData = TABS.find(t => t.key === activeTab);
   const modeOptions = activeTab === 'AllowedUserGuide' ? ROLES : null;
+  const storeOptions = activeTab === 'AllowedUserGuide' ? stores : null;
 
   return (
     <div className="min-h-screen bg-[#0E1235] cyber-grid">
@@ -241,6 +295,7 @@ export default function Whitelist() {
           title={activeTabData.label}
           description={activeTabData.description}
           modeOptions={modeOptions}
+          storeOptions={storeOptions}
         />
       </div>
     </div>
