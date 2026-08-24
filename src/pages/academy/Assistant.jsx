@@ -176,7 +176,7 @@ export default function Assistant() {
             SpotlightPOS Assistant
           </h1>
           <p className="text-base text-white/70" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Ρώτησέ με οτιδήποτε για το Spotlight POS
+            Ρώτησέ με οτιδήποτε για το SpotlightPOS
           </p>
         </div>
       </div>
