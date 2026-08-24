@@ -169,7 +169,7 @@ export default function StoreForm({ store, onClose }) {
         </Section>
 
         {/* Spotlight */}
-        <Section title="Spotlight POS">
+        <Section title="SpotlightPOS">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Field label="Spotlight Store ID"><input className={inputCls} value={form.spotlight_store_id} onChange={e => set("spotlight_store_id", e.target.value)} placeholder="ID" /></Field>
             <Field label="Κατάσταση Spotlight">
