@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import Navbar from '@/components/layout/Navbar';
 import { ROLES } from '@/lib/roles';
+import SearchableStoreSelect from '@/components/admin/SearchableStoreSelect';
 
 const parseModes = (modes) => (modes ? modes.split(',').map(m => m.trim()).filter(Boolean) : []);
 
@@ -98,16 +99,11 @@ function WhitelistSection({ entityName, title, description, modeOptions, storeOp
         {storeOptions && (
           <div>
             <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-1.5 uppercase">Κατάστημα</label>
-            <select
+            <SearchableStoreSelect
               value={storeId}
-              onChange={e => setStoreId(e.target.value)}
-              className="cyber-input"
-            >
-              <option value="">— Χωρίς κατάστημα —</option>
-              {storeOptions.map(s => (
-                <option key={s.id} value={s.id}>{s.store_name || s.business_name}</option>
-              ))}
-            </select>
+              onChange={setStoreId}
+              stores={storeOptions}
+            />
           </div>
         )}
 
@@ -166,16 +162,11 @@ function WhitelistSection({ entityName, title, description, modeOptions, storeOp
               {storeOptions && (
                 <div className="mt-3 pt-3 border-t border-[#00CFFF]/10">
                   <div className="font-mono-cyber text-[9px] tracking-widest text-[#00CFFF]/40 mb-2 uppercase">Κατάστημα</div>
-                  <select
+                  <SearchableStoreSelect
                     value={a.store_id || ''}
-                    onChange={e => handleStoreChange(a, e.target.value)}
-                    className="cyber-input !py-1.5 !text-xs"
-                  >
-                    <option value="">— Χωρίς κατάστημα —</option>
-                    {storeOptions.map(s => (
-                      <option key={s.id} value={s.id}>{s.store_name || s.business_name}</option>
-                    ))}
-                  </select>
+                    onChange={(id) => handleStoreChange(a, id)}
+                    stores={storeOptions}
+                  />
                 </div>
               )}
 
