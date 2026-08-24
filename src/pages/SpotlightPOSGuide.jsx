@@ -103,7 +103,7 @@ export default function SpotlightPOSGuide() {
               </button>
             )}
             <span className="inline-flex items-center gap-1.5 text-xs text-white/70" style={{ fontFamily: 'Inter, sans-serif' }}>
-              <Smartphone size={13} /> Διαθέσιμο για iOS (iPhone / iPad)
+              <Smartphone size={13} /> Διαθέσιμο για κινητά, tablet &amp; PC
             </span>
           </div>
         </div>
