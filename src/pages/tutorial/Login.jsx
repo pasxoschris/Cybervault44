@@ -12,7 +12,7 @@ export default function Login() {
     <TutorialLayout title="Σύνδεση Χρήστη" subtitle="Πώς να συνδεθείς με τα στοιχεία χρήστη σου">
 
       <InfoBox icon="📱" title="Συμβατότητα Συσκευής" variant="info">
-        Η εφαρμογή Spotlight POS (όχι το διαχειριστικό Secure) τρέχει <strong>μόνο σε iOS συσκευές</strong> — <strong>iPhone</strong> και <strong>iPad</strong>. Βεβαιώσου ότι χρησιμοποιείς συμβατή συσκευή.
+        Η εφαρμογή SpotlightPOS (όχι το διαχειριστικό Secure) τρέχει <strong>μόνο σε iOS συσκευές</strong> — <strong>iPhone</strong> και <strong>iPad</strong>. Βεβαιώσου ότι χρησιμοποιείς συμβατή συσκευή.
       </InfoBox>
 
       <InfoBox icon="⚠️" title="Προαπαιτούμενα" variant="warning">
