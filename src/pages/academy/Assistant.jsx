@@ -20,7 +20,7 @@ const CATEGORY_LABELS = {
 };
 
 const FALLBACK_SUGGESTED = [
-  { category: 'general', question: 'Πώς εγκαθιστώ την εφαρμογή Spotlight POS;' },
+  { category: 'general', question: 'Πώς εγκαθιστώ την εφαρμογή SpotlightPOS;' },
   { category: 'shift', question: 'Πώς ξεκινάω βάρδια;' },
   { category: 'sync', question: 'Τι σημαίνει η πράσινη ή κόκκινη κουκίδα σύνδεσης;' },
   { category: 'order', question: 'Πώς δημιουργώ νέα παραγγελία στο Service Mode;' },
