@@ -73,7 +73,7 @@ export default function CategoryManager() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="sm:col-span-2">
               <label className="text-white/40 text-xs block mb-1">Όνομα Κατηγορίας</label>
-              <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={inputCls} placeholder="π.χ. Spotlight POS Άδειες" />
+              <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={inputCls} placeholder="π.χ. SpotlightPOS Άδειες" />
             </div>
             <div>
               <label className="text-white/40 text-xs block mb-1">Σειρά Εμφάνισης</label>
