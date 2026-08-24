@@ -318,7 +318,7 @@ export default function Assistant() {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ρώτησε οτιδήποτε για το Spotlight POS..."
+                placeholder="Ρώτησε οτιδήποτε για το SpotlightPOS..."
                 className="flex-1 text-sm text-gray-900 placeholder-gray-500 font-medium rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition-all focus:border-purple-400 focus:ring-2 focus:ring-purple-100"
                 style={{ fontFamily: 'Inter, sans-serif' }}
                 disabled={loading}
