@@ -1,0 +1,44 @@
+{
+  "name": "Auto GitHub Release",
+  "description": "\u0395\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9 \u03b3\u03b9\u03b1 \u03bd\u03ad\u03b1 commits \u03c3\u03c4\u03bf GitHub repo \u03bc\u03b9\u03b1 \u03c6\u03bf\u03c1\u03ac \u03c4\u03b7\u03bd \u03b5\u03b2\u03b4\u03bf\u03bc\u03ac\u03b4\u03b1 \u03ba\u03b1\u03b9 \u03b4\u03b7\u03bc\u03b9\u03bf\u03c5\u03c1\u03b3\u03b5\u03af \u03b1\u03c5\u03c4\u03cc\u03bc\u03b1\u03c4\u03b1 \u03bd\u03ad\u03bf versioned release \u03bc\u03b5 changelog.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 6 * * 6",
+      "one_time_date": null,
+      "timezone": "UTC",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "auto_github_release",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "createGithubRelease",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  },
+  "x-base44-migrated-from-automation": {
+    "legacy_payload_function": "createGithubRelease"
+  }
+}
