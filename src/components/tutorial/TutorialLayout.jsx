@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
 import SpotlightBrand from "@/components/SpotlightBrand";
+import AssistantFloatingButton from "@/components/academy/AssistantFloatingButton";
 
 const sections = [
   { title: "Εγκατάσταση", path: "/tutorial/installation", icon: Download },
@@ -130,7 +131,7 @@ export default function TutorialLayout({ children, title, subtitle }) {
       )}
 
       {/* Prev / Next Navigation */}
-      <div className="max-w-3xl mx-auto px-6 pb-12">
+      <div className="max-w-3xl mx-auto px-6 pb-12 relative z-10">
         <div className="flex justify-between gap-4">
           {prev ? (
             <Link to={prev.path} className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-3 hover:border-purple-300 hover:shadow-sm transition-all text-sm group" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -158,6 +159,8 @@ export default function TutorialLayout({ children, title, subtitle }) {
           )}
         </div>
       </div>
+
+      <AssistantFloatingButton />
     </div>
   );
 }

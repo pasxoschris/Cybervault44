@@ -6,6 +6,7 @@ import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
 import SpotlightBrand from "@/components/SpotlightBrand";
 import Navbar from "@/components/layout/Navbar";
+import AssistantFloatingButton from "@/components/academy/AssistantFloatingButton";
 
 // Cashier-mode lessons (extended as new pages are added)
 export const cashierSections = [
@@ -157,6 +158,8 @@ export default function CashierTutorialLayout({ children, title, subtitle }) {
           )}
         </div>
       </div>
+
+      <AssistantFloatingButton />
     </div>
   );
 }
