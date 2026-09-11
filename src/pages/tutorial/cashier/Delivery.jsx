@@ -30,7 +30,7 @@ export default function Delivery() {
           Πάτα πάνω στο κουμπί <strong>«Delivery E-Food»</strong> για να ανοίξει το dropdown με τις διαθέσιμες επιλογές:
         </p>
         <ul className="list-disc list-inside mt-2 space-y-1">
-          <li><strong>E-Food</strong> — προεπιλογμένο</li>
+          <li><strong>E-Food</strong> — προεπιλεγμένο</li>
           <li><strong>E-Food Go</strong></li>
           <li><strong>Wolt</strong></li>
           <li><strong>Box Go</strong></li>
