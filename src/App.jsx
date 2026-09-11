@@ -10,7 +10,9 @@ import Services from './pages/Services';
 import Contact from './pages/Contact';
 import SpotlightPOSGuide from './pages/SpotlightPOSGuide';
 import CreateOrder from './pages/tutorial/CreateOrder';
-import Discount from './pages/tutorial/Discount';
+import DiscountGeneral from './pages/tutorial/DiscountGeneral';
+import DiscountOwn from './pages/tutorial/DiscountOwn';
+import DiscountOther from './pages/tutorial/DiscountOther';
 import EditOrder from './pages/tutorial/EditOrder';
 import Installation from './pages/tutorial/Installation';
 import Invoice from './pages/tutorial/Invoice';
@@ -92,7 +94,9 @@ const AuthenticatedApp = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/spotlight-pos-guide" element={<SpotlightPOSGuide />} />
       <Route path="/tutorial/create-order" element={<CreateOrder />} />
-      <Route path="/tutorial/discount" element={<Discount />} />
+      <Route path="/tutorial/discount" element={<DiscountGeneral />} />
+      <Route path="/tutorial/discount-own" element={<DiscountOwn />} />
+      <Route path="/tutorial/discount-other" element={<DiscountOther />} />
       <Route path="/tutorial/edit-order" element={<EditOrder />} />
       <Route path="/tutorial/installation" element={<Installation />} />
       <Route path="/tutorial/invoice" element={<Invoice />} />
