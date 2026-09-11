@@ -1,7 +1,7 @@
 import React from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
-import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
+import HighlightedImage from "../../components/tutorial/HighlightedImage";
 import { Grid3X3, Printer, CreditCard, FileText, UtensilsCrossed, Zap, MessageSquare, QrCode } from "lucide-react";
 
 const settings = [
@@ -25,9 +25,11 @@ export default function Settings() {
         Οι ρυθμίσεις χρήστη βρίσκονται <strong>πάνω αριστερά</strong> στις τρεις γραμμές <strong>☰</strong>. Πάτα το και επίλεξε <strong>«Ρυθμίσεις (όνομα χρήστη)»</strong> από το μενού που εμφανίζεται.
       </InfoBox>
 
-      <ScreenshotGallery
-        images={["https://media.base44.com/images/public/69f588f4590b173a2970ddb4/6981cd00c_image.png"]}
-        caption="Οθόνη Ρυθμίσεων"
+      <HighlightedImage
+        src="https://media.base44.com/images/public/69f588f4590b173a2970ddb4/6981cd00c_image.png"
+        alt="Οθόνη Ρυθμίσεων"
+        caption="Πάτα ☰ (πάνω αριστερά) και επίλεξε «Ρυθμίσεις (chriss)»"
+        coords={{ x: 13, y: 87, r: 13, ryRatio: 1.35 }}
       />
 
       <SectionTitle>Διαθέσιμες Ρυθμίσεις</SectionTitle>
