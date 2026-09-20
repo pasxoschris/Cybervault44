@@ -53,6 +53,15 @@ export default function Payments() {
         <p>Για <strong>IRIS</strong> — πληρωμή μέσω της υπηρεσίας IRIS (συνήθως πληρωμή με scan κωδικού / τραπεζικού λογαριασμού) μέσω της συσκευής Mellon.</p>
       </StepCard>
 
+      <InfoBox icon="📍" title="Αδυναμία εκκίνησης πληρωμής (POS)" variant="warning">
+        <p>Αν κατά την πληρωμή με κάρτα εμφανιστεί το μήνυμα <strong>«Αδυναμία εκκίνησης πληρωμής»</strong>, πήγαινε στις <strong>Ρυθμίσεις της συσκευής (iOS)</strong> και ενεργοποίησε:</p>
+        <ul className="list-disc pl-5 mt-2 space-y-1.5">
+          <li><strong>Πρόσβαση στην Τοποθεσία</strong> (Location) για την εφαρμογή Spotlight POS.</li>
+          <li><strong>Αυτόματη Ζώνη Ώρας</strong> (Settings → General → Date &amp; Time → Automatic Time Zone = ON).</li>
+        </ul>
+        <p className="mt-2">Χωρίς αυτά, το POS terminal δεν μπορεί να ξεκινήσει τη συναλλαγή.</p>
+      </InfoBox>
+
       <InfoBox icon="💡" title="Συνοπτικά" variant="info">
         <p><strong>«Ταμείο» → Σύνολο → Επιλογή τρόπου πληρωμής</strong>. Επίλεξε τον τρόπο, ολοκλήρωσε τη συναλλαγή και η παραγγελία κλείνει και εκτυπώνεται η απόδειξη.</p>
       </InfoBox>

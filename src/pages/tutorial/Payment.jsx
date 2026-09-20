@@ -87,6 +87,15 @@ export default function Payment() {
               <li>Πάτα <strong>«Ναι»</strong> για να ξεκλειδώσει η παραγγελία.</li>
             </ul>
           </InfoBox>
+
+          <InfoBox icon="📍" title="Αδυναμία εκκίνησης πληρωμής" variant="warning">
+            <p>Αν εμφανιστεί το μήνυμα <strong>«Αδυναμία εκκίνησης πληρωμής»</strong>, πήγαινε στις <strong>Ρυθμίσεις της συσκευής (iOS)</strong> και ενεργοποίησε:</p>
+            <ul className="list-disc pl-5 mt-2 space-y-1.5">
+              <li><strong>Πρόσβαση στην Τοποθεσία</strong> (Location) για την εφαρμογή Spotlight POS.</li>
+              <li><strong>Αυτόματη Ζώνη Ώρας</strong> (Settings → General → Date &amp; Time → Automatic Time Zone = ON).</li>
+            </ul>
+            <p className="mt-2">Χωρίς αυτά, το POS terminal δεν μπορεί να ξεκινήσει τη συναλλαγή.</p>
+          </InfoBox>
         </>
       )}
 
