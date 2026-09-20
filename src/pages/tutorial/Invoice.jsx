@@ -52,6 +52,18 @@ export default function Invoice() {
         <p>Για ελληνικά ΑΔΜ μπορείς να πατήσεις το εικονβιβλιαράκι <strong>📖</strong> δίπλα στο πεδίο ΑΦΜ για αυτόματη αναζήτηση στην ΑΑΔΕ. Τα στοιχεία της εταιρείας θα συμπληρωθούν αυτόματα.</p>
       </StepCard>
 
+      <InfoBox icon="🌍" title="Ξένα ΑΦΜ — Πρόθεμα Χώρας" variant="info">
+        <p>Για <strong>μη ελληνικά ΑΦΜ</strong> (ξένες εταιρείες), η αυτόματη αναζήτηση στην ΑΑΔΕ δεν λειτουργεί. Πρέπει να καταχωρήσεις το ΑΦΜ <strong>μαζί με το πρόθεμα της χώρας</strong>, χωρίς κενά:</p>
+        <ul className="list-disc pl-5 mt-2 space-y-1">
+          <li><strong>DE</strong>123456789 — Γερμανία</li>
+          <li><strong>CY</strong>12345678X — Κύπρος</li>
+          <li><strong>GB</strong>123456789 — Ηνωμένο Βασίλειο</li>
+          <li><strong>IT</strong>12345678901 — Ιταλία</li>
+          <li><strong>FR</strong>12345678901 — Γαλλία</li>
+        </ul>
+        <p className="mt-2">Συμπλήρωσε τα υπόλοιπα στοιχεία (Επωνυμία, Διεύθυνση, Δ.Ο.Υ., Δραστηριότητα) χειροκίνητα.</p>
+      </InfoBox>
+
       <StepCard number="5" title="Συμπλήρωσε τα στοιχεία">
         <img
           src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/2f3e213d5_image.png"
