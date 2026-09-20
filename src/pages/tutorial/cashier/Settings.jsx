@@ -47,7 +47,7 @@ export default function Settings() {
           <li><strong>Διανομείς</strong> — διαχείριση προσωπικού παράδοσης.</li>
           <li><strong>Παραγγελίες Βάρδιας</strong> — οι παραγγελίες της τρέχουσας βάρδιας.</li>
           <li><strong>Διαχείριση</strong> — λειτουργίες διαχειριστή.</li>
-          <li><strong>End of Day Report</strong> — αναφορά λήξης ημέρας.</li>
+          <li><strong>End of Day Report</strong> — αναφορά λήξης ημέρας. <span className="text-amber-600 font-medium">(Δεν υποστηρίζεται από την έκδοση 3.5.6 και έπειτα — χρησιμοποίησε «Ανάλυση Βάρδιας».)</span></li>
           <li><strong>Ρυθμίσεις (όνομα χρήστη)</strong> — οι ρυθμίσεις χρήστη.</li>
         </ul>
       </StepCard>

@@ -32,8 +32,12 @@ export default function Invoice() {
       </StepCard>
 
       <StepCard number="2" title="Βρες την «Έκδοση Τιμολογίου»">
-        <p>Στη λίστα βλέπεις τις επιλογές: <strong>Διανομείς</strong>, <strong>Παραγγελίες Βάρδιας</strong>, <strong>Διαχείριση</strong>, <strong>Έκδοση Τιμολογίου</strong>, <strong>End of Day Report</strong>, <strong>Ρυθμίσεις</strong>. Πάτα <strong>«Έκδοση Τιμολογίου»</strong>.</p>
+        <p>Στη λίστα βλέπεις τις επιλογές: <strong>Διανομείς</strong>, <strong>Παραγγελίες Βάρδιας</strong>, <strong>Διαχείριση</strong>, <strong>Έκδοση Τιμολογίου</strong>, <strong>Ρυθμίσεις</strong>. Πάτα <strong>«Έκδοση Τιμολογίου»</strong>.</p>
       </StepCard>
+
+      <InfoBox icon="ℹ️" title="End of Day Report — Δεν υποστηρίζεται πλέον" variant="warning">
+        <p>Από την έκδοση <strong>3.5.6</strong> και έπειτα, η επιλογή <strong>«End of Day Report»</strong> <strong>δεν εμφανίζεται</strong> και <strong>δεν υποστηρίζεται</strong>. Αν δεν τη βλέπεις στο μενού, είναι αναμενόμενο. Για αναφορά λήξης ημέρας, χρησιμοποίησε την <strong>«Ανάλυση Βάρδιας»</strong> (βλέπε μάθημα: Κλείσιμο Βάρδιας).</p>
+      </InfoBox>
 
       <InfoBox icon="⚠️" title="Πότε εμφανίζεται;" variant="warning">
         <ul className="list-disc pl-5 mt-1 space-y-1.5">
