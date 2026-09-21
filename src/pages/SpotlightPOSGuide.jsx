@@ -125,6 +125,10 @@ export default function SpotlightPOSGuide() {
           Το <strong>Spotlight POS (SpotlightPOS)</strong> είναι σύστημα διαχείρισης παραγγελιών για εστιατόρια, καφέ, μπαρ και ξενοδοχεία.
           <br />
           Η <strong>CyberVault</strong> παρέχει εκπαίδευση, οδηγούς χρήσης και τεχνική υποστήριξη για επιχειρήσεις που χρησιμοποιούν το Spotlight POS.
+          <br />
+          Εκτός από την εκπαίδευση χρηστών, η <strong>CyberVault</strong> παρέχει τεχνική υποστήριξη για εγκαταστάσεις SpotlightPOS.
+          <br />
+          Η υποστήριξη καλύπτει τη δικτυακή υποδομή, τη σύνδεση POS και τερματικών, τους εκτυπωτές και τη διάγνωση τεχνικών προβλημάτων.
         </p>
         <div className="grid sm:grid-cols-3 gap-4 mt-6">
           {[
