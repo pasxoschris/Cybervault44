@@ -120,13 +120,13 @@ export default function SpotlightPOSGuide() {
 
       {/* What is it */}
       <section className="max-w-4xl mx-auto px-6 py-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>Τι είναι το Spotlight POS</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>Τι είναι το Spotlight POS (SpotilightPOS)</h2>
         <p className="text-gray-600 leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
           Το <strong>Spotlight POS (SpotlightPOS)</strong> είναι σύστημα διαχείρισης παραγγελιών για εστιατόρια, καφέ, μπαρ και ξενοδοχεία.
           <br />
           Η <strong>CyberVault</strong> παρέχει εκπαίδευση, οδηγούς χρήσης και τεχνική υποστήριξη για επιχειρήσεις που χρησιμοποιούν το Spotlight POS.
           <br />
-          Εκτός από την εκπαίδευση χρηστών, η <strong>CyberVault</strong> παρέχει τεχνική υποστήριξη για εγκαταστάσεις SpotlightPOS.
+          Εκτός από την εκπαίδευση χρηστών, η <strong>CyberVault</strong> παρέχει τεχνική υποστήριξη για εγκαταστάσεις Spotlight POS.
           Η υποστήριξη καλύπτει τη δικτυακή υποδομή, τη σύνδεση POS και τερματικών, τους εκτυπωτές και τη διάγνωση τεχνικών προβλημάτων.
         </p>
         <div className="grid sm:grid-cols-3 gap-4 mt-6">
