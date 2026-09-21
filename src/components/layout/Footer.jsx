@@ -34,8 +34,8 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-2 font-rajdhani text-sm text-white/60">
             <Mail className="w-4 h-4 text-[#00D4FF]" strokeWidth={1.5} />
             <span>Email: </span>
-            <a href="mailto:info@cyber-vault.gr" className="text-[#00D4FF] font-semibold hover:underline">
-              info@cyber-vault.gr
+            <a href="mailto:support@cybervault.gr" className="text-[#00D4FF] font-semibold hover:underline">
+              support@cybervault.gr
             </a>
           </div>
           <div className="flex items-center justify-center gap-2 font-rajdhani text-sm text-white/60">
