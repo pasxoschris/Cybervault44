@@ -67,8 +67,8 @@ export default function SpotlightPOSGuide() {
   return (
     <div className="min-h-screen bg-gray-50">
       <SeoHead
-        title="SpotlightPOS Εκπαίδευση & Οδηγός Χρήσης | CyberVault Academy"
-        description="Ολοκληρωμένη εκπαίδευση στο SpotlightPOS: Service Mode (σερβιτόρος), Cashier Mode και Διαχειριστικό. Οδηγός χρήσης με βήματα, σενάρια και AI assistant. Αίτημα πρόσβασης από την CyberVault."
+        title="Spotlight POS | SpotlightPOS | Εκπαίδευση, Οδηγός & Υποστήριξη | CyberVault"
+        description="Spotlight POS εκπαίδευση, οδηγός χρήσης και τεχνική υποστήριξη από τη CyberVault."
         path="/spotlight-pos-guide"
       />
       <Navbar />
