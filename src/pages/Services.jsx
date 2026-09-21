@@ -8,7 +8,7 @@ export default function Services() {
     <div className="min-h-screen text-white overflow-x-hidden" style={{ backgroundColor: '#0D0E2E' }}>
       <SeoHead
         title="Υπηρεσίες IT & Ασφάλεια Δικτύων | CyberVault"
-        description="Δίκτυα, ασφάλεια πληροφοριών, POS συστήματα, κάμερες ασφαλείας & τεχνική υποστήριξη. Ανακαλύψτε τις επαγγελματικές υπηρεσίες της CyberVault E.E."
+        description="Δίκτυα, ασφάλεια πληροφοριών, SPOTLIGHT POS (spotlightpos) support, κάμερες ασφαλείας & τεχνική υποστήριξη. Ανακαλύψτε τις επαγγελματικές υπηρεσίες της CyberVault E.E."
         path="/services"
       />
       <Navbar />
