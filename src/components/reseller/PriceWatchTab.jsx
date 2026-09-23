@@ -1,9 +1,80 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Plus, Edit, Trash2, Save, X, RefreshCw, ExternalLink, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, RefreshCw, ExternalLink, TrendingUp, TrendingDown, Minus, Search, Check } from 'lucide-react';
 
 const EMPTY = { name: '', search_query: '', linked_pricing_item_id: '', is_active: true, display_order: 0 };
+
+const inputCls = "bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1.5 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 w-full";
+
+function PricingItemSearchableSelect({ value, onChange, items }) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const selected = items.find(p => p.id === value);
+
+  const filtered = items.filter(p => {
+    const q = query.trim().toLowerCase();
+    if (!q) return true;
+    return (p.name || '').toLowerCase().includes(q);
+  });
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        className={`${inputCls} text-left flex items-center justify-between`}
+      >
+        <span className={selected ? 'text-white' : 'text-white/40'}>
+          {selected ? `${selected.name} (€${Number(selected.unit_price).toFixed(2)})` : '— Χωρίς σύνδεση —'}
+        </span>
+        <Search size={13} className="text-white/40 flex-shrink-0 ml-2" />
+      </button>
+      {open && (
+        <>
+          <div className="fixed inset-0 z-20" onClick={() => setOpen(false)} />
+          <div className="absolute z-30 mt-1 w-full bg-[#131840] border border-[#00CFFF]/30 rounded-xl shadow-xl max-h-72 overflow-hidden flex flex-col">
+            <div className="p-2 border-b border-[#2A3580]">
+              <div className="relative">
+                <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-white/40" />
+                <input
+                  autoFocus
+                  value={query}
+                  onChange={e => setQuery(e.target.value)}
+                  placeholder="Αναζήτηση προϊόντος..."
+                  className="w-full bg-[#0E1235] border border-[#2A3580] rounded-lg pl-8 pr-2 py-1.5 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50"
+                />
+              </div>
+            </div>
+            <div className="overflow-y-auto">
+              <button
+                type="button"
+                onClick={() => { onChange(''); setOpen(false); setQuery(''); }}
+                className={`w-full text-left px-3 py-2 text-sm hover:bg-[#00CFFF]/10 transition-colors ${!value ? 'text-[#00CFFF] bg-[#00CFFF]/5' : 'text-white/60'}`}
+              >
+                — Χωρίς σύνδεση —
+              </button>
+              {filtered.map(p => (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => { onChange(p.id); setOpen(false); setQuery(''); }}
+                  className={`w-full text-left px-3 py-2 text-sm hover:bg-[#00CFFF]/10 transition-colors flex items-center justify-between gap-2 ${p.id === value ? 'text-[#00CFFF] bg-[#00CFFF]/5' : 'text-white/80'}`}
+                >
+                  <span className="truncate">{p.name}</span>
+                  <span className="font-mono text-xs text-white/40 flex-shrink-0">€{Number(p.unit_price).toFixed(2)}</span>
+                </button>
+              ))}
+              {filtered.length === 0 && (
+                <div className="px-3 py-4 text-center text-white/30 text-sm">Δεν βρέθηκαν προϊόντα</div>
+              )}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 export default function PriceWatchTab() {
   const queryClient = useQueryClient();
@@ -103,8 +174,6 @@ export default function PriceWatchTab() {
     if (!latestResults.has(r.watch_item_id)) latestResults.set(r.watch_item_id, r);
   });
 
-  const inputCls = "bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1.5 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 w-full";
-
   const DiffBadge = ({ pct }) => {
     if (pct == null) return <span className="text-white/30 text-xs">—</span>;
     const isUp = pct > 0;
@@ -167,10 +236,11 @@ export default function PriceWatchTab() {
             <div><label className="text-white/40 text-xs block mb-1">Keyword/URL Αναζήτησης</label><input value={form.search_query} onChange={e => setForm(f => ({ ...f, search_query: e.target.value }))} className={inputCls} placeholder="π.χ. RPP02N thermal printer τιμή" /></div>
             <div>
               <label className="text-white/40 text-xs block mb-1">Σύνδεση με Τιμοκατάλογο</label>
-              <select value={form.linked_pricing_item_id} onChange={e => setForm(f => ({ ...f, linked_pricing_item_id: e.target.value }))} className={inputCls}>
-                <option value="">— Χωρίς σύνδεση —</option>
-                {pricingItems.map(p => <option key={p.id} value={p.id}>{p.name} (€{Number(p.unit_price).toFixed(2)})</option>)}
-              </select>
+              <PricingItemSearchableSelect
+                value={form.linked_pricing_item_id}
+                onChange={(id) => setForm(f => ({ ...f, linked_pricing_item_id: id }))}
+                items={pricingItems}
+              />
             </div>
             <div><label className="text-white/40 text-xs block mb-1">Σειρά Εμφάνισης</label><input type="number" min={0} value={form.display_order ?? 0} onChange={e => setForm(f => ({ ...f, display_order: parseInt(e.target.value) || 0 }))} className={inputCls} /></div>
           </div>
