@@ -23,7 +23,7 @@ export default function PriceWatchTab() {
   // Load pricing items for linking
   const { data: pricingItems = [] } = useQuery({
     queryKey: ['pricingItems'],
-    queryFn: async () => await base44.entities.ResellerPricingItem.list()
+    queryFn: async () => await base44.entities.ResellerPricingItem.list('display_order', 500)
   });
 
   // Load recent results
