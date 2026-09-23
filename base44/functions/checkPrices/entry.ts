@@ -33,19 +33,20 @@ export default async function(req: Request): Promise<Response> {
     }));
 
     const prompt = `Είσαι ένας agent που ψάχνει retail τιμές για τεχνικά ανταλλακτικά POS/ηλεκτρονικού εξοπλισμού στην Ελλάδα.
-Για κάθε ένα από τα παρακάτω ανταλλακτικά, ψάξε στο διαδίκτυο (Ελλάδα, σε EUR) και βρες την τρέχουσα retail τιμή αγοράς (όχι χονδρική).
+Για κάθε ένα από τα παρακάτω ανταλλακτικά, ψάξε ΑΠΟΚΛΕΙΣΤΙΚΑ στο ηλεκτρονικό κατάστημα xpatit.gr (https://www.xpatit.gr/el) και βρες την τρέχουσα retail τιμή αγοράς (όχι χονδρική).
+Χρησιμοποίησε το site:www.xpatit.gr στην αναζήτηση ή περιηγήσου στο xpatit.gr για να βρεις το κάθε προϊόν.
 
 Ανταλλακτικά:
 ${searchList.map(s => `${s.index + 1}. "${s.name}" — αναζήτηση: "${s.search_query}"`).join('\n')}
 
 Για κάθε ανταλλακτικό, επέστρεψε:
 - name: το όνομα του ανταλλακτικού
-- retail_price: η χαμηλότερη retail τιμή σε EUR (αριθμός, χωρίς σύμβολο)
-- source_name: όνομα ιστοσελίδας/καταστήματος
-- source_url: URL σελίδας προϊόντος
+- retail_price: η retail τιμή από το xpatit.gr σε EUR (αριθμός, χωρίς σύμβολο)
+- source_name: όνομα ιστοσελίδας/καταστήματος (πρέπει να είναι "xpatit.gr")
+- source_url: URL σελίδας προϊόντος στο xpatit.gr
 - notes: σύντομη σημείωση (π.χ. διαθεσιμότητα, μοντέλο) ή κενό αν δεν βρέθηκε
 
-Αν δεν βρεις τιμή για κάποιο ανταλλακτικό, βάλε retail_price: null και source_url: "" με notes: "Δεν βρέθηκε τιμή".
+Αν δεν βρεις τιμή για κάποιο ανταλλακτικό στο xpatit.gr, βάλε retail_price: null και source_url: "" με notes: "Δεν βρέθηκε στο xpatit.gr".
 
 Επέστρεψε ΜΟΝΟ JSON με πεδίο "results" που είναι array με αντικείμενα {name, retail_price, source_name, source_url, notes}.`;
 
