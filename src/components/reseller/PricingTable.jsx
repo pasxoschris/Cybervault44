@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
-import { Plus, Edit, Trash2, Save, X, ArrowUp, ArrowDown, ArrowUpDown, Search } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { Plus, Edit, Trash2, Save, X, ArrowUp, ArrowDown, ArrowUpDown, Search, RefreshCw } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 import { usePricingItems, useCreatePricingItem, useUpdatePricingItem, useTogglePricingItemActive } from '@/hooks/usePricingItems';
 import { usePricingCategories } from '@/hooks/usePricingCategories';
 import { validate, pricingItemSchema } from '@/lib/validation/reseller.schemas';
 
-const EMPTY = { name: '', description: '', category_id: '', unit_price: 0, vat_rate: 24, is_vat_exempt: false, default_discount_percentage: 0, display_order: 0, is_active: true };
+const EMPTY = { name: '', description: '', category_id: '', unit_price: 0, vat_rate: 24, is_vat_exempt: false, default_discount_percentage: 0, display_order: 0, is_active: true, source_url: '' };
 
 export default function PricingTable() {
   const { data: items = [], isLoading } = usePricingItems();
@@ -22,7 +24,10 @@ export default function PricingTable() {
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [error, setError] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshingId, setRefreshingId] = useState(null);
   const editRef = useRef(null);
+  const queryClient = useQueryClient();
 
   const handleSort = (col) => {
     if (sortCol === col) {
@@ -104,6 +109,39 @@ export default function PricingTable() {
     setQuickEditId(null);
   };
 
+  const refreshPrice = async (item) => {
+    if (!item.source_url) return;
+    setRefreshingId(item.id);
+    setError('');
+    try {
+      const res = await base44.functions.invoke('refreshPricingItemPrice', { item_id: item.id });
+      const r = res.data?.results?.[0];
+      if (r?.status === 'error') setError(`Αποτυχία: ${r.reason}`);
+      queryClient.invalidateQueries({ queryKey: ['reseller', 'pricing-items'] });
+    } catch (e) {
+      setError('Σφάλμα ανανέωσης: ' + e.message);
+    } finally {
+      setRefreshingId(null);
+    }
+  };
+
+  const refreshAll = async () => {
+    setRefreshing(true);
+    setError('');
+    try {
+      const res = await base44.functions.invoke('refreshPricingItemPrice', {});
+      const data = res.data;
+      const ok = (data?.results || []).filter(r => r.status === 'ok').length;
+      const fail = (data?.results || []).filter(r => r.status === 'error').length;
+      if (fail > 0) setError(`${ok} επιτυχίες, ${fail} αποτυχίες`);
+      queryClient.invalidateQueries({ queryKey: ['reseller', 'pricing-items'] });
+    } catch (e) {
+      setError('Σφάλμα ανανέωσης: ' + e.message);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   const inputCls = "bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1.5 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 w-full";
 
   if (isLoading) return <div className="text-center py-12 text-white/30 text-sm">Φόρτωση...</div>;
@@ -131,7 +169,11 @@ export default function PricingTable() {
         </select>
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2">
+        <button onClick={refreshAll} disabled={refreshing || !items.some(i => i.source_url)}
+          className="flex items-center gap-2 px-4 py-2 border border-[#00CFFF]/30 text-[#00CFFF] rounded-xl text-sm font-bold hover:bg-[#00CFFF]/10 transition-colors disabled:opacity-40">
+          <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} /> Ανανέωση Όλων
+        </button>
         <button onClick={startNew}
           className="flex items-center gap-2 px-4 py-2 bg-[#00CFFF] text-[#0E1235] rounded-xl text-sm font-bold hover:bg-[#00CFFF]/80 transition-colors">
           <Plus size={14} /> Νέο Προϊόν
@@ -165,6 +207,7 @@ export default function PricingTable() {
             </div>
             <div><label className="text-white/40 text-xs block mb-1">Έκπτωση % (προεπιλογή)</label><input type="number" min={0} max={100} step={0.5} value={form.default_discount_percentage || 0} onChange={e => setForm(f => ({ ...f, default_discount_percentage: parseFloat(e.target.value) || 0 }))} className={inputCls} /></div>
             <div><label className="text-white/40 text-xs block mb-1">Σειρά Εμφάνισης</label><input type="number" min={0} value={form.display_order ?? 0} onChange={e => setForm(f => ({ ...f, display_order: parseInt(e.target.value) || 0 }))} className={inputCls} /></div>
+            <div className="sm:col-span-2 lg:col-span-3"><label className="text-white/40 text-xs block mb-1">URL Προϊόντος (Xpatit) — για αυτόματη ανανέωση τιμής χωρίς ΦΠΑ</label><input type="url" value={form.source_url || ''} onChange={e => setForm(f => ({ ...f, source_url: e.target.value }))} placeholder="https://www.xpatit.gr/..." className={inputCls} /></div>
           </div>
           {error && <p className="text-red-400 text-xs mt-3">{error}</p>}
           <div className="flex gap-3 mt-4">
@@ -185,7 +228,8 @@ export default function PricingTable() {
             <tr className="bg-[#131840] border-b border-[#2A3580]">
               {[
                 ['name', 'Όνομα'], ['description', 'Περιγραφή'], ['category_id', 'Κατηγορία'],
-                ['unit_price', 'Τιμή'], ['vat_rate', 'ΦΠΑ %'], ['default_discount_percentage', 'Έκπτωση %'],
+                ['unit_price', 'Τιμή'], [null, 'Αλλαγή %'], [null, 'Ανανέωση'],
+                ['vat_rate', 'ΦΠΑ %'], ['default_discount_percentage', 'Έκπτωση %'],
                 ['display_order', 'Σειρά'], ['is_active', 'Ενεργό'], [null, '']
               ].map(([col, h]) => (
                 <th key={h} className="text-left px-3 py-3 text-white/40 text-xs font-semibold uppercase tracking-wide whitespace-nowrap">
@@ -205,6 +249,27 @@ export default function PricingTable() {
                 <td className="px-3 py-3 text-white/50 max-w-[180px] truncate">{item.description || '—'}</td>
                 <td className="px-3 py-3 text-white/60 whitespace-nowrap">{getCategoryName(item.category_id)}</td>
                 <td className="px-3 py-3 font-mono text-[#00CFFF] whitespace-nowrap">€{Number(item.unit_price).toFixed(2)}</td>
+                <td className="px-3 py-3 whitespace-nowrap">
+                  {item.price_change_percentage != null ? (
+                    <span className={`text-xs font-mono ${item.price_change_percentage > 0 ? 'text-red-400' : item.price_change_percentage < 0 ? 'text-green-400' : 'text-white/40'}`}>
+                      {item.price_change_percentage > 0 ? '+' : ''}{item.price_change_percentage.toFixed(2)}%
+                    </span>
+                  ) : <span className="text-white/20">—</span>}
+                </td>
+                <td className="px-3 py-3 whitespace-nowrap">
+                  <div className="flex items-center gap-2">
+                    {item.last_price_update ? (
+                      <span className="text-white/40 text-xs">{new Date(item.last_price_update).toLocaleDateString('el-GR')}</span>
+                    ) : <span className="text-white/20 text-xs">—</span>}
+                    {item.source_url && (
+                      <button onClick={() => refreshPrice(item)} disabled={refreshingId === item.id}
+                        className="p-1 rounded hover:bg-cyan-500/10 text-white/40 hover:text-[#00CFFF] transition-colors disabled:opacity-40"
+                        title="Ανανέωση τιμής από Xpatit">
+                        <RefreshCw size={12} className={refreshingId === item.id ? 'animate-spin' : ''} />
+                      </button>
+                    )}
+                  </div>
+                </td>
                 <td className="px-3 py-3 whitespace-nowrap">{item.is_vat_exempt ? <span className="px-2 py-0.5 rounded text-xs border border-amber-500/40 bg-amber-500/10 text-amber-300">Απαλλαγή</span> : <span className="text-white/60">{item.vat_rate}%</span>}</td>
                 <td className="px-3 py-3 text-white/60">{item.default_discount_percentage || 0}%</td>
                 <td className="px-3 py-3">

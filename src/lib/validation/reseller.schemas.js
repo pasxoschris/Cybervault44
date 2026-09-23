@@ -49,6 +49,7 @@ export const pricingItemSchema = z.object({
   default_discount_percentage: z.number().min(0).max(100).default(0),
   display_order: z.number().default(0),
   is_active: z.boolean().default(true),
+  source_url: z.string().optional().default(''),
 });
 
 // ─── Category ─────────────────────────────────────────────────────
