@@ -236,7 +236,7 @@ export default function PriceWatchTab() {
           <h4 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">{editing === 'new' ? 'Νέος Εξοπλισμός' : 'Επεξεργασία'}</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div><label className="text-white/40 text-xs block mb-1">Όνομα/Κωδικός</label><input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={inputCls} placeholder="π.χ. POS Terminal, Thermal Printer" /></div>
-            <div><label className="text-white/40 text-xs block mb-1">Keyword/URL Αναζήτησης</label><input value={form.search_query} onChange={e => setForm(f => ({ ...f, search_query: e.target.value }))} className={inputCls} placeholder="π.χ. RPP02N thermal printer τιμή" /></div>
+            <div><label className="text-white/40 text-xs block mb-1">Keyword ή URL(s) — πολλαπλά με κόμμα</label><input value={form.search_query} onChange={e => setForm(f => ({ ...f, search_query: e.target.value }))} className={inputCls} placeholder="π.χ. https://xpatit.gr/..., https://hellasdigital.gr/..." /></div>
             <div>
               <label className="text-white/40 text-xs block mb-1">Σύνδεση με Τιμοκατάλογο</label>
               <PricingItemSearchableSelect
