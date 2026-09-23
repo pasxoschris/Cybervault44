@@ -6,11 +6,13 @@ import OffersHistory from '@/components/reseller/OffersHistory';
 import PricingTable from '@/components/reseller/PricingTable';
 import ResellerSettingsTab from '@/components/reseller/ResellerSettingsTab';
 import CategoryManager from '@/components/reseller/CategoryManager';
+import PriceWatchTab from '@/components/reseller/PriceWatchTab';
 
 const TABS = [
   { key: 'offer', label: 'Νέα Προσφορά' },
   { key: 'history', label: 'Ιστορικό' },
   { key: 'pricing', label: 'Τιμοκατάλογος' },
+  { key: 'pricewatch', label: 'Έλεγχος Τιμών' },
   { key: 'categories', label: 'Κατηγορίες' },
   { key: 'settings', label: 'Ρυθμίσεις' },
 ];
@@ -68,6 +70,9 @@ export default function ResellerConsole() {
           )}
           {tab === 'pricing' && (
             <PricingTable />
+          )}
+          {tab === 'pricewatch' && (
+            <PriceWatchTab />
           )}
           {tab === 'categories' && (
             <CategoryManager />
