@@ -24,19 +24,69 @@ export default async function(req: Request): Promise<Response> {
     const pricingItems = await base44.entities.ResellerPricingItem.list();
     const pricingMap = new Map(pricingItems.map(p => [p.id, p]));
 
-    // Build search list for LLM
-    const searchList = watchItems.map((item, idx) => ({
-      index: idx,
-      name: item.name,
-      search_query: item.search_query || item.name,
-      linked_price: item.linked_pricing_item_id ? (pricingMap.get(item.linked_pricing_item_id)?.unit_price ?? null) : null
-    }));
+    // Helper: fetch and parse price directly from xpatit.gr product page HTML
+    async function fetchPriceFromXpatit(url: string): Promise<{ price: number | null; title: string | null; availability: string | null }> {
+      try {
+        const res = await fetch(url, {
+          headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' }
+        });
+        if (!res.ok) return { price: null, title: null, availability: null };
+        const html = await res.text();
 
-    const prompt = `Είσαι ένας agent που ψάχνει retail τιμές για τεχνικά ανταλλακτικά POS/ηλεκτρονικού εξοπλισμού στην Ελλάδα.
+        // Extract first productFinalPrice (with VAT): "135,00 €"
+        const priceMatch = html.match(/<div class="productFinalPrice">\s*([\d.,]+)\s*€?\s*<\/div>/);
+        let price: number | null = null;
+        if (priceMatch) {
+          const numStr = priceMatch[1].replace(/\./g, '').replace(',', '.').trim();
+          price = parseFloat(numStr);
+        }
+
+        // Extract product title
+        const titleMatch = html.match(/<h1 class="productTitle">\s*([\s\S]*?)\s*<\/h1>/);
+        const title = titleMatch ? titleMatch[1].trim() : null;
+
+        // Extract availability
+        const availMatch = html.match(/<div class="productAvailability"[^>]*>\s*([\s\S]*?)\s*<\/div>/);
+        const availability = availMatch ? availMatch[1].trim() : null;
+
+        return { price, title, availability };
+      } catch {
+        return { price: null, title: null, availability: null };
+      }
+    }
+
+    // Separate items: those with a direct URL vs those needing LLM search
+    const urlItems = watchItems.filter(i => /^https?:\/\//i.test(i.search_query || ''));
+    const keywordItems = watchItems.filter(i => !/^https?:\/\//i.test(i.search_query || ''));
+
+    const scrapedResults: Map<string, { retail_price: number | null; source_name: string; source_url: string; notes: string }> = new Map();
+
+    // 1. Directly scrape URL items
+    for (const item of urlItems) {
+      const url = item.search_query.split('?')[0]; // strip query params like srsltid
+      const { price, title, availability } = await fetchPriceFromXpatit(url);
+      const notesParts = [];
+      if (title && title !== item.name) notesParts.push(title);
+      if (availability) notesParts.push(availability);
+      scrapedResults.set(item.id, {
+        retail_price: price,
+        source_name: 'xpatit.gr',
+        source_url: url,
+        notes: price != null ? notesParts.join(' — ') : 'Δεν βρέθηκε τιμή στη σελίδα'
+      });
+    }
+
+    // 2. LLM search for keyword items
+    if (keywordItems.length > 0) {
+      const searchList = keywordItems.map((item, idx) => ({
+        index: idx,
+        name: item.name,
+        search_query: item.search_query || item.name
+      }));
+
+      const prompt = `Είσαι ένας agent που ψάχνει retail τιμές για τεχνικά ανταλλακτικά POS/ηλεκτρονικού εξοπλισμού στην Ελλάδα.
 Για κάθε ένα από τα παρακάτω ανταλλακτικά, ψάξε ΑΠΟΚΛΕΙΣΤΙΚΑ στο ηλεκτρονικό κατάστημα xpatit.gr (https://www.xpatit.gr/el) και βρες την τρέχουσα retail τιμή αγοράς (όχι χονδρική).
-
-ΣΗΜΑΝΤΙΚΟ: Αν το πεδίο "αναζήτηση" είναι URL του xpatit.gr (π.χ. https://www.xpatit.gr/el/ensirmata-diktia/controllers/4635-ubiquiti-ucg-ultra...), μην κάνεις αναζήτηση — άνοιξε ΑΠΟΚΛΕΙΣΤΙΚΑ αυτή τη σελίδα και εξαγάγε την τιμή από εκεί. Το source_url πρέπει να είναι ακριβώς αυτό το URL.
-Αν το "αναζήτηση" είναι λέξη-κλειδί, κάνε αναζήτηση site:www.xpatit.gr και βρες το προϊόν στο xpatit.gr.
+Χρησιμοποίησε το site:www.xpatit.gr στην αναζήτηση για να βρεις το κάθε προϊόν.
 
 Ανταλλακτικά:
 ${searchList.map(s => `${s.index + 1}. "${s.name}" — αναζήτηση: "${s.search_query}"`).join('\n')}
@@ -45,51 +95,71 @@ ${searchList.map(s => `${s.index + 1}. "${s.name}" — αναζήτηση: "${s.
 - name: το όνομα του ανταλλακτικού
 - retail_price: η retail τιμή από το xpatit.gr σε EUR (αριθμός, χωρίς σύμβολο)
 - source_name: "xpatit.gr"
-- source_url: το URL της σελίδας προϊόντος στο xpatit.gr (αν δόθηκε URL, επέστρεψέ το αυτούσιο)
+- source_url: το URL της σελίδας προϊόντος στο xpatit.gr
 - notes: σύντομη σημείωση (π.χ. διαθεσιμότητα, μοντέλο) ή κενό αν δεν βρέθηκε
 
 Αν δεν βρεις τιμή για κάποιο ανταλλακτικό στο xpatit.gr, βάλε retail_price: null και source_url: "" με notes: "Δεν βρέθηκε στο xpatit.gr".
 
 Επέστρεψε ΜΟΝΟ JSON με πεδίο "results" που είναι array με αντικείμενα {name, retail_price, source_name, source_url, notes}.`;
 
-    const llmRes = await base44.integrations.Core.InvokeLLM({
-      prompt,
-      add_context_from_internet: true,
-      model: 'gemini_3_flash',
-      response_json_schema: {
-        type: 'object',
-        properties: {
-          results: {
-            type: 'array',
-            items: {
-              type: 'object',
-              properties: {
-                name: { type: 'string' },
-                retail_price: { type: 'number' },
-                source_name: { type: 'string' },
-                source_url: { type: 'string' },
-                notes: { type: 'string' }
+      const llmRes = await base44.integrations.Core.InvokeLLM({
+        prompt,
+        add_context_from_internet: true,
+        model: 'gemini_3_flash',
+        response_json_schema: {
+          type: 'object',
+          properties: {
+            results: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  name: { type: 'string' },
+                  retail_price: { type: 'number' },
+                  source_name: { type: 'string' },
+                  source_url: { type: 'string' },
+                  notes: { type: 'string' }
+                }
               }
             }
           }
         }
-      }
-    });
+      });
 
-    const results = (llmRes as any)?.results || [];
+      const llmResults = (llmRes as any)?.results || [];
+      for (const item of keywordItems) {
+        const match = llmResults.find((r: any) =>
+          (r.name || '').toLowerCase().includes(item.name.toLowerCase()) ||
+          item.name.toLowerCase().includes((r.name || '').toLowerCase())
+        );
+        if (match) {
+          scrapedResults.set(item.id, {
+            retail_price: match.retail_price ?? null,
+            source_name: match.source_name || 'xpatit.gr',
+            source_url: match.source_url || '',
+            notes: match.notes || ''
+          });
+        } else {
+          scrapedResults.set(item.id, {
+            retail_price: null,
+            source_name: 'xpatit.gr',
+            source_url: '',
+            notes: 'Δεν βρέθηκε αποτέλεσμα'
+          });
+        }
+      }
+    }
+
     const now = new Date().toISOString();
 
-    // Match results back to watch items by name (case-insensitive)
+    // Save results for each watch item
     const saved = [];
     for (const item of watchItems) {
-      const match = results.find((r: any) =>
-        (r.name || '').toLowerCase().includes(item.name.toLowerCase()) ||
-        item.name.toLowerCase().includes((r.name || '').toLowerCase())
-      );
+      const scraped = scrapedResults.get(item.id);
 
       const linkedPricing = item.linked_pricing_item_id ? pricingMap.get(item.linked_pricing_item_id) : null;
       const resellerPrice = linkedPricing?.unit_price ?? null;
-      const retailPrice = match?.retail_price ?? null;
+      const retailPrice = scraped?.retail_price ?? null;
 
       const diff = (retailPrice != null && resellerPrice != null) ? (retailPrice - resellerPrice) : null;
       const diffPct = (retailPrice != null && resellerPrice != null && resellerPrice > 0) ? ((retailPrice - resellerPrice) / resellerPrice * 100) : null;
@@ -98,13 +168,13 @@ ${searchList.map(s => `${s.index + 1}. "${s.name}" — αναζήτηση: "${s.
         watch_item_id: item.id,
         watch_item_name: item.name,
         retail_price: retailPrice,
-        source_url: match?.source_url || '',
-        source_name: match?.source_name || '',
+        source_url: scraped?.source_url || '',
+        source_name: scraped?.source_name || '',
         reseller_price: resellerPrice,
         price_difference: diff,
         price_difference_pct: diffPct,
         checked_at: now,
-        notes: match?.notes || (match ? '' : 'Δεν βρέθηκε αποτέλεσμα')
+        notes: scraped?.notes || 'Δεν βρέθηκε αποτέλεσμα'
       });
 
       saved.push(resultRecord);
