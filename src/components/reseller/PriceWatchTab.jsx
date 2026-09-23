@@ -81,7 +81,7 @@ export default function PriceWatchTab() {
   };
 
   const remove = async (id) => {
-    if (!window.confirm('Διαγραφή ανταλλακτικού από τον έλεγχο τιμών;')) return;
+    if (!window.confirm('Διαγραφή εξοπλισμού από τον έλεγχο τιμών;')) return;
     await deleteItem.mutateAsync(id);
   };
 
@@ -142,7 +142,7 @@ export default function PriceWatchTab() {
           </button>
           <button onClick={startNew}
             className="flex items-center gap-2 px-4 py-2 border border-[#00CFFF]/30 text-[#00CFFF] rounded-xl text-sm font-medium hover:border-[#00CFFF]/60 hover:bg-[#00CFFF]/5 transition-colors">
-            <Plus size={14} /> Νέο Ανταλλακτικό
+            <Plus size={14} /> Νέος Εξοπλισμός
           </button>
         </div>
       </div>
@@ -161,9 +161,9 @@ export default function PriceWatchTab() {
       {/* Edit form */}
       {editing && (
         <div className="bg-[#131840] border border-[#00CFFF]/30 rounded-2xl p-5">
-          <h4 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">{editing === 'new' ? 'Νέο Ανταλλακτικό' : 'Επεξεργασία'}</h4>
+          <h4 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">{editing === 'new' ? 'Νέος Εξοπλισμός' : 'Επεξεργασία'}</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <div><label className="text-white/40 text-xs block mb-1">Όνομα/Κωδικός</label><input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={inputCls} placeholder="π.χ. Thermal Printer RPP02N" /></div>
+            <div><label className="text-white/40 text-xs block mb-1">Όνομα/Κωδικός</label><input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={inputCls} placeholder="π.χ. POS Terminal, Thermal Printer" /></div>
             <div><label className="text-white/40 text-xs block mb-1">Keyword/URL Αναζήτησης</label><input value={form.search_query} onChange={e => setForm(f => ({ ...f, search_query: e.target.value }))} className={inputCls} placeholder="π.χ. RPP02N thermal printer τιμή" /></div>
             <div>
               <label className="text-white/40 text-xs block mb-1">Σύνδεση με Τιμοκατάλογο</label>
@@ -192,7 +192,7 @@ export default function PriceWatchTab() {
         <table className="w-full text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
           <thead>
             <tr className="bg-[#131840] border-b border-[#2A3580]">
-              <th className="text-left px-3 py-3 text-white/40 text-xs font-semibold uppercase tracking-wide">Ανταλλακτικό</th>
+              <th className="text-left px-3 py-3 text-white/40 text-xs font-semibold uppercase tracking-wide">Εξοπλισμός</th>
               <th className="text-left px-3 py-3 text-white/40 text-xs font-semibold uppercase tracking-wide">Αναζήτηση</th>
               <th className="text-left px-3 py-3 text-white/40 text-xs font-semibold uppercase tracking-wide">Τιμή Καταλόγου</th>
               <th className="text-left px-3 py-3 text-white/40 text-xs font-semibold uppercase tracking-wide">Retail Τιμή</th>
@@ -237,7 +237,7 @@ export default function PriceWatchTab() {
           </tbody>
         </table>
         {isLoading && <div className="text-center py-12 text-white/30 text-sm">Φόρτωση...</div>}
-        {watchItems.length === 0 && !isLoading && <div className="text-center py-12 text-white/30 text-sm">Δεν υπάρχουν ανταλλακτικά. Πατήστε «Νέο Ανταλλακτικό» για να ξεκινήσετε.</div>}
+        {watchItems.length === 0 && !isLoading && <div className="text-center py-12 text-white/30 text-sm">Δεν υπάρχει εξοπλισμός. Πατήστε «Νέος Εξοπλισμός» για να ξεκινήσετε.</div>}
       </div>
 
       {/* History */}
