@@ -62,6 +62,7 @@ import ResellerConsole from './pages/ResellerConsole';
 import PublicOfferPage from './pages/PublicOfferPage';
 import ServiceDeskAdmin from './pages/admin/ServiceDeskAdmin';
 import AssistantQuestions from './pages/admin/AssistantQuestions';
+import PriceMonitorAgent from './pages/PriceMonitorAgent';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -134,6 +135,7 @@ const AuthenticatedApp = () => {
       <Route path="/offers/:publicToken" element={<PublicOfferPage />} />
       <Route path="/admin/service-desk-admin" element={<ServiceDeskAdmin />} />
       <Route path="/admin/assistant-questions" element={<AssistantQuestions />} />
+      <Route path="/reseller-console/price-agent" element={<PriceMonitorAgent />} />
       {/* Placeholder lessons for all other roles */}
       <Route path="/tutorial/maitre-service/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/maitre-mode/*" element={<PlaceholderLesson />} />
