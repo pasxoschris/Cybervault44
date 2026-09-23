@@ -33,14 +33,14 @@ export default async function(req: Request): Promise<Response> {
         if (!res.ok) return { price: null, title: null, availability: null };
         const html = await res.text();
 
-        // Extract ALL productFinalPrice occurrences; 2nd = without VAT, 1st = with VAT
-        const priceMatches = [...html.matchAll(/<div class="productFinalPrice">\s*([\d.,]+)\s*€?\s*<\/div>/g)];
+        // Extract the with-VAT price (first productFinalPrice) and the VAT rate, then compute without-VAT
+        const priceMatch = html.match(/<div class="productFinalPrice">\s*([\d.,]+)\s*€?\s*<\/div>/);
+        const vatMatch = html.match(/Περιλαμβάνει ΦΠΑ\s*(\d+)%/) || html.match(/ΦΠΑ\s*(\d+)%/);
         let price: number | null = null;
-        // Prefer the 2nd match (without VAT); fallback to 1st (with VAT)
-        const target = priceMatches[1] || priceMatches[0];
-        if (target) {
-          const numStr = target[1].replace(/\./g, '').replace(',', '.').trim();
-          price = parseFloat(numStr);
+        if (priceMatch) {
+          const withVat = parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.').trim());
+          const vatRate = vatMatch ? parseFloat(vatMatch[1]) : 24;
+          price = withVat / (1 + vatRate / 100);
         }
 
         // Extract product title
@@ -90,12 +90,14 @@ export default async function(req: Request): Promise<Response> {
 Για κάθε ένα από τα παρακάτω ανταλλακτικά, ψάξε ΑΠΟΚΛΕΙΣΤΙΚΑ στο ηλεκτρονικό κατάστημα xpatit.gr (https://www.xpatit.gr/el) και βρες την τρέχουσα retail τιμή αγοράς (όχι χονδρική).
 Χρησιμοποίησε το site:www.xpatit.gr στην αναζήτηση για να βρεις το κάθε προϊόν.
 
+ΣΗΜΑΝΤΙΚΟ: Η τιμή που πρέπει να επιστρέψεις είναι η τιμή ΧΩΡΙΣ ΦΠΑ. Στο xpatit.gr η σελίδα προϊόντος δείχνει δύο τιμές: την τιμή με ΦΠΑ (π.χ. "135,00 € (Περιλαμβάνει ΦΠΑ 24%)") και πιο κάτω "Τιμή χωρίς ΦΠΑ: 108,87 €". Επέστρεψε ΠΑΝΤΑ τη τιμή χωρίς ΦΠΑ. Αν βρεις μόνο την τιμή με ΦΠΑ, χώρισέ την με 1.24 (για ΦΠΑ 24%) για να βρεις τη τιμή χωρίς ΦΠΑ.
+
 Ανταλλακτικά:
 ${searchList.map(s => `${s.index + 1}. "${s.name}" — αναζήτηση: "${s.search_query}"`).join('\n')}
 
 Για κάθε ανταλλακτικό, επέστρεψε:
 - name: το όνομα του ανταλλακτικού
-- retail_price: η retail τιμή από το xpatit.gr σε EUR (αριθμός, χωρίς σύμβολο)
+- retail_price: η retail τιμή ΧΩΡΙΣ ΦΠΑ από το xpatit.gr σε EUR (αριθμός, χωρίς σύμβολο)
 - source_name: "xpatit.gr"
 - source_url: το URL της σελίδας προϊόντος στο xpatit.gr
 - notes: σύντομη σημείωση (π.χ. διαθεσιμότητα, μοντέλο) ή κενό αν δεν βρέθηκε
