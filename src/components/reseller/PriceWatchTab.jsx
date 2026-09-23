@@ -168,10 +168,13 @@ export default function PriceWatchTab() {
 
   const getPricingPrice = (id) => pricingItems.find(p => p.id === id)?.unit_price ?? null;
 
-  // Latest result per watch item
-  const latestResults = new Map();
+  // Latest results per watch item, grouped by source (one entry per source)
+  const latestResultsByItem = new Map();
   results.forEach(r => {
-    if (!latestResults.has(r.watch_item_id)) latestResults.set(r.watch_item_id, r);
+    if (!latestResultsByItem.has(r.watch_item_id)) latestResultsByItem.set(r.watch_item_id, []);
+    const arr = latestResultsByItem.get(r.watch_item_id);
+    // Keep only the latest result per unique source_name
+    if (!arr.some(x => x.source_name === r.source_name)) arr.push(r);
   });
 
   const DiffBadge = ({ pct }) => {
@@ -274,23 +277,55 @@ export default function PriceWatchTab() {
           </thead>
           <tbody>
             {watchItems.map((item, i) => {
-              const latest = latestResults.get(item.id);
+              const itemResults = latestResultsByItem.get(item.id) || [];
               const resellerPrice = item.linked_pricing_item_id ? getPricingPrice(item.linked_pricing_item_id) : null;
+              const cheapest = itemResults.filter(r => r.retail_price != null).sort((a, b) => a.retail_price - b.retail_price)[0];
               return (
                 <tr key={item.id} className={`border-b border-[#2A3580]/50 hover:bg-[#131840]/70 transition-colors ${i % 2 === 0 ? 'bg-[#0E1235]' : 'bg-[#0f1339]/60'}`}>
-                  <td className="px-3 py-3 text-white font-medium whitespace-nowrap">{item.name}</td>
-                  <td className="px-3 py-3 text-white/50 max-w-[160px] truncate">{item.search_query || '—'}</td>
-                  <td className="px-3 py-3 font-mono text-white/70 whitespace-nowrap">{resellerPrice != null ? `€${Number(resellerPrice).toFixed(2)}` : '—'}</td>
-                  <td className="px-3 py-3 font-mono text-[#00CFFF] whitespace-nowrap">{latest?.retail_price != null ? `€${Number(latest.retail_price).toFixed(2)}` : <span className="text-white/30">—</span>}</td>
-                  <td className="px-3 py-3"><DiffBadge pct={latest?.price_difference_pct} /></td>
-                  <td className="px-3 py-3 max-w-[140px] truncate">
-                    {latest?.source_url ? (
-                      <a href={latest.source_url} target="_blank" rel="noopener noreferrer" className="text-[#00CFFF]/70 hover:text-[#00CFFF] inline-flex items-center gap-1 text-xs">
-                        {latest.source_name || 'Πηγή'} <ExternalLink size={10} />
-                      </a>
-                    ) : <span className="text-white/30 text-xs">—</span>}
+                  <td className="px-3 py-3 text-white font-medium whitespace-nowrap align-top">{item.name}</td>
+                  <td className="px-3 py-3 text-white/50 max-w-[160px] truncate align-top">{item.search_query || '—'}</td>
+                  <td className="px-3 py-3 font-mono text-white/70 whitespace-nowrap align-top">{resellerPrice != null ? `€${Number(resellerPrice).toFixed(2)}` : '—'}</td>
+                  <td className="px-3 py-3 align-top">
+                    {itemResults.length === 0 ? (
+                      <span className="text-white/30">—</span>
+                    ) : (
+                      <div className="flex flex-col gap-1">
+                        {itemResults.map((r, ri) => (
+                          <div key={ri} className="flex items-center gap-2">
+                            <span className={`font-mono whitespace-nowrap ${r.retail_price != null ? 'text-[#00CFFF]' : 'text-white/30'}`}>
+                              {r.retail_price != null ? `€${Number(r.retail_price).toFixed(2)}` : '—'}
+                            </span>
+                            <span className="text-white/30 text-xs">{r.source_name || '?'}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </td>
-                  <td className="px-3 py-3 text-white/40 text-xs whitespace-nowrap">{latest?.checked_at ? new Date(latest.checked_at).toLocaleDateString('el-GR') : '—'}</td>
+                  <td className="px-3 py-3 align-top">
+                    {itemResults.length === 0 ? (
+                      <span className="text-white/30 text-xs">—</span>
+                    ) : (
+                      <div className="flex flex-col gap-1">
+                        {itemResults.map((r, ri) => <DiffBadge key={ri} pct={r.price_difference_pct} />)}
+                      </div>
+                    )}
+                  </td>
+                  <td className="px-3 py-3 align-top">
+                    {itemResults.length === 0 ? (
+                      <span className="text-white/30 text-xs">—</span>
+                    ) : (
+                      <div className="flex flex-col gap-1 max-w-[140px]">
+                        {itemResults.map((r, ri) => (
+                          r.source_url ? (
+                            <a key={ri} href={r.source_url} target="_blank" rel="noopener noreferrer" className="text-[#00CFFF]/70 hover:text-[#00CFFF] inline-flex items-center gap-1 text-xs truncate">
+                              {r.source_name || 'Πηγή'} <ExternalLink size={10} />
+                            </a>
+                          ) : <span key={ri} className="text-white/30 text-xs">{r.source_name || '—'}</span>
+                        ))}
+                      </div>
+                    )}
+                  </td>
+                  <td className="px-3 py-3 text-white/40 text-xs whitespace-nowrap align-top">{cheapest?.checked_at ? new Date(cheapest.checked_at).toLocaleDateString('el-GR') : '—'}</td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     <div className="flex items-center gap-1">
                       <button onClick={() => runSingleCheck(item.id)} disabled={checkPrices.isPending}
