@@ -34,7 +34,9 @@ export default async function(req: Request): Promise<Response> {
 
     const prompt = `Είσαι ένας agent που ψάχνει retail τιμές για τεχνικά ανταλλακτικά POS/ηλεκτρονικού εξοπλισμού στην Ελλάδα.
 Για κάθε ένα από τα παρακάτω ανταλλακτικά, ψάξε ΑΠΟΚΛΕΙΣΤΙΚΑ στο ηλεκτρονικό κατάστημα xpatit.gr (https://www.xpatit.gr/el) και βρες την τρέχουσα retail τιμή αγοράς (όχι χονδρική).
-Χρησιμοποίησε το site:www.xpatit.gr στην αναζήτηση ή περιηγήσου στο xpatit.gr για να βρεις το κάθε προϊόν.
+
+ΣΗΜΑΝΤΙΚΟ: Αν το πεδίο "αναζήτηση" είναι URL του xpatit.gr (π.χ. https://www.xpatit.gr/el/ensirmata-diktia/controllers/4635-ubiquiti-ucg-ultra...), μην κάνεις αναζήτηση — άνοιξε ΑΠΟΚΛΕΙΣΤΙΚΑ αυτή τη σελίδα και εξαγάγε την τιμή από εκεί. Το source_url πρέπει να είναι ακριβώς αυτό το URL.
+Αν το "αναζήτηση" είναι λέξη-κλειδί, κάνε αναζήτηση site:www.xpatit.gr και βρες το προϊόν στο xpatit.gr.
 
 Ανταλλακτικά:
 ${searchList.map(s => `${s.index + 1}. "${s.name}" — αναζήτηση: "${s.search_query}"`).join('\n')}
@@ -42,8 +44,8 @@ ${searchList.map(s => `${s.index + 1}. "${s.name}" — αναζήτηση: "${s.
 Για κάθε ανταλλακτικό, επέστρεψε:
 - name: το όνομα του ανταλλακτικού
 - retail_price: η retail τιμή από το xpatit.gr σε EUR (αριθμός, χωρίς σύμβολο)
-- source_name: όνομα ιστοσελίδας/καταστήματος (πρέπει να είναι "xpatit.gr")
-- source_url: URL σελίδας προϊόντος στο xpatit.gr
+- source_name: "xpatit.gr"
+- source_url: το URL της σελίδας προϊόντος στο xpatit.gr (αν δόθηκε URL, επέστρεψέ το αυτούσιο)
 - notes: σύντομη σημείωση (π.χ. διαθεσιμότητα, μοντέλο) ή κενό αν δεν βρέθηκε
 
 Αν δεν βρεις τιμή για κάποιο ανταλλακτικό στο xpatit.gr, βάλε retail_price: null και source_url: "" με notes: "Δεν βρέθηκε στο xpatit.gr".
