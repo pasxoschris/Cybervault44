@@ -33,19 +33,14 @@ export default async function(req: Request): Promise<Response> {
         if (!res.ok) return { price: null, title: null, availability: null };
         const html = await res.text();
 
-        // Extract price WITHOUT VAT (secondary container): "Τιμή χωρίς ΦΠΑ: ... 108,87 €"
-        const noVatMatch = html.match(/Τιμή χωρίς ΦΠΑ:[\s\S]*?<div class="productFinalPrice">\s*([\d.,]+)\s*€?\s*<\/div>/);
+        // Extract ALL productFinalPrice occurrences; 2nd = without VAT, 1st = with VAT
+        const priceMatches = [...html.matchAll(/<div class="productFinalPrice">\s*([\d.,]+)\s*€?\s*<\/div>/g)];
         let price: number | null = null;
-        if (noVatMatch) {
-          const numStr = noVatMatch[1].replace(/\./g, '').replace(',', '.').trim();
+        // Prefer the 2nd match (without VAT); fallback to 1st (with VAT)
+        const target = priceMatches[1] || priceMatches[0];
+        if (target) {
+          const numStr = target[1].replace(/\./g, '').replace(',', '.').trim();
           price = parseFloat(numStr);
-        } else {
-          // Fallback: first productFinalPrice (with VAT)
-          const priceMatch = html.match(/<div class="productFinalPrice">\s*([\d.,]+)\s*€?\s*<\/div>/);
-          if (priceMatch) {
-            const numStr = priceMatch[1].replace(/\./g, '').replace(',', '.').trim();
-            price = parseFloat(numStr);
-          }
         }
 
         // Extract product title
