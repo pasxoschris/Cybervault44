@@ -129,12 +129,14 @@ export default async function(req: Request): Promise<Response> {
         if (t.url) {
           return `${idx + 1}. "${t.name}" — Βρες την τιμή ΧΩΡΙΣ ΦΠΑ στη διεύθυνση: ${t.url}`;
         } else {
-          return `${idx + 1}. "${t.name}" — Ψάξε στο xpatit.gr (site:www.xpatit.gr) για: "${t.keyword}"`;
+          return `${idx + 1}. "${t.name}" — Ψάξε σε ελληνικά ηλεκτρονικά καταστήματα (ΕΚΤΟΣ από skroutz.gr) για: "${t.keyword}"`;
         }
       }).join('\n');
 
       const prompt = `Είσαι ένας agent που ψάχνει retail τιμές για τεχνικό εξοπλισμό στην Ελλάδα.
 Για κάθε ένα από τα παρακάτω, βρες την τρέχουσα retail τιμή αγοράς ΧΩΡΙΣ ΦΠΑ.
+
+ΑΠΑΓΟΡΕΥΕΤΑΙ το skroutz.gr — ΜΗΝ ψάχνεις και ΜΗΝ επιστρέφεις αποτελέσματα από skroutz.gr. Ψάξε σε οποιοδήποτε άλλο ελληνικό ηλεκτρονικό κατάστημα (π.χ. xpatit.gr, hellasdigital.gr, plaisio.gr, public.gr, multisyst.gr, κ.λπ.).
 
 ΣΗΜΑΝΤΙΚΟ: Η τιμή που πρέπει να επιστρέψεις είναι ΠΑΝΤΑ η τιμή ΧΩΡΙΣ ΦΠΑ. Αν βρεις μόνο την τιμή με ΦΠΑ, χώρισέ την με 1.24 (για ΦΠΑ 24%) για να βρεις τη τιμή χωρίς ΦΠΑ.
 
