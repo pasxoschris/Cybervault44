@@ -4,6 +4,32 @@ import { base44 } from '@/api/base44Client';
 
 const MAX_SECONDS = 120;
 
+const GLOSSARY = 'SpotlightPOS, Service Mode, Cashier Mode, Maitre Mode, τιμολόγιο, απόδειξη, παραγγελία, βάρδια, ανάλυση βάρδιας, κλείσιμο βάρδιας, έναρξη βάρδιας, έκπτωση, ιδιοκατανάλωση, κεραστικό, συνοδευτικά, ακυρωτικό δελτίο, επαναφορά παραγγελίας, μεταφορά παραγγελίας, συγχώνευση παραγγελιών, προϊόν, τραπέζι, σερβιτόρος, ταμείο, πληρωμή, μετρητά, κάρτα, split payment, IRIS, delivery, διανομέας, πλατφόρμα, ΑΦΜ, ΑΑΔΕ, εκτυπωτής, συγχρονισμός, ρυθμίσεις, χρήστης, κωδικός διαχειριστή';
+
+// Διορθώνει φωνητικά λάθη της μεταγραφής με βάση τους όρους του SpotlightPOS
+const correctTranscript = async (raw) => {
+  try {
+    const fixed = await base44.integrations.Core.InvokeLLM({
+      prompt: `Το παρακάτω κείμενο προέκυψε από αυτόματη φωνητική μεταγραφή στα ελληνικά και μπορεί να περιέχει φωνητικά λάθη.
+
+Διόρθωσε τα φωνητικά/ορθογραφικά λάθη, ειδικά σε όρους του λογισμικού Spotlight POS (π.χ. «μολόγιο» → «τιμολόγιο», «προεπιλογμένο» → «προεπιλεγμένο»).
+Λεξιλόγιο: ${GLOSSARY}.
+
+ΚΑΝΟΝΕΣ:
+- Μην αλλάξεις το νόημα της ερώτησης.
+- Μην προσθέσεις και μην αφαιρέσεις τίποτα.
+- ΜΗΝ απαντήσεις στην ερώτηση — διόρθωσε μόνο το κείμενο.
+- Επέστρεψε ΜΟΝΟ το διορθωμένο κείμενο, χωρίς εισαγωγικά.
+
+Κείμενο: ${raw}`,
+    });
+    const clean = (typeof fixed === 'string' ? fixed : '').trim().replace(/^["'«]|["'»]$/g, '').trim();
+    return clean || raw;
+  } catch {
+    return raw;
+  }
+};
+
 const formatTime = (s) =>
   `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
 
@@ -67,10 +93,11 @@ export default function VoiceInputButton({ onTranscript, disabled }) {
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
       const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri, expires_in: 300 });
       const result = await base44.integrations.Core.TranscribeAudio({ audio_url: signed_url });
-      const text = (typeof result === 'string' ? result : '').trim();
-      if (!text) {
+      const raw = (typeof result === 'string' ? result : '').trim();
+      if (!raw) {
         setError('Δεν ακούστηκε καθαρά. Δοκιμάστε ξανά ή γράψτε την ερώτηση.');
       } else {
+        const text = await correctTranscript(raw);
         setError('');
         onTranscript(text);
       }
