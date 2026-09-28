@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import Navbar from '@/components/layout/Navbar';
 import SpotlightBrand from '@/components/SpotlightBrand';
-import { Send, ChevronLeft, Bot, ChevronRight, RotateCcw, ArrowLeft } from 'lucide-react';
+import { ChevronLeft, Bot, ChevronRight, RotateCcw, ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import AssistantInput from '@/components/academy/AssistantInput';
 
 const CATEGORY_LABELS = {
   general: 'Γενικά',
@@ -215,24 +216,12 @@ export default function Assistant() {
               <h2 className="text-gray-900 text-lg mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>SpotlightPOS Assistant</h2>
               <p className="text-gray-500 text-sm mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>Επίλεξε μια ερώτηση ή γράψε τη δική σου παρακάτω</p>
               <div className="max-w-3xl mx-auto w-full mb-8">
-                <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
-                  <input
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Ρώτησε οτιδήποτε για το SpotlightPOS..."
-                    className="flex-1 text-sm text-gray-900 placeholder-gray-500 font-medium rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition-all focus:border-purple-400 focus:ring-2 focus:ring-purple-100"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
-                    disabled={loading}
-                  />
-                  <button
-                    type="submit"
-                    disabled={!input.trim() || loading}
-                    className="rounded-lg px-4 py-3 text-white disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0 transition-all hover:opacity-90"
-                    style={{ fontFamily: 'Inter, sans-serif', background: "linear-gradient(135deg, #5B21B6, #b32483)" }}
-                  >
-                    <Send className="w-4 h-4" />
-                  </button>
-                </form>
+                <AssistantInput
+                  value={input}
+                  onValueChange={setInput}
+                  onSend={() => send()}
+                  disabled={loading}
+                />
               </div>
               <div className="space-y-4 text-left">
                 <div className="flex items-center gap-2 mb-3">
@@ -314,24 +303,12 @@ export default function Assistant() {
         {/* Input (when chatting) */}
         {messages.length > 0 && (
           <div className="mt-4">
-            <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ρώτησε οτιδήποτε για το SpotlightPOS..."
-                className="flex-1 text-sm text-gray-900 placeholder-gray-500 font-medium rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition-all focus:border-purple-400 focus:ring-2 focus:ring-purple-100"
-                style={{ fontFamily: 'Inter, sans-serif' }}
-                disabled={loading}
-              />
-              <button
-                type="submit"
-                disabled={!input.trim() || loading}
-                className="rounded-lg px-4 py-3 text-white disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0 transition-all hover:opacity-90"
-                style={{ fontFamily: 'Inter, sans-serif', background: "linear-gradient(135deg, #5B21B6, #b32483)" }}
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </form>
+            <AssistantInput
+              value={input}
+              onValueChange={setInput}
+              onSend={() => send()}
+              disabled={loading}
+            />
           </div>
         )}
       </div>
