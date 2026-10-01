@@ -1,18 +1,8 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
+import { isAllowedServiceDeskUser } from '../../shared/serviceDeskAccess.ts';
 
 const MAX_TICKETS_TO_SCAN = 500;
 const RESPONSE_LIMIT = 20;
-
-const isAllowedServiceDeskUser = async (base44, user) => {
-  if (user?.role === 'admin') return true;
-  if (!user?.email) return false;
-
-  const allowedUsers = await base44.asServiceRole.entities.AllowedUser.filter({
-    email: user.email.toLowerCase(),
-  });
-
-  return allowedUsers.length > 0;
-};
 
 Deno.serve(async (req) => {
   const base44 = createClientFromRequest(req);
