@@ -84,7 +84,6 @@ const services = [
   {
     icon: Store,
     title: 'VoIP Τηλεφωνία & Cloud PBX για Επιχειρήσεις',
-    link: 'https://www.modulus.gr/',
     code: 'SVC-010',
     subtitle: 'Εξουσιοδοτημένοι μεταπωλητές Modulus',
     description: '',
