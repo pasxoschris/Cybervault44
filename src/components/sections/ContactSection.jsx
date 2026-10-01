@@ -65,9 +65,9 @@ export default function ContactSection() {
           <div className="font-mono-cyber text-xs text-[#00D4FF]/60 tracking-[0.4em] uppercase mb-4">
             // ΕΚΚΙΝΗΣΗ.ΕΠΙΚΟΙΝΩΝΙΑΣ //
           </div>
-          <h2 className="font-orbitron font-bold text-3xl md:text-5xl text-white tracking-tight mb-4">
+          <h1 className="font-orbitron font-bold text-3xl md:text-5xl text-white tracking-tight mb-4">
             ΕΠΙΚΟΙΝΩΝΗΣΤΕ <span className="text-[#00D4FF] glow-cyan">ΜΑΖΙ ΜΑΣ</span>
-          </h2>
+          </h1>
           <div className="w-32 h-px bg-gradient-to-r from-transparent via-[#00D4FF] to-transparent mx-auto mb-4" />
           <p className="font-rajdhani text-base text-white/45 max-w-xl mx-auto">
             Είμαστε διαθέσιμοι για οποιαδήποτε ερώτηση ή αίτημα υποστήριξης.

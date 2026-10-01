@@ -33,6 +33,7 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Αρχική', to: '/', scrollTop: true },
     { label: 'Υπηρεσίες', to: '/services' },
+    { label: 'Σχετικά', to: '/about' },
     { label: 'SpotlightPOS Guide', to: '/spotlight-pos-guide' },
     { label: 'Service Desk', to: '/service-desk' },
   ];

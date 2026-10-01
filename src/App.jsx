@@ -8,6 +8,7 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import Home from './pages/Home';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
+import About from './pages/About';
 import SpotlightPOSGuide from './pages/SpotlightPOSGuide';
 import CreateOrder from './pages/tutorial/CreateOrder';
 import DiscountGeneral from './pages/tutorial/DiscountGeneral';
@@ -92,6 +93,7 @@ const AuthenticatedApp = () => {
       <Route path="/" element={<Home />} />
       <Route path="/services" element={<Services />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/about" element={<About />} />
       <Route path="/spotlight-pos-guide" element={<SpotlightPOSGuide />} />
       <Route path="/tutorial/create-order" element={<CreateOrder />} />
       <Route path="/tutorial/discount" element={<DiscountGeneral />} />
