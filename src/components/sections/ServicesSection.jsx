@@ -85,7 +85,7 @@ const services = [
     icon: Store,
     title: 'VoIP Τηλεφωνία & Cloud PBX για Επιχειρήσεις',
     code: 'SVC-010',
-    subtitle: 'Εξουσιοδοτημένοι μεταπωλητές Modulus',
+    subtitle: 'Custom σχεδιασμό ανάλογα με τις επιχειρησιακές απαιτήσεις',
     description: '',
     bullets: [
       'Πώληση & εγκατάσταση POS τερματικών Modulus',
