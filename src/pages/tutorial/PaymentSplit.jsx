@@ -30,7 +30,7 @@ export default function PaymentSplit() {
         <strong>Πρέπει να ολοκληρώνεται η μία πληρωμή πριν πας στη 2η.</strong> Μην αλλάζεις τρόπο πληρωμής ενώ εκκρεμεί χρέωση. Αυτόματα η εφαρμογή υπολογίζει το υπόλοιπο και το διαιρεί ισόποσα σε όσες πληρωμές απομένουν.
       </InfoBox>
       <InfoBox icon="💡" title="Προσοχή — μην το μπερδέψεις" variant="info">
-        Το Split Payment <strong>δεν</strong> είναι η πληρωμή συγκεκριμένου είδους (πληρωμή μεμονωμένων προϊόντων), η οποία γίνεται στην <Link to="/tutorial/edit-order" className="underline font-semibold">Επεξεργασία Παραγγελίας</Link>.
+        Το Split Payment <strong>δεν</strong> είναι η πληρωμή συγκεκριμένου είδους (πληρωμή μεμονωμένων προϊόντων), η οποία γίνεται στα <Link to="/tutorial/order-details" className="underline font-semibold">Στοιχεία Παραγγελίας</Link> → <Link to="/tutorial/edit-order" className="underline font-semibold">Επεξεργασία Παραγγελίας</Link>.
       </InfoBox>
       <InfoBox icon="🧮" title="Παράδειγμα" variant="purple">
         Παραγγελία <strong>100€</strong> σε <strong>3 πληρωμές</strong>: πληρώνεις την πρώτη <strong>50€ με μετρητά</strong>. Αυτόματα οι άλλες 2 γίνονται από <strong>25€</strong> — τη δεύτερη μπορείς να την πληρώσεις με <strong>IRIS</strong> και την τρίτη με <strong>κάρτα</strong>.
