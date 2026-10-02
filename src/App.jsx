@@ -54,6 +54,11 @@ import CloseCashier from './pages/tutorial/cashier/Close';
 import PrinterWarning from './pages/tutorial/PrinterWarning';
 import PrinterWarningCashier from './pages/tutorial/cashier/PrinterWarning';
 import Payment from './pages/tutorial/Payment';
+import PaymentCash from './pages/tutorial/PaymentCash';
+import PaymentCard from './pages/tutorial/PaymentCard';
+import PaymentSplit from './pages/tutorial/PaymentSplit';
+import PaymentOnline from './pages/tutorial/PaymentOnline';
+import PaymentIris from './pages/tutorial/PaymentIris';
 import Assistant from './pages/academy/Assistant';
 import Stores from './pages/stores/Stores';
 import StoreDetails from './pages/stores/StoreDetails';
@@ -123,6 +128,11 @@ const AuthenticatedApp = () => {
       <Route path="/academy/:roleId" element={<RolePath />} />
       {/* Payment & Shift (were missing) */}
       <Route path="/tutorial/payment" element={<Payment />} />
+      <Route path="/tutorial/payment-cash" element={<PaymentCash />} />
+      <Route path="/tutorial/payment-card" element={<PaymentCard />} />
+      <Route path="/tutorial/payment-split" element={<PaymentSplit />} />
+      <Route path="/tutorial/payment-online" element={<PaymentOnline />} />
+      <Route path="/tutorial/payment-iris" element={<PaymentIris />} />
       <Route path="/tutorial/shift" element={<Shift />} />
       <Route path="/tutorial/shift-analysis" element={<ShiftAnalysis />} />
       <Route path="/tutorial/shift-close" element={<ShiftClose />} />

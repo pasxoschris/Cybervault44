@@ -1,30 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
-import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
-import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
+import { StepCard, SectionTitle } from "../../components/tutorial/StepCard";
 
 const methods = [
-  { id: "cash", label: "Πληρωμή με Μετρητά", icon: "💵" },
-  { id: "card", label: "Πληρωμή με Κάρτα", icon: "💳" },
-  { id: "online", label: "Ηλεκτρονική Πληρωμή", icon: "🌐" },
-  { id: "split", label: "Split Payments", icon: "✂️" },
-  { id: "iris", label: "Πληρωμή με IRIS", icon: "🔵" },
+  { path: "/tutorial/payment-cash", icon: "💵", label: "Πληρωμή με Μετρητά", desc: "Πληρωμή με μετρητά και υπολογισμός ρέστων." },
+  { path: "/tutorial/payment-card", icon: "💳", label: "Πληρωμή με Κάρτα", desc: "Χρέωση στο POS terminal και αντιμετώπιση προβλημάτων." },
+  { path: "/tutorial/payment-split", icon: "✂️", label: "Split Payments", desc: "Διαίρεση της παραγγελίας σε πολλαπλές πληρωμές." },
+  { path: "/tutorial/payment-online", icon: "🌐", label: "Ηλεκτρονική Πληρωμή", desc: "Ενεργοποίηση και ολοκλήρωση ηλεκτρονικής πληρωμής." },
+  { path: "/tutorial/payment-iris", icon: "🔵", label: "Πληρωμή με IRIS", desc: "Άμεση πληρωμή με κωδικό IRIS από τον πελάτη." },
 ];
 
 export default function Payment() {
-  const [active, setActive] = useState("cash");
-
-  const methodLabels = {
-    cash: "Πληρωμή με Μετρητά",
-    card: "Πληρωμή με Κάρτα",
-    online: "Ηλεκτρονική Πληρωμή",
-    split: "Split Payments",
-    iris: "Πληρωμή με IRIS",
-  };
-
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [active]);
+  }, []);
 
   return (
     <TutorialLayout title="Πληρωμή" subtitle="Διαδικασία πληρωμής παραγγελίας">
@@ -37,140 +27,24 @@ export default function Payment() {
         <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/195dd216c_Screenshot2026-07-14101523.png" alt="Μενού επιλογής τρόπου πληρωμής" className="w-40 h-auto rounded-lg border border-gray-200" />
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        {methods.map(m => (
-          <button
-            key={m.id}
-            onClick={() => setActive(m.id)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${active === m.id ? "bg-primary text-primary-foreground shadow" : "bg-secondary text-secondary-foreground hover:bg-secondary/70"}`}
+      <SectionTitle>Τρόποι πληρωμής</SectionTitle>
+      <p>Κάθε τρόπος πληρωμής είναι ξεχωριστό μάθημα — διάλεξε αυτόν που θέλεις να δεις.</p>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {methods.map((m) => (
+          <Link
+            key={m.path}
+            to={m.path}
+            className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-primary hover:bg-primary/5"
           >
-            {m.icon} {m.label}
-          </button>
+            <span className="text-xl leading-none">{m.icon}</span>
+            <span className="flex flex-col">
+              <span className="font-semibold text-gray-900">{m.label}</span>
+              <span className="text-sm text-gray-500">{m.desc}</span>
+            </span>
+          </Link>
         ))}
       </div>
 
-      {active === "cash" && (
-        <>
-          <SectionTitle>Πληρωμή με Μετρητά</SectionTitle>
-          <StepCard number="1" title="Άνοιξε την παραγγελία">
-            <p>Πάτα στην παραγγελία για να δεις τα στοιχεία της.</p>
-          </StepCard>
-          <StepCard number="2" title="Πάτα «Πληρωμή με Μετρητά»">
-            <p>Στο κάτω μέρος ή από το μενού πληρωμής, επίλεξε <strong>«Πληρωμή με Μετρητά»</strong>.</p>
-          </StepCard>
-          <StepCard number="3" title="Εισήγαγε ποσό (προαιρετικό)">
-            <p>Αν ο πελάτης δώσει ποσό μεγαλύτερο, χρησιμοποίησε το <strong>εργαλείο για ρέστα</strong> για να υπολογίσεις τα ρέστα.</p>
-          </StepCard>
-          <StepCard number="4" title="Επιβεβαίωση">
-            <p>Επιβεβαίωσε την πληρωμή. Η απόδειξη θα εκτυπωθεί αυτόματα.</p>
-          </StepCard>
-        </>
-      )}
-
-      {active === "card" && (
-        <>
-          <SectionTitle>Πληρωμή με Κάρτα</SectionTitle>
-          <StepCard number="1" title="Επίλεξε «Πληρωμή με Κάρτα»">
-            <p>Στο μενού πληρωμής, επίλεξε <strong>«Πληρωμή με Κάρτα (POS που έχεις επιλέξει)»</strong>.</p>
-          </StepCard>
-          <StepCard number="2" title="Χρέωσε στο POS terminal">
-            <p>Το ποσό θα σταλεί αυτόματα στο τερματικό POS. Ζήτα από τον πελάτη να πληρώσει στο τερματικό.</p>
-          </StepCard>
-          <StepCard number="3" title="Αναμονή επιβεβαίωσης">
-            <p>Μόλις η συναλλαγή εγκριθεί, η παραγγελία κλείνει αυτόματα και η απόδειξη εκτυπώνεται.</p>
-          </StepCard>
-          <InfoBox icon="⚠️" title="Αν παγώσει η παραγγελία" variant="warning">
-            <p>Αν πληρωθείς με κάρτα αλλά η παραγγελία παγώσει, ακολούθησε τα εξής βήματα:</p>
-            <ul className="list-disc pl-5 mt-2 space-y-1.5">
-              <li><strong>Κράτα τα κέρματα πατημένα για 10 δευτερόλεπτα</strong>.</li>
-              <li>Θα εμφανιστεί το μήνυμα: <strong>«Αφαίρεση ελέγχου εκκρεμών συναλλαγών και ξεκλείδωμα παραγγελίας;»</strong>.</li>
-              <li>Πάτα <strong>«Ναι»</strong> για να ξεκλειδώσει η παραγγελία.</li>
-            </ul>
-          </InfoBox>
-
-          <InfoBox icon="📍" title="Αδυναμία εκκίνησης πληρωμής" variant="warning">
-            <p>Αν εμφανιστεί το μήνυμα <strong>«Αδυναμία εκκίνησης πληρωμής»</strong>, πήγαινε στις <strong>Ρυθμίσεις της συσκευής (iOS)</strong> και ενεργοποίησε:</p>
-            <ul className="list-disc pl-5 mt-2 space-y-1.5">
-              <li><strong>Πρόσβαση στην Τοποθεσία</strong> (Location) για την εφαρμογή Spotlight POS.</li>
-              <li><strong>Αυτόματη Ζώνη Ώρας</strong> (Settings → General → Date &amp; Time → Automatic Time Zone = ON).</li>
-            </ul>
-            <p className="mt-2">Χωρίς αυτά, το POS terminal δεν μπορεί να ξεκινήσει τη συναλλαγή.</p>
-          </InfoBox>
-        </>
-      )}
-
-      {active === "split" && (
-        <>
-          <SectionTitle>Split Payments — Διαίρεση Πληρωμής</SectionTitle>
-          <StepCard number="1" title="Επίλεξε «Split Payments»">
-            <p>Στο μενού πληρωμής, πάτα <strong>«Split Payments»</strong>.</p>
-          </StepCard>
-          <StepCard number="2" title="Ορισμός αριθμού πληρωμών">
-            <p>Με τα κουμπιά <strong>«+»</strong> και <strong>«-»</strong> ρύθμισε τον αριθμό πληρωμών (π.χ. 2). Το σύστημα διαιρεί αυτόματα το σύνολο ισόποσα.</p>
-          </StepCard>
-          <StepCard number="3" title="Επίλεξε τρόπο πληρωμής για κάθε μέρος">
-            <p>Πάτα <strong>«Τρόπος πληρωμής»</strong> δίπλα σε κάθε γραμμή και επίλεξε: Μετρητά, Κάρτα ή Ηλεκτρονική Πληρωμή.</p>
-          </StepCard>
-          <StepCard number="4" title="Χρέωση μία-μία">
-            <p>Πάτα <strong>«Χρέωση»</strong> για κάθε πληρωμή ξεχωριστά. Ολοκλήρωσε την πρώτη πριν πας στη δεύτερη.</p>
-          </StepCard>
-          <InfoBox icon="⚠️" title="Σημαντικό!" variant="warning">
-            <strong>Πρέπει να ολοκληρώνεται η μία πληρωμή πριν πας στη 2η.</strong> Μην αλλάζεις τρόπο πληρωμής ενώ εκκρεμεί χρέωση.
-          </InfoBox>
-        </>
-      )}
-
-      {active === "online" && (
-        <>
-          <SectionTitle>Ηλεκτρονική Πληρωμή</SectionTitle>
-          <InfoBox icon="⚙️" title="Προαπαιτούμενο" variant="purple">
-            <p>Η <strong>Ηλεκτρονική Πληρωμή</strong> πρέπει πρώτα να ενεργοποιηθεί στις <strong>Ρυθμίσεις του χρήστη</strong>.</p>
-            <ul className="list-disc pl-5 mt-2 space-y-1.5">
-              <li>Πήγαινε στις <strong>Ρυθμίσεις</strong>.</li>
-              <li>Βρες τη γραμμή <strong>«Ηλεκτρονική Πληρωμή»</strong>.</li>
-              <li>Άνοιξε το διακόπτη (γίνεται <strong>πράσινο</strong>).</li>
-            </ul>
-          </InfoBox>
-          <div className="flex justify-center">
-            <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/b098d52d1_anyviewer_screenshot_20260714104819.png" alt="Ενεργοποίηση Ηλεκτρονικής Πληρωμής στις Ρυθμίσεις" className="w-44 h-auto rounded-lg border border-gray-200" />
-          </div>
-          <StepCard number="1" title="Επίλεξε «Ηλεκτρονική Πληρωμή»">
-            <p>Στο μενού πληρωμής, πάτα <strong>«Ηλεκτρονική Πληρωμή»</strong>.</p>
-          </StepCard>
-          <StepCard number="2" title="Εμφάνιση παραθύρου «Επιλέξτε ενέργεια»">
-            <p>Εμφανίζεται παράθυρο με τρεις επιλογές:</p>
-            <ul className="list-disc pl-5 mt-2 space-y-1.5">
-              <li><strong>Κλείσιμο</strong> — κλείνει την παραγγελία χωρίς εκτύπωση.</li>
-              <li><strong>Εκτύπωση Απόδειξης και Κλείσιμο</strong> — εκτυπώνει απόδειξη και κλείνει.</li>
-              <li><strong>Ακύρωση</strong> — ακυρώνει την ενέργεια.</li>
-            </ul>
-          </StepCard>
-          <div className="flex justify-center">
-            <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/40daaac78_.png" alt="Παράθυρο Επιλέξτε ενέργεια" className="w-40 h-auto rounded-lg border border-gray-200" />
-          </div>
-          <StepCard number="3" title="Επίλεξε ενέργεια">
-            <p>Πάτα <strong>«Εκτύπωση Απόδειξης και Κλείσιμο»</strong> για να εκτυπωθεί η απόδειξη και να κλείσει η παραγγελία.</p>
-          </StepCard>
-        </>
-      )}
-
-      {active === "iris" && (
-        <>
-          <SectionTitle>Πληρωμή με IRIS</SectionTitle>
-          <InfoBox icon="🔵" title="Τι είναι το IRIS;" variant="info">
-            Το IRIS είναι το σύστημα άμεσων πληρωμών της Ελληνικής Τράπεζας — ο πελάτης πληρώνει με κωδικό IRIS από την τραπεζική του εφαρμογή.
-          </InfoBox>
-          <StepCard number="1" title="Επίλεξε «Πληρωμή με IRIS»">
-            <p>Στο μενού πληρωμής, πάτα <strong>«Πληρωμή με IRIS»</strong>.</p>
-          </StepCard>
-          <StepCard number="2" title="Εμφάνιση κωδικού">
-            <p>Το σύστημα εμφανίζει τον κωδικό IRIS ή QR που ο πελάτης σκανάρει / εισάγει στην τραπεζική εφαρμογή του.</p>
-          </StepCard>
-          <StepCard number="3" title="Επιβεβαίωση πληρωμής">
-            <p>Όταν η πληρωμή ολοκληρωθεί, η παραγγελία κλείνει αυτόματα και η απόδειξη εκτυπώνεται.</p>
-          </StepCard>
-        </>
-      )}
     </TutorialLayout>
   );
 }

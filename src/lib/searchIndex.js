@@ -45,7 +45,37 @@ const index = [
     title: "Πληρωμή",
     path: "/tutorial/payment",
     keywords: ["πληρωμή", "payment", "μετρητά", "κάρτα", "split", "bill", "split bill", "cash", "card"],
-    context: "Μετρητά, κάρτα, split payments",
+    context: "Επισκόπηση τρόπων πληρωμής",
+  },
+  {
+    title: "Πληρωμή με Μετρητά",
+    path: "/tutorial/payment-cash",
+    keywords: ["μετρητά", "cash", "ρέστα", "πληρωμή"],
+    context: "Πληρωμή παραγγελίας με μετρητά",
+  },
+  {
+    title: "Πληρωμή με Κάρτα",
+    path: "/tutorial/payment-card",
+    keywords: ["κάρτα", "card", "pos", "terminal", "πληρωμή"],
+    context: "Χρέωση μέσω POS terminal",
+  },
+  {
+    title: "Split Payments",
+    path: "/tutorial/payment-split",
+    keywords: ["split", "split bill", "διαίρεση", "μοιρασμό", "πληρωμή"],
+    context: "Διαίρεση πληρωμής σε πολλαπλές χρεώσεις",
+  },
+  {
+    title: "Ηλεκτρονική Πληρωμή",
+    path: "/tutorial/payment-online",
+    keywords: ["ηλεκτρονική", "online", "web", "πληρωμή"],
+    context: "Ενεργοποίηση και ολοκλήρωση ηλεκτρονικής πληρωμής",
+  },
+  {
+    title: "Πληρωμή με IRIS",
+    path: "/tutorial/payment-iris",
+    keywords: ["iris", "κωδικός", "qr", "τράπεζα", "πληρωμή"],
+    context: "Άμεση πληρωμή με κωδικό IRIS",
   },
   {
     title: "Επεξεργασία Παραγγελίας",
