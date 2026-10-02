@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { Mic, Square, X, Loader2 } from 'lucide-react';
+import { Mic, Loader2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const MAX_SECONDS = 120;
+const MIN_HOLD_MS = 400;
 
 const GLOSSARY = 'SpotlightPOS, Service Mode, Cashier Mode, Maitre Mode, τιμολόγιο, απόδειξη, παραγγελία, βάρδια, ανάλυση βάρδιας, κλείσιμο βάρδιας, έναρξη βάρδιας, έκπτωση, ιδιοκατανάλωση, κεραστικό, συνοδευτικά, ακυρωτικό δελτίο, επαναφορά παραγγελίας, μεταφορά παραγγελίας, συγχώνευση παραγγελιών, προϊόν, τραπέζι, σερβιτόρος, ταμείο, πληρωμή, μετρητά, κάρτα, split payment, IRIS, delivery, διανομέας, πλατφόρμα, ΑΦΜ, ΑΑΔΕ, εκτυπωτής, συγχρονισμός, ρυθμίσεις, χρήστης, κωδικός διαχειριστή';
 
@@ -55,7 +56,11 @@ export default function VoiceInputButton({ onTranscript, disabled }) {
   const streamRef = useRef(null);
   const timerRef = useRef(null);
   const elapsedRef = useRef(0);
-  const cancelledRef = useRef(false);
+  const cancelReasonRef = useRef(null); // null | 'short' | 'unmount'
+  const holdingRef = useRef(false);
+  const startedAtRef = useRef(null);
+  const releasePendingRef = useRef(false);
+  const releaseHandlersRef = useRef(null);
 
   const releaseMic = () => {
     clearInterval(timerRef.current);
@@ -64,9 +69,39 @@ export default function VoiceInputButton({ onTranscript, disabled }) {
     streamRef.current = null;
   };
 
+  const detachReleaseListeners = () => {
+    const handlers = releaseHandlersRef.current;
+    if (!handlers) return;
+    window.removeEventListener('pointerup', handlers.onUp);
+    window.removeEventListener('pointercancel', handlers.onUp);
+    releaseHandlersRef.current = null;
+  };
+
+  const attachReleaseListeners = () => {
+    detachReleaseListeners();
+    const onUp = () => handleRelease();
+    releaseHandlersRef.current = { onUp };
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+  };
+
+  // Όσο το κουμπί είναι πατημένο ηχογραφούμε — με το άφημα ξεκινά η μεταγραφή
+  const handleRelease = () => {
+    holdingRef.current = false;
+    detachReleaseListeners();
+    if (!startedAtRef.current) {
+      // αφέθηκε πριν προλάβει να ξεκινήσει η ηχογράφηση
+      releasePendingRef.current = true;
+      return;
+    }
+    if (Date.now() - startedAtRef.current < MIN_HOLD_MS) cancelReasonRef.current = 'short';
+    stopRecording();
+  };
+
   // Clear recorder + microphone on unmount
   useEffect(() => () => {
-    cancelledRef.current = true;
+    cancelReasonRef.current = 'unmount';
+    detachReleaseListeners();
     const rec = recorderRef.current;
     if (rec && rec.state !== 'inactive') {
       try { rec.stop(); } catch {}
@@ -74,8 +109,7 @@ export default function VoiceInputButton({ onTranscript, disabled }) {
     releaseMic();
   }, []);
 
-  const stopRecording = (cancel = false) => {
-    cancelledRef.current = cancel;
+  const stopRecording = () => {
     clearInterval(timerRef.current);
     timerRef.current = null;
     const rec = recorderRef.current;
@@ -111,43 +145,61 @@ export default function VoiceInputButton({ onTranscript, disabled }) {
   };
 
   const startRecording = async () => {
-    if (status !== 'idle' || disabled) return;
+    if (disabled || recorderRef.current || status === 'transcribing') return;
     setError('');
+    cancelReasonRef.current = null;
+    releasePendingRef.current = false;
+    startedAtRef.current = null;
     if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
       setError('Η συσκευή δεν υποστηρίζει ηχογράφηση.');
       return;
     }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (!holdingRef.current || releasePendingRef.current) {
+        stream.getTracks().forEach((t) => t.stop());
+        return;
+      }
       streamRef.current = stream;
 
       const mimeType = pickMime();
       const recorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
       chunksRef.current = [];
-      cancelledRef.current = false;
 
       recorder.ondataavailable = (e) => { if (e.data?.size) chunksRef.current.push(e.data); };
       recorder.onstop = () => {
         const blob = new Blob(chunksRef.current, { type: recorder.mimeType || 'audio/webm' });
         recorderRef.current = null;
         releaseMic();
+        startedAtRef.current = null;
         elapsedRef.current = 0;
         setSeconds(0);
-        if (cancelledRef.current) { setStatus('idle'); return; }
+        const reason = cancelReasonRef.current;
+        cancelReasonRef.current = null;
+        if (reason === 'unmount') return;
+        if (reason === 'short') {
+          setStatus('idle');
+          setError('Κρατήστε πατημένο το μικρόφωνο όσο μιλάτε.');
+          return;
+        }
         if (!blob.size) { setStatus('idle'); setError('Δεν καταγράφηκε ήχος. Δοκιμάστε ξανά.'); return; }
         transcribe(blob);
       };
 
       recorderRef.current = recorder;
       recorder.start();
-      setSeconds(0);
+      startedAtRef.current = Date.now();
       elapsedRef.current = 0;
+      setSeconds(0);
       setStatus('recording');
 
       timerRef.current = setInterval(() => {
         elapsedRef.current += 1;
         setSeconds(elapsedRef.current);
-        if (elapsedRef.current >= MAX_SECONDS) stopRecording();
+        if (elapsedRef.current >= MAX_SECONDS) {
+          detachReleaseListeners();
+          stopRecording();
+        }
       }, 1000);
     } catch (e) {
       releaseMic();
@@ -157,34 +209,43 @@ export default function VoiceInputButton({ onTranscript, disabled }) {
     }
   };
 
+  const handlePressStart = (e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    holdingRef.current = true;
+    attachReleaseListeners();
+    startRecording();
+  };
+
+  const handleKeyDown = (e) => {
+    if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) {
+      e.preventDefault();
+      holdingRef.current = true;
+      attachReleaseListeners();
+      startRecording();
+    }
+  };
+
+  const handleKeyUp = (e) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      handleRelease();
+    }
+  };
+
   const base = 'rounded-lg px-4 py-3 flex items-center gap-2 flex-shrink-0 transition-all disabled:opacity-40 disabled:cursor-not-allowed';
 
   return (
     <div className="relative flex-shrink-0">
       {status === 'recording' && (
-        <>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={(e) => { e.preventDefault(); stopRecording(); }}
-              className={`${base} text-white bg-red-600 hover:bg-red-700 animate-pulse`}
-              title="Διακοπή και μεταγραφή"
-            >
-              <Square className="w-4 h-4 fill-current" />
-              <span className="text-xs font-semibold tabular-nums" style={{ fontFamily: 'Inter, sans-serif' }}>
-                {formatTime(seconds)}
-              </span>
-            </button>
-            <button
-              type="button"
-              onClick={(e) => { e.preventDefault(); stopRecording(true); }}
-              className="rounded-lg p-3 text-gray-400 hover:text-gray-700 border border-gray-200 bg-white flex-shrink-0 transition-all"
-              title="Ακύρωση"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        </>
+        <div className={`${base} text-white bg-red-600`}>
+          <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+          <span className="text-xs font-semibold tabular-nums" style={{ fontFamily: 'Inter, sans-serif' }}>
+            {formatTime(seconds)}
+          </span>
+          <span className="hidden sm:inline text-xs text-white/80" style={{ fontFamily: 'Inter, sans-serif' }}>
+            Αφήστε για μεταγραφή
+          </span>
+        </div>
       )}
 
       {status === 'transcribing' && (
@@ -199,11 +260,14 @@ export default function VoiceInputButton({ onTranscript, disabled }) {
       {status === 'idle' && (
         <button
           type="button"
-          onClick={(e) => { e.preventDefault(); startRecording(); }}
+          onPointerDown={handlePressStart}
+          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
+          onContextMenu={(e) => e.preventDefault()}
           disabled={disabled}
-          className={`${base} text-white hover:opacity-90`}
+          className={`${base} text-white hover:opacity-90 select-none touch-none`}
           style={{ fontFamily: 'Inter, sans-serif', background: 'linear-gradient(135deg, #5B21B6, #b32483)' }}
-          title="Ηχογράφηση ερώτησης"
+          title="Κρατήστε πατημένο για ηχογράφηση — αφήστε για μεταγραφή"
         >
           <Mic className="w-4 h-4" />
         </button>
