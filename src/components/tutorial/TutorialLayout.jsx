@@ -28,7 +28,7 @@ const sections = [
   { title: "Πληρωμή με Κάρτα", path: "/tutorial/payment-card", icon: CreditCard },
   { title: "Ηλεκτρονική Πληρωμή", path: "/tutorial/payment-online", icon: Globe },
   { title: "Πληρωμή με IRIS", path: "/tutorial/payment-iris", icon: QrCode },
-  { title: "Split Payments", path: "/tutorial/payment-split", icon: Split },
+  { title: "Split Payments", path: "/tutorial/split-payment", icon: Split },
   { title: "Επεξεργασία", path: "/tutorial/edit-order", icon: Edit3 },
   { title: "Τιμολόγιο", path: "/tutorial/invoice", icon: Receipt },
   { title: "Μεταφορά Παραγγελίας", path: "/tutorial/transfer-order", icon: ArrowLeftRight },

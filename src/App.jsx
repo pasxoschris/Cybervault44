@@ -130,7 +130,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/payment" element={<Payment />} />
       <Route path="/tutorial/payment-cash" element={<PaymentCash />} />
       <Route path="/tutorial/payment-card" element={<PaymentCard />} />
-      <Route path="/tutorial/payment-split" element={<PaymentSplit />} />
+      <Route path="/tutorial/split-payment" element={<PaymentSplit />} />
       <Route path="/tutorial/payment-online" element={<PaymentOnline />} />
       <Route path="/tutorial/payment-iris" element={<PaymentIris />} />
       <Route path="/tutorial/shift" element={<Shift />} />

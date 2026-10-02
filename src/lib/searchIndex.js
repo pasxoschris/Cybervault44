@@ -61,7 +61,7 @@ const index = [
   },
   {
     title: "Split Payments",
-    path: "/tutorial/payment-split",
+    path: "/tutorial/split-payment",
     keywords: ["split", "split bill", "διαίρεση", "μοιρασμό", "πληρωμή"],
     context: "Διαίρεση πληρωμής σε πολλαπλές χρεώσεις",
   },
