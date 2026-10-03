@@ -8,7 +8,6 @@ export const MANUAL_META = {
   subtitleLong: 'Οδηγός χρήσης για σερβιτόρους (Service Mode)',
   footer: 'SpotlightPOS — Εγχειρίδιο Service Mode',
   coverNote: 'Το υλικό υπάρχει και online, με assistant εκπαίδευσης — βλ. τελευταία σελίδα.',
-  fileName: 'SpotlightPOS-Service-Mode-Manual.pdf',
   logos: [
     { src: 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/71e29efae_web-app-manifest-512x512.png', name: 'CyberVault', url: 'https://cybervault.gr' },
     { src: 'https://media.base44.com/images/public/69f588f4590b173a2970ddb4/c5b6c58e9_SpotlightPos_icon.png', name: 'SpotlightPOS', url: 'https://www.spotlightpos.com/' },

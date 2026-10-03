@@ -1,20 +1,8 @@
 import { jsPDF } from 'jspdf';
 import { MANUAL_META, MANUAL_CHAPTERS, MANUAL_CLOSING } from './serviceManual';
+import { MANUAL_PROFILES } from './manualProfiles';
 
 const FONT = 'Roboto';
-const PW = 210; // A4 πλάτος (mm)
-const PH = 297; // A4 ύψος (mm)
-const ML = 18;
-const MR = 18;
-const MT = 20;
-const MB = 22;
-const CW = PW - ML - MR;
-const BOTTOM = PH - MB;
-
-const FONT_URLS = {
-  normal: 'https://cdn.jsdelivr.net/npm/@expo-google-fonts/roboto/Roboto_400Regular.ttf',
-  bold: 'https://cdn.jsdelivr.net/npm/@expo-google-fonts/roboto/Roboto_700Bold.ttf',
-};
 
 const GRADIENT = [[106, 43, 158], [179, 36, 131]];
 const PURPLE = [106, 43, 158];
@@ -70,13 +58,39 @@ const setFont = (doc, isBold, size) => {
   doc.setFontSize(size);
 };
 
-const lineH = (size) => size * 0.3528 * 1.45;
+// Σπάει λέξεις που δεν χωρούν σε μία γραμμή (π.χ. μεγάλα URLs)
+const splitLongWord = (doc, word, bold, maxWidth, size) => {
+  setFont(doc, bold, size);
+  const parts = [];
+  let current = '';
+  for (const ch of word) {
+    if (current && doc.getTextWidth(current + ch) > maxWidth) {
+      parts.push(current);
+      current = ch;
+    } else {
+      current += ch;
+    }
+  }
+  if (current) parts.push(current);
+  return parts;
+};
 
 const wrapRich = (doc, text, maxWidth, size) => {
-  const tokens = [];
+  const words = [];
   parseRich(text).forEach(({ t, b }) => {
-    t.split(/\s+/).filter(Boolean).forEach((word) => tokens.push({ t: word, b }));
+    t.split(/\s+/).filter(Boolean).forEach((word) => words.push({ t: word, b }));
   });
+
+  const tokens = [];
+  words.forEach((word) => {
+    setFont(doc, word.b, size);
+    if (doc.getTextWidth(word.t) <= maxWidth) {
+      tokens.push(word);
+      return;
+    }
+    splitLongWord(doc, word.t, word.b, maxWidth, size).forEach((part) => tokens.push({ t: part, b: word.b }));
+  });
+
   const widthOf = (word, b) => { setFont(doc, b, size); return doc.getTextWidth(word); };
   const lines = [];
   let current = [];
@@ -145,24 +159,38 @@ const loadImageDataUrl = async (url) => {
   });
 };
 
-export async function generateServiceManualPdf({ onProgress } = {}) {
+export async function generateServiceManualPdf({ onProgress, profile = 'print' } = {}) {
+  const P = MANUAL_PROFILES[profile] || MANUAL_PROFILES.print;
+  const S = P.sizes;
+  const C = P.cover;
+
+  const PW = P.pageW;
+  const PH = P.pageH;
+  const ML = P.margin.l;
+  const MR = P.margin.r;
+  const MT = P.margin.t;
+  const MB = P.margin.b;
+  const CW = PW - ML - MR;
+  const BOTTOM = PH - MB;
+  const lineH = (size) => size * 0.3528 * P.lineSpacing;
+
   const [fontNormal, fontBold] = await Promise.all([
-    fetchBase64(FONT_URLS.normal),
-    fetchBase64(FONT_URLS.bold),
+    fetchBase64('https://cdn.jsdelivr.net/npm/@expo-google-fonts/roboto/Roboto_400Regular.ttf'),
+    fetchBase64('https://cdn.jsdelivr.net/npm/@expo-google-fonts/roboto/Roboto_700Bold.ttf'),
   ]);
 
-  const doc = new jsPDF({ unit: 'mm', format: 'a4', compress: true });
+  const doc = new jsPDF({ unit: 'mm', format: [PW, PH], compress: true });
   doc.addFileToVFS('Roboto-Regular.ttf', fontNormal);
   doc.addFileToVFS('Roboto-Bold.ttf', fontBold);
   doc.addFont('Roboto-Regular.ttf', FONT, 'normal');
   doc.addFont('Roboto-Bold.ttf', FONT, 'bold');
-  setFont(doc, false, 10.5);
+  setFont(doc, false, S.body);
 
   const y = { v: MT };
   const newPage = () => { doc.addPage(); y.v = MT; };
   const ensure = (h) => { if (y.v + h > BOTTOM) newPage(); };
 
-  const paragraph = (text, { size = 10.5, indent = 0, color = BODY, gap = 3, spacing = 1.1 } = {}) => {
+  const paragraph = (text, { size = S.body, indent = 0, color = BODY, gap = 3, spacing = 1.1 } = {}) => {
     const clean = sanitize(text);
     if (!clean) return;
     const lines = wrapRich(doc, clean, CW - indent, size);
@@ -177,14 +205,14 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
 
   const drawSection = (title) => {
     const clean = sanitize(title);
-    const lines = wrapRich(doc, clean, CW - 6, 12.5);
-    ensure(lines.length * lineH(12.5) + 6);
+    const lines = wrapRich(doc, clean, CW - 6, S.sectionTitle);
+    ensure(lines.length * lineH(S.sectionTitle) + 6);
     y.v += 2;
     doc.setFillColor(147, 51, 234);
     doc.roundedRect(ML, y.v - 3.6, 1.6, 4.8, 0.8, 0.8, 'F');
     lines.forEach((tokens) => {
-      drawRich(doc, tokens, ML + 5, y.v, 12.5, INK);
-      y.v += lineH(12.5);
+      drawRich(doc, tokens, ML + 5, y.v, S.sectionTitle, INK);
+      y.v += lineH(S.sectionTitle);
     });
     y.v += 3.5;
   };
@@ -195,37 +223,37 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
     const index = typeof block.n === 'number' ? block.n : counter.value + 1;
     if (typeof block.n !== 'number') counter.value += 1;
 
-    const r = 3.6;
+    const r = P.stepCircleR;
     const indent = r * 2 + 4;
-    const titleLines = wrapRich(doc, sanitize(block.title), CW - indent, 11.2);
-    ensure(titleLines.length * lineH(11.2) + 8);
+    const titleLines = wrapRich(doc, sanitize(block.title), CW - indent, S.stepTitle);
+    ensure(titleLines.length * lineH(S.stepTitle) + 8);
 
     const cy = y.v - 1.4;
     doc.setFillColor(91, 33, 182);
     doc.circle(ML + r, cy, r, 'F');
-    setFont(doc, true, 8.5);
+    setFont(doc, true, S.stepNumber);
     doc.setTextColor(255, 255, 255);
-    doc.text(String(index), ML + r, cy + 1.1, { align: 'center' });
+    doc.text(String(index), ML + r, cy + S.stepNumber * 0.13, { align: 'center' });
 
     titleLines.forEach((tokens) => {
-      drawRich(doc, tokens, ML + indent, y.v, 11.2, INK);
-      y.v += lineH(11.2);
+      drawRich(doc, tokens, ML + indent, y.v, S.stepTitle, INK);
+      y.v += lineH(S.stepTitle);
     });
     y.v += 1.4;
-    (block.lines || []).forEach((line) => paragraph(line, { size: 10.2, indent, gap: 1.6 }));
+    (block.lines || []).forEach((line) => paragraph(line, { size: S.stepBody, indent, gap: 1.6 }));
     y.v += 2.4;
   };
 
   const drawNote = (block) => {
     const style = NOTE_STYLES[block.variant] || NOTE_STYLES.info;
-    const size = 10;
+    const size = S.noteBody;
     const lh = lineH(size) + 0.9;
-    const pad = 5;
+    const pad = P.notePad;
     const textW = CW - pad * 2 - 3;
 
     const items = [];
     if (block.title) {
-      wrapRich(doc, sanitize(block.title), textW, 10.5).forEach((tokens) => items.push({ h: lineH(10.5), tokens, isTitle: true }));
+      wrapRich(doc, sanitize(block.title), textW, S.noteTitle).forEach((tokens) => items.push({ h: lineH(S.noteTitle), tokens, isTitle: true }));
     }
     (block.lines || []).forEach((line, index) => {
       wrapRich(doc, sanitize(line), textW, size).forEach((tokens) => items.push({ h: lh, tokens }));
@@ -234,8 +262,8 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
     if (block.smallLines?.length) {
       items.push({ h: 2.6, gap: true });
       block.smallLines.forEach((line) => {
-        wrapRich(doc, sanitize(line), textW, 8.8).forEach((tokens) => {
-          items.push({ h: lineH(8.8) + 0.8, tokens, small: true });
+        wrapRich(doc, sanitize(line), textW, S.noteSmall).forEach((tokens) => {
+          items.push({ h: lineH(S.noteSmall) + 0.8, tokens, small: true });
         });
       });
     }
@@ -264,8 +292,8 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
       for (let k = idx; k < end; k += 1) {
         const item = items[k];
         if (!item.gap) {
-          const itemSize = item.small ? 8.8 : item.isTitle ? 10.5 : size;
-          const itemColor = item.small ? [122, 114, 142] : item.isTitle ? style.title : BODY;
+          const itemSize = item.small ? S.noteSmall : item.isTitle ? S.noteTitle : size;
+          const itemColor = item.small ? P.smallNoteColor : item.isTitle ? style.title : BODY;
           drawRich(doc, item.tokens, ML + pad + 1.5, baseline, itemSize, itemColor);
         }
         baseline += item.h;
@@ -290,7 +318,7 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
 
     let w = CW;
     let h = w * ratio;
-    const maxH = 132;
+    const maxH = P.imageMaxH;
     if (h > maxH) { h = maxH; w = h / ratio; }
     if (w > CW) { w = CW; h = w * ratio; }
 
@@ -313,7 +341,7 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
     y.v += h + 3;
 
     if (block.caption) {
-      setFont(doc, false, 8.5);
+      setFont(doc, false, S.caption);
       doc.setTextColor(150, 152, 162);
       doc.text(sanitize(block.caption), ML + CW / 2, y.v, { align: 'center', maxWidth: CW });
       y.v += 5;
@@ -330,10 +358,10 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
       doc.rect(0, (PH / bands) * i, PW, PH / bands + 0.3, 'F');
     }
 
-    const boxW = 132;
-    const boxH = 40;
+    const boxW = C.logoBoxW;
+    const boxH = C.logoBoxH;
     const boxX = (PW - boxW) / 2;
-    const boxY = 60;
+    const boxY = C.logoBoxY;
     doc.setFillColor(255, 255, 255);
     doc.roundedRect(boxX, boxY, boxW, boxH, 4, 4, 'F');
 
@@ -345,35 +373,43 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
       if (!dataUrl) return;
       const props = doc.getImageProperties(dataUrl);
       const ratio = props.height / props.width;
-      let h = 24;
+      let h = C.logoH;
       let w = h / ratio;
-      if (w > cellW - 16) { w = cellW - 16; h = w * ratio; }
+      if (w > cellW - C.logoPadX) { w = cellW - C.logoPadX; h = w * ratio; }
       doc.addImage(dataUrl, props.fileType || 'PNG', boxX + cellW * i + (cellW - w) / 2, boxY + (boxH - h) / 2, w, h);
     });
     doc.setDrawColor(226, 232, 240);
     doc.setLineWidth(0.4);
     doc.line(boxX + cellW, boxY + 9, boxX + cellW, boxY + boxH - 9);
 
-    let titleY = 150;
-    wrapRich(doc, MANUAL_META.title, CW - 10, 28).forEach((tokens) => {
-      drawRich(doc, tokens, PW / 2, titleY, 28, [255, 255, 255], 'center');
-      titleY += lineH(28);
-    });
+    const cursor = { v: C.titleY };
+    const centered = (text, size, color) => {
+      wrapRich(doc, sanitize(text), C.titleMaxW, size).forEach((tokens) => {
+        drawRich(doc, tokens, PW / 2, cursor.v, size, color, 'center');
+        cursor.v += lineH(size);
+      });
+    };
 
-    drawRich(doc, parseRich(sanitize(MANUAL_META.subtitle)), PW / 2, titleY + 5, 15, [238, 232, 248], 'center');
-    drawRich(doc, parseRich(sanitize(MANUAL_META.subtitleLong)), PW / 2, titleY + 14, 11, [216, 206, 236], 'center');
+    centered(MANUAL_META.title, C.title, [255, 255, 255]);
+    cursor.v += C.afterTitle;
+    centered(MANUAL_META.subtitle, C.subtitle, [238, 232, 248]);
+    cursor.v += C.afterSubtitle;
+    centered(MANUAL_META.subtitleLong, C.subtitleLong, [216, 206, 236]);
+    cursor.v += C.afterSubtitleLong;
+    if (MANUAL_META.coverNote) {
+      centered(MANUAL_META.coverNote, C.note, [208, 196, 230]);
+      cursor.v += C.afterNote;
+    }
 
-    // Διακριτική παραπομπή στο online υλικό — δεν αυξάνει το ύψος της σύνθεσης
-    drawRich(doc, parseRich(sanitize(MANUAL_META.coverNote)), PW / 2, titleY + 23, 9.5, [208, 196, 230], 'center');
-
-    setFont(doc, false, 10.5);
+    setFont(doc, false, C.edition);
     doc.setTextColor(226, 218, 240);
     const dateLabel = new Date().toLocaleDateString('el-GR', { month: 'long', year: 'numeric' });
-    doc.text(`Έκδοση: ${dateLabel}`, PW / 2, titleY + 30, { align: 'center' });
+    doc.text(`Έκδοση: ${dateLabel}`, PW / 2, cursor.v, { align: 'center' });
+    cursor.v += C.afterEdition;
 
     doc.setDrawColor(255, 255, 255);
     doc.setLineWidth(0.4);
-    doc.line(PW / 2 - 25, titleY + 38, PW / 2 + 25, titleY + 38);
+    doc.line(PW / 2 - C.dividerHalf, cursor.v, PW / 2 + C.dividerHalf, cursor.v);
   };
 
   const chapterStart = (number, chapter) => {
@@ -381,17 +417,17 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
     y.v = MT;
     counter.value = 0;
 
-    const badge = 10;
+    const badge = P.chapterBadge;
     doc.setFillColor(PURPLE[0], PURPLE[1], PURPLE[2]);
     doc.roundedRect(ML, y.v - 6, badge, badge, 2.4, 2.4, 'F');
-    setFont(doc, true, 12);
+    setFont(doc, true, badge * 1.2);
     doc.setTextColor(255, 255, 255);
     doc.text(String(number), ML + badge / 2, y.v + 0.6, { align: 'center' });
 
     // Ο τίτλος του κεφαλαίου πάντα έντονος (bold)
-    wrapRich(doc, `**${sanitize(chapter.title)}**`, CW - badge - 5, 17).forEach((tokens) => {
-      drawRich(doc, tokens, ML + badge + 5, y.v, 17, INK);
-      y.v += lineH(17);
+    wrapRich(doc, `**${sanitize(chapter.title)}**`, CW - badge - 5, S.chapterTitle).forEach((tokens) => {
+      drawRich(doc, tokens, ML + badge + 5, y.v, S.chapterTitle, INK);
+      y.v += lineH(S.chapterTitle);
     });
     y.v += 4;
 
@@ -400,7 +436,7 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
     doc.line(ML, y.v, PW - MR, y.v);
     y.v += 8;
 
-    if (chapter.subtitle) paragraph(chapter.subtitle, { size: 10.5, color: [122, 114, 142], gap: 6 });
+    if (chapter.subtitle) paragraph(chapter.subtitle, { size: S.chapterSubtitle, color: [122, 114, 142], gap: 6 });
   };
 
   // Καταληκτική σελίδα (χωρίς αρίθμηση κεφαλαίου, εκτός Περιεχομένων): online υλικό & assistant
@@ -409,59 +445,84 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
     y.v = MT;
 
     drawSection(MANUAL_CLOSING.title);
-    (MANUAL_CLOSING.paragraphs || []).forEach((line) => paragraph(line, { size: 10.5, gap: 2.4 }));
+    (MANUAL_CLOSING.paragraphs || []).forEach((line) => paragraph(line, { size: S.body, gap: 2.4 }));
 
     // Ενεργός σύνδεσμος προς τον online οδηγό (ίδια τεχνική με τα λογότυπα του εξωφύλλου)
-    const linkSize = 12;
     const link = MANUAL_CLOSING.link;
-    ensure(lineH(linkSize) + 4);
-    const tokens = [{ t: link.label, b: true }];
-    drawRich(doc, tokens, ML, y.v, linkSize, PURPLE);
-    setFont(doc, true, linkSize);
-    const linkW = doc.getTextWidth(link.label);
-    doc.setDrawColor(PURPLE[0], PURPLE[1], PURPLE[2]);
-    doc.setLineWidth(0.3);
-    doc.line(ML, y.v + 1.4, ML + linkW, y.v + 1.4);
-    doc.link(ML - 1, y.v - 4.5, linkW + 2, 7.5, { url: link.url });
-    y.v += lineH(linkSize) + 5;
+    y.v += 1;
+    wrapRich(doc, link.label, CW, S.link).forEach((tokens) => {
+      ensure(lineH(S.link) + 2);
+      drawRich(doc, tokens, ML, y.v, S.link, PURPLE);
+      const w = measureTokens(doc, tokens, S.link);
+      doc.setDrawColor(PURPLE[0], PURPLE[1], PURPLE[2]);
+      doc.setLineWidth(0.3);
+      doc.line(ML, y.v + 1.4, ML + w, y.v + 1.4);
+      doc.link(ML - 1, y.v - 4.5, w + 2, 7.5, { url: link.url });
+      y.v += lineH(S.link);
+    });
+    y.v += 4;
 
     (MANUAL_CLOSING.notes || []).forEach((block) => drawNote(block));
   };
 
   const drawToc = (entries) => {
-    doc.setPage(2);
-    y.v = MT;
-    setFont(doc, true, 20);
-    doc.setTextColor(INK[0], INK[1], INK[2]);
-    doc.text('Περιεχόμενα', ML, y.v + 2);
-    y.v += 12;
-    doc.setFillColor(147, 51, 234);
-    doc.roundedRect(ML, y.v - 5, 22, 1.2, 0.6, 0.6, 'F');
-    y.v += 7;
+    const rowStep = S.tocRow * 0.7056;
+    const rowsPerPage = Math.max(1, Math.floor((BOTTOM - MT - 20) / rowStep));
+    const chunks = [];
+    for (let i = 0; i < entries.length; i += rowsPerPage) chunks.push(entries.slice(i, i + rowsPerPage));
 
-    entries.forEach((entry, index) => {
-      const label = sanitize(`${index + 1}. ${entry.title}`);
-      const page = String(entry.page);
-      setFont(doc, false, 10.5);
-      doc.setTextColor(BODY[0], BODY[1], BODY[2]);
-      doc.text(label, ML, y.v);
-      const labelW = doc.getTextWidth(label);
-      setFont(doc, true, 10.5);
-      const pageW = doc.getTextWidth(page);
-      const startX = ML + labelW + 2;
-      const endX = PW - MR - pageW - 2;
-      if (endX > startX) {
-        doc.setDrawColor(205, 210, 220);
-        doc.setLineWidth(0.25);
-        doc.setLineDashPattern([0.5, 1.3], 0);
-        doc.line(startX, y.v - 1, endX, y.v - 1);
-        doc.setLineDashPattern([], 0);
-      }
+    // Οι σελίδες των κεφαλαίων μετατοπίζονται όταν τα Περιεχόμενα πιάνουν >1 σελίδα
+    const extra = chunks.length - 1;
+    for (let i = 0; i < extra; i += 1) doc.insertPage(3 + i);
+
+    let globalIndex = 0;
+    chunks.forEach((chunk, index) => {
+      doc.setPage(2 + index);
+      y.v = MT;
+      setFont(doc, true, S.tocTitle);
       doc.setTextColor(INK[0], INK[1], INK[2]);
-      doc.text(page, PW - MR, y.v, { align: 'right' });
-      // Κλικ στη γραμμή των περιεχομένων -> μετάβαση στο κεφάλαιο
-      doc.link(ML, y.v - 4, CW, 6, { pageNumber: entry.page });
-      y.v += 7.4;
+      doc.text('Περιεχόμενα', ML, y.v + 2);
+      if (chunks.length > 1) {
+        setFont(doc, false, S.tocRow * 0.85);
+        doc.setTextColor(150, 152, 162);
+        doc.text(`${index + 1}/${chunks.length}`, PW - MR, y.v + 2, { align: 'right' });
+      }
+      y.v += 12;
+      doc.setFillColor(147, 51, 234);
+      doc.roundedRect(ML, y.v - 5, 22, 1.2, 0.6, 0.6, 'F');
+      y.v += 7;
+
+      chunk.forEach((entry) => {
+        globalIndex += 1;
+        const page = String(entry.page + extra);
+        setFont(doc, false, S.tocRow);
+        const maxLabelW = CW - 16;
+        let label = sanitize(`${globalIndex}. ${entry.title}`);
+        if (doc.getTextWidth(label) > maxLabelW) {
+          while (label.length > 4 && doc.getTextWidth(`${label}…`) > maxLabelW) label = label.slice(0, -1);
+          label += '…';
+        }
+
+        doc.setTextColor(BODY[0], BODY[1], BODY[2]);
+        doc.text(label, ML, y.v);
+        const labelW = doc.getTextWidth(label);
+        setFont(doc, true, S.tocRow);
+        const pageW = doc.getTextWidth(page);
+        const startX = ML + labelW + 2;
+        const endX = PW - MR - pageW - 2;
+        if (endX > startX) {
+          doc.setDrawColor(205, 210, 220);
+          doc.setLineWidth(0.25);
+          doc.setLineDashPattern([0.5, 1.3], 0);
+          doc.line(startX, y.v - 1, endX, y.v - 1);
+          doc.setLineDashPattern([], 0);
+        }
+        doc.setTextColor(INK[0], INK[1], INK[2]);
+        doc.text(page, PW - MR, y.v, { align: 'right' });
+        // Κλικ στη γραμμή των περιεχομένων -> μετάβαση στο κεφάλαιο
+        doc.link(ML, y.v - 4, CW, 6, { pageNumber: entry.page + extra });
+        y.v += rowStep;
+      });
     });
   };
 
@@ -472,7 +533,7 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
       doc.setDrawColor(230, 232, 238);
       doc.setLineWidth(0.3);
       doc.line(ML, PH - MB + 4, PW - MR, PH - MB + 4);
-      setFont(doc, false, 8.5);
+      setFont(doc, false, S.footer);
       doc.setTextColor(150, 152, 162);
       doc.text(sanitize(MANUAL_META.footer), ML, PH - MB + 8.5);
       doc.text(`${p} / ${total}`, PW - MR, PH - MB + 8.5, { align: 'right' });
@@ -506,5 +567,5 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
   drawToc(entries);
   drawFooters();
 
-  doc.save(MANUAL_META.fileName);
+  doc.save(P.fileName);
 }
