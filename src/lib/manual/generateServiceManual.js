@@ -417,6 +417,8 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
       }
       doc.setTextColor(INK[0], INK[1], INK[2]);
       doc.text(page, PW - MR, y.v, { align: 'right' });
+      // Κλικ στη γραμμή των περιεχομένων -> μετάβαση στο κεφάλαιο
+      doc.link(ML, y.v - 4, CW, 6, { pageNumber: entry.page });
       y.v += 7.4;
     });
   };
