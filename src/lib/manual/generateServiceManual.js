@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf';
-import { MANUAL_META, MANUAL_CHAPTERS } from './serviceManual';
+import { MANUAL_META, MANUAL_CHAPTERS, MANUAL_CLOSING } from './serviceManual';
 
 const FONT = 'Roboto';
 const PW = 210; // A4 πλάτος (mm)
@@ -231,6 +231,14 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
       wrapRich(doc, sanitize(line), textW, size).forEach((tokens) => items.push({ h: lh, tokens }));
       if (index < block.lines.length - 1) items.push({ h: 1.4, gap: true });
     });
+    if (block.smallLines?.length) {
+      items.push({ h: 2.6, gap: true });
+      block.smallLines.forEach((line) => {
+        wrapRich(doc, sanitize(line), textW, 8.8).forEach((tokens) => {
+          items.push({ h: lineH(8.8) + 0.8, tokens, small: true });
+        });
+      });
+    }
     if (!items.length) return;
 
     let idx = 0;
@@ -256,7 +264,9 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
       for (let k = idx; k < end; k += 1) {
         const item = items[k];
         if (!item.gap) {
-          drawRich(doc, item.tokens, ML + pad + 1.5, baseline, item.isTitle ? 10.5 : size, item.isTitle ? style.title : BODY);
+          const itemSize = item.small ? 8.8 : item.isTitle ? 10.5 : size;
+          const itemColor = item.small ? [122, 114, 142] : item.isTitle ? style.title : BODY;
+          drawRich(doc, item.tokens, ML + pad + 1.5, baseline, itemSize, itemColor);
         }
         baseline += item.h;
       }
@@ -353,6 +363,9 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
     drawRich(doc, parseRich(sanitize(MANUAL_META.subtitle)), PW / 2, titleY + 5, 15, [238, 232, 248], 'center');
     drawRich(doc, parseRich(sanitize(MANUAL_META.subtitleLong)), PW / 2, titleY + 14, 11, [216, 206, 236], 'center');
 
+    // Διακριτική παραπομπή στο online υλικό — δεν αυξάνει το ύψος της σύνθεσης
+    drawRich(doc, parseRich(sanitize(MANUAL_META.coverNote)), PW / 2, titleY + 23, 9.5, [208, 196, 230], 'center');
+
     setFont(doc, false, 10.5);
     doc.setTextColor(226, 218, 240);
     const dateLabel = new Date().toLocaleDateString('el-GR', { month: 'long', year: 'numeric' });
@@ -388,6 +401,31 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
     y.v += 8;
 
     if (chapter.subtitle) paragraph(chapter.subtitle, { size: 10.5, color: [122, 114, 142], gap: 6 });
+  };
+
+  // Καταληκτική σελίδα (χωρίς αρίθμηση κεφαλαίου, εκτός Περιεχομένων): online υλικό & assistant
+  const drawClosing = () => {
+    doc.addPage();
+    y.v = MT;
+
+    drawSection(MANUAL_CLOSING.title);
+    (MANUAL_CLOSING.paragraphs || []).forEach((line) => paragraph(line, { size: 10.5, gap: 2.4 }));
+
+    // Ενεργός σύνδεσμος προς τον online οδηγό (ίδια τεχνική με τα λογότυπα του εξωφύλλου)
+    const linkSize = 12;
+    const link = MANUAL_CLOSING.link;
+    ensure(lineH(linkSize) + 4);
+    const tokens = [{ t: link.label, b: true }];
+    drawRich(doc, tokens, ML, y.v, linkSize, PURPLE);
+    setFont(doc, true, linkSize);
+    const linkW = doc.getTextWidth(link.label);
+    doc.setDrawColor(PURPLE[0], PURPLE[1], PURPLE[2]);
+    doc.setLineWidth(0.3);
+    doc.line(ML, y.v + 1.4, ML + linkW, y.v + 1.4);
+    doc.link(ML - 1, y.v - 4.5, linkW + 2, 7.5, { url: link.url });
+    y.v += lineH(linkSize) + 5;
+
+    (MANUAL_CLOSING.notes || []).forEach((block) => drawNote(block));
   };
 
   const drawToc = (entries) => {
@@ -462,6 +500,8 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
     }
     onProgress?.(i + 1, MANUAL_CHAPTERS.length);
   }
+
+  drawClosing();
 
   drawToc(entries);
   drawFooters();
