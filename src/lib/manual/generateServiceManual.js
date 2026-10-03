@@ -329,6 +329,9 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
 
     const cellW = boxW / MANUAL_META.logos.length;
     logoImages.forEach((dataUrl, i) => {
+      const logo = MANUAL_META.logos[i];
+      // Κλικ στο λογότυπο -> άνοιγμα της αντίστοιχης ιστοσελίδας
+      if (logo && logo.url) doc.link(boxX + cellW * i, boxY, cellW, boxH, { url: logo.url });
       if (!dataUrl) return;
       const props = doc.getImageProperties(dataUrl);
       const ratio = props.height / props.width;
