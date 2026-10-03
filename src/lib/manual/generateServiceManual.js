@@ -375,7 +375,8 @@ export async function generateServiceManualPdf({ onProgress } = {}) {
     doc.setTextColor(255, 255, 255);
     doc.text(String(number), ML + badge / 2, y.v + 0.6, { align: 'center' });
 
-    wrapRich(doc, sanitize(chapter.title), CW - badge - 5, 17).forEach((tokens) => {
+    // Ο τίτλος του κεφαλαίου πάντα έντονος (bold)
+    wrapRich(doc, `**${sanitize(chapter.title)}**`, CW - badge - 5, 17).forEach((tokens) => {
       drawRich(doc, tokens, ML + badge + 5, y.v, 17, INK);
       y.v += lineH(17);
     });
