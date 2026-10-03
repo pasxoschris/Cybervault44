@@ -6,6 +6,7 @@ import { getRoleById } from '@/lib/roles';
 import { getCompletedCount, isVisited } from '@/lib/tutorialProgress';
 import { ChevronRight, CheckCircle2, ArrowLeft } from 'lucide-react';
 import AssistantFloatingButton from '@/components/academy/AssistantFloatingButton';
+import ManualDownloadButton from '@/components/academy/ManualDownloadButton';
 import SpotlightBrand from '@/components/SpotlightBrand';
 
 export default function RolePath() {
@@ -98,8 +99,9 @@ export default function RolePath() {
           <h1 className="font-bold text-2xl md:text-3xl text-white mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>{role.title}</h1>
           <p className="text-white/70 text-base mb-5" style={{ fontFamily: 'Inter, sans-serif' }}>{role.subtitle}</p>
 
-          {/* Progress */}
-          <div className="max-w-xs">
+          {/* Progress + Λήψη Manual */}
+          <div className="flex flex-wrap items-end gap-4">
+          <div className="max-w-xs flex-1 min-w-[180px]">
             <div className="flex justify-between mb-1.5">
               <span className="text-[10px] tracking-widest text-white/50 uppercase" style={{ fontFamily: 'Inter, sans-serif' }}>Πρόοδος</span>
               <span className="text-[10px] text-white/70" style={{ fontFamily: 'Inter, sans-serif' }}>{completed}/{total}</span>
@@ -110,6 +112,8 @@ export default function RolePath() {
                 style={{ width: `${pct}%`, background: "rgba(255,255,255,0.9)" }} />
               
             </div>
+          </div>
+          {role.id === 'service' && <ManualDownloadButton />}
           </div>
         </div>
       </div>
