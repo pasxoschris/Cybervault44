@@ -50,6 +50,16 @@ export const MANUAL_PROFILES = {
       afterEdition: 2.6,
       dividerHalf: 25,
     },
+    journey: {
+      title: 20,
+      showSubtitle: true,
+      subtitle: 11,
+      stepTitle: 12.5,
+      hint: 11,
+      ref: 9.5,
+      rowGap: 3,
+      circle: 3.4,
+    },
   },
   phone: {
     id: 'phone',
@@ -99,6 +109,16 @@ export const MANUAL_PROFILES = {
       afterNote: 3,
       afterEdition: 4,
       dividerHalf: 16,
+    },
+    journey: {
+      title: 14,
+      showSubtitle: false,
+      subtitle: 10,
+      stepTitle: 11,
+      hint: 10,
+      ref: 8,
+      rowGap: 1,
+      circle: 2.9,
     },
   },
 };

@@ -1,6 +1,7 @@
 import { jsPDF } from 'jspdf';
 import { MANUAL_META, MANUAL_CHAPTERS, MANUAL_CLOSING } from './serviceManual';
 import { MANUAL_PROFILES } from './manualProfiles';
+import { SHIFT_JOURNEY, journeyChapterRef } from '@/lib/shiftJourney';
 
 const FONT = 'Roboto';
 
@@ -412,6 +413,86 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
     doc.line(PW / 2 - C.dividerHalf, cursor.v, PW / 2 + C.dividerHalf, cursor.v);
   };
 
+  // Σελίδα-χάρτης «Η βάρδια σου σε 8 βήματα» — αμέσως μετά το εξώφυλλο.
+  // Επιστρέφει τα ορθογώνια κάθε βήματος, ώστε να μπουν μετά οι σύνδεσμοι στα κεφάλαια.
+  const drawJourney = () => {
+    const J = P.journey;
+    doc.addPage();
+    y.v = MT;
+    const rects = [];
+
+    setFont(doc, true, J.title);
+    doc.setTextColor(INK[0], INK[1], INK[2]);
+    doc.text(sanitize(SHIFT_JOURNEY.title), ML, y.v);
+    y.v += lineH(J.title) + 4;
+
+    doc.setDrawColor(226, 232, 240);
+    doc.setLineWidth(0.5);
+    doc.line(ML, y.v, PW - MR, y.v);
+    y.v += 6;
+
+    if (J.showSubtitle) {
+      paragraph(SHIFT_JOURNEY.subtitle, { size: J.subtitle, color: [122, 114, 142], gap: 5 });
+    }
+
+    SHIFT_JOURNEY.steps.forEach((step) => {
+      const r = J.circle;
+      const indent = r * 2 + 4;
+      const titleLines = wrapRich(doc, sanitize(step.title), CW - indent, J.stepTitle);
+      const hintLines = wrapRich(doc, sanitize(step.hint), CW - indent, J.hint);
+      const refLines = wrapRich(doc, sanitize(journeyChapterRef(step)), CW - indent, J.ref);
+      const extraLines = step.extraRefs?.length
+        ? wrapRich(doc, sanitize(step.extraRefs.join(' · ')), CW - indent, J.ref)
+        : [];
+
+      const height = titleLines.length * lineH(J.stepTitle)
+        + hintLines.length * lineH(J.hint)
+        + (refLines.length + extraLines.length) * lineH(J.ref)
+        + J.rowGap;
+      ensure(height + 1);
+
+      const top = y.v - 1.2;
+      const cy = y.v - 1.4;
+      doc.setFillColor(91, 33, 182);
+      doc.circle(ML + r, cy, r, 'F');
+      setFont(doc, true, J.stepTitle * 0.75);
+      doc.setTextColor(255, 255, 255);
+      doc.text(String(step.n), ML + r, cy + J.stepTitle * 0.1, { align: 'center' });
+
+      titleLines.forEach((tokens) => {
+        drawRich(doc, tokens, ML + indent, y.v, J.stepTitle, INK);
+        y.v += lineH(J.stepTitle);
+      });
+      hintLines.forEach((tokens) => {
+        drawRich(doc, tokens, ML + indent, y.v, J.hint, BODY);
+        y.v += lineH(J.hint);
+      });
+      refLines.forEach((tokens) => {
+        drawRich(doc, tokens, ML + indent, y.v, J.ref, PURPLE);
+        y.v += lineH(J.ref);
+      });
+      extraLines.forEach((tokens) => {
+        drawRich(doc, tokens, ML + indent, y.v, J.ref, [122, 114, 142]);
+        y.v += lineH(J.ref);
+      });
+
+      rects.push({ page: doc.getNumberOfPages(), x: ML, y: top, w: CW, h: height, chapter: step.chapter });
+      y.v += J.rowGap;
+    });
+
+    return rects;
+  };
+
+  // Κλικαμπλ βήματα -> σελίδα κεφαλαίου (οι σελίδες είναι γνωστές μετά τα κεφάλαια και τα Περιεχόμενα)
+  const attachJourneyLinks = (rects, entries, extra) => {
+    rects.forEach((rect) => {
+      const entry = entries[rect.chapter - 1];
+      if (!entry) return;
+      doc.setPage(rect.page);
+      doc.link(rect.x, rect.y, rect.w, rect.h, { pageNumber: entry.page + extra });
+    });
+  };
+
   const chapterStart = (number, chapter) => {
     doc.addPage();
     y.v = MT;
@@ -465,7 +546,7 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
     (MANUAL_CLOSING.notes || []).forEach((block) => drawNote(block));
   };
 
-  const drawToc = (entries) => {
+  const drawToc = (entries, tocStart) => {
     const rowStep = S.tocRow * 0.7056;
     const rowsPerPage = Math.max(1, Math.floor((BOTTOM - MT - 20) / rowStep));
     const chunks = [];
@@ -473,11 +554,11 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
 
     // Οι σελίδες των κεφαλαίων μετατοπίζονται όταν τα Περιεχόμενα πιάνουν >1 σελίδα
     const extra = chunks.length - 1;
-    for (let i = 0; i < extra; i += 1) doc.insertPage(3 + i);
+    for (let i = 0; i < extra; i += 1) doc.insertPage(tocStart + 1 + i);
 
     let globalIndex = 0;
     chunks.forEach((chunk, index) => {
-      doc.setPage(2 + index);
+      doc.setPage(tocStart + index);
       y.v = MT;
       setFont(doc, true, S.tocTitle);
       doc.setTextColor(INK[0], INK[1], INK[2]);
@@ -524,11 +605,13 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
         y.v += rowStep;
       });
     });
+
+    return extra;
   };
 
-  const drawFooters = () => {
+  const drawFooters = (tocStart) => {
     const total = doc.getNumberOfPages();
-    for (let p = 2; p <= total; p += 1) {
+    for (let p = tocStart; p <= total; p += 1) {
       doc.setPage(p);
       doc.setDrawColor(230, 232, 238);
       doc.setLineWidth(0.3);
@@ -543,6 +626,10 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
   const logoImages = await Promise.all(MANUAL_META.logos.map((logo) => loadImageDataUrl(logo.src).catch(() => null)));
   await drawCover(logoImages);
 
+  // Σελίδα-χάρτης «Η βάρδια σου σε 8 βήματα» — μετά το εξώφυλλο, πριν τα Περιεχόμενα
+  const journeyRects = drawJourney();
+
+  const tocStart = doc.getNumberOfPages() + 1;
   doc.addPage(); // σελίδα Περιεχομένων (συμπληρώνεται στο τέλος)
 
   const entries = [];
@@ -564,8 +651,9 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
 
   drawClosing();
 
-  drawToc(entries);
-  drawFooters();
+  const extra = drawToc(entries, tocStart);
+  attachJourneyLinks(journeyRects, entries, extra);
+  drawFooters(tocStart);
 
   doc.save(P.fileName);
 }

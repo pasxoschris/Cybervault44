@@ -7,6 +7,7 @@ import { getCompletedCount, isVisited } from '@/lib/tutorialProgress';
 import { ChevronRight, CheckCircle2, ArrowLeft } from 'lucide-react';
 import AssistantFloatingButton from '@/components/academy/AssistantFloatingButton';
 import ManualDownloadButton from '@/components/academy/ManualDownloadButton';
+import ShiftJourneyMap from '@/components/tutorial/ShiftJourneyMap';
 import SpotlightBrand from '@/components/SpotlightBrand';
 
 export default function RolePath() {
@@ -123,6 +124,8 @@ export default function RolePath() {
         <Link to="/spotlight-pos-guide" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-purple-600 mb-6 transition-colors" style={{ fontFamily: 'Inter, sans-serif' }}>
           <ArrowLeft className="w-4 h-4" /> Επιστροφή στους Ρόλους
         </Link>
+
+        {role.id === 'service' && <ShiftJourneyMap visited={visited} />}
 
         <div className="flex flex-col gap-3">
           {role.lessons.map((lesson, i) => {
