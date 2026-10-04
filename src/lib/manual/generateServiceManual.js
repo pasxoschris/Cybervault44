@@ -1,7 +1,10 @@
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { jsPDF } from 'jspdf';
 import { MANUAL_META, MANUAL_CHAPTERS, MANUAL_CLOSING } from './serviceManual';
 import { MANUAL_PROFILES } from './manualProfiles';
 import { SHIFT_JOURNEY, journeyChapterRef } from '@/lib/shiftJourney';
+import { STEP_ICONS } from '@/lib/shiftJourneyIcons';
 
 const FONT = 'Roboto';
 
@@ -159,6 +162,22 @@ const loadImageDataUrl = async (url) => {
     reader.readAsDataURL(blob);
   });
 };
+
+// Εικονίδιο βήματος (lucide) -> PNG data URL, για να σχεδιαστεί στη χρονογραμμή του PDF
+const iconToPng = (IconComponent, size = 160) =>
+  new Promise((resolve) => {
+    const svg = renderToStaticMarkup(React.createElement(IconComponent, { size, color: '#FFFFFF', strokeWidth: 2 }));
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      canvas.getContext('2d').drawImage(img, 0, 0, size, size);
+      try { resolve(canvas.toDataURL('image/png')); } catch { resolve(null); }
+    };
+    img.onerror = () => resolve(null);
+    img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+  });
 
 export async function generateServiceManualPdf({ onProgress, profile = 'print' } = {}) {
   const P = MANUAL_PROFILES[profile] || MANUAL_PROFILES.print;
@@ -415,11 +434,12 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
 
   // Σελίδα-χάρτης «Η βάρδια σου σε 6 βήματα» — αμέσως μετά το εξώφυλλο.
   // Επιστρέφει τα ορθογώνια κάθε βήματος, ώστε να μπουν μετά οι σύνδεσμοι στα κεφάλαια.
-  const drawJourney = () => {
+  const drawJourney = (iconImages) => {
     const J = P.journey;
     doc.addPage();
     y.v = MT;
     const rects = [];
+    let prev = null;
 
     setFont(doc, true, J.title);
     doc.setTextColor(INK[0], INK[1], INK[2]);
@@ -435,10 +455,10 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
       paragraph(SHIFT_JOURNEY.subtitle, { size: J.subtitle, color: [122, 114, 142], gap: 5 });
     }
 
-    SHIFT_JOURNEY.steps.forEach((step) => {
+    SHIFT_JOURNEY.steps.forEach((step, i) => {
       const r = J.circle;
       const indent = r * 2 + 4;
-      const titleLines = wrapRich(doc, sanitize(step.title), CW - indent, J.stepTitle);
+      const titleLines = wrapRich(doc, sanitize(`${step.n}. ${step.title}`), CW - indent, J.stepTitle);
       const hintLines = wrapRich(doc, sanitize(step.hint), CW - indent, J.hint);
       const refLines = wrapRich(doc, sanitize(journeyChapterRef(step)), CW - indent, J.ref);
       const extraLines = step.extraRefs?.length
@@ -453,11 +473,28 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
 
       const top = y.v - 1.2;
       const cy = y.v - 1.4;
+
+      // Κάθετη χρονογραμμή: γραμμή σύνδεσης με το προηγούμενο βήμα
+      const page = doc.getNumberOfPages();
+      if (prev && prev.page === page) {
+        doc.setDrawColor(220, 212, 238);
+        doc.setLineWidth(0.7);
+        doc.line(ML + r, prev.cy + r + 0.8, ML + r, cy - r - 0.8);
+      }
+      prev = { cy, page };
+
       doc.setFillColor(91, 33, 182);
       doc.circle(ML + r, cy, r, 'F');
-      setFont(doc, true, J.stepTitle * 0.75);
-      doc.setTextColor(255, 255, 255);
-      doc.text(String(step.n), ML + r, cy + J.stepTitle * 0.1, { align: 'center' });
+
+      const iconPng = iconImages[i];
+      if (iconPng) {
+        const s = r * 1.25;
+        doc.addImage(iconPng, 'PNG', ML + r - s / 2, cy - s / 2, s, s);
+      } else {
+        setFont(doc, true, J.stepTitle * 0.75);
+        doc.setTextColor(255, 255, 255);
+        doc.text(String(step.n), ML + r, cy + J.stepTitle * 0.1, { align: 'center' });
+      }
 
       titleLines.forEach((tokens) => {
         drawRich(doc, tokens, ML + indent, y.v, J.stepTitle, INK);
@@ -627,7 +664,11 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
   await drawCover(logoImages);
 
   // Σελίδα-χάρτης «Η βάρδια σου σε 6 βήματα» — μετά το εξώφυλλο, πριν τα Περιεχόμενα
-  const journeyRects = drawJourney();
+  const journeyIcons = await Promise.all(SHIFT_JOURNEY.steps.map((step) => {
+    const Icon = STEP_ICONS[step.icon];
+    return Icon ? iconToPng(Icon).catch(() => null) : Promise.resolve(null);
+  }));
+  const journeyRects = drawJourney(journeyIcons);
 
   const tocStart = doc.getNumberOfPages() + 1;
   doc.addPage(); // σελίδα Περιεχομένων (συμπληρώνεται στο τέλος)

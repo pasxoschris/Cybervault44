@@ -1,11 +1,13 @@
 // Ο χάρτης της βάρδιας σε 6 βήματα — κοινή πηγή για τον online οδηγό και το PDF manual.
 // Οι αριθμοί κεφαλαίων αντιστοιχούν στη σειρά των κεφαλαίων του Service Mode manual.
+// Το `icon` δείχνει στο STEP_ICONS (src/lib/shiftJourneyIcons.js).
 export const SHIFT_JOURNEY = {
   title: 'Η βάρδια σου σε 6 βήματα',
   subtitle: 'Η σειρά με την οποία δουλεύεις τη βάρδια σου — κάθε βήμα δείχνει το κεφάλαιο με τις λεπτομέρειες.',
   steps: [
     {
       n: 1,
+      icon: 'start',
       title: 'Έναρξη Βάρδιας',
       hint: 'Άνοιξε τη βάρδια πριν δεχτείς παραγγελίες.',
       chapter: 5,
@@ -14,6 +16,7 @@ export const SHIFT_JOURNEY = {
     },
     {
       n: 2,
+      icon: 'order',
       title: 'Δημιουργία Παραγγελίας',
       hint: 'Διάλεξε τραπέζι, πρόσθεσε προϊόντα και στείλε την παραγγελία.',
       chapter: 7,
@@ -22,6 +25,7 @@ export const SHIFT_JOURNEY = {
     },
     {
       n: 3,
+      icon: 'invoice',
       title: 'Έκδοση Παραστατικού',
       hint: 'Έκδωσε τιμολόγιο πριν την πληρωμή, όταν χρειάζεται.',
       chapter: 22,
@@ -30,6 +34,7 @@ export const SHIFT_JOURNEY = {
     },
     {
       n: 4,
+      icon: 'payment',
       title: 'Πληρωμή',
       hint: 'Μετρητά, κάρτα, IRIS, split payments — με απόδειξη.',
       chapter: 15,
@@ -38,6 +43,7 @@ export const SHIFT_JOURNEY = {
     },
     {
       n: 5,
+      icon: 'close_order',
       title: 'Κλείσιμο Παραγγελίας',
       hint: 'Μετά την πληρωμή η παραγγελία κλείνει — δες τη στη βάρδια.',
       chapter: 25,
@@ -46,6 +52,7 @@ export const SHIFT_JOURNEY = {
     },
     {
       n: 6,
+      icon: 'close_shift',
       title: 'Ανάλυση & Κλείσιμο Βάρδιας',
       hint: 'Έλεγξε τα σύνολα της βάρδιας και κλείσε τη μέρα.',
       chapter: 26,
