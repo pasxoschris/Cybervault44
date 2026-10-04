@@ -14,7 +14,7 @@ export default function TransferOrder() {
       <InfoBox icon="⚙️" title="Προαπαιτούμενο" variant="purple">
         <p>Ο διαχειριστής του καταστήματος πρέπει πρώτα να επιτρέψει τη μεταφορά παραγγελιών στον χρήστη, από το <strong>Διαχειριστικό</strong>.</p>
         <ul className="list-disc pl-5 mt-2 space-y-1.5">
-          <li>Μπες στο <strong>Διαχειριστικό (Secure)</strong>.</li>
+          <li>Μπες στο <strong>Secure (Διαχειριστικό)</strong>.</li>
           <li>Πήγαινε στα <strong>«Δικαιώματα Διαχειριστικού Κωδικού»</strong>.</li>
           <li>Βρες τη γραμμή <strong>«Μεταφορά Παραγγελιών»</strong> και άνοιξε το διακόπτη (γίνεται <strong>πράσινο / ON</strong>).</li>
         </ul>

@@ -10,7 +10,7 @@ export default function Invoice() {
   return (
     <CashierTutorialLayout title="Έκδοση Τιμολογίου" subtitle="Εκτύπωση τιμολογίου από το μενού του Cashier">
       <InfoBox icon="⚙️" title="Προαπαιτούμενο — Ενεργοποίηση από Διαχειριστή" variant="warning">
-        <p>Για να εμφανιστεί η επιλογή <strong>«Έκδοση Τιμολογίου»</strong>, πρέπει να την έχει <strong>ενεργοποιήσει ο διαχειριστής</strong> (από το <strong>Secure / Back Office</strong>) για το συγκεκριμένο <strong>Point of Sale (iPad)</strong>. Αν δεν είναι ενεργοποιημένη, η επιλογή δεν εμφανίζεται στο μενού.</p>
+        <p>Για να εμφανιστεί η επιλογή <strong>«Έκδοση Τιμολογίου»</strong>, πρέπει να την έχει <strong>ενεργοποιήσει ο διαχειριστής</strong> (από το <strong>Secure (Διαχειριστικό)</strong>) για το συγκεκριμένο <strong>Point of Sale (iPad)</strong>. Αν δεν είναι ενεργοποιημένη, η επιλογή δεν εμφανίζεται στο μενού.</p>
       </InfoBox>
 
       <InfoBox icon="📄" title="Τι θα μάθεις" variant="purple">
@@ -49,7 +49,7 @@ export default function Invoice() {
       <SectionTitle>Ενεργοποίηση ανά iPad</SectionTitle>
 
       <StepCard number="1" title="Από το Διαχειριστικό">
-        <p>Η ενεργοποίηση της Έκδοσης Τιμολογίου γίνεται από το <strong>Διαχειριστικό (Secure / Back Office)</strong>, ανά <strong>συσκευή (iPad)</strong>.</p>
+        <p>Η ενεργοποίηση της Έκδοσης Τιμολογίου γίνεται από το <strong>Secure (Διαχειριστικό)</strong>, ανά <strong>συσκευή (iPad)</strong>.</p>
       </StepCard>
 
       <StepCard number="2" title="Δικαιώματα συσκευής">

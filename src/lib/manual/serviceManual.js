@@ -21,7 +21,7 @@ export const MANUAL_CHAPTERS = [...CHAPTERS_A, ...CHAPTERS_B, ...CHAPTERS_C].fil
 export const MANUAL_CLOSING = {
   title: 'Το υλικό online & ο assistant',
   paragraphs: [
-    'Το ίδιο υλικό για το Spotlight POS (SpotlightPOS) υπάρχει και online — οργανωμένο ανά ρόλο (Service, Cashier, Maitre Service, Maitre Mode, Back Office), με εικόνες βήμα-βήμα και δυνατότητα αναζήτησης.',
+    'Το ίδιο υλικό για το Spotlight POS (SpotlightPOS) υπάρχει και online — οργανωμένο ανά ρόλο (Service, Cashier, Maitre Service, Maitre Mode, Secure (Διαχειριστικό)), με εικόνες βήμα-βήμα και δυνατότητα αναζήτησης.',
     'Άνοιγμα του online οδηγού:',
   ],
   link: {

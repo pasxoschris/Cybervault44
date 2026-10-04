@@ -23,7 +23,7 @@ export default function LoginDevice() {
     <TutorialLayout title="Σύνδεση από νέα συσκευή" subtitle="Πώς να συνδέσεις μια νέα συσκευή (iPhone/iPad) με το κατάστημα">
 
       <InfoBox icon="📱" title="Συμβατότητα Συσκευής" variant="info">
-        Η εφαρμογή Spotlight POS (όχι το διαχειριστικό Secure) τρέχει <strong>μόνο σε iOS συσκευές</strong> — <strong>iPhone</strong> και <strong>iPad</strong>. Βεβαιώσου ότι χρησιμοποιείς συμβατή συσκευή.
+        Η εφαρμογή Spotlight POS — όχι το Secure (Διαχειριστικό) — τρέχει <strong>μόνο σε iOS συσκευές</strong> — <strong>iPhone</strong> και <strong>iPad</strong>. Βεβαιώσου ότι χρησιμοποιείς συμβατή συσκευή.
       </InfoBox>
 
       <InfoBox icon="⚠️" title="Προαπαιτούμενα" variant="warning">
@@ -51,7 +51,7 @@ export default function LoginDevice() {
 
       <StepCard number="2" title="Πάτα «QR Code» για σύνδεση καταστήματος">
         <p>Στην οθόνη σύνδεσης πάτα το κουμπί <strong>«QR Code»</strong>. Θα ανοίξει η κάμερα του iPhone/iPad σου.</p>
-        <p className="mt-2">Σκάναρε το <strong>QR Code του καταστήματος</strong> (το παρέχει ο διαχειριστής από το Secure ή το βλέπεις από άλλη συνδεδεμένη συσκευή) για να συνδέσεις τη συσκευή σου με το κατάστημα.</p>
+        <p className="mt-2">Σκάναρε το <strong>QR Code του καταστήματος</strong> (το παρέχει ο διαχειριστής από το Secure (Διαχειριστικό) ή το βλέπεις από άλλη συνδεδεμένη συσκευή) για να συνδέσεις τη συσκευή σου με το κατάστημα.</p>
       </StepCard>
 
       <StepCard number="3" title="Επίλεξε κατάστημα και συσκευή (POS) χρήστη">

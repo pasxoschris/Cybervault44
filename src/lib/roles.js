@@ -100,7 +100,7 @@ export const ROLES = [
   {
     id: 'backoffice',
     emoji: '⚙️',
-    title: 'Secure / Back Office',
+    title: 'Secure (Διαχειριστικό)',
     subtitle: 'Διαχειριστικό σύστημα',
     color: '#DC2626',
     colorLight: 'rgba(220,38,38,0.12)',
