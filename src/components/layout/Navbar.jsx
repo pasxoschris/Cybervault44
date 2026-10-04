@@ -36,7 +36,6 @@ export default function Navbar() {
     { label: 'Σχετικά', to: '/about' },
     { label: 'SpotlightPOS Guide', to: '/spotlight-pos-guide' },
     { label: 'Service Desk', to: '/service-desk' },
-    { label: 'Σύνδεση AI', to: '/connect' },
   ];
 
   const contactLink = { label: 'Επικοινωνία', to: '/contact' };
