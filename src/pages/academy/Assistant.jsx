@@ -6,6 +6,7 @@ import SpotlightBrand from '@/components/SpotlightBrand';
 import { ChevronLeft, Bot, ChevronRight, RotateCcw, ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import AssistantInput from '@/components/academy/AssistantInput';
+import { withModePolicy, stripModePolicy } from '@/lib/assistantModePolicy';
 
 const CATEGORY_LABELS = {
   general: 'Γενικά',
@@ -53,7 +54,7 @@ function MessageBubble({ message }) {
             : 'bg-white border border-gray-200 text-gray-800 shadow-sm'
         }`}>
           {isUser ? (
-            <p>{message.content}</p>
+            <p>{stripModePolicy(message.content)}</p>
           ) : (
             <ReactMarkdown
               className="prose prose-sm max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
@@ -145,7 +146,7 @@ export default function Assistant() {
     if (!msg || loading || !conversation) return;
     setInput('');
     setLoading(true);
-    await base44.agents.addMessage(conversation, { role: 'user', content: msg });
+    await base44.agents.addMessage(conversation, { role: 'user', content: withModePolicy(msg) });
   };
 
   const resetToQuestions = async () => {
