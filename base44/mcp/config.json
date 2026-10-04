@@ -1,0 +1,29 @@
+{
+  "auth": "none",
+  "tools": {
+    "excluded_agents": ["spotlight_pos_assistant"],
+    "entity_overrides": {
+      "KnowledgeArticle": {
+        "operations": ["read"]
+      },
+      "AllowedUser": { "operations": [] },
+      "AllowedUserGuide": { "operations": [] },
+      "AllowedUserReseller": { "operations": [] },
+      "AssistantSuggestedQuestion": { "operations": [] },
+      "Priority": { "operations": [] },
+      "ResellerCategory": { "operations": [] },
+      "ResellerOffer": { "operations": [] },
+      "ResellerPricingItem": { "operations": [] },
+      "ResellerSettings": { "operations": [] },
+      "ResolutionStatus": { "operations": [] },
+      "RootCause": { "operations": [] },
+      "Store": { "operations": [] },
+      "SupportLevel": { "operations": [] },
+      "Ticket": { "operations": [] },
+      "TicketCategory": { "operations": [] },
+      "TicketSubcategory": { "operations": [] },
+      "TicketType": { "operations": [] },
+      "User": { "operations": [] }
+    }
+  }
+}
