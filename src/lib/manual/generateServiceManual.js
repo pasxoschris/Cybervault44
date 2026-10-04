@@ -413,7 +413,7 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
     doc.line(PW / 2 - C.dividerHalf, cursor.v, PW / 2 + C.dividerHalf, cursor.v);
   };
 
-  // Σελίδα-χάρτης «Η βάρδια σου σε 8 βήματα» — αμέσως μετά το εξώφυλλο.
+  // Σελίδα-χάρτης «Η βάρδια σου σε 6 βήματα» — αμέσως μετά το εξώφυλλο.
   // Επιστρέφει τα ορθογώνια κάθε βήματος, ώστε να μπουν μετά οι σύνδεσμοι στα κεφάλαια.
   const drawJourney = () => {
     const J = P.journey;
@@ -626,7 +626,7 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
   const logoImages = await Promise.all(MANUAL_META.logos.map((logo) => loadImageDataUrl(logo.src).catch(() => null)));
   await drawCover(logoImages);
 
-  // Σελίδα-χάρτης «Η βάρδια σου σε 8 βήματα» — μετά το εξώφυλλο, πριν τα Περιεχόμενα
+  // Σελίδα-χάρτης «Η βάρδια σου σε 6 βήματα» — μετά το εξώφυλλο, πριν τα Περιεχόμενα
   const journeyRects = drawJourney();
 
   const tocStart = doc.getNumberOfPages() + 1;
