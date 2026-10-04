@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
-import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
-import CancelActionButton from "../../components/tutorial/CancelActionIcon";
+import { StepCard, SectionTitle } from "../../components/tutorial/StepCard";
 
 export default function CancelOrder() {
   useEffect(() => {
@@ -10,21 +9,21 @@ export default function CancelOrder() {
 
   return (
     <TutorialLayout title="Ακύρωση Παραγγελίας" subtitle="Ακύρωση ολόκληρης παραγγελίας">
-      <InfoBox icon="🆚" title="Ακύρωση Παραγγελίας vs Ακύρωση Απόδειξης" variant="purple">
-        <p><strong>Ακύρωση Παραγγελίας</strong> (αυτό το μάθημα): η παραγγελία είναι <strong>ανοιχτή / μη πληρωμένη</strong> — δεν έχει εκδοθεί απόδειξη.</p>
-        <p className="mt-1"><strong>Ακύρωση Απόδειξης</strong>: η παραγγελία <strong>έχει πληρωθεί</strong> και έχει εκδοθεί <strong>απόδειξη</strong> (χρειάζεται πρώτα επαναφορά). Βλέπε μάθημα: Ακύρωση Απόδειξης.</p>
-      </InfoBox>
-
       <SectionTitle>Ακύρωση Παραγγελίας</SectionTitle>
-      <StepCard number="1" title="Άνοιξε την ανοιχτή παραγγελία">
-        <p>Βρες την παραγγελία που είναι <strong>ανοιχτή / μη πληρωμένη</strong> (δεν έχει εκδοθεί απόδειξη) και πάτα πάνω της.</p>
+      <StepCard number="1" title="Εντόπισε την παραγγελία">
+        <p>Εντόπισε την <strong>ανοιχτή παραγγελία</strong> που θέλεις να ακυρώσεις.</p>
       </StepCard>
-      <StepCard number="2" title="Επίλεξε Επεξεργασία">
-        <p>Πάτα ✏️ και στη συνέχεια επίλεξε <strong>όλα τα προϊόντα</strong>.</p>
+      <StepCard number="2" title="Slide προς τα αριστερά">
+        <p>Κάνοντας <strong>slide προς τα αριστερά</strong> πάνω στην παραγγελία, εμφανίζεται η επιλογή <strong>«Ακύρωση»</strong>.</p>
       </StepCard>
-      <StepCard number="3" title="Έκδοση Ακυρωτικού">
-        <CancelActionButton />
-        <p className="mt-2">Πάτα αυτό το κουμπί στο κάτω μέρος της οθόνης (<strong>«Έκδοση Ακυρωτικού Δελτίου Παραγγελίας»</strong>). Η παραγγελία θα ακυρωθεί και το τραπέζι θα ελευθερωθεί.</p>
+      <StepCard number="3" title="Κωδικός διαχειριστή">
+        <p>Απαιτείται <strong>κωδικός διαχειριστή</strong>.</p>
+      </StepCard>
+      <StepCard number="4" title="Αιτία Ακύρωσης">
+        <p>Επίλεξε <strong>Αιτία Ακύρωσης</strong>.</p>
+      </StepCard>
+      <StepCard number="5" title="Επιβεβαίωση">
+        <p>Επιβεβαίωσε την ακύρωση της παραγγελίας.</p>
       </StepCard>
     </TutorialLayout>
   );
