@@ -26,7 +26,6 @@ function buildHtmlBody(offer, settings, origin, customBody) {
       <div style="margin-top:24px;padding:24px;background:#f0f9ff;border:2px solid #0099cc;text-align:center;">
         <p style="margin:0 0 16px;font-size:14px;color:#0E1235;">Ανοίξτε την προσφορά για να δείτε τα στοιχεία της και να την αποδεχτείτε ή να την απορρίψετε:</p>
         <a href="${link}" style="display:inline-block;background:#0099cc;color:#fff;padding:14px 32px;text-decoration:none;font-weight:bold;font-size:15px;">Προβολή Προσφοράς</a>
-        <p style="margin:14px 0 0;font-size:12px;color:#888;">Αν το κουμπί δεν λειτουργεί, αντιγράψτε τη διεύθυνση:<br><a href="${link}" style="color:#0099cc;">${link}</a></p>
       </div>` : ''}
     </div>
     <div style="margin-top:20px;padding:16px;border-top:2px solid #0099cc;font-size:12px;color:#888;">
