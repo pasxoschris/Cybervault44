@@ -1,7 +1,6 @@
 {
-  "auth": "none",
+  "auth": "oauth",
   "tools": {
-    "excluded_agents": ["spotlight_pos_assistant"],
     "entity_overrides": {
       "KnowledgeArticle": {
         "operations": ["read"]

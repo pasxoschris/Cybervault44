@@ -69,6 +69,8 @@ import ResellerConsole from './pages/ResellerConsole';
 import PublicOfferPage from './pages/PublicOfferPage';
 import ServiceDeskAdmin from './pages/admin/ServiceDeskAdmin';
 import AssistantQuestions from './pages/admin/AssistantQuestions';
+import Connect from './pages/Connect';
+import OAuthConsent from './pages/OAuthConsent';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -148,6 +150,9 @@ const AuthenticatedApp = () => {
       <Route path="/offers/:publicToken" element={<PublicOfferPage />} />
       <Route path="/admin/service-desk-admin" element={<ServiceDeskAdmin />} />
       <Route path="/admin/assistant-questions" element={<AssistantQuestions />} />
+      <Route path="/connect" element={<Connect />} />
+      {/* MCP OAuth consent — must stay outside any auth guard */}
+      <Route path="/oauth/consent" element={<OAuthConsent />} />
       {/* Placeholder lessons for all other roles */}
       <Route path="/tutorial/maitre-service/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/maitre-mode/*" element={<PlaceholderLesson />} />
