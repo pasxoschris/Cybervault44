@@ -13,6 +13,14 @@ export const MANUAL_PROFILES = {
     stepCircleR: 3.6,
     notePad: 5,
     imageMaxH: 132,
+    link: {
+      titleSize: 11,
+      urlSize: 9.5,
+      minUrlSize: 7,
+      qrSize: 40,
+      qrPad: 3.5,
+      caption: 9,
+    },
     sizes: {
       body: 10.5,
       chapterTitle: 17,
@@ -73,6 +81,14 @@ export const MANUAL_PROFILES = {
     stepCircleR: 3.3,
     notePad: 4.5,
     imageMaxH: 120,
+    link: {
+      titleSize: 11.5,
+      urlSize: 10,
+      minUrlSize: 7,
+      qrSize: 34,
+      qrPad: 3,
+      caption: 9.5,
+    },
     sizes: {
       body: 11.5,
       chapterTitle: 19,

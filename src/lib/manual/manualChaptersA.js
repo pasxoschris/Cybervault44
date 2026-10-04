@@ -1,14 +1,18 @@
 // Κεφάλαια 1–10 του εγχειριδίου Service Mode
+
+// Σύνδεσμος App Store — τυπώνεται ως κλικαμπλ σύνδεσμος με QR, χωρίς σπάσιμο σε δύο γραμμές
+export const APP_STORE_URL = 'https://apps.apple.com/gr/app/spotlight-pos/id969806094';
+
 export const CHAPTERS_A = [
   {
     id: 'installation',
     title: 'Εγκατάσταση Εφαρμογής',
-    subtitle: 'Πώς να κατεβάσεις το SpotlightPOS στο iPhone σου',
+    subtitle: 'Πώς να κατεβάσεις το SpotlightPOS στο iPhone ή το iPad σου',
     blocks: [
       { type: 'note', variant: 'info', title: 'Μόνο για iOS', lines: [
         'Το SpotlightPOS λειτουργεί αποκλειστικά σε συσκευές Apple (iPhone / iPad). Δεν είναι διαθέσιμο για Android.',
       ] },
-      { type: 'text', lines: ['Κατέβασε την εφαρμογή από το App Store: apps.apple.com/gr/app/spotlight-pos/id969806094'] },
+      { type: 'link', title: 'Κατέβασε την εφαρμογή από το App Store', url: APP_STORE_URL, qr: true, caption: 'Σκάναρε το QR Code με το iPhone ή το iPad σου — ανοίγει απευθείας το App Store.' },
       { type: 'section', title: 'Βήματα Εγκατάστασης' },
       { type: 'step', title: 'Άνοιξε το App Store', lines: [
         'Βρες την εφαρμογή **App Store** στο iPhone σου και πάτησε για να την ανοίξεις.',

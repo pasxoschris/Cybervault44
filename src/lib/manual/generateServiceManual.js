@@ -138,6 +138,18 @@ const drawRich = (doc, tokens, x, baseline, size, color, align = 'left') => {
   });
 };
 
+// Μέγεθος γραμματοσειράς ώστε μια διεύθυνση να χωρέσει σε μία γραμμή
+const fitSizeForWidth = (doc, text, maxWidth, preferred, min) => {
+  let size = preferred;
+  doc.setFont(FONT, 'normal');
+  doc.setFontSize(size);
+  while (size > min && doc.getTextWidth(text) > maxWidth) {
+    size -= 0.2;
+    doc.setFontSize(size);
+  }
+  return size;
+};
+
 const fetchBase64 = async (url) => {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Font load failed: ${res.status}`);
@@ -369,6 +381,59 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
     y.v += 3;
   };
 
+  // Σύνδεσμος με QR: η διεύθυνση μπαίνει σε μία μόνο γραμμή (ποτέ σπασμένη στα δύο)
+  const drawLink = async (block) => {
+    const L = P.link;
+
+    if (block.title) paragraph(block.title, { size: L.titleSize, color: INK, gap: 2.5 });
+
+    if (block.qr) {
+      const qr = await qrDataUrl(block.url);
+      if (qr) {
+        const size = L.qrSize;
+        const pad = L.qrPad;
+        const box = size + pad * 2;
+        ensure(box + 5);
+        const x = ML + (CW - size) / 2;
+        doc.setFillColor(255, 255, 255);
+        doc.setDrawColor(226, 232, 240);
+        doc.setLineWidth(0.4);
+        doc.roundedRect(x - pad, y.v, box, box, 2, 2, 'FD');
+        doc.addImage(qr, 'PNG', x, y.v + pad, size, size);
+        doc.link(x - pad, y.v, box, box, { url: block.url });
+        y.v += box + 4;
+      }
+    }
+
+    // Η διεύθυνση πάντα σε μία γραμμή (μικραίνει αν χρειάζεται, δεν σπάει ποτέ)
+    const size = fitSizeForWidth(doc, block.url, CW, L.urlSize, L.minUrlSize);
+    setFont(doc, false, size);
+    ensure(lineH(size) + 3);
+    const urlW = doc.getTextWidth(block.url);
+    const urlX = ML + Math.max(0, (CW - urlW) / 2);
+    doc.setTextColor(PURPLE[0], PURPLE[1], PURPLE[2]);
+    doc.text(block.url, urlX, y.v);
+    doc.setDrawColor(PURPLE[0], PURPLE[1], PURPLE[2]);
+    doc.setLineWidth(0.3);
+    doc.line(urlX, y.v + 1.3, urlX + urlW, y.v + 1.3);
+    doc.link(urlX - 1.5, y.v - 4.2, urlW + 3, 7, { url: block.url });
+    y.v += lineH(size) + 2;
+
+    if (block.caption) {
+      wrapRich(doc, sanitize(block.caption), CW, L.caption).forEach((tokens) => {
+        ensure(lineH(L.caption));
+        drawRich(doc, tokens, ML + CW / 2, y.v, L.caption, P.smallNoteColor, 'center');
+        y.v += lineH(L.caption);
+      });
+    }
+    y.v += 3;
+  };
+
+  // QR code για σύνδεσμο, ώστε το έντυπο να είναι σκαναρίσιμο
+  const qrDataUrl = (url) =>
+    loadImageDataUrl(`https://api.qrserver.com/v1/create-qr-code/?size=600x600&margin=0&data=${encodeURIComponent(url)}`).
+    catch(() => null);
+
   const drawCover = async (logoImages) => {
     const bands = 240;
     for (let i = 0; i < bands; i += 1) {
@@ -568,16 +633,18 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
     // Ενεργός σύνδεσμος προς τον online οδηγό (ίδια τεχνική με τα λογότυπα του εξωφύλλου)
     const link = MANUAL_CLOSING.link;
     y.v += 1;
-    wrapRich(doc, link.label, CW, S.link).forEach((tokens) => {
-      ensure(lineH(S.link) + 2);
-      drawRich(doc, tokens, ML, y.v, S.link, PURPLE);
-      const w = measureTokens(doc, tokens, S.link);
-      doc.setDrawColor(PURPLE[0], PURPLE[1], PURPLE[2]);
-      doc.setLineWidth(0.3);
-      doc.line(ML, y.v + 1.4, ML + w, y.v + 1.4);
-      doc.link(ML - 1, y.v - 4.5, w + 2, 7.5, { url: link.url });
-      y.v += lineH(S.link);
-    });
+    // Η διεύθυνση σε μία γραμμή (δεν σπάει στη μέση του URL)
+    const linkSize = fitSizeForWidth(doc, link.label, CW, S.link, 9);
+    setFont(doc, false, linkSize);
+    ensure(lineH(linkSize) + 3);
+    const linkW = doc.getTextWidth(link.label);
+    doc.setTextColor(PURPLE[0], PURPLE[1], PURPLE[2]);
+    doc.text(link.label, ML, y.v);
+    doc.setDrawColor(PURPLE[0], PURPLE[1], PURPLE[2]);
+    doc.setLineWidth(0.3);
+    doc.line(ML, y.v + 1.4, ML + linkW, y.v + 1.4);
+    doc.link(ML - 1, y.v - 4.5, linkW + 2, 7.5, { url: link.url });
+    y.v += lineH(linkSize);
     y.v += 4;
 
     (MANUAL_CLOSING.notes || []).forEach((block) => drawNote(block));
@@ -685,6 +752,7 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
       else if (block.type === 'step') drawStep(block);
       else if (block.type === 'note') drawNote(block);
       else if (block.type === 'image') await drawImage(block);
+      else if (block.type === 'link') await drawLink(block);
       else if (block.type === 'text') (block.lines || []).forEach((line) => paragraph(line));
     }
     onProgress?.(i + 1, MANUAL_CHAPTERS.length);
