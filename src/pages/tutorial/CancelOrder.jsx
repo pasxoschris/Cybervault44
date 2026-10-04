@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
+import CancelActionButton from "../../components/tutorial/CancelActionIcon";
 
 export default function CancelOrder() {
   useEffect(() => {
@@ -22,7 +23,8 @@ export default function CancelOrder() {
         <p>Πάτα ✏️ και στη συνέχεια επίλεξε <strong>όλα τα προϊόντα</strong>.</p>
       </StepCard>
       <StepCard number="3" title="Έκδοση Ακυρωτικού">
-        <p>Πάτα <strong>«Έκδοση Ακυρωτικού Δελτίου Παραγγελίας»</strong>. Η παραγγελία θα ακυρωθεί και το τραπέζι θα ελευθερωθεί.</p>
+        <CancelActionButton />
+        <p className="mt-2">Πάτα αυτό το κουμπί στο κάτω μέρος της οθόνης (<strong>«Έκδοση Ακυρωτικού Δελτίου Παραγγελίας»</strong>). Η παραγγελία θα ακυρωθεί και το τραπέζι θα ελευθερωθεί.</p>
       </StepCard>
     </TutorialLayout>
   );

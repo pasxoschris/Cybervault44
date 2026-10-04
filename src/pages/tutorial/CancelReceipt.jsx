@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
+import CancelActionButton from "../../components/tutorial/CancelActionIcon";
 
 export default function CancelReceipt() {
   useEffect(() => {
@@ -25,7 +26,8 @@ export default function CancelReceipt() {
         <p>Πάτα το εικονίδιο <strong>✏️ (Επεξεργασία Παραγγελίας)</strong> και στη συνέχεια επίλεξε <strong>όλα τα προϊόντα</strong>.</p>
       </StepCard>
       <StepCard number="4" title="Έκδοση Ακυρωτικού Δελτίου">
-        <p>Πάτα <strong>«Έκδοση Ακυρωτικού Δελτίου»</strong>. Η απόδειξη ακυρώνεται και το τραπέζι ελευθερώνεται.</p>
+        <CancelActionButton />
+        <p className="mt-2">Πάτα αυτό το κουμπί στο κάτω μέρος της οθόνης (<strong>«Έκδοση Ακυρωτικού Δελτίου»</strong>). Η απόδειξη ακυρώνεται και το τραπέζι ελευθερώνεται.</p>
       </StepCard>
       <InfoBox icon="🧾" title="Πότε χρειάζεται" variant="info">
         <p>Η ακύρωση απόδειξης χρειάζεται όταν έχεις εκδώσει <strong>απόδειξη</strong> και θέλεις να εκδώσεις <strong>τιμολόγιο</strong> για την ίδια παραγγελία — ώστε να μην αποδοθεί διπλό ΑΦΜ.</p>
