@@ -16,7 +16,7 @@ export default function Split() {
       </StepCard>
 
       <StepCard number="2" title="Ορισμός αριθμού πληρωμών">
-        <p>Με τα κουμπιά <strong>«+»</strong> και <strong>«-»</strong> ρύθμισε τον αριθμό πληρωμών (π.χ. 2). Το σύστημα διαιρεί αυτόματα το σύνολο ισόποσα.</p>
+        <p>Με τα κουμπιά <strong>«+»</strong> και <strong>«-»</strong> ρύθμισε τον αριθμό πληρωμών (π.χ. 2). Το σύστημα προτείνει αυτόματα ισόποσα ποσά, αλλά το ποσό κάθε πληρωμής το αλλάζεις ελεύθερα.</p>
       </StepCard>
 
       <StepCard number="3" title="Επίλεξε τρόπο πληρωμής για κάθε μέρος">
@@ -29,6 +29,10 @@ export default function Split() {
 
       <InfoBox icon="⚠️" title="Σημαντικό!" variant="warning">
         <strong>Πρέπει να ολοκληρώνεται η μία πληρωμή πριν πας στη 2η.</strong> Μην αλλάζεις τρόπο πληρωμής ενώ εκκρεμεί χρέωση.
+      </InfoBox>
+
+      <InfoBox icon="🧮" title="Παράδειγμα" variant="purple">
+        Δεν απαιτούνται ίσα ποσά: παραγγελία <strong>120€</strong> σε <strong>3 πληρωμές</strong> — γράφεις <strong>50€</strong> στην πρώτη (μετρητά) και το υπόλοιπο <strong>70€</strong> μοιράζεται αυτόματα σε <strong>35€ + 35€</strong>, τα οποία μπορείς κι αυτά να αλλάξεις.
       </InfoBox>
     </CashierTutorialLayout>
   );
