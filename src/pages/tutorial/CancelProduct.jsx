@@ -9,7 +9,7 @@ export default function CancelProduct() {
 
   return (
     <TutorialLayout title="Ακύρωση Προϊόντος" subtitle="Ακύρωση μεμονωμένου προϊόντος από παραγγελία">
-      <SectionTitle>Ακύρωση Προϊόντος</SectionTitle>
+      <SectionTitle>Παραγγελία χωρίς απόδειξη</SectionTitle>
       <StepCard number="1" title="Άνοιξε την παραγγελία">
         <p>Πάτα πάνω στην παραγγελία για να δεις τα στοιχεία της.</p>
       </StepCard>
@@ -21,6 +21,26 @@ export default function CancelProduct() {
       </StepCard>
       <InfoBox icon="⚠️" variant="warning">
         Η ακύρωση προϊόντος στέλνει ακυρωτικό δελτίο στην κουζίνα/μπαρ. Βεβαιώσου ότι το προϊόν δεν έχει ήδη ετοιμαστεί.
+      </InfoBox>
+
+      <SectionTitle>Αν έχει εκδοθεί απόδειξη</SectionTitle>
+      <StepCard number="1" title="Άνοιξε τα Στοιχεία Παραγγελίας">
+        <p>Στην οθόνη <strong>Στοιχεία Παραγγελίας</strong> βλέπεις τα εκτυπωμένα προϊόντα της παραγγελίας.</p>
+      </StepCard>
+      <StepCard number="2" title="Πάτα πάνω στο συγκεκριμένο προϊόν">
+        <p>Πάτα πάνω στο προϊόν που θέλεις να ακυρώσεις — όχι στην Επεξεργασία Παραγγελίας.</p>
+      </StepCard>
+      <StepCard number="3" title="Επίλεξε «Ακύρωση Προϊόντος»">
+        <p>Ανοίγει μενού με τις επιλογές του προϊόντος (Σχόλια, Ακύρωση προϊόντος). Επίλεξε <strong>«Ακύρωση Προϊόντος»</strong>.</p>
+      </StepCard>
+      <StepCard number="4" title="Κωδικός διαχειριστή">
+        <p>Σου ζητείται <strong>κωδικός διαχειριστή</strong> για επιβεβαίωση.</p>
+      </StepCard>
+      <StepCard number="5" title="Αιτία ακύρωσης">
+        <p>Στη συνέχεια δηλώνεις την <strong>αιτία της ακύρωσης</strong>.</p>
+      </StepCard>
+      <InfoBox icon="🧾" variant="info">
+        Για το ακυρωμένο προϊόν εκδίδεται <strong>πιστωτικό στοιχείο λιανικής</strong>.
       </InfoBox>
     </TutorialLayout>
   );
