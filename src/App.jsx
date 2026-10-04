@@ -69,6 +69,7 @@ import ResellerConsole from './pages/ResellerConsole';
 import PublicOfferPage from './pages/PublicOfferPage';
 import ServiceDeskAdmin from './pages/admin/ServiceDeskAdmin';
 import AssistantQuestions from './pages/admin/AssistantQuestions';
+import OAuthConsent from './pages/OAuthConsent';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -167,6 +168,8 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/cashier/printer-warning" element={<PrinterWarningCashier />} />
       <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
+      {/* OAuth consent page for the app's MCP server (mounted without an auth guard) */}
+      <Route path="/oauth/consent" element={<OAuthConsent />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
