@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Coins, Split, Globe, QrCode, Edit3, Receipt, Layers, Monitor, ArrowLeft, ArrowLeftRight, GitMerge, Cloud, XCircle, Ban, CopyPlus, AlertTriangle, ReceiptText } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Coins, Split, Globe, QrCode, Edit3, Receipt, Layers, Monitor, ArrowLeft, ArrowLeftRight, GitMerge, Cloud, XCircle, Ban, CopyPlus, AlertTriangle, ReceiptText, Printer } from "lucide-react";
 import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
@@ -30,6 +30,7 @@ const sections = [
   { title: "Πληρωμή με IRIS", path: "/tutorial/payment-iris", icon: QrCode },
   { title: "Split Payments", path: "/tutorial/split-payment", icon: Split },
   { title: "Επεξεργασία", path: "/tutorial/edit-order", icon: Edit3 },
+  { title: "Έκδοση Παραστατικού", path: "/tutorial/issue-receipt", icon: Printer },
   { title: "Τιμολόγιο", path: "/tutorial/invoice", icon: Receipt },
   { title: "Μεταφορά Παραγγελίας", path: "/tutorial/transfer-order", icon: ArrowLeftRight },
   { title: "Συγχώνευση Παραγγελιών", path: "/tutorial/merge-orders", icon: GitMerge },

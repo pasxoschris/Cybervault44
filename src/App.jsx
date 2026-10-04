@@ -17,6 +17,7 @@ import DiscountOther from './pages/tutorial/DiscountOther';
 import EditOrder from './pages/tutorial/EditOrder';
 import Installation from './pages/tutorial/Installation';
 import Invoice from './pages/tutorial/Invoice';
+import IssueReceipt from './pages/tutorial/IssueReceipt';
 import TransferOrder from './pages/tutorial/TransferOrder';
 import MergeOrders from './pages/tutorial/MergeOrders';
 import Login from './pages/tutorial/Login';
@@ -106,6 +107,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/discount-other" element={<DiscountOther />} />
       <Route path="/tutorial/edit-order" element={<EditOrder />} />
       <Route path="/tutorial/installation" element={<Installation />} />
+      <Route path="/tutorial/issue-receipt" element={<IssueReceipt />} />
       <Route path="/tutorial/invoice" element={<Invoice />} />
       <Route path="/tutorial/transfer-order" element={<TransferOrder />} />
       <Route path="/tutorial/merge-orders" element={<MergeOrders />} />

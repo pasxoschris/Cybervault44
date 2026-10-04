@@ -29,6 +29,7 @@ export const ROLES = [
       { title: 'Πληρωμή με IRIS', href: '/tutorial/payment-iris' },
       { title: 'Split Payments', href: '/tutorial/split-payment' },
       { title: 'Επεξεργασία Παραγγελίας', href: '/tutorial/edit-order' },
+      { title: 'Έκδοση Παραστατικού', href: '/tutorial/issue-receipt' },
       { title: 'Έκδοση Τιμολογίου', href: '/tutorial/invoice' },
       { title: 'Μεταφορά Παραγγελίας', href: '/tutorial/transfer-order' },
       { title: 'Συγχώνευση Παραγγελιών', href: '/tutorial/merge-orders' },

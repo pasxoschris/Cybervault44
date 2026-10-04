@@ -27,10 +27,10 @@ export const SHIFT_JOURNEY = {
       n: 3,
       icon: 'invoice',
       title: 'Έκδοση Παραστατικού',
-      hint: 'Έκδωσε τιμολόγιο πριν την πληρωμή, όταν χρειάζεται.',
+      hint: 'Απόδειξη τώρα, δελτίο παραγγελίας ή αργότερα — διαλέγεις εσύ.',
       chapter: 22,
       chapterTitle: 'Έκδοση Τιμολογίου',
-      lesson: '/tutorial/invoice',
+      lesson: '/tutorial/issue-receipt',
     },
     {
       n: 4,
