@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
-import CancelActionButton from "../../components/tutorial/CancelActionIcon";
 
 export default function CancelProduct() {
   useEffect(() => {
@@ -52,20 +51,6 @@ export default function CancelProduct() {
         Η ακύρωση προϊόντος στέλνει ακυρωτικό δελτίο στην κουζίνα/μπαρ. Βεβαιώσου ότι το προϊόν δεν έχει ήδη ετοιμαστεί.
       </InfoBox>
 
-      <SectionTitle>Ακύρωση πολλαπλών προϊόντων μαζί</SectionTitle>
-      <StepCard number="1" title="Άνοιξε την Επεξεργασία Παραγγελίας">
-        <p>Πάτα πάνω στην παραγγελία και μετά το εικονίδιο επεξεργασίας (✏️) για να μπεις στη λίστα προϊόντων.</p>
-      </StepCard>
-      <StepCard number="2" title="Επίλεξε ένα ή περισσότερα προϊόντα">
-        <p>Τσέκαρε τα προϊόντα που θέλεις να ακυρώσεις. Στην κορυφή εμφανίζεται το σύνολο και ο αριθμός τους (π.χ. <strong>«5,00 € (1 προϊόν)»</strong>).</p>
-      </StepCard>
-      <StepCard number="3" title="Πάτα το εικονίδιο ακύρωσης">
-        <CancelActionButton />
-        <p className="mt-2">Στο κάτω μέρος της οθόνης πάτα αυτό το εικονίδιο. Εκδίδεται <strong>Ακυρωτικό Δελτίο</strong> για τα επιλεγμένα προϊόντα.</p>
-      </StepCard>
-      <InfoBox icon="🧾" variant="info">
-        Με την επιλογή προϊόντων στην Επεξεργασία Παραγγελίας ακυρώνεις τα προϊόντα από την <strong>απόδειξη</strong> ή το <strong>δελτίο παραγγελίας</strong>.
-      </InfoBox>
     </TutorialLayout>
   );
 }
