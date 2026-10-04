@@ -46,7 +46,6 @@ export default function OrderDetails() {
           <li>Ιδιο Κατανάλωση (θα σου ζητήσει qr υπαλλήλου) - Εναλλακτικά πας Έκπτωση και το περνάς σαν είδος Έκπτωσης</li>
           <li>Έκδοση Τιμολογίου (εφόσον έχει ενεργοποιηθεί για αυτή τη συσκευή)</li>
           <li>Order extra charges και discard(αν εχει ενεργοποιηθεί)</li>
-          <li>Έλεγχος πληρωμών Spotit και MezePay (αν έχουν ενεργοποιηθεί)</li>
         </ul>
       </InfoBox>
     </TutorialLayout>
