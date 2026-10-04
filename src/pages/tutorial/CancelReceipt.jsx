@@ -25,9 +25,14 @@ export default function CancelReceipt() {
       <StepCard number="3" title="Επίλεξε Επεξεργασία">
         <p>Πάτα το εικονίδιο <strong>✏️ (Επεξεργασία Παραγγελίας)</strong> και στη συνέχεια επίλεξε <strong>όλα τα προϊόντα</strong>.</p>
       </StepCard>
-      <StepCard number="4" title="Έκδοση Ακυρωτικού Δελτίου">
+      <StepCard number="4" title="Έκδοση Πιστωτικού Στοιχείου Λιανικής">
         <CancelActionButton />
-        <p className="mt-2">Πάτα αυτό το κουμπί στο κάτω μέρος της οθόνης (<strong>«Έκδοση Ακυρωτικού Δελτίου»</strong>). Η απόδειξη ακυρώνεται και το τραπέζι ελευθερώνεται.</p>
+        <p className="mt-2">Πάτα αυτό το κουμπί στο κάτω μέρος της οθόνης (<strong>«Έκδοση Ακυρωτικού Δελτίου»</strong>). Εμφανίζεται το μήνυμα:</p>
+        <p className="mt-2 rounded-lg bg-gray-50 border border-gray-200 px-4 py-3 text-gray-800">
+          <strong>Έκδοση Πιστωτικού Στοιχείου Λιανικής Πώλησης για τα επιλεγμένα προϊόντα;</strong><br />
+          Ποσό: … €
+        </p>
+        <p className="mt-2">Πάτα <strong>ΟΚ</strong>. Η απόδειξη ακυρώνεται με έκδοση <strong>Πιστωτικού Στοιχείου Λιανικής</strong>.</p>
       </StepCard>
       <InfoBox icon="🧾" title="Πότε χρειάζεται" variant="info">
         <p>Η ακύρωση απόδειξης χρειάζεται όταν έχεις εκδώσει <strong>απόδειξη</strong> και θέλεις να εκδώσεις <strong>τιμολόγιο</strong> για την ίδια παραγγελία — ώστε να μην αποδοθεί διπλό ΑΦΜ.</p>
