@@ -11,10 +11,14 @@ export function CancelActionIcon({ size = 24, className = "" }) {
   );
 }
 
-export default function CancelActionButton({ size = 40, label = "Κουμπί ακύρωσης στο κάτω μενού" }) {
+export default function CancelActionButton({ size = 40, label = "Κουμπί ακύρωσης στο κάτω μενού", src }) {
   return (
     <div className="flex items-center gap-3">
-      <CancelActionIcon size={size} />
+      {src ? (
+        <img src={src} alt="Εικονίδιο ακύρωσης προϊόντος" style={{ width: size, height: size }} className="inline-block align-middle" />
+      ) : (
+        <CancelActionIcon size={size} />
+      )}
       {label && (
         <span className="text-xs text-gray-500" style={{ fontFamily: "Inter, sans-serif" }}>
           {label}
