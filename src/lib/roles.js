@@ -18,6 +18,7 @@ export const ROLES = [
       { title: 'Στοιχεία Παραγγελίας', href: '/tutorial/order-details' },
       { title: 'Ακύρωση Προϊόντος', href: '/tutorial/cancel-product' },
       { title: 'Ακύρωση Παραγγελίας', href: '/tutorial/cancel-order' },
+      { title: 'Ακύρωση Απόδειξης', href: '/tutorial/cancel-receipt' },
       { title: 'Προσθήκη Ομοίων', href: '/tutorial/add-similar' },
       { title: 'Γενική Έκπτωση', href: '/tutorial/discount' },
       { title: 'Ιδιοκατανάλωση', href: '/tutorial/discount-own' },
@@ -37,6 +38,7 @@ export const ROLES = [
       { title: 'Ανάλυση Βάρδιας', href: '/tutorial/shift-analysis' },
       { title: 'Κλείσιμο Βάρδιας', href: '/tutorial/shift-close' },
       { title: 'Σενάρια', href: '/tutorial/scenarios' },
+      { title: 'Προειδοποιητικό Τρίγωνο', href: '/tutorial/printer-warning' },
     ],
   },
   {
@@ -85,8 +87,7 @@ export const ROLES = [
       { title: 'Συνοδευτικά Προϊόντος', href: '/tutorial/cashier/accompaniments' },
       { title: 'Προϊόντα Παραγγελίας', href: '/tutorial/cashier/order-items' },
       { title: 'Διαγραφή & Έκπτωση', href: '/tutorial/cashier/swipe-actions' },
-      { title: 'Σύνδεση από νέα συσκευή', href: '/tutorial/cashier/login?tab=device' },
-      { title: 'Σύνδεση Χρήστη', href: '/tutorial/cashier/login?tab=user' },
+      { title: 'Σύνδεση Χρήστη', href: '/tutorial/cashier/login' },
       { title: 'Δείκτης Σύνδεσης & Συγχρονισμού', href: '/tutorial/cashier/sync-status' },
       { title: 'Έναρξη Βάρδιας', href: '/tutorial/cashier/open' },
       { title: 'Πληρωμές', href: '/tutorial/cashier/payments' },
@@ -95,6 +96,7 @@ export const ROLES = [
       { title: 'Ρυθμίσεις Χρήστη', href: '/tutorial/cashier/settings' },
       { title: 'Παραγγελία Delivery', href: '/tutorial/cashier/delivery' },
       { title: 'Κλείσιμο Βάρδιας', href: '/tutorial/cashier/close' },
+      { title: 'Προειδοποιητικό Τρίγωνο', href: '/tutorial/cashier/printer-warning' },
     ],
   },
   {
