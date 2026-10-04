@@ -25,6 +25,11 @@ export default function DiscountGeneral() {
       </StepCard>
       <StepCard number="3" title="Εισήγαγε Κωδικό Διαχειριστή">
         <p>Για να εφαρμόσεις συνολική έκπτωση, θα σου ζητηθεί ο <strong>Κωδικός Διαχειριστή</strong>. Βάλε τον κωδικό ή σκάναρε QR.</p>
+        <ul className="list-disc list-inside mt-2 space-y-1">
+          <li>Πάτα <strong>Scan QR Code</strong> — ανοίγει η κάμερα της συσκευής.</li>
+          <li>Σκάναρε το QR που έχει δημιουργηθεί για <strong>συγκεκριμένη κατηγορία πελατών</strong>: φέρνει <strong>προκαθορισμένο ποσοστό έκπτωσης</strong>.</li>
+          <li>Τα QR αυτά δημιουργούνται από το <strong>διαχειριστικό</strong>.</li>
+        </ul>
       </StepCard>
       <StepCard number="4" title="Ρύθμισε την έκπτωση">
         <p>Στην οθόνη <strong>Έκπτωση</strong>:</p>
