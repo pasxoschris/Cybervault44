@@ -19,7 +19,7 @@ export default function SyncStatusCashier() {
           <span className="font-semibold text-gray-800">Πράσινη κουκίδα + «All synced»</span>
         </div>
         <p>
-          Υπάρχει <strong>ενεργή σύνδεση δικτύου</strong>. Τα προϊόντα που έχεις βάλει στην παραγγελία έχουν <strong>συγχρονιστεί στο Cloud</strong> και είναι ασφαλή.
+          Υπάρχει <strong>ενεργή σύνδεση δικτύου</strong>. Τα προϊόντα που έχεις βάλει στην παραγγελία έχουν <strong>συγχρονιστεί επιτυχώς στο Cloud</strong>.
         </p>
       </StepCard>
 
