@@ -334,13 +334,11 @@ Deno.serve(async (req) => {
   if (offer.email) emailsToSend.push({ to: offer.email, subject: `Επιβεβαίωση Αποδοχής – ${offer.reference_number}`, html: buildConfirmHtml(false) });
   if (settings.public_email) emailsToSend.push({ to: settings.public_email, subject: `[CyberVault] Αποδοχή Προσφοράς – ${offer.reference_number}`, html: buildConfirmHtml(true) });
 
-  const attachments = acceptedPdfBase64 ? [{ filename: `Accepted-${offer.reference_number}.pdf`, content: acceptedPdfBase64 }] : [];
-
   await Promise.allSettled(emailsToSend.map(e =>
     fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from: 'CyberVault <offers@cybervault.gr>', to: [e.to], subject: e.subject, html: e.html, attachments }),
+      body: JSON.stringify({ from: 'CyberVault <offers@cybervault.gr>', to: [e.to], subject: e.subject, html: e.html }),
     })
   ));
 
