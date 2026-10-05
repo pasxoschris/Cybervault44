@@ -16,8 +16,8 @@ export const MANUAL_META = {
 
 const ALL_MANUAL_CHAPTERS = [...CHAPTERS_A, ...CHAPTERS_B, ...CHAPTERS_C];
 
-// Κεφάλαια με αρίθμηση & εγγραφή στα Περιεχόμενα — ένα για κάθε μάθημα του Service Mode.
-export const MANUAL_CHAPTERS = ALL_MANUAL_CHAPTERS.filter((chapter) => !chapter.informational);
+// Κεφάλαια με αρίθμηση & εγγραφή στα Περιεχόμενα (τα «Σενάρια» μένουν εκτός manual).
+export const MANUAL_CHAPTERS = ALL_MANUAL_CHAPTERS.filter((chapter) => !chapter.informational && chapter.id !== 'scenarios');
 
 // Πληροφοριακές σελίδες: υλικό χωρίς αρίθμηση κεφαλαίου και εκτός Περιεχομένων.
 export const MANUAL_INFO_CHAPTERS = ALL_MANUAL_CHAPTERS.filter((chapter) => chapter.informational);
