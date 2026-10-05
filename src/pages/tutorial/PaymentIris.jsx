@@ -11,7 +11,7 @@ export default function PaymentIris() {
     <TutorialLayout title="Πληρωμή με IRIS" subtitle="Άμεση πληρωμή με κωδικό IRIS">
       <SectionTitle>Πληρωμή με IRIS</SectionTitle>
       <InfoBox icon="🔵" title="Τι είναι το IRIS;" variant="info">
-        Το IRIS είναι το σύστημα άμεσων πληρωμών της Ελληνικής Τράπεζας — ο πελάτης πληρώνει με κωδικό IRIS από την τραπεζική του εφαρμογή.
+        Το IRIS είναι υπηρεσία άμεσων πληρωμών μέσω του διατραπεζικού συστήματος ΔΙΑΣ. Ο πελάτης πραγματοποιεί την πληρωμή μέσω της τραπεζικής εφαρμογής του, σαρώνοντας το QR που εμφανίζεται στο POS
       </InfoBox>
       <StepCard number="1" title="Επίλεξε «Πληρωμή με IRIS»">
         <p>Στο μενού πληρωμής, πάτα <strong>«Πληρωμή με IRIS»</strong>.</p>
