@@ -646,18 +646,10 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
     await renderBlocks(chapter.blocks);
   };
 
-  // Καταληκτική σελίδα (χωρίς αρίθμηση κεφαλαίου, εκτός Περιεχομένων): online υλικό & assistant
-  const drawClosing = () => {
-    doc.addPage();
-    y.v = MT;
-
-    drawSection(MANUAL_CLOSING.title);
-    (MANUAL_CLOSING.paragraphs || []).forEach((line) => paragraph(line, { size: S.body, gap: 2.4 }));
-
-    // Ενεργός σύνδεσμος προς τον online οδηγό (ίδια τεχνική με τα λογότυπα του εξωφύλλου)
-    const link = MANUAL_CLOSING.link;
+  // Ενεργός σύνδεσμος στην καταληκτική σελίδα — η διεύθυνση πάντα σε μία γραμμή
+  const drawClosingLink = (link) => {
+    if (!link) return;
     y.v += 1;
-    // Η διεύθυνση σε μία γραμμή (δεν σπάει στη μέση του URL)
     const linkSize = fitSizeForWidth(doc, link.label, CW, S.link, 9);
     setFont(doc, false, linkSize);
     ensure(lineH(linkSize) + 3);
@@ -668,10 +660,24 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
     doc.setLineWidth(0.3);
     doc.line(ML, y.v + 1.4, ML + linkW, y.v + 1.4);
     doc.link(ML - 1, y.v - 4.5, linkW + 2, 7.5, { url: link.url });
-    y.v += lineH(linkSize);
-    y.v += 4;
+    y.v += lineH(linkSize) + 4;
+  };
+
+  // Καταληκτική σελίδα (χωρίς αρίθμηση κεφαλαίου, εκτός Περιεχομένων): online υλικό & assistant
+  const drawClosing = () => {
+    doc.addPage();
+    y.v = MT;
+
+    drawSection(MANUAL_CLOSING.title);
+    (MANUAL_CLOSING.paragraphs || []).forEach((line) => paragraph(line, { size: S.body, gap: 2.4 }));
+
+    // Ενεργός σύνδεσμος προς τον online οδηγό (ίδια τεχνική με τα λογότυπα του εξωφύλλου)
+    drawClosingLink(MANUAL_CLOSING.link);
 
     (MANUAL_CLOSING.notes || []).forEach((block) => drawNote(block));
+
+    // Πρόσθετοι σύνδεσμοι της καταληκτικής σελίδας (π.χ. σύνδεση AI client μέσω MCP)
+    (MANUAL_CLOSING.links || []).forEach((link) => drawClosingLink(link));
   };
 
   const drawToc = (entries, tocStart) => {

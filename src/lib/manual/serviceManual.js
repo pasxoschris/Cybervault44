@@ -46,5 +46,16 @@ export const MANUAL_CLOSING = {
         'Η προφορική χρήση απαιτεί συσκευή με μικρόφωνο.',
       ],
     },
+    {
+      variant: 'info',
+      title: 'Σύνδεση με Claude (MCP)',
+      lines: [
+        'Μπορείτε να συνδέσετε τον οδηγό Spotlight POS (SpotlightPOS) με το **Claude** μέσω **MCP**, ώστε να απαντά με βάση το υλικό αυτού του εγχειριδίου.',
+        'Η σύνδεση γίνεται μία φορά, με έγκριση πρόσβασης στο email σας. Οδηγίες βήμα-βήμα:',
+      ],
+    },
+  ],
+  links: [
+    { label: 'https://cybervault.gr/connect', url: 'https://cybervault.gr/connect' },
   ],
 };
