@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Coins, Split, Globe, QrCode, Edit3, Receipt, Layers, Monitor, ArrowLeft, ArrowLeftRight, GitMerge, Cloud, XCircle, Ban, CopyPlus, AlertTriangle, ReceiptText, Printer } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Coins, Split, Globe, QrCode, Edit3, Receipt, Layers, Monitor, ArrowLeft, ArrowLeftRight, GitMerge, Cloud, XCircle, Ban, CopyPlus, ReceiptText, Printer } from "lucide-react";
 import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
@@ -38,12 +38,12 @@ const sections = [
   { title: "Ανάλυση Βάρδιας", path: "/tutorial/shift-analysis", icon: Monitor },
   { title: "Κλείσιμο Βάρδιας", path: "/tutorial/shift-close", icon: Layers },
   { title: "Σενάρια", path: "/tutorial/scenarios", icon: Monitor },
-  { title: "Προειδοποιητικό Τρίγωνο", path: "/tutorial/printer-warning", icon: AlertTriangle },
 ];
 
-export default function TutorialLayout({ children, title, subtitle }) {
+export default function TutorialLayout({ children, title, subtitle, standalone = false }) {
   const location = useLocation();
-  const currentIndex = sections.findIndex(s => s.path === location.pathname);
+  // standalone: πληροφοριακή σελίδα εκτός σειράς μαθημάτων (χωρίς αρίθμηση & πλοήγηση)
+  const currentIndex = standalone ? -1 : sections.findIndex(s => s.path === location.pathname);
   const prev = currentIndex > 0 ? sections[currentIndex - 1] : null;
   const next = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
   const SectionIcon = sections[currentIndex]?.icon;
@@ -78,17 +78,19 @@ export default function TutorialLayout({ children, title, subtitle }) {
           <span className="text-white/80 text-xs truncate" style={{ fontFamily: 'Inter, sans-serif' }}>{title}</span>
         </div>
         {/* Progress dots */}
-        <div className="flex justify-center gap-1.5 pb-2.5">
-          {sections.map((s, i) => (
-            <Link key={s.path} to={s.path} title={s.title}>
-              <div className={`h-1 rounded-full transition-all duration-200 ${
-                i === currentIndex ? 'w-6 bg-[#8B5CF6]' :
-                i < currentIndex ? 'w-1.5 bg-white/40' :
-                'w-1.5 bg-white/15 hover:bg-white/30'
-              }`} />
-            </Link>
-          ))}
-        </div>
+        {!standalone && (
+          <div className="flex justify-center gap-1.5 pb-2.5">
+            {sections.map((s, i) => (
+              <Link key={s.path} to={s.path} title={s.title}>
+                <div className={`h-1 rounded-full transition-all duration-200 ${
+                  i === currentIndex ? 'w-6 bg-[#8B5CF6]' :
+                  i < currentIndex ? 'w-1.5 bg-white/40' :
+                  'w-1.5 bg-white/15 hover:bg-white/30'
+                }`} />
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Page Header */}
@@ -105,9 +107,11 @@ export default function TutorialLayout({ children, title, subtitle }) {
             )}
             <h1 className="font-bold text-2xl md:text-3xl" style={{ fontFamily: 'Inter, sans-serif' }}>{title}</h1>
             {subtitle && <p className="text-white/60 mt-1.5 text-base" style={{ fontFamily: 'Inter, sans-serif' }}>{subtitle}</p>}
-            <div className="mt-3 text-white/35 text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
-              {currentIndex + 1} / {sections.length}
-            </div>
+            {!standalone && (
+              <div className="mt-3 text-white/35 text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
+                {currentIndex + 1} / {sections.length}
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
@@ -136,7 +140,21 @@ export default function TutorialLayout({ children, title, subtitle }) {
         </div>
       )}
 
+      {/* Πληροφοριακή σελίδα: επιστροφή στον οδηγό */}
+      {standalone && (
+        <div className="max-w-3xl mx-auto px-6 pt-2 pb-0">
+          <Link
+            to="/spotlight-pos-guide"
+            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-purple-600 transition-colors"
+            style={{ fontFamily: 'Inter, sans-serif' }}
+          >
+            <ArrowLeft size={14} /> Επιστροφή στον οδηγό
+          </Link>
+        </div>
+      )}
+
       {/* Prev / Next Navigation */}
+      {!standalone && (
       <div className="max-w-3xl mx-auto px-6 pb-12 relative z-10">
         <div className="flex justify-between gap-4">
           {prev ? (
@@ -165,6 +183,7 @@ export default function TutorialLayout({ children, title, subtitle }) {
           )}
         </div>
       </div>
+      )}
 
       <AssistantFloatingButton />
     </div>

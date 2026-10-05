@@ -6,6 +6,7 @@ export default function PrinterWarning() {
     <TutorialLayout
       title="Προειδοποιητικό Τρίγωνο Εκτυπωτή"
       subtitle="Τι σημαίνει και πότε εμφανίζεται — ισχύει για όλα τα mode"
+      standalone
     >
       <PrinterWarningContent />
     </TutorialLayout>

@@ -38,7 +38,6 @@ export const ROLES = [
       { title: 'Ανάλυση Βάρδιας', href: '/tutorial/shift-analysis' },
       { title: 'Κλείσιμο Βάρδιας', href: '/tutorial/shift-close' },
       { title: 'Σενάρια', href: '/tutorial/scenarios' },
-      { title: 'Προειδοποιητικό Τρίγωνο', href: '/tutorial/printer-warning' },
     ],
   },
   {

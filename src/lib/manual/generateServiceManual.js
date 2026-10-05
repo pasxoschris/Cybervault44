@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { jsPDF } from 'jspdf';
-import { MANUAL_META, MANUAL_CHAPTERS, MANUAL_CLOSING } from './serviceManual';
+import { MANUAL_META, MANUAL_CHAPTERS, MANUAL_INFO_CHAPTERS, MANUAL_CLOSING } from './serviceManual';
 import { MANUAL_PROFILES } from './manualProfiles';
 import { SHIFT_JOURNEY, journeyChapterRef } from '@/lib/shiftJourney';
 import { STEP_ICONS } from '@/lib/shiftJourneyIcons';
@@ -622,6 +622,30 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
     if (chapter.subtitle) paragraph(chapter.subtitle, { size: S.chapterSubtitle, color: [122, 114, 142], gap: 6 });
   };
 
+  // Ένα block περιεχομένου — κοινό για τα αριθμημένα κεφάλαια και τις πληροφοριακές σελίδες
+  const renderBlock = async (block) => {
+    if (block.type === 'section') drawSection(block.title);
+    else if (block.type === 'step') drawStep(block);
+    else if (block.type === 'note') drawNote(block);
+    else if (block.type === 'image') await drawImage(block);
+    else if (block.type === 'link') await drawLink(block);
+    else if (block.type === 'text') (block.lines || []).forEach((line) => paragraph(line));
+  };
+
+  const renderBlocks = async (blocks) => {
+    for (const block of blocks) await renderBlock(block);
+  };
+
+  // Πληροφοριακή σελίδα: υλικό χωρίς αρίθμηση κεφαλαίου και εκτός Περιεχομένων
+  const drawInfoChapter = async (chapter) => {
+    doc.addPage();
+    y.v = MT;
+    counter.value = 0;
+    drawSection(`Πληροφοριακό: ${chapter.title}`);
+    if (chapter.subtitle) paragraph(chapter.subtitle, { size: S.chapterSubtitle, color: [122, 114, 142], gap: 6 });
+    await renderBlocks(chapter.blocks);
+  };
+
   // Καταληκτική σελίδα (χωρίς αρίθμηση κεφαλαίου, εκτός Περιεχομένων): online υλικό & assistant
   const drawClosing = () => {
     doc.addPage();
@@ -747,15 +771,13 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
     chapterStart(i + 1, chapter);
     entries.push({ title: chapter.title, page: doc.getNumberOfPages() });
 
-    for (const block of chapter.blocks) {
-      if (block.type === 'section') drawSection(block.title);
-      else if (block.type === 'step') drawStep(block);
-      else if (block.type === 'note') drawNote(block);
-      else if (block.type === 'image') await drawImage(block);
-      else if (block.type === 'link') await drawLink(block);
-      else if (block.type === 'text') (block.lines || []).forEach((line) => paragraph(line));
-    }
+    await renderBlocks(chapter.blocks);
     onProgress?.(i + 1, MANUAL_CHAPTERS.length);
+  }
+
+  // Πληροφοριακές σελίδες μετά τα αριθμημένα κεφάλαια (εκτός Περιεχομένων)
+  for (const chapter of MANUAL_INFO_CHAPTERS) {
+    await drawInfoChapter(chapter);
   }
 
   drawClosing();

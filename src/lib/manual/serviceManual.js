@@ -14,8 +14,13 @@ export const MANUAL_META = {
   ],
 };
 
-// Τα «Σενάρια» δεν περιλαμβάνονται στο PDF του Manual
-export const MANUAL_CHAPTERS = [...CHAPTERS_A, ...CHAPTERS_B, ...CHAPTERS_C].filter((chapter) => chapter.id !== 'scenarios');
+const ALL_MANUAL_CHAPTERS = [...CHAPTERS_A, ...CHAPTERS_B, ...CHAPTERS_C];
+
+// Κεφάλαια με αρίθμηση & εγγραφή στα Περιεχόμενα — ένα για κάθε μάθημα του Service Mode.
+export const MANUAL_CHAPTERS = ALL_MANUAL_CHAPTERS.filter((chapter) => !chapter.informational);
+
+// Πληροφοριακές σελίδες: υλικό χωρίς αρίθμηση κεφαλαίου και εκτός Περιεχομένων.
+export const MANUAL_INFO_CHAPTERS = ALL_MANUAL_CHAPTERS.filter((chapter) => chapter.informational);
 
 // Καταληκτική σελίδα: το online υλικό και ο assistant εκπαίδευσης
 export const MANUAL_CLOSING = {
