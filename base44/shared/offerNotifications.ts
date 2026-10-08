@@ -36,13 +36,26 @@ export function buildAcceptedNotificationHtml(offer, { acceptedAt, ip, method, p
 }
 
 export async function sendAcceptedNotifications({ offer, acceptedAt, ip, method, pdfUrl, apiKey }) {
-  if (!apiKey) return;
+  if (!apiKey) {
+    console.error('Accepted offer notification skipped: RESEND_API_KEY missing');
+    return;
+  }
   const html = buildAcceptedNotificationHtml(offer, { acceptedAt, ip, method, pdfUrl });
   const subject = `[CyberVault] Αποδοχή Προσφοράς – ${offer.reference_number || ''}`;
 
-  await Promise.allSettled(ACCEPTED_NOTIFICATION_EMAILS.map((to) => fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: 'CyberVault <offers@cybervault.gr>', to: [to], subject, html }),
-  })));
+  const results = await Promise.allSettled(ACCEPTED_NOTIFICATION_EMAILS.map(async (to) => {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from: 'CyberVault <offers@cybervault.gr>', to: [to], subject, html }),
+    });
+    if (!res.ok) throw new Error(`${to}: ${res.status} ${await res.text()}`);
+    return to;
+  }));
+
+  results.forEach((result, i) => {
+    if (result.status === 'rejected') {
+      console.error(`Accepted offer notification failed for ${ACCEPTED_NOTIFICATION_EMAILS[i]}:`, result.reason?.message);
+    }
+  });
 }
