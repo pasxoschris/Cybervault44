@@ -1,6 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 import { PDFDocument, rgb, StandardFonts } from 'npm:pdf-lib@1.17.1';
 import fontkit from 'npm:@pdf-lib/fontkit@1.1.1';
+import { sendAcceptedNotifications } from '../../shared/offerNotifications.ts';
 
 async function buildAcceptedPdf(offer, verificationDetails) {
   const pdfDoc = await PDFDocument.create();
@@ -234,15 +235,11 @@ Deno.serve(async (req) => {
 
   await base44.asServiceRole.entities.ResellerOffer.update(offer_id, updateData);
 
-  // Send confirmation emails
+  // Send confirmation email to the customer
   const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
-  const settingsList = await base44.asServiceRole.entities.ResellerSettings.list();
-  const settings = settingsList[0] || {};
 
-  const buildConfirmHtml = (isAdmin) => {
-    const heading = isAdmin
-      ? `Η προσφορά <strong>${offer.reference_number}</strong> έγινε αποδεκτή από τον πελάτη.`
-      : `Η αποδοχή σας καταγράφηκε με επιτυχία για την προσφορά <strong>${offer.reference_number}</strong>.`;
+  const buildConfirmHtml = () => {
+    const heading = `Η αποδοχή σας καταγράφηκε με επιτυχία για την προσφορά <strong>${offer.reference_number}</strong>.`;
     return `<!DOCTYPE html>
 <html><body style="font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto;padding:20px;">
   <div style="background:#0E1235;padding:20px 30px;border-radius:8px 8px 0 0;">
@@ -265,8 +262,7 @@ Deno.serve(async (req) => {
   };
 
   const emailsToSend = [];
-  if (offer.email) emailsToSend.push({ to: offer.email, subject: `Επιβεβαίωση Αποδοχής – ${offer.reference_number}`, html: buildConfirmHtml(false) });
-  if (settings.public_email) emailsToSend.push({ to: settings.public_email, subject: `[CyberVault] Αποδοχή Προσφοράς – ${offer.reference_number}`, html: buildConfirmHtml(true) });
+  if (offer.email) emailsToSend.push({ to: offer.email, subject: `Επιβεβαίωση Αποδοχής – ${offer.reference_number}`, html: buildConfirmHtml() });
 
   await Promise.allSettled(emailsToSend.map(e =>
     fetch('https://api.resend.com/emails', {
@@ -275,6 +271,16 @@ Deno.serve(async (req) => {
       body: JSON.stringify({ from: 'CyberVault <offers@cybervault.gr>', to: [e.to], subject: e.subject, html: e.html }),
     })
   ));
+
+  // Ειδοποίηση αποδοχής στις σταθερές διευθύνσεις του γραφείου
+  await sendAcceptedNotifications({
+    offer,
+    acceptedAt: now,
+    ip,
+    method: 'Direct Acceptance (Click-to-Accept)',
+    pdfUrl: acceptedPdfUrl,
+    apiKey: RESEND_API_KEY,
+  });
 
   return Response.json({ success: true, message: 'Η αποδοχή ολοκληρώθηκε επιτυχώς.' });
 });

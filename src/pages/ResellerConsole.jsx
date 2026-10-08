@@ -6,6 +6,7 @@ import OffersHistory from '@/components/reseller/OffersHistory';
 import PricingTable from '@/components/reseller/PricingTable';
 import ResellerSettingsTab from '@/components/reseller/ResellerSettingsTab';
 import CategoryManager from '@/components/reseller/CategoryManager';
+import AcceptedNotifications from '@/components/reseller/AcceptedNotifications';
 
 const TABS = [
   { key: 'offer', label: 'Νέα Προσφορά' },
@@ -34,15 +35,18 @@ export default function ResellerConsole() {
         <Navbar />
         <div className="max-w-[1400px] mx-auto px-4 pt-24 pb-16">
           {/* Header */}
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 border font-mono-cyber text-[10px] tracking-widest uppercase"
-              style={{ borderColor:'rgba(0,207,255,0.3)', color:'rgba(0,207,255,0.7)', background:'rgba(0,207,255,0.05)' }}>
-              ✦ RESELLER PORTAL
+          <div className="mb-8 flex items-start justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 border font-mono-cyber text-[10px] tracking-widest uppercase"
+                style={{ borderColor:'rgba(0,207,255,0.3)', color:'rgba(0,207,255,0.7)', background:'rgba(0,207,255,0.05)' }}>
+                ✦ RESELLER PORTAL
+              </div>
+              <h1 className="font-orbitron text-3xl font-bold text-white mb-1">
+                RESELLER <span className="text-[#00CFFF]">CONSOLE</span>
+              </h1>
+              <p className="text-white/40 text-sm">Διαχείριση Προσφορών & Τιμοκαταλόγου</p>
             </div>
-            <h1 className="font-orbitron text-3xl font-bold text-white mb-1">
-              RESELLER <span className="text-[#00CFFF]">CONSOLE</span>
-            </h1>
-            <p className="text-white/40 text-sm">Διαχείριση Προσφορών & Τιμοκαταλόγου</p>
+            <AcceptedNotifications />
           </div>
 
           {/* Tabs */}
