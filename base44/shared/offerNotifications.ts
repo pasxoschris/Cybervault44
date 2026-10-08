@@ -10,6 +10,15 @@ export const ACCEPTED_NOTIFICATION_EMAILS = [
 
 const CONSOLE_URL = 'https://cybervault.gr/reseller-console';
 
+// Ο server τρέχει σε UTC — οι ημερομηνίες εμφανίζονται πάντα σε ώρα Ελλάδας.
+export function formatAthensDateTime(value) {
+  return value ? new Date(value).toLocaleString('el-GR', { timeZone: 'Europe/Athens' }) : '—';
+}
+
+export function formatAthensDate(value) {
+  return value ? new Date(value).toLocaleDateString('el-GR', { timeZone: 'Europe/Athens' }) : '—';
+}
+
 export function buildAcceptedNotificationHtml(offer, { acceptedAt, ip, method, pdfUrl }) {
   return `<!DOCTYPE html>
 <html><body style="font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto;padding:20px;">
@@ -23,7 +32,7 @@ export function buildAcceptedNotificationHtml(offer, { acceptedAt, ip, method, p
       <tr><td style="color:#888;padding:4px 0;">Αρ. Αναφοράς:</td><td><strong>${offer.reference_number || '—'}</strong></td></tr>
       <tr><td style="color:#888;padding:4px 0;">Πελάτης:</td><td>${offer.company_legal_name || offer.store_name || '—'}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">Email:</td><td>${offer.email || '—'}</td></tr>
-      <tr><td style="color:#888;padding:4px 0;">Ημ/νία Αποδοχής:</td><td>${acceptedAt ? new Date(acceptedAt).toLocaleString('el-GR') : '—'}</td></tr>
+      <tr><td style="color:#888;padding:4px 0;">Ημ/νία Αποδοχής:</td><td>${formatAthensDateTime(acceptedAt)}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">IP:</td><td style="font-family:monospace;">${ip || '—'}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">Μέθοδος:</td><td>${method || '—'}</td></tr>
     </table>

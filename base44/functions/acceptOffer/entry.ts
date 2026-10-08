@@ -1,7 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 import { PDFDocument, rgb, StandardFonts } from 'npm:pdf-lib@1.17.1';
 import fontkit from 'npm:@pdf-lib/fontkit@1.1.1';
-import { sendAcceptedNotifications } from '../../shared/offerNotifications.ts';
+import { sendAcceptedNotifications, formatAthensDate, formatAthensDateTime } from '../../shared/offerNotifications.ts';
 
 async function buildAcceptedPdf(offer, verificationDetails) {
   const pdfDoc = await PDFDocument.create();
@@ -38,7 +38,7 @@ async function buildAcceptedPdf(offer, verificationDetails) {
   page1.drawRectangle({ x: 0, y: height - 60, width, height: 60, color: darkBlue });
   page1.drawText('CYBERVAULT', { x: 20, y: height - 38, size: 22, font: boldFont, color: white });
 
-  const today = new Date().toLocaleDateString('el-GR');
+  const today = formatAthensDate(new Date());
   const ref = offer.reference_number || '';
   if (ref) {
     const refW = boldFont.widthOfTextAtSize(ref, 10);
@@ -150,7 +150,7 @@ async function buildAcceptedPdf(offer, verificationDetails) {
   drawCertRow('AUDIT REFERENCE (Public Token)', offer.public_token || '—');
   drawCertRow('CUSTOMER', offer.company_legal_name || offer.store_name || '—');
   drawCertRow('EMAIL', verificationDetails.verified_email || offer.email || '—');
-  drawCertRow('ACCEPTED AT', verificationDetails.verified_at ? new Date(verificationDetails.verified_at).toLocaleString('el-GR') : '—');
+  drawCertRow('ACCEPTED AT', formatAthensDateTime(verificationDetails.verified_at));
   drawCertRow('VERIFICATION METHOD', 'Direct Acceptance (Click-to-Accept)');
   drawCertRow('IP ADDRESS', verificationDetails.ip || '—');
 
@@ -252,7 +252,7 @@ Deno.serve(async (req) => {
       <tr><td style="color:#888;padding:4px 0;">Αρ. Αναφοράς:</td><td><strong>${offer.reference_number || '—'}</strong></td></tr>
       <tr><td style="color:#888;padding:4px 0;">Πελάτης:</td><td>${offer.company_legal_name || offer.store_name || '—'}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">Email:</td><td>${offer.email || '—'}</td></tr>
-      <tr><td style="color:#888;padding:4px 0;">Ημ/νία Αποδοχής:</td><td>${new Date(now).toLocaleString('el-GR')}</td></tr>
+      <tr><td style="color:#888;padding:4px 0;">Ημ/νία Αποδοχής:</td><td>${formatAthensDateTime(now)}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">IP:</td><td style="font-family:monospace;">${ip}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">Μέθοδος:</td><td>Direct Acceptance</td></tr>
     </table>
