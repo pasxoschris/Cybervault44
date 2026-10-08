@@ -29,7 +29,7 @@ export function buildAcceptedNotificationHtml(offer, { acceptedAt, ip, method, p
     <div style="display:inline-block;background:#e8f5e9;color:#2e7d32;padding:8px 18px;border-radius:20px;font-weight:bold;font-size:13px;margin-bottom:16px;">✓ ΑΠΟΔΕΚΤΗ</div>
     <p style="font-size:14px;">Η προσφορά <strong>${offer.reference_number || ''}</strong> έγινε αποδεκτή από τον πελάτη.</p>
     <table style="width:100%;font-size:13px;margin-top:12px;">
-      <tr><td style="color:#888;padding:4px 0;">Αρ. Αναφοράς:</td><td><strong>${offer.reference_number || '—'}</strong></td></tr>
+      <tr><td style="color:#888;padding:4px 0;">Αρ. Αναφοράς Προσφοράς:</td><td><strong>${offer.reference_number || '—'}</strong></td></tr>
       <tr><td style="color:#888;padding:4px 0;">Πελάτης:</td><td>${offer.company_legal_name || offer.store_name || '—'}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">Email:</td><td>${offer.email || '—'}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">Ημ/νία Αποδοχής:</td><td>${formatAthensDateTime(acceptedAt)}</td></tr>
