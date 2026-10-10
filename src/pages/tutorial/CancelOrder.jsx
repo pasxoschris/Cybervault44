@@ -49,15 +49,6 @@ export default function CancelOrder() {
           Μετά την επαναφορά, σύρε ξανά την παραγγελία <strong>προς τα αριστερά (slide)</strong> → <strong>«Ακύρωση»</strong> → κωδικός διαχειριστή → <strong>Αιτία Ακύρωσης</strong> → επιβεβαίωση.
         </p>
       </StepCard>
-      <InfoBox icon="⚠️" title="Δεν γίνεται με «Έκδοση Ακυρωτικού Δελτίου»" variant="warning">
-        <p>
-          Η ακύρωση κλειστής παραγγελίας <strong>δεν</strong> γίνεται με «Έκδοση Ακυρωτικού Δελτίου». Αυτό αφορά την{" "}
-          <Link to="/tutorial/cancel-receipt" className="text-purple-600 underline">Ακύρωση Απόδειξης</Link>.
-        </p>
-      </InfoBox>
-      <InfoBox icon="💡" variant="info">
-        <p>Η ακύρωση της παραγγελίας <strong>δεν ελευθερώνει αυτόματα το τραπέζι</strong>.</p>
-      </InfoBox>
     </TutorialLayout>
   );
 }
