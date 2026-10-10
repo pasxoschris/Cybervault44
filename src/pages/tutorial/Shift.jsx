@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
@@ -35,6 +36,12 @@ export default function Shift() {
       <StepCard number="4" title="Επαναφορά παραγγελίας">
         <p>Σύρε την ολοκληρωμένη παραγγελία <strong>προς τα αριστερά (slide)</strong> — δεν πατάς την παραγγελία. Εμφανίζεται το κουμπί <strong>«Επαναφορά»</strong>.</p>
       </StepCard>
+      <InfoBox icon="🔄" title="Ακύρωση κλειστής παραγγελίας" variant="info">
+        <p>
+          Μετά την <strong>Επαναφορά</strong> η παραγγελία ξανανοίγει. Για ακύρωση: σύρε ξανά την παραγγελία <strong>προς τα αριστερά (slide)</strong> → <strong>«Ακύρωση»</strong> → κωδικός διαχειριστή → αιτία ακύρωσης (
+          <Link to="/tutorial/cancel-order" className="text-purple-600 underline">μάθημα 23 — Ακύρωση Παραγγελίας</Link>).
+        </p>
+      </InfoBox>
       <StepCard number="5" title="Επανεκτύπωση Απόδειξης">
         <p>Με τον ίδιο τρόπο (slide προς τα αριστερά) εμφανίζεται το <strong>«Επανεκτύπωση Απόδειξης»</strong> για να ξαναεκτυπώσεις.</p>
       </StepCard>
