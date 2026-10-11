@@ -12,7 +12,7 @@ export default function TransferOrder() {
       <SectionTitle>Μεταφορά Παραγγελίας (από σερβιτόρο σε σερβιτόρο)</SectionTitle>
 
       <InfoBox icon="⚙️" title="Προαπαιτούμενο" variant="purple">
-        <p>Ο διαχειριστής του καταστήματος πρέπει πρώτα να επιτρέψει τη μεταφορά παραγγελιών στον χρήστη, από το <strong>Διαχειριστικό</strong>.</p>
+        <p>Ο διαχειριστής του καταστήματος πρέπει πρώτα να επιτρέψει τη μεταφορά παραγγελιών στον χρήστη, από το <strong>Secure (Διαχειριστικό)</strong>.</p>
         <ul className="list-disc pl-5 mt-2 space-y-1.5">
           <li>Μπες στο <strong>Secure (Διαχειριστικό)</strong>.</li>
           <li>Πήγαινε στα <strong>«Δικαιώματα Διαχειριστικού Κωδικού»</strong>.</li>
@@ -70,9 +70,9 @@ export default function TransferOrder() {
         </p>
       </StepCard>
 
-      <InfoBox icon="🚫" title="Χαμένες Μεταφορές — Διαχειριστικό" variant="warning">
+      <InfoBox icon="🚫" title="Χαμένες Μεταφορές — Secure (Διαχειριστικό)" variant="warning">
         <p>
-          Όταν μια μεταφορά <strong>δεν ολοκληρώνεται σωστά</strong> (π.χ. ο παραλήπτης δεν είχε ανοιχτή/active την εφαρμογή), καταγράφεται στο <strong>Διαχειριστικό</strong> ως <strong>«χαμένη μεταφορά»</strong> και φαίνεται με <strong>κόκκινο χρώμα</strong>. Στο χρονολόγιο μεταφορών, οι χαμένες εμφανίζονται με <strong>κόκκινο</strong> δείκτη (όνομα σερβιτόρου με λουκέτο και βέλος από→προς σε κόκκινο), ενώ στο παράθυρο «Μετακινήσεις Παραγγελίας» η γραμμή φέρει <strong>κόκκινο Χ</strong> δεξιά.
+          Όταν μια μεταφορά <strong>δεν ολοκληρώνεται σωστά</strong> (π.χ. ο παραλήπτης δεν είχε ανοιχτή/active την εφαρμογή), καταγράφεται στο <strong>Secure (Διαχειριστικό)</strong> ως <strong>«χαμένη μεταφορά»</strong> και φαίνεται με <strong>κόκκινο χρώμα</strong>. Στο χρονολόγιο μεταφορών, οι χαμένες εμφανίζονται με <strong>κόκκινο</strong> δείκτη (όνομα σερβιτόρου με λουκέτο και βέλος από→προς σε κόκκινο), ενώ στο παράθυρο «Μετακινήσεις Παραγγελίας» η γραμμή φέρει <strong>κόκκινο Χ</strong> δεξιά.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
           <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/addf40367_Screenshot2026-07-29104534.png" alt="Μετακινήσεις Παραγγελίας — χαμένη μεταφορά με κόκκινο Χ" className="w-full h-auto rounded-lg border border-gray-200" />
