@@ -6,10 +6,10 @@ export function ScreenshotGallery({ images, caption }) {
   if (!images || images.length === 0) return null;
 
   return (
-    <div className="border border-[#00D4FF]/10 bg-[#0D1526]/70 p-4 flex flex-col gap-3">
+    <div className="border border-[#00D4FF]/10 bg-[#0D1526]/70 p-4 flex flex-col gap-3 hidden">
       {/* Main image */}
-      <div className="relative overflow-hidden bg-[#080c20] flex items-center justify-center min-h-48 rounded-sm">
-        <img src={images[active]} alt={caption || `screenshot ${active + 1}`} className="w-full h-auto object-contain rounded-sm" />
+      <div className="relative overflow-hidden bg-[#080c20] flex items-center justify-center min-h-48 rounded-sm hidden">
+        <img src={images[active]} alt={caption || `screenshot ${active + 1}`} className="w-full h-auto object-contain rounded-sm hidden" />
 
       </div>
 
