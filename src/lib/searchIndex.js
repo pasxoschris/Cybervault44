@@ -95,12 +95,6 @@ const index = [
     keywords: ["βάρδια", "shift", "κλείσιμο", "ανάλυση", "εκτύπωση", "z"],
     context: "Ανάλυση, εκτύπωση & κλείσιμο βάρδιας",
   },
-  {
-    title: "Σενάρια",
-    path: "/tutorial/scenarios",
-    keywords: ["σενάριο", "παράδειγμα", "scenarios", "πρακτικό", "χρήση"],
-    context: "Πρακτικά παραδείγματα χρήσης",
-  },
 ];
 
 export function searchItems(query) {

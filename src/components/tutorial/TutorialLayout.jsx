@@ -37,7 +37,6 @@ const sections = [
   { title: "Παραγγελίες Βάρδιας", path: "/tutorial/shift", icon: Layers },
   { title: "Ανάλυση Βάρδιας", path: "/tutorial/shift-analysis", icon: Monitor },
   { title: "Κλείσιμο Βάρδιας", path: "/tutorial/shift-close", icon: Layers },
-  { title: "Σενάρια", path: "/tutorial/scenarios", icon: Monitor },
 ];
 
 export default function TutorialLayout({ children, title, subtitle, standalone = false }) {
