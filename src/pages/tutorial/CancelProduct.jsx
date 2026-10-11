@@ -64,6 +64,9 @@ export default function CancelProduct() {
       </StepCard>
       <StepCard number="2" title="Επίλεξε όλα τα προϊόντα">
         <p>Τσέκαρε <strong>όλα τα προϊόντα</strong> της παραγγελίας.</p>
+        <InfoBox icon="⚠️" title="Προσοχή — προϊόν με μηδενική τιμή" variant="warning">
+          <p>Αν υπάρχει <strong>προϊόν με μηδενική τιμή</strong>, πρέπει να <strong>μην είναι επιλεγμένο</strong>, καθώς δεν μπορεί να εκδοθεί <strong>Πιστωτικό Στοιχείο Λιανικής</strong> για αυτό το προϊόν.</p>
+        </InfoBox>
       </StepCard>
       <StepCard number="3" title="Πάτα το εικονίδιο στο κάτω μέρος">
         <CancelActionButton size={56} src={CREDIT_ICON_SRC} label="" />
