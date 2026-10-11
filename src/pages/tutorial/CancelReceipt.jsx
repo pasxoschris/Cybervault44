@@ -24,6 +24,9 @@ export default function CancelReceipt() {
       </StepCard>
       <StepCard number="3" title="Επίλεξε Επεξεργασία">
         <p>Πάτα το εικονίδιο <strong>✏️ (Επεξεργασία Παραγγελίας)</strong> και στη συνέχεια επίλεξε <strong>όλα τα προϊόντα</strong>.</p>
+        <InfoBox icon="⚠️" title="Προσοχή — προϊόν με μηδενική τιμή" variant="warning">
+          <p>Αν υπάρχει <strong>προϊόν με μηδενική τιμή</strong>, πρέπει να <strong>μην είναι επιλεγμένο</strong>, καθώς δεν μπορεί να εκδοθεί <strong>Πιστωτικό Στοιχείο Λιανικής</strong> για αυτό το προϊόν.</p>
+        </InfoBox>
       </StepCard>
       <StepCard number="4" title="Έκδοση Πιστωτικού Στοιχείου Λιανικής">
         <CancelActionButton />
