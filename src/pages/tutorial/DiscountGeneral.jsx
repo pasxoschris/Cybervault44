@@ -28,7 +28,7 @@ export default function DiscountGeneral() {
         <ul className="list-disc list-inside mt-2 space-y-1">
           <li>Πάτα <strong>Scan QR Code</strong> — ανοίγει η κάμερα της συσκευής.</li>
           <li>Σκάναρε το QR που έχει δημιουργηθεί για <strong>συγκεκριμένη κατηγορία πελατών</strong>: φέρνει <strong>προκαθορισμένο ποσοστό έκπτωσης</strong>.</li>
-          <li>Τα QR αυτά δημιουργούνται από το <strong>διαχειριστικό</strong>.</li>
+          <li>Τα QR αυτά δημιουργούνται από το <strong>Secure (Διαχειριστικό)</strong>.</li>
         </ul>
       </StepCard>
       <StepCard number="4" title="Ρύθμισε την έκπτωση">

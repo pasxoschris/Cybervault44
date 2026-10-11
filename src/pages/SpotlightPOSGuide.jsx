@@ -133,7 +133,7 @@ export default function SpotlightPOSGuide() {
           {[
             { icon: Smartphone, t: 'iOS App', d: 'iPhone & iPad' },
             { icon: ShieldCheck, t: 'Official Support', d: 'SpotlightPOS συνεργάτης' },
-            { icon: GraduationCap, t: 'Ανά ρόλο', d: 'Service · Maitre · Cashier · Διαχειριστικό' },
+            { icon: GraduationCap, t: 'Ανά ρόλο', d: 'Service · Maitre · Cashier · Secure (Διαχειριστικό)' },
           ].map(f => (
             <div key={f.t} className="bg-white border border-gray-100 rounded-2xl p-5">
               <f.icon size={20} className="text-purple-600 mb-2" />
@@ -172,7 +172,7 @@ export default function SpotlightPOSGuide() {
         <div className="max-w-4xl mx-auto px-6 py-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>Σε ποιον απευθύνεται</h2>
           <p className="text-gray-600 leading-relaxed mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Η εκπαίδευση αφορά προσωπικό καταστημάτων που χρησιμοποιούν SpotlightPOS — σερβιτόρους, ταμίες, κεντρικό ταμείο (maitre mode), υπεύθυνους καταστήματος και ιδιοκτήτες (Διαχειριστικό/Secure). Πρόσβαση δίνεται σε εξουσιοδοτημένους χρήστες κατόπιν αιτήματος.
+            Η εκπαίδευση αφορά προσωπικό καταστημάτων που χρησιμοποιούν SpotlightPOS — σερβιτόρους, ταμίες, κεντρικό ταμείο (maitre mode), υπεύθυνους καταστήματος και ιδιοκτήτες στο Secure (Διαχειριστικό). Πρόσβαση δίνεται σε εξουσιοδοτημένους χρήστες κατόπιν αιτήματος.
           </p>
           <div className="flex flex-wrap gap-2">
             {['Σερβιτόρος', 'Ταμίας', 'Maitre', 'Διαχειριστής καταστήματος', 'Reseller'].map(t => (

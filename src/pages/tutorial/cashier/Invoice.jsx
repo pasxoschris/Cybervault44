@@ -48,7 +48,7 @@ export default function Invoice() {
 
       <SectionTitle>Ενεργοποίηση ανά iPad</SectionTitle>
 
-      <StepCard number="1" title="Από το Διαχειριστικό">
+      <StepCard number="1" title="Από το Secure (Διαχειριστικό)">
         <p>Η ενεργοποίηση της Έκδοσης Τιμολογίου γίνεται από το <strong>Secure (Διαχειριστικό)</strong>, ανά <strong>συσκευή (iPad)</strong>.</p>
       </StepCard>
 
@@ -73,7 +73,7 @@ export default function Invoice() {
       </InfoBox>
 
       <InfoBox icon="💡" title="Συνοπτικά" variant="info">
-        <p><strong>Μενού → Έκδοση Τιμολογίου</strong> (εμφανίζεται με παραγγελία + ενεργοποιημένο iPad). Η ενεργοποίηση γίνεται <strong>ανά iPad από το Διαχειριστικό</strong>.</p>
+        <p><strong>Μενού → Έκδοση Τιμολογίου</strong> (εμφανίζεται με παραγγελία + ενεργοποιημένο iPad). Η ενεργοποίηση γίνεται <strong>ανά iPad από το Secure (Διαχειριστικό)</strong>.</p>
       </InfoBox>
 
       <InfoBox icon="🧾" title="Απόδειξη πριν Τιμολόγιο" variant="warning">

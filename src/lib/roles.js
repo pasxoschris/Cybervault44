@@ -101,7 +101,7 @@ export const ROLES = [
     id: 'backoffice',
     emoji: '⚙️',
     title: 'Secure (Διαχειριστικό)',
-    subtitle: 'Διαχειριστικό σύστημα',
+    subtitle: 'Διαχείριση καταστήματος',
     color: '#DC2626',
     colorLight: 'rgba(220,38,38,0.12)',
     colorBorder: 'rgba(220,38,38,0.3)',
