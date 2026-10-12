@@ -18,7 +18,7 @@ export default function PaymentCash() {
       </StepCard>
       <StepCard number="3" title="Εισήγαγε ποσό (προαιρετικό)">
         <p>Αν ο πελάτης δώσει μεγαλύτερο ποσό, μπορείς να χρησιμοποιήσεις το <strong>εργαλείο για ρέστα</strong> για να υπολογίσεις τα ρέστα.</p>
-        <p>Το Εργαλείο για ρέστα ενεργοποιείται στις <strong><a href="/tutorial/Settings" className="text-purple-600 underline hover:text-purple-800">«Ρυθμίσεις Χρήστη»</a></strong>)
+        <p>Το Εργαλείο για ρέστα ενεργοποιείται στις <strong><a href="/tutorial/Settings" className="text-purple-600 underline hover:text-purple-800">«Ρυθμίσεις Χρήστη»</a></strong>)</p>
 
       </StepCard>
       <StepCard number="4" title="Επιβεβαίωση">
