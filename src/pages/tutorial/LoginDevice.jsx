@@ -23,7 +23,7 @@ export default function LoginDevice() {
     <TutorialLayout title="Σύνδεση από νέα συσκευή" subtitle="Πώς να συνδέσεις μια νέα συσκευή (iPhone/iPad) με το κατάστημα">
 
       <InfoBox icon="📱" title="Συμβατότητα Συσκευής" variant="info">
-        Η εφαρμογή Spotlight POS — όχι το Secure (Διαχειριστικό) — τρέχει <strong>μόνο σε iOS συσκευές</strong> — <strong>iPhone</strong> και <strong>iPad</strong>. Βεβαιώσου ότι χρησιμοποιείς συμβατή συσκευή.
+        Η εφαρμογή Spotlight POS τρέχει <strong>μόνο σε iOS συσκευές</strong> — <strong>iPhone</strong> και <strong>iPad</strong>. Βεβαιώσου ότι χρησιμοποιείς συμβατή συσκευή.
       </InfoBox>
 
       <InfoBox icon="⚠️" title="Προαπαιτούμενα" variant="warning">
