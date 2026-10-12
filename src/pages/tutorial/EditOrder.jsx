@@ -46,7 +46,7 @@ export default function EditOrder() {
         ))}
       </div>
 
-      <InfoBox icon="⚠️" title="Προσοχή — προϊόν με μηδενική τιμή" variant="warning">
+      <InfoBox icon="⚠️" title="Πιστωτικό σε προϊόν με μηδενική τιμή" variant="info">
         Αν υπάρχει <strong>προϊόν με μηδενική τιμή</strong>, πρέπει να <strong>μην είναι επιλεγμένο</strong>, καθώς δεν μπορεί να εκδοθεί <strong>Πιστωτικό Στοιχείο Λιανικής</strong> για αυτό το προϊόν.
       </InfoBox>
 
