@@ -23,7 +23,7 @@ export default function DiscountOther() {
         <p>Επίλεξε τα προϊόντα που θέλεις να εκπτώσεις, ρύθμισε το ποσοστό αν χρειάζεται και πάτα <strong>✓</strong>.</p>
       </StepCard>
       <InfoBox icon="💡" variant="info">
-        Οι κατηγορίες δημιουργούνται από το Secure (Διαχειριστικό). Αν δεν βλέπεις αυτή που χρειάζεσαι, ζήτα από τον διαχειριστή να τη φτιάξει.
+        Οι κατηγορίες δημιουργούνται από τον <strong>Διαχειριστή</strong> στο <strong> Secure (Διαχειριστικό)</strong>. 
       </InfoBox>
     </TutorialLayout>
   );
