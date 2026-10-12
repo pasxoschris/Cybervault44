@@ -28,7 +28,7 @@ export default function Payment() {
       </div>
 
       <SectionTitle>Τρόποι πληρωμής</SectionTitle>
-      <p>Κάθε τρόπος πληρωμής είναι ξεχωριστό μάθημα — διάλεξε αυτόν που θέλεις να δεις.</p>
+      <p><strong>Κάθε τρόπος πληρωμής είναι ξεχωριστό μάθημα — διάλεξε αυτόν που θέλεις να δεις.</strong></p>
       <div className="grid gap-3 sm:grid-cols-2">
         {methods.map((m) => (
           <Link
