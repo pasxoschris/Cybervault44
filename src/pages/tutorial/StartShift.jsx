@@ -21,7 +21,7 @@ export default function StartShift() {
       </StepCard>
 
       <StepCard number="3" title="Εισήγαγε αρχικό ποσό ταμείου (optional)">
-        <p className="mt-2">⚙️ Αυτή η επιλογή πρέπει να έχει ενεργοποιηθεί από τον <strong>Διαχειριστή</strong> στο <strong>Secure (Διαχειριστικό)</strong>.</p>
+        <p className="mt-2">⚙️ Αυτή η επιλογή πρέπει να έχει ενεργοποιηθεί από τον <strong>Διαχειριστή</strong> στο <strong>Secure (Διαχειριστικό)</strong>, διαφορετικά δεν εμφανίζεται.</p>
         <p>Πληκτρολόγησε το αρχικό ποσό μετρητών που υπάρχει στο ταμείο. Αν δεν υπάρχει, πάτησε <strong>ΟΚ</strong>.</p>
         
       </StepCard>
