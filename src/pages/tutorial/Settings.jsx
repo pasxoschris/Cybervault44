@@ -29,7 +29,7 @@ export default function Settings() {
       <HighlightedImage
         src="https://media.base44.com/images/public/69f588f4590b173a2970ddb4/6981cd00c_image.png"
         alt="Οθόνη Ρυθμίσεων"
-        caption="Πάτα ☰ (πάνω αριστερά) και επίλεξε «Ρυθμίσεις (chriss)»"
+        caption="Πάτα ☰ (πάνω αριστερά) και επίλεξε «Ρυθμίσεις (όνομα_χρήστη)»"
         coords={{ x: 13, y: 87, r: 13, ryRatio: 1.35 }}
       />
 
