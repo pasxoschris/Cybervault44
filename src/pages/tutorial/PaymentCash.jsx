@@ -18,6 +18,8 @@ export default function PaymentCash() {
       </StepCard>
       <StepCard number="3" title="Εισήγαγε ποσό (προαιρετικό)">
         <p>Αν ο πελάτης δώσει ποσό μεγαλύτερο, χρησιμοποίησε το <strong>εργαλείο για ρέστα</strong> για να υπολογίσεις τα ρέστα.</p>
+        <p> <strong><a href="/tutorial/Settings" className="text-purple-600 underline hover:text-purple-800">«Ρυθμίσεις Χρήστη»</a></strong>)
+
       </StepCard>
       <StepCard number="4" title="Επιβεβαίωση">
         <p>Επιβεβαίωσε την πληρωμή. Η απόδειξη θα εκτυπωθεί αυτόματα.</p>
