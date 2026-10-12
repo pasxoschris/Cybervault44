@@ -47,7 +47,7 @@ export default function Discount() {
             <p>Π'ατησε πάνω δεξία στις τρεις τελείες, και επέλεξε <strong>Έκπτωση</strong>.</p>
           </StepCard>
           <StepCard number="3" title="Εισήγαγε Κωδικό Διαχειριστή">
-            <p>Για να εφαρμόσεις συνολική έκπτωση, θα σου ζητηθεί ο <strong>Κωδικός Διαχειριστή</strong>. Βάλε τον κωδικό ή σκάναρε QR.</p>
+            <p>Για να εφαρμόσεις συνολική έκπτωση, θα σου ζητηθεί ο <strong>Κωδικός Διαχειριστή</strong> είτε να σκανάρεις <strong>QR Code</strong>.</p>
           </StepCard>
          <StepCard number="4" title="Ρύθμισε την έκπτωση">
   <p>Στην οθόνη <strong>Έκπτωση</strong>:</p>
@@ -60,7 +60,7 @@ export default function Discount() {
       Γενική Έκπτωση
     </span>
     <span className="rounded bg-gray-100 px-2 py-1 text-sm">
-      Ίδια Κατανάλωση
+      Ίδιο Κατανάλωση
     </span>
     <span className="rounded bg-gray-100 px-2 py-1 text-sm">
       Άλλες Εκπτώσεις
