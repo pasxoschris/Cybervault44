@@ -13,7 +13,6 @@ export default function CancelReceipt() {
     <TutorialLayout title="Ακύρωση Απόδειξης" subtitle="Πώς να ακυρώσεις απόδειξη ώστε να μην αποδοθεί διπλό ΦΠΑ">
       <InfoBox icon="🆚" title="Ακύρωση Απόδειξης vs Ακύρωση Παραγγελίας" variant="purple">
         <p><strong>Ακύρωση Απόδειξης</strong> (αυτό το μάθημα): η παραγγελία <strong>έχει ήδη πληρωθεί</strong> και έχει εκδοθεί <strong>απόδειξη</strong>. Χρειάζεται πρώτα επαναφορά. Βλέπε μάθημα: <Link to="/tutorial/shift" className="font-semibold text-purple-700 underline underline-offset-2 hover:text-purple-900">Παραγγελίες Βάρδιας</Link>.</p>
-        <p className="mt-1"><strong>Ακύρωση Παραγγελίας</strong>: η παραγγελία είναι <strong>ανοιχτή / μη πληρωμένη</strong> (δεν έχει απόδειξη). Βλέπε μάθημα: <Link to="/tutorial/cancel-order" className="font-semibold text-purple-700 underline underline-offset-2 hover:text-purple-900">Ακύρωση Παραγγελίας</Link>.</p>
       </InfoBox>
 
       <SectionTitle>Ακύρωση Απόδειξης</SectionTitle>
