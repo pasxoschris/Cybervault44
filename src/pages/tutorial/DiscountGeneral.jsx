@@ -12,10 +12,10 @@ export default function DiscountGeneral() {
     <TutorialLayout title="Γενική Έκπτωση" subtitle="Πώς να εφαρμόσεις μια γενική έκπτωση σε παραγγελία">
       <ScreenshotGallery
         images={[
-          "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/188cb6052_14.JPG",
-        ]}
-        caption="Οθόνη έκπτωσης"
-      />
+        "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/188cb6052_14.JPG"]
+        }
+        caption="Οθόνη έκπτωσης" />
+      
       <SectionTitle>Γενική Έκπτωση</SectionTitle>
       <StepCard number="1" title="Άνοιξε την παραγγελία">
         <p>Πάτα στην ανοικτή παραγγελία για να δεις τα στοιχεία της.</p>
@@ -38,7 +38,7 @@ export default function DiscountGeneral() {
             Επίλεξε το <strong>Είδος έκπτωσης</strong>:
             <div className="ml-6 mt-2 flex flex-col gap-2 items-start">
               <span className="rounded bg-gray-100 px-2 py-1 text-sm">Γενική Έκπτωση</span>
-              <span className="rounded bg-gray-100 px-2 py-1 text-sm">Ίδια Κατανάλωση</span>
+              <span className="rounded bg-gray-100 px-2 py-1 text-sm">Ίδιο Κατανάλωση</span>
               <span className="rounded bg-gray-100 px-2 py-1 text-sm">Άλλες Εκπτώσεις</span>
             </div>
           </li>
@@ -53,6 +53,6 @@ export default function DiscountGeneral() {
       <InfoBox icon="💡" variant="info">
         Η τιμή δίπλα στο ποσοστό δείχνει τη νέα τιμή μετά την έκπτωση. Βεβαιώσου ότι είναι σωστή πριν επιβεβαιώσεις.
       </InfoBox>
-    </TutorialLayout>
-  );
+    </TutorialLayout>);
+
 }
