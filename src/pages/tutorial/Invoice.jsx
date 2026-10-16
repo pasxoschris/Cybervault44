@@ -54,7 +54,7 @@ export default function Invoice() {
       </StepCard>
 
       <InfoBox icon="🌍" title="Ξένα ΑΦΜ — Πρόθεμα Χώρας" variant="info">
-        <p>Για <strong>μη ελληνικά ΑΦΜ</strong> (ξένες εταιρείες), η αυτόματη αναζήτηση στην ΑΑΔΕ δεν λειτουργεί. Πρέπει να καταχωρήσεις το ΑΦΜ <strong>μαζί με το πρόθεμα της χώρας</strong>, χωρίς κενά:</p>
+        <p>Για <strong>μη ελληνικά ΑΦΜ</strong> (ξένες εταιρείες), η αυτόματη αναζήτηση στην ΑΑΔΕ δεν λειτουργεί. Πρέπει να καταχωρήσεις το ΑΦΜ <strong>μαζί με το πρόθεμα της χώρας</strong>:</p>
         <ul className="list-disc pl-5 mt-2 space-y-1">
           <li><strong>DE</strong>123456789 — Γερμανία</li>
           <li><strong>CY</strong>12345678X — Κύπρος</li>
