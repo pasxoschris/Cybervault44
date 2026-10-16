@@ -624,7 +624,8 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
 
   // Ένα block περιεχομένου — κοινό για τα αριθμημένα κεφάλαια και τις πληροφοριακές σελίδες
   const renderBlock = async (block) => {
-    if (block.type === 'section') drawSection(block.title);
+    // Νέα ενότητα (π.χ. «2η περίπτωση»): η αρίθμηση των βημάτων ξεκινά ξανά από το 1
+    if (block.type === 'section') { counter.value = 0; drawSection(block.title); }
     else if (block.type === 'step') drawStep(block);
     else if (block.type === 'note') drawNote(block);
     else if (block.type === 'image') await drawImage(block);
