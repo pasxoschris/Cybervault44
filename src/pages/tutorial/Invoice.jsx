@@ -53,6 +53,17 @@ export default function Invoice() {
         <p>Για ελληνικά ΑΦΜ μπορείς να πατήσεις το βιβλιαράκι <strong>📖</strong> δίπλα στο πεδίο ΑΦΜ για αυτόματη αναζήτηση στην ΑΑΔΕ. Τα στοιχεία της εταιρείας θα συμπληρωθούν αυτόματα.</p>
       </StepCard>
 
+      <StepCard number="5" title="Επιλογή τρόπου πληρωμής">
+        <p>Επίλεξε τον τρόπο πληρωμής του τιμολογίου:</p>
+        <ul className="list-disc pl-5 mt-2 space-y-1">
+          <li>Μετρητά</li>
+          <li>Κάρτα</li>
+          <li>Κατάθεση σε Τράπεζα</li>
+          <li>Επί Πιστώσει</li>
+          <li>IRIS</li>
+        </ul>
+      </StepCard>
+
       <InfoBox icon="🌍" title="Ξένα ΑΦΜ — Πρόθεμα Χώρας" variant="info">
         <p>Για <strong>μη ελληνικά ΑΦΜ</strong> (ξένες εταιρείες), η αυτόματη αναζήτηση στην ΑΑΔΕ δεν λειτουργεί. Πρέπει να καταχωρήσεις το ΑΦΜ <strong>μαζί με το πρόθεμα της χώρας</strong>:</p>
         <ul className="list-disc pl-5 mt-2 space-y-1">
@@ -65,7 +76,7 @@ export default function Invoice() {
         <p className="mt-2">Συμπλήρωσε τα υπόλοιπα στοιχεία (Επωνυμία, Διεύθυνση, Δ.Ο.Υ., Δραστηριότητα) χειροκίνητα.</p>
       </InfoBox>
 
-      <StepCard number="5" title="Συμπλήρωσε τα στοιχεία">
+      <StepCard number="6" title="Συμπλήρωσε τα στοιχεία">
         <img
           src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/2f3e213d5_image.png"
           alt="Στοιχεία Τιμολογίου πριν και μετά την αναζήτηση ΑΦΜ στην ΑΑΔΕ"
@@ -78,7 +89,7 @@ export default function Invoice() {
         </div>
       </StepCard>
 
-      <StepCard number="6" title="Πάτα «Έκδοση»">
+      <StepCard number="7" title="Πάτα «Έκδοση»">
         <p>Μόλις συμπληρώσεις όλα τα υποχρεωτικά πεδία (*), πάτα <strong>«Έκδοση»</strong> και επιβεβαίωσε.</p>
       </StepCard>
 
