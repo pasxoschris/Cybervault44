@@ -1,21 +1,7 @@
 import React from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
-import { StepCard, InfoBox, SectionTitle, FieldRow } from "../../components/tutorial/StepCard";
+import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
-
-const fields = [
-{ label: "Email*", value: "Email πελάτη" },
-{ label: "Τρόπος Πληρωμής*", value: "Μετρητά / Κάρτα / Κατάθεση / Επί Πιστώσει" },
-{ label: "Τύπος Τιμολογίου*", value: "Τιμολόγιο Πώλησης / Τιμολόγιο Παροχής Υπηρεσιών" },
-{ label: "ΑΦΜ Εταιρείας*", value: "ΑΦΜ (μπορείς να αναζητήσεις από ΑΑΔΕ)" },
-{ label: "Επωνυμία Εταιρείας*", value: "Αυτόματη συμπλήρωση μετά το ΑΦΜ" },
-{ label: "Διεύθυνση*", value: "Αυτόματη συμπλήρωση" },
-{ label: "Δ.Ο.Υ.*", value: "Αυτόματη συμπλήρωση" },
-{ label: "Δραστηριότητα*", value: "Αυτόματη συμπλήρωση" },
-{ label: "Πόλη", value: "Προαιρετικό" },
-{ label: "Τ.Κ.", value: "Προαιρετικό" },
-{ label: "Σχόλια", value: "Προαιρετικό" }];
-
 
 export default function Invoice() {
   return (
@@ -53,17 +39,6 @@ export default function Invoice() {
         <p>Για ελληνικά ΑΦΜ μπορείς να πατήσεις το βιβλιαράκι <strong>📖</strong> δίπλα στο πεδίο ΑΦΜ για αυτόματη αναζήτηση στην ΑΑΔΕ. Τα στοιχεία της εταιρείας θα συμπληρωθούν αυτόματα.</p>
       </StepCard>
 
-      <StepCard number="5" title="Επιλογή τρόπου πληρωμής">
-        <p>Επίλεξε τον τρόπο πληρωμής του τιμολογίου:</p>
-        <ul className="list-disc pl-5 mt-2 space-y-1">
-          <li>Μετρητά</li>
-          <li>Κάρτα</li>
-          <li>Κατάθεση σε Τράπεζα</li>
-          <li>Επί Πιστώσει</li>
-          <li>IRIS</li>
-        </ul>
-      </StepCard>
-
       <InfoBox icon="🌍" title="Ξένα ΑΦΜ — Πρόθεμα Χώρας" variant="info">
         <p>Για <strong>μη ελληνικά ΑΦΜ</strong> (ξένες εταιρείες), η αυτόματη αναζήτηση στην ΑΑΔΕ δεν λειτουργεί. Πρέπει να καταχωρήσεις το ΑΦΜ <strong>μαζί με το πρόθεμα της χώρας</strong>:</p>
         <ul className="list-disc pl-5 mt-2 space-y-1">
@@ -76,20 +51,18 @@ export default function Invoice() {
         <p className="mt-2">Συμπλήρωσε τα υπόλοιπα στοιχεία (Επωνυμία, Διεύθυνση, Δ.Ο.Υ., Δραστηριότητα) χειροκίνητα.</p>
       </InfoBox>
 
-      <StepCard number="6" title="Συμπλήρωσε τα στοιχεία">
-        
-
-
-        
-        
-        <div className="bg-[#080c20] border border-[#00D4FF]/10 rounded-sm overflow-hidden mt-2 px-3">
-          {fields.map((f, i) =>
-          <FieldRow key={i} label={f.label} value={f.value} />
-          )}
-        </div>
+      <StepCard number="5" title="Επιλογή τρόπου πληρωμής">
+        <p>Επίλεξε τον τρόπο πληρωμής του τιμολογίου:</p>
+        <ul className="list-disc pl-5 mt-2 space-y-1">
+          <li>Μετρητά</li>
+          <li>Κάρτα</li>
+          <li>Κατάθεση σε Τράπεζα</li>
+          <li>Επί Πιστώσει</li>
+          <li>IRIS</li>
+        </ul>
       </StepCard>
 
-      <StepCard number="7" title="Πάτα «Έκδοση»">
+      <StepCard number="6" title="Πάτα «Έκδοση»">
         <p>Μόλις συμπληρώσεις όλα τα υποχρεωτικά πεδία (*), πάτα <strong>«Έκδοση»</strong> και επιβεβαίωσε.</p>
       </StepCard>
 
