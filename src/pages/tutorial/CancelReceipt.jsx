@@ -9,7 +9,7 @@ export default function CancelReceipt() {
   }, []);
 
   return (
-    <TutorialLayout title="Ακύρωση Απόδειξης" subtitle="Πώς να ακυρώσεις απόδειξη ώστε να μην αποδοθεί διπλό ΑΦΜ">
+    <TutorialLayout title="Ακύρωση Απόδειξης" subtitle="Πώς να ακυρώσεις απόδειξη ώστε να μην αποδοθεί διπλό ΦΠΑ">
       <InfoBox icon="🆚" title="Ακύρωση Απόδειξης vs Ακύρωση Παραγγελίας" variant="purple">
         <p><strong>Ακύρωση Απόδειξης</strong> (αυτό το μάθημα): η παραγγελία <strong>έχει ήδη πληρωθεί</strong> και έχει εκδοθεί <strong>απόδειξη</strong>. Χρειάζεται πρώτα επαναφορά.</p>
         <p className="mt-1"><strong>Ακύρωση Παραγγελίας</strong>: η παραγγελία είναι <strong>ανοιχτή / μη πληρωμένη</strong> (δεν έχει απόδειξη). Βλέπε μάθημα: Ακύρωση Παραγγελίας.</p>
