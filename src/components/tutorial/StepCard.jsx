@@ -39,7 +39,7 @@ export function InfoBox({ icon = "💡", title, children, variant = "info" }) {
   };
 
   return (
-    <div className={`border rounded-2xl p-6 ${variants[variant]}`}>
+    <div className={`border rounded-2xl p-6 hidden ${variants[variant]}`}>
       <div className="flex items-start gap-4">
         <span className="text-2xl flex-shrink-0 mt-0.5">{icon}</span>
         <div className="text-base leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
