@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import Navbar from '@/components/layout/Navbar';
 import { getRoleById } from '@/lib/roles';
 import { getCompletedCount, isVisited } from '@/lib/tutorialProgress';
-import { ChevronRight, CheckCircle2, ArrowLeft } from 'lucide-react';
+import { ChevronRight, ArrowLeft } from 'lucide-react';
 import AssistantFloatingButton from '@/components/academy/AssistantFloatingButton';
 import ManualDownloadButton from '@/components/academy/ManualDownloadButton';
 import SpotlightBrand from '@/components/SpotlightBrand';
@@ -133,9 +133,9 @@ export default function RolePath() {
                 to={lesson.href}
                 className={`group bg-white rounded-xl border px-5 py-4 flex items-center gap-4 hover:shadow-md transition-all duration-200 ${done ? 'border-green-200' : 'border-gray-100 hover:border-purple-200'}`}>
                 
-                {/* Step number / check */}
+                {/* Αρίθμηση μαθήματος — πράσινος αριθμός όταν ολοκληρωθεί */}
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold ${done ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400 group-hover:bg-purple-100 group-hover:text-purple-600'} transition-colors`} style={{ fontFamily: 'Inter, sans-serif' }}>
-                  {done ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : i + 1}
+                  {i + 1}
                 </div>
                 <span className={`flex-1 font-medium text-sm ${done ? 'text-gray-500' : 'text-gray-800 group-hover:text-purple-700'} transition-colors`} style={{ fontFamily: 'Inter, sans-serif' }}>
                   {lesson.title}
