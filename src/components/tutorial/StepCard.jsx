@@ -38,17 +38,16 @@ export function InfoBox({ icon = "💡", title, children, variant = "info" }) {
     purple: "bg-purple-50 border-purple-200 text-purple-800"
   };
 
-  return null;
-
-
-
-
-
-
-
-
-
-
+  return (
+    <div className={`border rounded-2xl p-6 ${variants[variant]}`}>
+      <div className="flex items-start gap-4">
+        <span className="text-2xl flex-shrink-0 mt-0.5">{icon}</span>
+        <div className="text-base leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+          {title && <p className="font-semibold text-sm mb-1.5" style={{ fontFamily: 'Inter, sans-serif' }}>{title}</p>}
+          <div className="[&_strong]:font-semibold">{children}</div>
+        </div>
+      </div>
+    </div>);
 }
 
 export function SectionTitle({ children }) {
