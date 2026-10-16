@@ -4,18 +4,18 @@ import { StepCard, InfoBox, SectionTitle, FieldRow } from "../../components/tuto
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
 
 const fields = [
-  { label: "Email*", value: "Email πελάτη" },
-  { label: "Τρόπος Πληρωμής*", value: "Μετρητά / Κάρτα / Κατάθεση / Επί Πιστώσει" },
-  { label: "Τύπος Τιμολογίου*", value: "Τιμολόγιο Πώλησης / Τιμολόγιο Παροχής Υπηρεσιών" },
-  { label: "ΑΦΜ Εταιρείας*", value: "ΑΦΜ (μπορείς να αναζητήσεις από ΑΑΔΕ)" },
-  { label: "Επωνυμία Εταιρείας*", value: "Αυτόματη συμπλήρωση μετά το ΑΦΜ" },
-  { label: "Διεύθυνση*", value: "Αυτόματη συμπλήρωση" },
-  { label: "Δ.Ο.Υ.*", value: "Αυτόματη συμπλήρωση" },
-  { label: "Δραστηριότητα*", value: "Αυτόματη συμπλήρωση" },
-  { label: "Πόλη", value: "Προαιρετικό" },
-  { label: "Τ.Κ.", value: "Προαιρετικό" },
-  { label: "Σχόλια", value: "Προαιρετικό" },
-];
+{ label: "Email*", value: "Email πελάτη" },
+{ label: "Τρόπος Πληρωμής*", value: "Μετρητά / Κάρτα / Κατάθεση / Επί Πιστώσει" },
+{ label: "Τύπος Τιμολογίου*", value: "Τιμολόγιο Πώλησης / Τιμολόγιο Παροχής Υπηρεσιών" },
+{ label: "ΑΦΜ Εταιρείας*", value: "ΑΦΜ (μπορείς να αναζητήσεις από ΑΑΔΕ)" },
+{ label: "Επωνυμία Εταιρείας*", value: "Αυτόματη συμπλήρωση μετά το ΑΦΜ" },
+{ label: "Διεύθυνση*", value: "Αυτόματη συμπλήρωση" },
+{ label: "Δ.Ο.Υ.*", value: "Αυτόματη συμπλήρωση" },
+{ label: "Δραστηριότητα*", value: "Αυτόματη συμπλήρωση" },
+{ label: "Πόλη", value: "Προαιρετικό" },
+{ label: "Τ.Κ.", value: "Προαιρετικό" },
+{ label: "Σχόλια", value: "Προαιρετικό" }];
+
 
 export default function Invoice() {
   return (
@@ -28,12 +28,12 @@ export default function Invoice() {
 
       <ScreenshotGallery
         images={[
-          "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/1c2d5c355_17.JPG",
-          "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/a151b64da_18.JPG",
-          "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/d65d4c712_19.JPG",
-        ]}
-        caption="Φόρμα έκδοσης τιμολογίου"
-      />
+        "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/1c2d5c355_17.JPG",
+        "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/a151b64da_18.JPG",
+        "https://media.base44.com/images/public/69f588f4590b173a2970ddb4/d65d4c712_19.JPG"]
+        }
+        caption="Φόρμα έκδοσης τιμολογίου" />
+      
 
       <SectionTitle>Διαδικασία Έκδοσης</SectionTitle>
 
@@ -80,12 +80,12 @@ export default function Invoice() {
         <img
           src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/2f3e213d5_image.png"
           alt="Στοιχεία Τιμολογίου πριν και μετά την αναζήτηση ΑΦΜ στην ΑΑΔΕ"
-          className="w-full rounded-xl border border-gray-200 mb-4"
-        />
+          className="w-full rounded-xl border border-gray-200 mb-4 hidden" />
+        
         <div className="bg-[#080c20] border border-[#00D4FF]/10 rounded-sm overflow-hidden mt-2 px-3">
-          {fields.map((f, i) => (
-            <FieldRow key={i} label={f.label} value={f.value} />
-          ))}
+          {fields.map((f, i) =>
+          <FieldRow key={i} label={f.label} value={f.value} />
+          )}
         </div>
       </StepCard>
 
@@ -106,6 +106,6 @@ export default function Invoice() {
         <p>Αν έχεις εκδώσει απόδειξη και θέλεις να εκδώσεις τιμολόγιο, πρέπει πρώτα να ακυρώσεις την απόδειξη, εκδίδοντας Πιστωτικό Στοιχείο Λιανικής (βλέπε μάθημα:Ακύρωση Απόδειξης
 ), ώστε να μην αποδοθεί διπλό ΦΠΑ.</p>
       </InfoBox>
-    </TutorialLayout>
-  );
+    </TutorialLayout>);
+
 }
