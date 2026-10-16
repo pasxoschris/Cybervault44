@@ -82,6 +82,10 @@ export default function Invoice() {
         <p>Μόλις συμπληρώσεις όλα τα υποχρεωτικά πεδία (*), πάτα <strong>«Έκδοση»</strong> και επιβεβαίωσε.</p>
       </StepCard>
 
+      <InfoBox icon="ℹ️" title="Δεν υποστηρίζεται το Split Payment" variant="info">
+        <p>Στην έκδοση τιμολογίου <strong>δεν υποστηρίζεται</strong> το Split Payment.</p>
+      </InfoBox>
+
       <InfoBox icon="⚠️" title="Σημαντικό — Ακύρωση Τιμολογίου" variant="warning">
         <p className="font-semibold">Το τιμολόγιο ακυρώνεται ΜΟΝΟ από το Secure (Διαχειριστικό).</p>
         <p className="mt-1">Αν θέλεις να ακυρώσεις τιμολόγιο <em>από την εφαρμογή</em>, θα πρέπει να <strong>ακυρώσεις ολόκληρη την παραγγελία</strong>.</p>
