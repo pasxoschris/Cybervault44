@@ -51,6 +51,9 @@ export default function CancelProduct() {
       <InfoBox icon="📄" variant="purple">
         Για το ακυρωμένο προϊόν εκδίδεται <strong>πιστωτικό στοιχείο λιανικής</strong>.
       </InfoBox>
+      <InfoBox icon="⚠️" title="Προσοχή — προϊόν με μηδενική τιμή" variant="warning">
+        <p>Αν το προϊόν έχει <strong>μηδενική τιμή</strong>, δεν μπορεί να εκδοθεί <strong>Πιστωτικό Στοιχείο Λιανικής</strong> για αυτό.</p>
+      </InfoBox>
       <InfoBox icon="⚠️" variant="warning">
         Η ακύρωση προϊόντος στέλνει ακυρωτικό δελτίο στην κουζίνα/μπαρ. Βεβαιώσου ότι το προϊόν δεν έχει ήδη ετοιμαστεί.
       </InfoBox>
