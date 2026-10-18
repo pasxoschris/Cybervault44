@@ -70,7 +70,7 @@ export default function CancelProduct() {
         <p>Όταν έχει εκδοθεί <strong>Τιμολόγιο</strong>, η ακύρωση γίνεται για <strong>ολόκληρη την παραγγελία</strong>. Ακολούθησε το μάθημα <Link to="/tutorial/cancel-order" className="text-purple-600 underline hover:text-purple-800 font-semibold">Ακύρωση Παραγγελίας</Link>.</p>
       </StepCard>
       <StepCard number="2" title="Καταχώρισε ξανά την παραγγελία">
-        <p>Χτύπα ξανά ολόκληρη τη <strong>σωστή</strong> παραγγελία από την αρχή.</p>
+        <p>Ξαναδημιούργησε ολόκληρη τη <strong>σωστή</strong> παραγγελία από την αρχή.</p>
       </StepCard>
 
       
