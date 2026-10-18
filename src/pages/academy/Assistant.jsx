@@ -37,8 +37,23 @@ const FALLBACK_SUGGESTED = [
   { category: 'cashier', question: 'Πώς προσθέτω συνοδευτικά σε προϊόν στο Cashier Mode;' },
 ];
 
+// Μήνυμα με πραγματικό κείμενο
+const hasText = (m) => typeof m.content === 'string' && m.content.trim() !== '';
+
+// Εκκρεμεί αναζήτηση στη βάση γνώσης
+const hasRunningTool = (m) =>
+  Array.isArray(m.tool_calls) && m.tool_calls.some(tc => tc?.status === 'running');
+
+// Εμφανίζεται μόνο ό,τι έχει περιεχόμενο — τα κενά μηνύματα παραλείπονται
+const isVisibleMessage = (m) => m.role !== 'system' && (hasText(m) || hasRunningTool(m));
+
 function MessageBubble({ message }) {
   const isUser = message.role === 'user';
+  const showBubble = hasText(message);
+  const runningTools = Array.isArray(message.tool_calls)
+    ? message.tool_calls.filter(tc => tc?.status === 'running')
+    : [];
+  if (!isVisibleMessage(message)) return null;
   return (
     <div className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
       {!isUser && (
@@ -47,6 +62,7 @@ function MessageBubble({ message }) {
         </div>
       )}
       <div className={`max-w-[85%] ${isUser ? 'flex flex-col items-end' : ''}`}>
+        {showBubble && (
         <div className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
           isUser
             ? 'bg-purple-600 text-white'
@@ -89,7 +105,8 @@ function MessageBubble({ message }) {
             </ReactMarkdown>
           )}
         </div>
-        {message.tool_calls?.map((tc, i) => tc.status === 'running' && (
+        )}
+        {runningTools.map((tc, i) => (
           <div key={i} className="mt-1 text-xs text-purple-500 flex items-center gap-1" style={{ fontFamily: 'Inter, sans-serif' }}>
             <div className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
             Αναζήτηση στη βάση γνώσης...
@@ -108,6 +125,7 @@ export default function Assistant() {
   const [init, setInit] = useState(true);
   const [suggested, setSuggested] = useState(FALLBACK_SUGGESTED);
   const bottomRef = useRef(null);
+  const visibleMessages = messages.filter(isVisibleMessage);
 
   useEffect(() => {
     const start = async () => {
@@ -193,7 +211,7 @@ export default function Assistant() {
           >
             <ArrowLeft size={14} /> Επιστροφή στους Ρόλους
           </Link>
-          {messages.length > 0 && (
+          {visibleMessages.length > 0 && (
             <button
               onClick={resetToQuestions}
               disabled={loading}
@@ -208,7 +226,7 @@ export default function Assistant() {
 
         {/* Messages / Empty state */}
         <div className="space-y-4">
-          {messages.length === 0 && !loading && (
+          {visibleMessages.length === 0 && !loading && (
             <div className="text-center py-6">
               <div className="w-16 h-16 rounded-full bg-purple-100 border border-purple-200 flex items-center justify-center mx-auto mb-4">
                 <Bot className="w-8 h-8 text-purple-600" />
@@ -261,11 +279,11 @@ export default function Assistant() {
             </div>
           )}
 
-          {messages.filter(m => m.role !== 'system').map((m, i) => (
+          {visibleMessages.map((m, i) => (
             <MessageBubble key={i} message={m} />
           ))}
 
-          {loading && messages[messages.length - 1]?.role === 'user' && (
+          {loading && visibleMessages[visibleMessages.length - 1]?.role === 'user' && (
             <div className="flex gap-3 justify-start">
               <div className="w-8 h-8 rounded-full bg-purple-100 border border-purple-200 flex items-center justify-center flex-shrink-0">
                 <Bot className="w-4 h-4 text-purple-600" />
@@ -282,7 +300,7 @@ export default function Assistant() {
         </div>
 
         {/* Input (when chatting) */}
-        {messages.length > 0 && (
+        {visibleMessages.length > 0 && (
           <div className="mt-4">
             <AssistantInput
               value={input}
