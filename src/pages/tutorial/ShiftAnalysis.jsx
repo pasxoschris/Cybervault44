@@ -11,8 +11,10 @@ export default function ShiftAnalysis() {
     <TutorialLayout title="Ανάλυση Βάρδιας" subtitle="Αναλυτική αναφορά πωλήσεων και πληρωμών βάρδιας">
 
       <SectionTitle>Ανάλυση Βάρδιας</SectionTitle>
-      <StepCard number="1" title="Άνοιξε Ανάλυση Βάρδιας">
-        <p>Από τις Παραγγελίες Βάρδιας, επίλεξε <strong>«Ανάλυση Βάρδιας»</strong>.</p>
+      <StepCard number="1" title="Άνοιξε την Ανάλυση Βάρδιας">
+        <p>Πάτα τις <strong>τρεις γραμμές (☰)</strong> πάνω αριστερά για να ανοίξει το μενού.</p>
+        <p>Επίλεξε <strong>«Ρυθμίσεις (χρήστη)»</strong>.</p>
+        <p>Στο <strong>κάτω μέρος</strong> της οθόνης πάτα το κουμπί <strong>«Ανάλυση Βάρδιας»</strong>.</p>
       </StepCard>
       <InfoBox icon="📊" title="Τι περιλαμβάνει η ανάλυση;" variant="info">
         <ul className="space-y-1">
