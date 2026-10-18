@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import CancelActionButton from "../../components/tutorial/CancelActionIcon";
@@ -16,6 +17,7 @@ export default function CancelProduct() {
         <p><strong>1η περίπτωση:</strong> Δεν έχεις εκδώσει Δελτίο παραγγελίας και το προϊόν δεν έχει πληρωθεί → <strong>Διαγραφή</strong> με slide προς τα αριστερά.</p>
         <p className="mt-1"><strong>2η περίπτωση:</strong> Έχεις εκδώσει Δελτίο Παραγγελίας ή Απόδειξη και η παραγγελία είναι ακόμα ανοιχτή→ <strong>κρατάς πατημένο</strong> το προϊόν και επιλέγεις <strong>«Ακύρωση Προϊόντος»</strong>.</p>
         <p className="mt-1"><strong>3η περίπτωση:</strong> Έχεις εκδώσει Απόδειξη και η παραγγελία έχει κλείσει.<strong> Δες το μάθημα: Παραγγελίες Βάρδιας </strong></p>
+        <p className="mt-1"><strong>4η περίπτωση:</strong> Έχεις εκδώσει <strong>Τιμολόγιο</strong> → ακυρώνεις ολόκληρη την παραγγελία και την καταχωρίζεις ξανά σωστά.</p>
      </InfoBox>
 
       <SectionTitle>1η περίπτωση — Δεν έχει εκδοθεί δελτίο παραγγελίας / δεν έχει πληρωθεί</SectionTitle>
@@ -57,6 +59,14 @@ export default function CancelProduct() {
       <InfoBox icon="⚠️" variant="warning">
         Η ακύρωση προϊόντος στέλνει ακυρωτικό δελτίο στην κουζίνα/μπαρ. Βεβαιώσου ότι το προϊόν δεν έχει ήδη ετοιμαστεί.
       </InfoBox>
+
+      <SectionTitle>4η περίπτωση — Έχει εκδοθεί Τιμολόγιο</SectionTitle>
+      <StepCard number="1" title="Ακύρωσε ολόκληρη την παραγγελία">
+        <p>Όταν έχει εκδοθεί <strong>Τιμολόγιο</strong>, η ακύρωση γίνεται για <strong>ολόκληρη την παραγγελία</strong>. Ακολούθησε το μάθημα <Link to="/tutorial/cancel-order" className="text-purple-600 underline hover:text-purple-800 font-semibold">Ακύρωση Παραγγελίας</Link>.</p>
+      </StepCard>
+      <StepCard number="2" title="Καταχώρισε ξανά την παραγγελία">
+        <p>Χτύπα ξανά ολόκληρη τη <strong>σωστή</strong> παραγγελία από την αρχή.</p>
+      </StepCard>
 
       
     </TutorialLayout>
