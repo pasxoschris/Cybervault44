@@ -17,7 +17,7 @@ export default function CancelProduct() {
         <p><strong>1η περίπτωση:</strong> Δεν έχεις εκδώσει Δελτίο παραγγελίας και το προϊόν δεν έχει πληρωθεί → <strong>Διαγραφή</strong> με slide προς τα αριστερά.</p>
         <p className="mt-1"><strong>2η περίπτωση:</strong> Έχεις εκδώσει Δελτίο Παραγγελίας ή Απόδειξη και η παραγγελία είναι ακόμα ανοιχτή→ <strong>κρατάς πατημένο</strong> το προϊόν και επιλέγεις <strong>«Ακύρωση Προϊόντος»</strong>.</p>
         <p className="mt-1"><strong>3η περίπτωση:</strong> Έχεις εκδώσει Απόδειξη και η παραγγελία έχει κλείσει → <Link to="/tutorial/shift" className="text-purple-700 underline hover:text-purple-900 font-semibold">Δες το μάθημα: Παραγγελίες Βάρδιας</Link></p>
-        <p className="mt-1"><strong>4η περίπτωση:</strong> Έχεις εκδώσει <strong>Τιμολόγιο</strong> → ακυρώνεις ολόκληρη την παραγγελία και την καταχωρίζεις ξανά σωστά.</p>
+        <p className="mt-1"><strong>4η περίπτωση:</strong> Έχεις εκδώσει <strong>Τιμολόγιο</strong> → ακυρώνεις ολόκληρη την παραγγελία και την καταχωρείς ξανά σωστά.</p>
      </InfoBox>
 
       <SectionTitle>1η περίπτωση — Δεν έχει εκδοθεί δελτίο παραγγελίας / δεν έχει πληρωθεί</SectionTitle>
