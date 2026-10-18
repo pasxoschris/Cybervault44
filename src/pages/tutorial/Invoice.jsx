@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
@@ -72,12 +73,12 @@ export default function Invoice() {
 
       <InfoBox icon="⚠️" title="Σημαντικό — Ακύρωση Τιμολογίου" variant="warning">
         <p className="font-semibold">Το τιμολόγιο ακυρώνεται ΜΟΝΟ από το Secure (Διαχειριστικό).</p>
-        <p className="mt-1">Αν θέλεις να ακυρώσεις τιμολόγιο <em>από την εφαρμογή</em>, θα πρέπει να <strong>ακυρώσεις ολόκληρη την παραγγελία</strong>.</p>
+        <p className="mt-1">Αν θέλεις να ακυρώσεις τιμολόγιο <em>από την εφαρμογή</em>, θα πρέπει να <strong>ακυρώσεις ολόκληρη την παραγγελία</strong>. Η ακύρωση ολόκληρης της παραγγελίας <strong>ακυρώνει και το τιμολόγιο</strong>.</p>
+        <p className="mt-1">Ακολούθησε το μάθημα <Link to="/tutorial/cancel-order" className="text-amber-900 underline hover:text-amber-950 font-semibold">Ακύρωση Παραγγελίας</Link>.</p>
       </InfoBox>
 
       <InfoBox icon="🧾" title="Αν εκδόθηκε ήδη Απόδειξη" variant="warning">
-        <p>Αν έχεις εκδώσει απόδειξη και θέλεις να εκδώσεις τιμολόγιο, πρέπει πρώτα να ακυρώσεις την απόδειξη, εκδίδοντας Πιστωτικό Στοιχείο Λιανικής (βλέπε μάθημα:Ακύρωση Απόδειξης
-), ώστε να μην αποδοθεί διπλό ΦΠΑ.</p>
+        <p>Αν έχεις εκδώσει απόδειξη και θέλεις να εκδώσεις τιμολόγιο, πρέπει πρώτα να ακυρώσεις την απόδειξη, εκδίδοντας <strong>Πιστωτικό Στοιχείο Λιανικής</strong> (μάθημα <Link to="/tutorial/cancel-receipt" className="text-amber-900 underline hover:text-amber-950 font-semibold">Ακύρωση Απόδειξης</Link>), ώστε να μην αποδοθεί διπλό ΦΠΑ.</p>
       </InfoBox>
     </TutorialLayout>);
 

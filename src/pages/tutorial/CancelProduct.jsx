@@ -62,12 +62,18 @@ export default function CancelProduct() {
 
       <SectionTitle>3η περίπτωση — Έχει εκδοθεί Απόδειξη και η παραγγελία έχει κλείσει</SectionTitle>
       <StepCard number="1" title="Άνοιξε τις Παραγγελίες Βάρδιας">
-        <p>Η παραγγελία έχει κλείσει, οπότε τη βρίσκεις στις <strong>Παραγγελίες Βάρδιας</strong>. Ακολούθησε το μάθημα <Link to="/tutorial/shift" className="text-purple-600 underline hover:text-purple-800 font-semibold">Παραγγελίες Βάρδιας</Link>.</p>
+        <p>Η παραγγελία έχει κλείσει, οπότε τη βρίσκεις στις <strong>Παραγγελίες Βάρδιας</strong>.</p>
+      </StepCard>
+      <StepCard number="2" title="Επαναφορά παραγγελίας">
+        <p>Σύρε την παραγγελία <strong>προς τα αριστερά (slide)</strong> — δεν πατάς την παραγγελία — και πάτα <strong>«Επαναφορά παραγγελίας»</strong> για να ξανανοίξει.</p>
+      </StepCard>
+      <StepCard number="3" title="Συνέχισε όπως στη 2η περίπτωση">
+        <p>Μετά την επαναφορά η παραγγελία είναι ξανά ανοιχτή. Συνέχισε τη διαδικασία <strong>όπως στη 2η περίπτωση</strong>: κράτα πατημένο το προϊόν → <strong>«Ακύρωση Προϊόντος»</strong> → κωδικός διαχειριστή → αιτία ακύρωσης.</p>
       </StepCard>
 
       <SectionTitle>4η περίπτωση — Έχει εκδοθεί Τιμολόγιο</SectionTitle>
       <StepCard number="1" title="Ακύρωσε ολόκληρη την παραγγελία">
-        <p>Όταν έχει εκδοθεί <strong>Τιμολόγιο</strong>, η ακύρωση γίνεται για <strong>ολόκληρη την παραγγελία</strong>. Ακολούθησε το μάθημα <Link to="/tutorial/cancel-order" className="text-purple-600 underline hover:text-purple-800 font-semibold">Ακύρωση Παραγγελίας</Link>.</p>
+        <p>Όταν έχει εκδοθεί <strong>Τιμολόγιο</strong>, η ακύρωση γίνεται για <strong>ολόκληρη την παραγγελία</strong> — η ακύρωση ολόκληρης της παραγγελίας <strong>ακυρώνει και το τιμολόγιο</strong>. Ακολούθησε το μάθημα <Link to="/tutorial/cancel-order" className="text-purple-600 underline hover:text-purple-800 font-semibold">Ακύρωση Παραγγελίας</Link>.</p>
       </StepCard>
       <StepCard number="2" title="Καταχώρισε ξανά την παραγγελία">
         <p>Ξαναδημιούργησε ολόκληρη τη <strong>σωστή</strong> παραγγελία από την αρχή.</p>
