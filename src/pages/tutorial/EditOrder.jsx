@@ -46,6 +46,10 @@ export default function EditOrder() {
         ))}
       </div>
 
+      <InfoBox icon="↗" title="Δημιουργία νέας παραγγελίας" variant="info">
+        <strong>Δεν μπορεί να δημιουργηθεί νέα παραγγελία με ήδη πληρωμένα προϊόντα.</strong>
+      </InfoBox>
+
       <InfoBox icon="⚠️" title="Πιστωτικό σε προϊόν με μηδενική τιμή" variant="info">
         Αν υπάρχει <strong>προϊόν με μηδενική τιμή</strong>, πρέπει να <strong>μην είναι επιλεγμένο</strong>, καθώς δεν μπορεί να εκδοθεί <strong>Πιστωτικό Στοιχείο Λιανικής</strong> για αυτό το προϊόν.
       </InfoBox>
