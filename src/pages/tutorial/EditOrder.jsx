@@ -32,16 +32,17 @@ export default function EditOrder() {
 
       <div className="grid gap-3">
         {tools.map((t, i) => (
-          <div key={i} className="border border-[#00D4FF]/10 bg-[#0D1526]/70 p-4 flex items-start gap-4 relative">
-            <div className="w-10 h-10 border border-purple-500/40 bg-purple-900/20 flex items-center justify-center text-[#A78BFA] font-bold text-sm flex-shrink-0 font-mono-cyber">
+          <div key={i} className="bg-white border border-gray-100 shadow-sm rounded-2xl p-5 flex items-start gap-4">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-md"
+              style={{ background: "linear-gradient(135deg, #5B21B6, #2D2B55)" }}
+            >
               {t.icon}
             </div>
             <div>
-              <p className="font-orbitron text-sm font-bold text-white tracking-wide">{t.label}</p>
-              <p className="font-rajdhani text-sm text-white/50 mt-0.5">{t.desc}</p>
+              <h3 className="font-semibold text-gray-900 text-base" style={{ fontFamily: 'Inter, sans-serif' }}>{t.label}</h3>
+              <p className="text-gray-600 text-base leading-relaxed mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>{t.desc}</p>
             </div>
-            <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-purple-500/20" />
-            <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-purple-500/20" />
           </div>
         ))}
       </div>
