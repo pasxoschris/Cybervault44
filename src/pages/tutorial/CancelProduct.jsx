@@ -16,7 +16,7 @@ export default function CancelProduct() {
       <InfoBox icon="🆚" title="Περιπτώσεις" variant="purple">
         <p><strong>1η περίπτωση:</strong> Δεν έχεις εκδώσει Δελτίο παραγγελίας και το προϊόν δεν έχει πληρωθεί → <strong>Διαγραφή</strong> με slide προς τα αριστερά.</p>
         <p className="mt-1"><strong>2η περίπτωση:</strong> Έχεις εκδώσει Δελτίο Παραγγελίας ή Απόδειξη και η παραγγελία είναι ακόμα ανοιχτή→ <strong>κρατάς πατημένο</strong> το προϊόν και επιλέγεις <strong>«Ακύρωση Προϊόντος»</strong>.</p>
-        <p className="mt-1"><strong>3η περίπτωση:</strong> Έχεις εκδώσει Απόδειξη και η παραγγελία έχει κλείσει.<strong> Δες το μάθημα: Παραγγελίες Βάρδιας </strong></p>
+        <p className="mt-1"><strong>3η περίπτωση:</strong> Έχεις εκδώσει Απόδειξη και η παραγγελία έχει κλείσει → <Link to="/tutorial/shift" className="text-purple-700 underline hover:text-purple-900 font-semibold">Δες το μάθημα: Παραγγελίες Βάρδιας</Link></p>
         <p className="mt-1"><strong>4η περίπτωση:</strong> Έχεις εκδώσει <strong>Τιμολόγιο</strong> → ακυρώνεις ολόκληρη την παραγγελία και την καταχωρίζεις ξανά σωστά.</p>
      </InfoBox>
 
@@ -59,6 +59,11 @@ export default function CancelProduct() {
       <InfoBox icon="⚠️" variant="warning">
         Η ακύρωση προϊόντος στέλνει ακυρωτικό δελτίο στην κουζίνα/μπαρ. Βεβαιώσου ότι το προϊόν δεν έχει ήδη ετοιμαστεί.
       </InfoBox>
+
+      <SectionTitle>3η περίπτωση — Έχει εκδοθεί Απόδειξη και η παραγγελία έχει κλείσει</SectionTitle>
+      <StepCard number="1" title="Άνοιξε τις Παραγγελίες Βάρδιας">
+        <p>Η παραγγελία έχει κλείσει, οπότε τη βρίσκεις στις <strong>Παραγγελίες Βάρδιας</strong>. Ακολούθησε το μάθημα <Link to="/tutorial/shift" className="text-purple-600 underline hover:text-purple-800 font-semibold">Παραγγελίες Βάρδιας</Link>.</p>
+      </StepCard>
 
       <SectionTitle>4η περίπτωση — Έχει εκδοθεί Τιμολόγιο</SectionTitle>
       <StepCard number="1" title="Ακύρωσε ολόκληρη την παραγγελία">
