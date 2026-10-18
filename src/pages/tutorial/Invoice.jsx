@@ -34,6 +34,7 @@ export default function Invoice() {
 
       <StepCard number="3" title="Αναζήτηση πελάτη για τον οποίο έχει ξαναεκδοθεί τιμολόγιο">
         <p>Αν ο πελάτης είναι ήδη αποθηκευμένος στο Spotlight, πάτα <strong>«Αναζήτηση σε Spotlight»</strong> και αναζήτησε με τηλέφωνο, email ή ΑΦΜ.</p>
+        <p>Το μήνυμα <strong>«customer with the same data already exists»</strong> εμφανίζεται επειδή προσπαθείς να καταχωρήσεις πελάτη με στοιχεία (ΑΦΜ, email ή τηλέφωνο) που υπάρχουν ήδη αποθηκευμένα στο Spotlight.</p>
       </StepCard>
 
       <StepCard number="4" title="Αναζήτηση στοιχείων πελάτη μέσω ΑΑΔΕ">
