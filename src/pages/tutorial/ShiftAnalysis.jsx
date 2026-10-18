@@ -26,7 +26,7 @@ export default function ShiftAnalysis() {
         </ul>
       </InfoBox>
       <StepCard number="2" title="Εκτύπωση Αναφοράς">
-        <p>Πάτα <strong>«Εκτύπωση Αναφοράς Βάρδιας»</strong> για να εκτυπώσεις αναλυτική αναφορά.</p>
+        <p>Πάτα το <strong>εικονίδιο του Εκτυπωτή</strong> (πάνω δεξιά) → <strong>«Εκτύπωση Αναφοράς Βάρδιας»</strong> για να εκτυπώσεις αναλυτική αναφορά.</p>
       </StepCard>
     </TutorialLayout>
   );
