@@ -15,7 +15,7 @@ export default function Footer() {
         {/* Logo */}
         <div className="flex items-center gap-3">
           <img
-            src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/71e29efae_web-app-manifest-512x512.png"
+            src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/6f48938e7_image.png"
             alt="CyberVault Logo"
             className="w-10 h-10 object-contain"
           />
