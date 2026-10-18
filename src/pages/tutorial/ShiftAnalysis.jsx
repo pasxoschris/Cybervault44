@@ -15,6 +15,7 @@ export default function ShiftAnalysis() {
         <p>Πάτα τις <strong>τρεις γραμμές (☰)</strong> πάνω αριστερά για να ανοίξει το μενού.</p>
         <p>Επίλεξε <strong>«Ρυθμίσεις (χρήστη)»</strong>.</p>
         <p>Στο <strong>κάτω μέρος</strong> της οθόνης πάτα το κουμπί <strong>«Ανάλυση Βάρδιας»</strong>.</p>
+        <p><strong>Απαιτείται Κωδικός Διαχειριστή</strong> για να ανοίξει η Ανάλυση Βάρδιας.</p>
       </StepCard>
       <InfoBox icon="📊" title="Τι περιλαμβάνει η ανάλυση;" variant="info">
         <ul className="space-y-1">
