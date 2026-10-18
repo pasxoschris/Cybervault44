@@ -281,25 +281,6 @@ export default function Assistant() {
           <div ref={bottomRef} />
         </div>
 
-        {/* Suggested (when chatting) */}
-        {messages.length > 0 && (
-          <div className="mt-4">
-            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-              {suggested.slice(0, 4).map((item) => (
-                <button
-                  key={item.question}
-                  onClick={() => send(item.question)}
-                  disabled={loading}
-                  className="whitespace-nowrap px-3 py-1.5 border border-gray-200 bg-white hover:border-purple-300 text-gray-600 hover:text-purple-600 text-xs transition-all flex-shrink-0 disabled:opacity-40 rounded-lg"
-                  style={{ fontFamily: 'Inter, sans-serif' }}
-                >
-                  {item.question}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Input (when chatting) */}
         {messages.length > 0 && (
           <div className="mt-4">
