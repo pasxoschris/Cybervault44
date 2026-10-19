@@ -8,8 +8,6 @@ export const ACCEPTED_NOTIFICATION_EMAILS = [
   'info@cybervault.gr',
 ];
 
-const CONSOLE_URL = 'https://cybervault.gr/reseller-console';
-
 // Ο server τρέχει σε UTC — οι ημερομηνίες εμφανίζονται πάντα σε ώρα Ελλάδας.
 export function formatAthensDateTime(value) {
   return value ? new Date(value).toLocaleString('el-GR', { timeZone: 'Europe/Athens' }) : '—';
@@ -19,7 +17,7 @@ export function formatAthensDate(value) {
   return value ? new Date(value).toLocaleDateString('el-GR', { timeZone: 'Europe/Athens' }) : '—';
 }
 
-export function buildAcceptedNotificationHtml(offer, { acceptedAt, ip, method, pdfUrl }) {
+export function buildAcceptedNotificationHtml(offer, { acceptedAt, ip, method }) {
   return `<!DOCTYPE html>
 <html><body style="font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto;padding:20px;">
   <div style="background:#0E1235;padding:20px 30px;border-radius:8px 8px 0 0;">
@@ -36,20 +34,16 @@ export function buildAcceptedNotificationHtml(offer, { acceptedAt, ip, method, p
       <tr><td style="color:#888;padding:4px 0;">IP:</td><td style="font-family:monospace;">${ip || '—'}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">Μέθοδος:</td><td>${method || '—'}</td></tr>
     </table>
-    <div style="margin-top:20px;">
-      <a href="${CONSOLE_URL}" style="display:inline-block;background:#0E1235;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;">Άνοιγμα Reseller Console</a>
-    </div>
-    ${pdfUrl ? `<div style="margin-top:10px;"><a href="${pdfUrl}" style="display:inline-block;background:#0E1235;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;">📄 Λήψη PDF Αποδοχής</a></div>` : ''}
   </div>
 </body></html>`;
 }
 
-export async function sendAcceptedNotifications({ offer, acceptedAt, ip, method, pdfUrl, apiKey }) {
+export async function sendAcceptedNotifications({ offer, acceptedAt, ip, method, apiKey }) {
   if (!apiKey) {
     console.error('Accepted offer notification skipped: RESEND_API_KEY missing');
     return;
   }
-  const html = buildAcceptedNotificationHtml(offer, { acceptedAt, ip, method, pdfUrl });
+  const html = buildAcceptedNotificationHtml(offer, { acceptedAt, ip, method });
   const subject = `[CyberVault] Αποδοχή Προσφοράς – ${offer.reference_number || ''}`;
 
   const results = await Promise.allSettled(ACCEPTED_NOTIFICATION_EMAILS.map(async (to) => {

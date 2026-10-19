@@ -139,7 +139,6 @@ function statusBanner(offer, expired) {
     return `<div class="banner ok">
       <h3>Η προσφορά έχει γίνει αποδεκτή</h3>
       <p>Ηλεκτρονική αποδοχή στις ${esc(formatAthensDateTime(offer.accepted_at))}</p>
-      ${offer.accepted_pdf_url ? `<a class="pdf-btn" href="${esc(offer.accepted_pdf_url)}" target="_blank" rel="noopener">Λήψη Υπογεγραμμένου PDF</a>` : ''}
     </div>`;
   }
   if (offer.status === 'rejected') {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { CheckCircle, XCircle, Clock, AlertTriangle, Download, FileText } from 'lucide-react';
+import { CheckCircle, XCircle, Clock, AlertTriangle, FileText } from 'lucide-react';
 
 const fmt = (n) => `€${Number(n).toFixed(2)}`;
 const fmtDate = (s) => s ? new Date(s).toLocaleDateString('el-GR') : '—';
@@ -132,12 +132,6 @@ export default function PublicOfferPage() {
             <div>
               <h3 className="font-bold text-green-800">Η προσφορά έχει γίνει αποδεκτή</h3>
               <p className="text-green-700 text-sm mt-0.5">Ηλεκτρονική αποδοχή στις {fmtDateTime(offer.accepted_at)}</p>
-              {offer.accepted_pdf_url && (
-                <a href={offer.accepted_pdf_url} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 mt-3 px-4 py-2 bg-green-600 text-white text-sm rounded-xl hover:bg-green-700 transition-colors">
-                  <Download size={14} /> Λήψη Υπογεγραμμένου PDF
-                </a>
-              )}
             </div>
           </div>
         )}
