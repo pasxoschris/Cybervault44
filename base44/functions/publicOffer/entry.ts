@@ -93,7 +93,13 @@ function shellStyles() {
   .notes { white-space: pre-wrap; font-size: 12px; color: #7b8397; margin: 0; }
   .pdf-btn { display: inline-block; margin-top: 12px; background: #15803d; color: #fff; text-decoration: none; padding: 11px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; }
   footer { text-align: center; font-size: 12px; color: #9aa1b2; padding: 24px 20px 40px; line-height: 1.7; }
-  footer p { margin: 0; }`;
+  footer p { margin: 0; }
+  .confirm { text-align: center; padding: 46px 26px; }
+  .check { width: 76px; height: 76px; margin: 0 auto 20px; border-radius: 50%; background: #eafaf0; border: 2px solid #86dfa8; color: #15803d; font-size: 38px; line-height: 72px; font-weight: 700; }
+  .confirm-title { margin: 0 0 10px; font-size: 22px; color: #0E1235; }
+  .confirm-sub { margin: 0 auto; max-width: 540px; font-size: 14px; color: #5b6478; line-height: 1.6; }
+  .confirm-grid { margin: 26px auto 0; max-width: 560px; text-align: left; background: #f7f8fc; border: 1px solid #e8eaf3; border-radius: 12px; padding: 16px 18px; }
+  .confirm-note { margin: 22px 0 0; font-size: 12px; color: #8a90a2; line-height: 1.7; }`;
 }
 
 function shell({ title, ref, body, settings }) {
@@ -223,7 +229,11 @@ function actionCard(token) {
       return res.json().then(function (data) { return { ok: res.ok, data: data }; });
     }).then(function (result) {
       if (result.ok && result.data && result.data.success) {
-        window.location.reload();
+        if (action === 'accept') {
+          window.location.href = window.location.pathname + '?token=' + encodeURIComponent(TOKEN) + '&accepted=1';
+        } else {
+          window.location.reload();
+        }
         return;
       }
       box.textContent = (result.data && result.data.error) || 'Κάτι πήγε λάθος. Δοκιμάστε ξανά.';
@@ -284,6 +294,35 @@ function renderOfferPage(offer, settings, token) {
 
   return shell({
     title: `Προσφορά ${offer.reference_number || ''} — CyberVault`.trim(),
+    ref: offer.reference_number,
+    body,
+    settings,
+  });
+}
+
+// Σελίδα επιβεβαίωσης — εμφανίζεται αμέσως μετά την αποδοχή της προσφοράς.
+function renderAcceptanceConfirmationPage(offer, settings) {
+  const contact = [settings.public_phone, settings.public_email].filter(Boolean).map(esc).join(' · ');
+  const note = [
+    offer.email ? `Στείλαμε email επιβεβαίωσης στη διεύθυνση ${esc(offer.email)}.` : '',
+    contact ? `Για οποιαδήποτε διευκρίνιση επικοινωνήστε μαζί μας: ${contact}.` : '',
+  ].filter(Boolean).join(' ');
+
+  const body = `<div class="card confirm">
+    <div class="check">✓</div>
+    <h2 class="confirm-title">Η αποδοχή της προσφοράς καταχωρήθηκε επιτυχώς</h2>
+    <p class="confirm-sub">Ευχαριστούμε. Λάβαμε την αποδοχή σας και η προσφορά καταχωρήθηκε οριστικά στα στοιχεία μας.</p>
+    <div class="grid confirm-grid">
+      ${infoRow('Αρ. Αναφοράς', offer.reference_number)}
+      ${infoRow('Επωνυμία', offer.company_legal_name || offer.store_name)}
+      ${infoRow('Ημ/νία & Ώρα Αποδοχής', formatAthensDateTime(offer.accepted_at))}
+      ${infoRow('Σύνολο Προσφοράς', euro(offer.final_total))}
+    </div>
+    ${note ? `<p class="confirm-note">${note}</p>` : ''}
+  </div>`;
+
+  return shell({
+    title: `Η αποδοχή καταχωρήθηκε — ${offer.reference_number || 'CyberVault'}`,
     ref: offer.reference_number,
     body,
     settings,
@@ -355,6 +394,14 @@ export default async function (req: Request): Promise<Response> {
         message: 'Ο σύνδεσμος μπορεί να είναι λανθασμένος ή η προσφορά να έχει αφαιρεθεί.',
         settings,
       }), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
+    }
+
+    // ─── Σελίδα επιβεβαίωσης αμέσως μετά την αποδοχή ───
+    if (url.searchParams.get('accepted') === '1' && offer.status === 'accepted') {
+      return new Response(renderAcceptanceConfirmationPage(offer, settings), {
+        status: 200,
+        headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' },
+      });
     }
 
     const view = await logOfferViewCore(base44, offer.id, meta);
