@@ -3,6 +3,7 @@ import { Eye, Edit, Copy, Trash2, Mail, CheckCircle, XCircle, Search, ExternalLi
 import { useOffers, useUpdateOfferStatus, useDuplicateOffer, useDeleteOffer } from '@/hooks/useOffers';
 import { useResellerSettings } from '@/hooks/useResellerSettings';
 import { formatEuro, formatDate, formatDateTime, STATUS_LABELS, STATUS_COLORS, ALL_STATUSES } from '@/lib/resellerUtils';
+import { publicOfferUrl } from '@/lib/publicOfferUrl';
 
 const EmailModal = lazy(() => import('./EmailModal'));
 
@@ -95,8 +96,8 @@ export default function OffersHistory({ onEdit }) {
                         {o.reference_number || '—'}
                       </button>
                       {o.public_token && (
-                        <a href={`/offers/${o.public_token}`} target="_blank" rel="noopener noreferrer"
-                          title="Άνοιγμα Public Link"
+                        <a href={publicOfferUrl(o.public_token)} target="_blank" rel="noopener noreferrer"
+                          title="Άνοιγμα δημόσιου συνδέσμου (χωρίς σύνδεση)"
                           className="text-white/20 hover:text-[#00CFFF] transition-colors">
                           <ExternalLink size={11} />
                         </a>
@@ -132,8 +133,8 @@ export default function OffersHistory({ onEdit }) {
                       <button title="Αντιγραφή" onClick={() => handleDuplicate(o)} className="p-1 rounded hover:bg-[#00CFFF]/10 text-white/40 hover:text-[#00CFFF] transition-colors"><Copy size={13} /></button>
                       <button title="Αποστολή email" onClick={() => setEmailOffer(o)} className="p-1 rounded hover:bg-purple-500/10 text-white/40 hover:text-purple-400 transition-colors"><Mail size={13} /></button>
                       {o.public_token && (
-                        <a href={`/offers/${o.public_token}`} target="_blank" rel="noopener noreferrer"
-                          title="Public Offer Link" className="p-1 rounded hover:bg-[#00CFFF]/10 text-white/40 hover:text-[#00CFFF] transition-colors">
+                        <a href={publicOfferUrl(o.public_token)} target="_blank" rel="noopener noreferrer"
+                          title="Δημόσιος σύνδεσμος προσφοράς (χωρίς σύνδεση)" className="p-1 rounded hover:bg-[#00CFFF]/10 text-white/40 hover:text-[#00CFFF] transition-colors">
                           <ExternalLink size={13} />
                         </a>
                       )}
