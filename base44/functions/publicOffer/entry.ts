@@ -99,7 +99,13 @@ function shellStyles() {
   .confirm-title { margin: 0 0 10px; font-size: 22px; color: #0E1235; }
   .confirm-sub { margin: 0 auto; max-width: 540px; font-size: 14px; color: #5b6478; line-height: 1.6; }
   .confirm-grid { margin: 26px auto 0; max-width: 560px; text-align: left; background: #f7f8fc; border: 1px solid #e8eaf3; border-radius: 12px; padding: 16px 18px; }
-  .confirm-note { margin: 22px 0 0; font-size: 12px; color: #8a90a2; line-height: 1.7; }`;
+  .confirm-note { margin: 22px 0 0; font-size: 12px; color: #8a90a2; line-height: 1.7; }
+  .confirm-box { padding: 14px 16px; border-radius: 10px; background: #f7f8fc; border: 1px solid #e3e7f2; margin-bottom: 16px; }
+  .confirm-q { margin: 0 0 12px; font-size: 13px; color: #334155; }
+  .ghost { background: #fff; color: #334155; border-color: #d8dce8; }
+  .ghost:hover { background: #f1f3f9; }
+  .danger-solid { background: #dc2626; color: #fff; border-color: #dc2626; }
+  .danger-solid:hover { background: #b91c1c; }`;
 }
 
 function shell({ title, ref, body, settings }) {
@@ -205,6 +211,13 @@ function actionCard(token) {
     <h2>Αποδοχή Προσφοράς</h2>
     <p class="hint" style="margin: 8px 0 16px;">Μπορείτε να αποδεχτείτε ή να απορρίψετε την προσφορά απευθείας, χωρίς σύνδεση ή κωδικό. Η αποδοχή είναι οριστική.</p>
     <div id="msg" class="msg" hidden></div>
+    <div id="confirmBox" class="confirm-box" hidden>
+      <p id="confirmText" class="confirm-q"></p>
+      <div class="actions">
+        <button id="yesBtn" class="primary" type="button" onclick="submitAction()">Επιβεβαίωση</button>
+        <button id="cancelBtn" class="ghost" type="button" onclick="cancelAction()">Άκυρο</button>
+      </div>
+    </div>
     <div class="actions">
       <button id="acceptBtn" class="primary" type="button" onclick="act('accept')">Αποδοχή Προσφοράς</button>
       <button id="rejectBtn" class="danger" type="button" onclick="act('reject')">Απόρριψη</button>
@@ -212,15 +225,58 @@ function actionCard(token) {
   </div>
   <script>
   var TOKEN = ${JSON.stringify(token)};
+  var pendingAction = null;
+  var msgBox = document.getElementById('msg');
+  var confirmBox = document.getElementById('confirmBox');
+  var confirmText = document.getElementById('confirmText');
+  var yesBtn = document.getElementById('yesBtn');
+  var cancelBtn = document.getElementById('cancelBtn');
+  var acceptBtn = document.getElementById('acceptBtn');
+  var rejectBtn = document.getElementById('rejectBtn');
+
   function act(action) {
-    var question = action === 'accept'
-      ? 'Η αποδοχή της προσφοράς είναι οριστική. Συνέχεια;'
-      : 'Να απορριφθεί η προσφορά;';
-    if (!window.confirm(question)) return;
-    var box = document.getElementById('msg');
-    box.hidden = true;
-    document.getElementById('acceptBtn').disabled = true;
-    document.getElementById('rejectBtn').disabled = true;
+    pendingAction = action;
+    msgBox.hidden = true;
+    if (action === 'accept') {
+      confirmText.textContent = 'Η αποδοχή της προσφοράς είναι οριστική και δεν μπορεί να αναιρεθεί. Να προχωρήσω στην αποδοχή;';
+      yesBtn.textContent = 'Ναι, αποδοχή';
+      yesBtn.className = 'primary';
+    } else {
+      confirmText.textContent = 'Να απορριφθεί η προσφορά;';
+      yesBtn.textContent = 'Ναι, απόρριψη';
+      yesBtn.className = 'danger-solid';
+    }
+    confirmBox.hidden = false;
+    acceptBtn.disabled = true;
+    rejectBtn.disabled = true;
+  }
+
+  function releaseButtons() {
+    yesBtn.disabled = false;
+    cancelBtn.disabled = false;
+    acceptBtn.disabled = false;
+    rejectBtn.disabled = false;
+  }
+
+  function cancelAction() {
+    pendingAction = null;
+    confirmBox.hidden = true;
+    releaseButtons();
+  }
+
+  function fail(text) {
+    msgBox.textContent = text;
+    msgBox.hidden = false;
+    confirmBox.hidden = true;
+    pendingAction = null;
+    releaseButtons();
+  }
+
+  function submitAction() {
+    var action = pendingAction;
+    if (!action) return;
+    yesBtn.disabled = true;
+    cancelBtn.disabled = true;
     fetch(window.location.pathname + window.location.search, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -236,15 +292,9 @@ function actionCard(token) {
         }
         return;
       }
-      box.textContent = (result.data && result.data.error) || 'Κάτι πήγε λάθος. Δοκιμάστε ξανά.';
-      box.hidden = false;
-      document.getElementById('acceptBtn').disabled = false;
-      document.getElementById('rejectBtn').disabled = false;
+      fail((result.data && result.data.error) || 'Κάτι πήγε λάθος. Δοκιμάστε ξανά.');
     }).catch(function () {
-      box.textContent = 'Σφάλμα σύνδεσης. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.';
-      box.hidden = false;
-      document.getElementById('acceptBtn').disabled = false;
-      document.getElementById('rejectBtn').disabled = false;
+      fail('Σφάλμα σύνδεσης. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.');
     });
   }
   </script>`;
