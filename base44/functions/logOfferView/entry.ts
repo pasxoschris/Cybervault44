@@ -1,57 +1,23 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
+// Καταγραφή προβολής προσφοράς από τη σελίδα της εφαρμογής.
+// Η λογική είναι κοινή με τη δημόσια σελίδα προσφοράς — base44/shared/offerAcceptance.ts.
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { logOfferViewCore } from '../../shared/offerAcceptance.ts';
 
-Deno.serve(async (req) => {
-  const base44 = createClientFromRequest(req);
+export default async function (req: Request): Promise<Response> {
+  try {
+    const base44 = createClientFromRequest(req);
+    const body = await req.json();
+    const { offer_id } = body;
+    if (!offer_id) return Response.json({ error: 'Missing offer_id' }, { status: 400 });
 
-  const body = await req.json();
-  const { offer_id } = body;
-  if (!offer_id) return Response.json({ error: 'Missing offer_id' }, { status: 400 });
+    const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+    const userAgent = req.headers.get('user-agent') || 'unknown';
 
-  const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
-  const userAgent = req.headers.get('user-agent') || 'unknown';
-  const now = new Date().toISOString();
+    const result = await logOfferViewCore(base44, offer_id, { ip, userAgent });
+    if (!result.ok) return Response.json({ error: result.error }, { status: result.status });
 
-  const offers = await base44.asServiceRole.entities.ResellerOffer.filter({ id: offer_id });
-  if (!offers || offers.length === 0) return Response.json({ error: 'Offer not found' }, { status: 404 });
-
-  const offer = offers[0];
-
-  // Only log view if not in final state
-  if (['accepted', 'rejected', 'expired'].includes(offer.status)) {
-    return Response.json({ success: true, skipped: true });
+    return Response.json({ success: true, skipped: Boolean(result.skipped) });
+  } catch (error) {
+    return Response.json({ error: error.message }, { status: 500 });
   }
-
-  // Parse existing audit log
-  let auditLog = [];
-  try { auditLog = JSON.parse(offer.audit_log || '[]'); } catch {}
-
-  // Only mark viewed once (first time)
-  const alreadyViewed = auditLog.some(e => e.action === 'viewed');
-
-  const updates = {};
-
-  if (!alreadyViewed) {
-    auditLog.push({
-      action: 'viewed',
-      timestamp: now,
-      actor: 'customer',
-      details: { ip, user_agent: userAgent }
-    });
-    updates.status = 'viewed';
-    updates.viewed_at = now;
-  } else {
-    // Still log subsequent views but don't change status
-    auditLog.push({
-      action: 'viewed',
-      timestamp: now,
-      actor: 'customer',
-      details: { ip, user_agent: userAgent }
-    });
-  }
-
-  updates.audit_log = JSON.stringify(auditLog);
-
-  await base44.asServiceRole.entities.ResellerOffer.update(offer_id, updates);
-
-  return Response.json({ success: true });
-});
+}

@@ -3,7 +3,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 // Σύντομο email ειδοποίησης: μήνυμα + κουμπί προβολής της προσφοράς.
 // Χωρίς πίνακα γραμμών / σύνολα / όρους και χωρίς συνημμένο PDF — ο πελάτης
 // πρέπει να ανοίξει την προσφορά, ώστε να καταγράφεται η προβολή (viewed_at).
-function buildHtmlBody(offer, settings, baseUrl, customBody) {
+function buildHtmlBody(offer, settings, offerLink, customBody) {
   const introSource = customBody || settings?.default_email_body || '';
   const intro = introSource
     ? introSource.replace(/\n/g, '<br>')
@@ -11,7 +11,7 @@ function buildHtmlBody(offer, settings, baseUrl, customBody) {
 
   const ref = offer?.reference_number || '';
   const expires = offer?.expires_at ? new Date(offer.expires_at).toLocaleDateString('el-GR') : '';
-  const link = offer?.public_token ? `${baseUrl}/offers/${offer.public_token}` : '';
+  const link = offerLink || '';
 
   return `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto;padding:20px;">
     <div style="background:#0E1235;padding:20px 30px;">
@@ -64,9 +64,11 @@ Deno.serve(async (req) => {
     const settings = settingsList[0] || {};
 
     // ─── Build short notification body on backend ───
-    // Σταθερή βάση: το link της προσφοράς δείχνει πάντα στην επίσημη διεύθυνση.
-    const baseUrl = 'https://cybervault.gr';
-    const htmlBody = buildHtmlBody(offer, settings, baseUrl, custom_body);
+    // Ο σύνδεσμος δείχνει στη δημόσια σελίδα προσφοράς, ώστε ο πελάτης να την
+    // ανοίγει χωρίς σύνδεση στην εφαρμογή.
+    const appOrigin = req.headers.get('X-Base44-App-Url') || 'https://cybervault.base44.app';
+    const offerLink = offer.public_token ? `${appOrigin}/functions/publicOffer?token=${offer.public_token}` : '';
+    const htmlBody = buildHtmlBody(offer, settings, offerLink, custom_body);
 
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 
