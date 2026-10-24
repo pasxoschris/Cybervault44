@@ -35,9 +35,9 @@ const settingBlocks = [
     { label: "QR Code Καταστήματος", desc: "Εμφάνιση QR για σύνδεση νέας συσκευής", icon: QrCode, type: "open" },
   ],
   [
-    { label: "Κατάστημα", desc: "", icon: Store, type: "info" },
-    { label: "Συσκευή POS", desc: "", icon: Tablet, type: "info" },
-    { label: "Χρήστης", desc: "", icon: User, type: "info" },
+    { label: "Κατάστημα", desc: "Επωνυμία Καταστήματος", icon: Store, type: "info" },
+    { label: "Συσκευή POS", desc: "Θέση/Συσκευή Χρήστη", icon: Tablet, type: "info" },
+    { label: "Χρήστης", desc: "Χρήστης", icon: User, type: "info" },
   ],
 ];
 
@@ -102,7 +102,7 @@ export default function Settings() {
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-semibold text-gray-900">{s.label}</p>
-                    {s.desc && <p className="text-sm text-gray-600 mt-0.5">{s.desc}</p>}
+                    {s.desc && <p className={`text-sm mt-0.5 ${s.type === "info" ? "text-gray-400" : "text-gray-600"}`}>{s.desc}</p>}
                   </div>
                   {s.type === "open" && <OpenMark />}
                   {s.type === "toggle" && <ToggleMark />}
