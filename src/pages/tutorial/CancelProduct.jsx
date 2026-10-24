@@ -51,7 +51,11 @@ export default function CancelProduct() {
         <p>Στη συνέχεια δηλώνεις την <strong>αιτία της ακύρωσης</strong>.</p>
       </StepCard>
       <InfoBox icon="📄" variant="purple">
-        Για το ακυρωμένο προϊόν εκδίδεται <strong>πιστωτικό στοιχείο λιανικής</strong>.
+        <p>Για το ακυρωμένο προϊόν εκδίδεται είτε:</p>
+        <ul className="list-disc pl-5 mt-2 space-y-1.5">
+          <li><strong>Ακυρωτικό Δελτίο Παραγγελίας</strong>, αν έχει εκδοθεί Δελτίο Παραγγελίας, είτε</li>
+          <li><strong>Πιστωτικό Στοιχείο Λιανικής Πώλησης</strong>, αν έχει εκδοθεί απόδειξη.</li>
+        </ul>
       </InfoBox>
       <InfoBox icon="⚠️" title="Προσοχή — προϊόν με μηδενική τιμή" variant="warning">
         <p>Αν το προϊόν έχει <strong>μηδενική τιμή</strong>, δεν μπορεί να εκδοθεί <strong>Πιστωτικό Στοιχείο Λιανικής</strong> για αυτό.</p>
