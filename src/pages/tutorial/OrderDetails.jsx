@@ -2,14 +2,18 @@ import React, { useEffect } from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
+import { Tag, Clock, Users, LayoutGrid, Palette, MessageSquare, ShoppingBasket, Euro } from "lucide-react";
 
+// Η σειρά ακολουθεί την οθόνη «Στοιχεία Παραγγελίας» της εφαρμογής.
 const overviewRows = [
-  ["ΑΝΟΙΚΤΗ ΠΑΡΑΓΓΕΛΙΑ", "Κατάσταση παραγγελίας"],
-  ["Άτομα", "Αριθμός ατόμων (π.χ. 2)"],
-  ["Τραπέζι", "Αριθμός τραπεζιού (π.χ. A4)"],
-  ["Ώρα", "Ώρα παραγγελίας"],
-  ["Προϊόντα", "Λίστα παραγγελθέντων"],
-  ["Σύνολο", "Συνολικό ποσό"],
+  { label: "ΝΕΑ / ΑΝΟΙΚΤΗ ΠΑΡΑΓΓΕΛΙΑ", desc: "Η κατάσταση της παραγγελίας", icon: Tag },
+  { label: "Ώρα", desc: "Η ώρα δημιουργίας της παραγγελίας", icon: Clock },
+  { label: "Άτομα", desc: "Ο αριθμός ατόμων", icon: Users },
+  { label: "Τραπέζι", desc: "Πατώντας το επιλέγεις ή αλλάζεις τραπέζι", icon: LayoutGrid },
+  { label: "Χρώμα", desc: "Πατώντας το διαλέγεις χρώμα για τη λίστα παραγγελιών", icon: Palette },
+  { label: "Εισάγετε σχόλιο", desc: "", icon: MessageSquare },
+  { label: "Προϊόντα", desc: "Η λίστα με τα προϊόντα της παραγγελίας", icon: ShoppingBasket },
+  { label: "Σύνολο", desc: "Το συνολικό ποσό", icon: Euro },
 ];
 
 export default function OrderDetails() {
@@ -27,16 +31,24 @@ export default function OrderDetails() {
         caption="Στοιχεία παραγγελίας — επιλογές"
       />
       <SectionTitle>Στοιχεία Ανοικτής Παραγγελίας</SectionTitle>
-      <div className="border border-[#00D4FF]/10 bg-[#0D1526]/70 p-4">
-        <p className="font-rajdhani text-sm text-white/50 mb-3">Στην οθόνη παραγγελίας βλέπεις:</p>
-        <div className="border border-[#00D4FF]/10 bg-[#080c20]/60 rounded-sm overflow-hidden">
-          {overviewRows.map(([label, val]) => (
-            <div key={label} className="flex items-start gap-2 py-2 px-3 border-b border-[#00D4FF]/10 last:border-0 font-rajdhani text-sm">
-              <span className="text-white/80 font-semibold min-w-[160px] flex-shrink-0">{label}</span>
-              <span className="text-white/50">{val}</span>
-            </div>
-          ))}
-        </div>
+      <div className="max-w-2xl w-full mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
+        <p className="text-base text-gray-600 mb-3">Στην οθόνη παραγγελίας βλέπεις, από πάνω προς τα κάτω:</p>
+        <ul className="bg-white border border-gray-100 shadow-sm rounded-2xl overflow-hidden">
+          {overviewRows.map((row) => {
+            const IconComponent = row.icon;
+            return (
+              <li key={row.label} className="flex items-center gap-4 px-5 py-3.5 border-b border-gray-100 last:border-0">
+                <span className="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center flex-shrink-0">
+                  <IconComponent size={18} />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold text-gray-900">{row.label}</p>
+                  {row.desc && <p className="text-sm text-gray-600 mt-0.5">{row.desc}</p>}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
       <InfoBox icon="💡" title="Επιλογή τραπεζιού" variant="info">
         Τραπέζι μπορείς να επιλέξεις και μετά τη δημιουργία της παραγγελίας: στα <strong>Στοιχεία Παραγγελίας</strong> πάτα πάνω στο πεδίο <strong>«Τραπέζι»</strong>.
