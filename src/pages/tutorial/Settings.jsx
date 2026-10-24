@@ -60,7 +60,7 @@ export default function Settings() {
         {settingGroups.map((group) => (
           <div key={group.title} className="bg-white border border-gray-100 shadow-sm rounded-2xl overflow-hidden">
             <div className="px-5 py-3 bg-purple-50 border-b border-purple-100">
-              <h3 className="text-xs font-semibold uppercase tracking-wide text-purple-700">{group.title}</h3>
+              <h3 className="text-sm font-semibold text-purple-700">{group.title}</h3>
             </div>
             <ul>
               {group.items.map((s) => {
