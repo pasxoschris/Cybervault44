@@ -19,7 +19,8 @@ export default function AddSimilar() {
         <p>Μπες στα στοιχεία της παραγγελίας.</p>
       </StepCard>
       <StepCard number="2" title="Πάτα το εικονίδιο Προσθήκης">
-        <p>Στη γραμμή εργαλείων (icons πάνω δεξιά), βρες και πάτα το εικονίδιο <strong>«Προσθήκη ομοίων»</strong>.</p>
+        <p>Στην <strong>κάτω μπάρα</strong> της οθόνης, πάτα το εικονίδιο <strong>«Προσθήκη ομοίων»</strong> (τρίτο από αριστερά):</p>
+        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/668f7810a_add-similar-icon.webp" alt="Εικονίδιο Προσθήκη ομοίων" className="mt-3 w-14 h-14 rounded-xl shadow" />
       </StepCard>
       <StepCard number="3" title="Επίλεξε προϊόντα">
         <p>Εμφανίζεται λίστα με τα ήδη παραγγελμένα προϊόντα. Τσεκάρε αυτά που θέλεις να προσθέσεις ξανά και πάτα ✓.</p>

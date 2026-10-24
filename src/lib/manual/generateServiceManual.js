@@ -348,7 +348,7 @@ export async function generateServiceManualPdf({ onProgress, profile = 'print' }
     const ratio = props.height / props.width;
     const captionH = block.caption ? 6 : 0;
 
-    let w = CW;
+    let w = block.width ? Math.min(block.width, CW) : CW;
     let h = w * ratio;
     const maxH = P.imageMaxH;
     if (h > maxH) { h = maxH; w = h / ratio; }
