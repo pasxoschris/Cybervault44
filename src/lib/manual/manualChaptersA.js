@@ -159,7 +159,7 @@ export const CHAPTERS_A = [
       { type: 'note', variant: 'info', title: 'Πού βρίσκονται οι ρυθμίσεις;', lines: [
         'Οι ρυθμίσεις χρήστη βρίσκονται **πάνω αριστερά** στις τρεις γραμμές **☰**. Πάτα το και επίλεξε **«Ρυθμίσεις (όνομα χρήστη)»** από το μενού που εμφανίζεται.',
       ] },
-      { type: 'image', src: 'https://media.base44.com/images/public/69f588f4590b173a2970ddb4/6981cd00c_image.png', caption: 'Πάτα ☰ (πάνω αριστερά) και επίλεξε «Ρυθμίσεις (όνομα χρήστη)»' },
+      { type: 'image', src: 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/507fb5774_settings-menu.webp', caption: 'Πάτα ☰ (πάνω αριστερά) και επίλεξε «Ρυθμίσεις (όνομα χρήστη)»' },
       { type: 'section', title: 'Διαθέσιμες Ρυθμίσεις' },
       { type: 'text', lines: [
         '• **Ομάδες Τραπεζιών** — Επιλογή ομάδας τραπεζιών που θα βλέπεις',
