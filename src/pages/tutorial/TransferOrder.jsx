@@ -20,6 +20,12 @@ export default function TransferOrder() {
         </ul>
       </InfoBox>
 
+      <InfoBox icon="📱" title="Το iPhone/iPad του παραλήπτη πρέπει να είναι ενεργό" variant="warning">
+        <p>
+          <strong>Είναι απολύτως απαραίτητο και σημαντικό</strong> το iPhone/iPad του σερβιτόρου που <strong>δέχεται</strong> τη μεταφορά να έχει την εφαρμογή <strong>ανοιχτή και active</strong> (στο προσκήνιο) εκείνη τη στιγμή. Αν η εφαρμογή του παραλήπτη είναι κλειστή, σε παρασκήνιο ή οθόνη στάσης, η μεταφορά <strong>δεν ολοκληρώνεται σωστά</strong>.
+        </p>
+      </InfoBox>
+
         <StepCard number="1" title="Κράτα πατημένη την παραγγελία">
         <p>Από τη λίστα παραγγελιών, <strong>κράτα πατημένη</strong> την παραγγελία που θέλεις να μεταφέρεις. Εμφανίζεται μενού ενεργειών.</p>
       </StepCard>
@@ -59,12 +65,6 @@ export default function TransferOrder() {
       <div className="flex justify-center">
         <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/1e9cf1dd3_3.png" alt="Παράθυρο επιβεβαίωσης μεταφοράς" className="w-52 h-auto rounded-lg border border-gray-200" />
       </div>
-
-      <StepCard number="6" title="Το iPhone/iPad του παραλήπτη πρέπει να είναι ενεργό" variant="warning">
-        <p>
-          <strong>Είναι απολύτως απαραίτητο και σημαντικό</strong> το iPhone/iPad του σερβιτόρου που <strong>δέχεται</strong> τη μεταφορά να έχει την εφαρμογή <strong>ανοιχτή και active</strong> (στο προσκήνιο) εκείνη τη στιγμή. Αν η εφαρμογή του παραλήπτη είναι κλειστή, σε παρασκήνιο ή οθόνη στάσης, η μεταφορά <strong>δεν ολοκληρώνεται σωστά</strong>.
-        </p>
-      </StepCard>
 
       <InfoBox icon="🚫" title="Χαμένες Μεταφορές — Secure (Διαχειριστικό)" variant="warning">
         <p>
