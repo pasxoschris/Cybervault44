@@ -22,6 +22,7 @@ export default function IssueReceipt() {
 
       <StepCard number="1" title="Απόδειξη Λιανικής Πώλησης — εκτύπωση κατευθείαν">
         <p>Εκτυπώνεται <strong>αμέσως</strong> η απόδειξη λιανικής της παραγγελίας. Διάλεξέ το όταν ο πελάτης πληρώνει τώρα και θέλει την απόδειξη στο χέρι.</p>
+        <p className="mt-2">Στη συνέχεια ανοίγει το παράθυρο <strong>«Τρόπος Πληρωμής»</strong>, όπου επιλέγεις πώς πληρώνει ο πελάτης — δες το μάθημα <Link to="/tutorial/payment" className="underline font-semibold">Πληρωμή</Link>.</p>
       </StepCard>
 
       <StepCard number="2" title="Δελτίο Παραγγελίας — πρώτα δελτίο, μετά παραστατικό">
