@@ -8,10 +8,11 @@ const HEADER = "#2b2146";
 const MARK = "#b32483";
 const font = { fontFamily: "Inter, sans-serif" };
 
-export function Marker({ n, className = "" }) {
+export function Marker({ n, className = "", large = false }) {
+  const size = large ? "w-7 h-7 text-xs" : "w-5 h-5 text-[10px] ring-2 ring-white";
   return (
     <span
-      className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold text-white shadow ring-2 ring-white flex-shrink-0 ${className}`}
+      className={`inline-flex items-center justify-center rounded-full font-bold text-white shadow flex-shrink-0 ${size} ${className}`}
       style={{ background: MARK, ...font }}
     >
       {n}
