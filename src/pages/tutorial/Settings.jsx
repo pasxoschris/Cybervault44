@@ -37,7 +37,7 @@ const settingBlocks = [
   [
     { label: "Κατάστημα", desc: "Επωνυμία Καταστήματος", icon: Store, type: "info" },
     { label: "Συσκευή POS", desc: "Θέση/Συσκευή Χρήστη", icon: Tablet, type: "info" },
-    { label: "Χρήστης", desc: "Χρήστης", icon: User, type: "info" },
+    { label: "Χρήστης", desc: "Όνομα Χρήστη", icon: User, type: "info" },
   ],
 ];
 
