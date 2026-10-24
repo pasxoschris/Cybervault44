@@ -3,6 +3,7 @@ import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
 import { Tag, Clock, Users, LayoutGrid, Palette, MessageSquare, ShoppingBasket, Euro } from "lucide-react";
+import OrderDetailsMock, { Marker } from "../../components/tutorial/OrderDetailsMock";
 
 // Η σειρά ακολουθεί την οθόνη «Στοιχεία Παραγγελίας» της εφαρμογής.
 const overviewRows = [
@@ -32,12 +33,14 @@ export default function OrderDetails() {
       />
       <SectionTitle>Στοιχεία Ανοικτής Παραγγελίας</SectionTitle>
       <div className="max-w-2xl w-full mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
-        <p className="text-base text-gray-600 mb-3">Στην οθόνη παραγγελίας βλέπεις, από πάνω προς τα κάτω:</p>
+        <OrderDetailsMock />
+        <p className="text-base text-gray-600 mt-6 mb-3">Τι δείχνει κάθε αριθμός:</p>
         <ul className="bg-white border border-gray-100 shadow-sm rounded-2xl overflow-hidden">
-          {overviewRows.map((row) => {
+          {overviewRows.map((row, i) => {
             const IconComponent = row.icon;
             return (
               <li key={row.label} className="flex items-center gap-4 px-5 py-3.5 border-b border-gray-100 last:border-0">
+                <Marker n={i + 1} className="w-7 h-7 text-xs ring-0" />
                 <span className="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center flex-shrink-0">
                   <IconComponent size={18} />
                 </span>
