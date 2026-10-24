@@ -31,7 +31,7 @@ export default function OrderDetails() {
         ]}
         caption="Στοιχεία παραγγελίας — επιλογές"
       />
-      <SectionTitle>Στοιχεία Ανοικτής Παραγγελίας</SectionTitle>
+      <SectionTitle>Στοιχεία Παραγγελίας</SectionTitle>
       <div className="max-w-2xl w-full mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
         <OrderDetailsMock />
         <p className="text-base text-gray-600 mt-6 mb-3">Τι δείχνει κάθε αριθμός:</p>
