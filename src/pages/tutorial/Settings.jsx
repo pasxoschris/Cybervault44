@@ -1,20 +1,40 @@
 import React from "react";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
-import { Grid3X3, Printer, CreditCard, FileText, UtensilsCrossed, Zap, MessageSquare, QrCode } from "lucide-react";
+import { LayoutGrid, Printer, Receipt, ClipboardList, CreditCard, FileText, UtensilsCrossed, Coins, Smartphone, MessageSquare, QrCode } from "lucide-react";
 
-const settings = [
-  { label: "Ομάδες Τραπεζιών", desc: "Επιλογή ομάδας τραπεζιών που θα βλέπεις", icon: Grid3X3 },
-  { label: "Ομάδα Εκτυπωτών", desc: "Επιλογή ομάδας εκτυπωτών", icon: Printer },
-  { label: "Εκτυπωτής Αποδείξεων", desc: "Επιλογή Εκτυπωτή Αποδείξεων", icon: Printer },
-  { label: "Εκτυπωτής Δελτίων Παραγγελίας", desc: "Επιλογή Εκτυπωτή Δελτίων Παραγγελίας", icon: Printer },
-  { label: "Τερματικά POS", desc: "Επιλογή Τερματικού Πληρωμής (POS)", icon: CreditCard },
-  { label: "Τρόπος Έκδοσης παραστατικών", desc: "Επιλογή Τρόπου Έκδοσης Παραστατικών", icon: FileText },
-  { label: "Τιμοκατάλογος", desc: "Επιλογή Τιμοκαταλόγου (Βασικός, Take away κτλ)", icon: UtensilsCrossed },
-  { label: "Εργαλείο για ρέστα", desc: "Ενεργοποίηση Εργαλείου για ρέστα", icon: Zap },
-  { label: "Ηλεκτρονική Πληρωμή", desc: "Ενεργοποίηση Ηλεκτρονικής Πληρωμής", icon: Zap },
-  { label: "Αποστολή Μηνύματος", desc: "Αποστολή μηνύματος σε εκτυπωτή", icon: MessageSquare },
-  { label: "QR Code Καταστήματος", desc: "Εμφάνιση QR για σύνδεση νέας συσκευής", icon: QrCode },
+const settingGroups = [
+  {
+    title: "Τραπέζια & Τιμοκατάλογος",
+    items: [
+      { label: "Ομάδες Τραπεζιών", desc: "Επιλογή ομάδας τραπεζιών που θα βλέπεις", icon: LayoutGrid },
+      { label: "Τιμοκατάλογος", desc: "Επιλογή Τιμοκαταλόγου (Βασικός, Take away κτλ)", icon: UtensilsCrossed },
+    ],
+  },
+  {
+    title: "Εκτυπωτές",
+    items: [
+      { label: "Ομάδα Εκτυπωτών", desc: "Επιλογή ομάδας εκτυπωτών", icon: Printer },
+      { label: "Εκτυπωτής Αποδείξεων", desc: "Επιλογή Εκτυπωτή Αποδείξεων", icon: Receipt },
+      { label: "Εκτυπωτής Δελτίων Παραγγελίας", desc: "Επιλογή Εκτυπωτή Δελτίων Παραγγελίας", icon: ClipboardList },
+      { label: "Αποστολή Μηνύματος", desc: "Αποστολή μηνύματος σε εκτυπωτή", icon: MessageSquare },
+    ],
+  },
+  {
+    title: "Πληρωμές & Παραστατικά",
+    items: [
+      { label: "Τερματικά POS", desc: "Επιλογή Τερματικού Πληρωμής (POS)", icon: CreditCard },
+      { label: "Τρόπος Έκδοσης παραστατικών", desc: "Επιλογή Τρόπου Έκδοσης Παραστατικών", icon: FileText },
+      { label: "Εργαλείο για ρέστα", desc: "Ενεργοποίηση Εργαλείου για ρέστα", icon: Coins },
+      { label: "Ηλεκτρονική Πληρωμή", desc: "Ενεργοποίηση Ηλεκτρονικής Πληρωμής", icon: Smartphone },
+    ],
+  },
+  {
+    title: "Σύνδεση Συσκευής",
+    items: [
+      { label: "QR Code Καταστήματος", desc: "Εμφάνιση QR για σύνδεση νέας συσκευής", icon: QrCode },
+    ],
+  },
 ];
 
 export default function Settings() {
@@ -36,19 +56,30 @@ export default function Settings() {
 
       <SectionTitle>Διαθέσιμες Ρυθμίσεις</SectionTitle>
 
-      <div className="border border-[#00D4FF]/10 bg-[#0D1526]/70 overflow-hidden">
-        {settings.map((s, i) => {
-          const IconComponent = s.icon;
-          return (
-            <div key={i} className="flex items-start gap-4 px-5 py-4 border-b border-[#00D4FF]/10 last:border-0 hover:bg-[#00D4FF]/5 transition-colors">
-              <IconComponent size={18} className="text-[#00D4FF] flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="font-rajdhani text-sm font-semibold text-white/90">{s.label}</p>
-                <p className="font-rajdhani text-xs text-white/40 mt-0.5">{s.desc}</p>
-              </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+        {settingGroups.map((group) => (
+          <div key={group.title} className="bg-white border border-gray-100 shadow-sm rounded-2xl overflow-hidden">
+            <div className="px-5 py-3 bg-purple-50 border-b border-purple-100">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-purple-700">{group.title}</h3>
             </div>
-          );
-        })}
+            <ul>
+              {group.items.map((s) => {
+                const IconComponent = s.icon;
+                return (
+                  <li key={s.label} className="flex items-start gap-4 px-5 py-4 border-b border-gray-100 last:border-0">
+                    <span className="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center flex-shrink-0">
+                      <IconComponent size={18} />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-gray-900">{s.label}</p>
+                      <p className="text-sm text-gray-600 mt-0.5">{s.desc}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
       </div>
 
     </TutorialLayout>
