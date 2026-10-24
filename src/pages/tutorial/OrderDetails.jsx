@@ -41,6 +41,9 @@ export default function OrderDetails() {
       <InfoBox icon="💡" title="Επιλογή τραπεζιού" variant="info">
         Τραπέζι μπορείς να επιλέξεις και μετά τη δημιουργία της παραγγελίας: στα <strong>Στοιχεία Παραγγελίας</strong> πάτα πάνω στο πεδίο <strong>«Τραπέζι»</strong>.
       </InfoBox>
+      <InfoBox icon="🎨" title="Χρώμα παραγγελίας" variant="info">
+        Πάτα <strong>«Χρώμα»</strong> στα Στοιχεία Παραγγελίας και διάλεξε ένα από τα χρώματα. Η παραγγελία θα εμφανίζεται με αυτό το χρώμα στη λίστα παραγγελιών, ώστε να την ξεχωρίζεις εύκολα.
+      </InfoBox>
       <InfoBox icon="⋯" title="Μενού επιλογών (···)" variant="info">
         Στα δεξιά της επικεφαλίδας υπάρχουν 3 τελείες (···) που ανοίγουν επιπλέον επιλογές:
         <ul className="list-disc list-inside mt-2 space-y-1">
