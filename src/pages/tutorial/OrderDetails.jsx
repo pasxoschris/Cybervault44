@@ -40,7 +40,7 @@ export default function OrderDetails() {
             const IconComponent = row.icon;
             return (
               <li key={row.label} className="flex items-center gap-4 px-5 py-3.5 border-b border-gray-100 last:border-0">
-                <Marker n={i + 1} className="w-7 h-7 text-xs ring-0" />
+                <Marker n={i + 1} large />
                 <span className="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center flex-shrink-0">
                   <IconComponent size={18} />
                 </span>
