@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
@@ -64,8 +65,8 @@ export default function OrderDetails() {
         <ul className="list-disc list-inside mt-2 space-y-1">
           <li>Έκπτωση (Συνολική Έκπτωση επί της παραγγελίας -θα ζητήσει Κωδικό Διαχειριστή)</li>
           <li>Αν θέλεις να κάνεις Έκπτωση σε ένα μόνο προϊόν, σέρνεις το προϊόν προς τα αριστερά</li>
-          <li>Ιδιο Κατανάλωση (θα σου ζητήσει qr υπαλλήλου) - Εναλλακτικά πας Έκπτωση και το περνάς σαν είδος Έκπτωσης</li>
-          <li>Έκδοση Τιμολογίου (εφόσον έχει ενεργοποιηθεί για αυτή τη συσκευή)</li>
+          <li><Link to="/tutorial/discount-own" className="underline font-semibold">Ιδιο Κατανάλωση</Link> (θα σου ζητήσει qr υπαλλήλου) - Εναλλακτικά πας Έκπτωση και το περνάς σαν είδος Έκπτωσης</li>
+          <li><Link to="/tutorial/invoice" className="underline font-semibold">Έκδοση Τιμολογίου</Link> (εφόσον έχει ενεργοποιηθεί για αυτή τη συσκευή)</li>
         </ul>
       </InfoBox>
     </TutorialLayout>
