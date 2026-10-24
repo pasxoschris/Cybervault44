@@ -24,7 +24,7 @@ export default function Settings() {
   return (
     <CashierTutorialLayout title="Ρυθμίσεις Χρήστη" subtitle="Παραμετροποίηση της εφαρμογής για κάθε χρήστη">
       <InfoBox icon="⚙️" title="Πού βρίσκονται οι ρυθμίσεις;" variant="purple">
-        <p>Οι ρυθμίσεις βρίσκονται <strong>πάνω αριστερά</strong> στο <strong>μενού</strong> (το εικονίδιο με τις <strong>τρεις οριζόντιες γραμμές</strong>). Πάτα το και επίλεξε <strong>«Ρυθμίσεις (όνομα χρήστη)»</strong> από το μενού που εμφανίζεται.</p>
+        <p>Οι ρυθμίσεις βρίσκονται <strong>πάνω αριστερά</strong> στο <strong>μενού</strong> (το εικονίδιο με τις <strong>τρεις οριζόντιες γραμμές</strong>). Πάτα το και επίλεξε <strong>«Ρυθμίσεις (Όνομα Χρήστη)»</strong> από το μενού που εμφανίζεται.</p>
       </InfoBox>
 
       <SectionTitle>Το Μενού</SectionTitle>
@@ -48,12 +48,12 @@ export default function Settings() {
           <li><strong>Παραγγελίες Βάρδιας</strong> — οι παραγγελίες της τρέχουσας βάρδιας.</li>
           <li><strong>Διαχείριση</strong> — λειτουργίες διαχειριστή.</li>
           <li><strong>End of Day Report</strong> — αναφορά λήξης ημέρας. <span className="text-amber-600 font-medium">(Δεν υποστηρίζεται από την έκδοση 3.5.6 και έπειτα — χρησιμοποίησε «Ανάλυση Βάρδιας».)</span></li>
-          <li><strong>Ρυθμίσεις (όνομα χρήστη)</strong> — οι ρυθμίσεις χρήστη.</li>
+          <li><strong>Ρυθμίσεις (Όνομα Χρήστη)</strong> — οι ρυθμίσεις χρήστη.</li>
         </ul>
       </StepCard>
 
       <StepCard number="3" title="Πάτα «Ρυθμίσεις»">
-        <p>Επίλεξε <strong>«Ρυθμίσεις (όνομα χρήστη)»</strong> — η τελευταία επιλογή. Ανοίγει η οθόνη ρυθμίσεων χρήστη.</p>
+        <p>Επίλεξε <strong>«Ρυθμίσεις (Όνομα Χρήστη)»</strong> — η τελευταία επιλογή. Ανοίγει η οθόνη ρυθμίσεων χρήστη.</p>
       </StepCard>
 
       <SectionTitle>Διαθέσιμες Ρυθμίσεις</SectionTitle>
@@ -78,7 +78,7 @@ export default function Settings() {
       </div>
 
       <InfoBox icon="💡" title="Συνοπτικά" variant="info">
-        <p><strong>Μενού (τρεις γραμμές) → Ρυθμίσεις (όνομα χρήστη)</strong>. Οι ρυθμίσεις είναι προσωπικές ανά χρήστη και ταυτίζονται με αυτές του σερβιτόρου.</p>
+        <p><strong>Μενού (τρεις γραμμές) → Ρυθμίσεις (Όνομα Χρήστη)</strong>. Οι ρυθμίσεις είναι προσωπικές ανά χρήστη και ταυτίζονται με αυτές του σερβιτόρου.</p>
       </InfoBox>
     </CashierTutorialLayout>
   );

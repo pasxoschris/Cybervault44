@@ -7,7 +7,7 @@ import {
   MessageSquare, QrCode, Store, Tablet, User, LogOut, CalendarCheck, ChevronRight,
 } from "lucide-react";
 
-// Η σειρά και τα μπλοκ ακολουθούν την οθόνη «Ρυθμίσεις (όνομα χρήστη)» της εφαρμογής.
+// Η σειρά και τα μπλοκ ακολουθούν την οθόνη «Ρυθμίσεις (Όνομα Χρήστη)» της εφαρμογής.
 // type: "open" = ανοίγει επιλογή (βελάκι), "toggle" = διακόπτης on/off, "info" = μόνο προβολή
 const settingBlocks = [
   [
@@ -67,13 +67,13 @@ export default function Settings() {
     <TutorialLayout title="Ρυθμίσεις Χρήστη" subtitle="Παραμετροποίηση της εφαρμογής για κάθε χρήστη">
 
       <InfoBox icon="⚙️" title="Πού βρίσκονται οι ρυθμίσεις;" variant="info">
-        Οι ρυθμίσεις χρήστη βρίσκονται <strong>πάνω αριστερά</strong> στις τρεις γραμμές <strong>☰</strong>. Πάτα το και επίλεξε <strong>«Ρυθμίσεις (όνομα χρήστη)»</strong> από το μενού που εμφανίζεται.
+        Οι ρυθμίσεις χρήστη βρίσκονται <strong>πάνω αριστερά</strong> στις τρεις γραμμές <strong>☰</strong>. Πάτα το και επίλεξε <strong>«Ρυθμίσεις (Όνομα Χρήστη)»</strong> από το μενού που εμφανίζεται.
       </InfoBox>
 
       <div className="flex flex-col items-center">
         <img
           src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/507fb5774_settings-menu.webp"
-          alt="Μενού ☰ — Ρυθμίσεις (όνομα χρήστη)"
+          alt="Μενού ☰ — Ρυθμίσεις (Όνομα Χρήστη)"
           className="w-full max-w-sm h-auto rounded-2xl border border-gray-200"
         />
         <p className="text-center text-xs text-gray-500 mt-2">Πάτα ☰ (πάνω αριστερά) και επίλεξε «Ρυθμίσεις (Όνομα Χρήστη)»</p>
