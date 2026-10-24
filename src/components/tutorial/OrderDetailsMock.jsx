@@ -29,15 +29,16 @@ function Cell({ children, marker }) {
   );
 }
 
-function ProductRow({ name, price }) {
+// Γενικές γραμμές προϊόντων, χωρίς ονόματα και τιμές.
+function ProductRow({ width = "w-24" }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-2.5 bg-white border-b border-gray-200">
+    <div className="flex items-center gap-3 px-4 py-3 bg-white border-b border-gray-200">
       <span className="w-9 h-8 rounded-md border border-[#3a2f63] text-[12px] text-[#3a2f63] flex items-center justify-center">1×</span>
-      <div className="flex-1 min-w-0 leading-tight">
-        <p className="text-[9px] text-gray-500">Drinks</p>
-        <p className="text-[13px] text-[#2b2146] truncate">{name}</p>
+      <div className="flex-1 min-w-0 space-y-1.5">
+        <span className="block h-2 w-12 rounded bg-gray-200" />
+        <span className={`block h-2.5 ${width} rounded bg-gray-300`} />
       </div>
-      <span className="text-[12px] text-[#3a2f63]">{price}</span>
+      <span className="block h-2.5 w-10 rounded bg-gray-300" />
       <span className="w-5 h-5 rounded-full border border-gray-400 flex items-center justify-center">
         <ArrowRight size={11} className="text-gray-500" />
       </span>
@@ -98,11 +99,11 @@ export default function OrderDetailsMock() {
 
         {/* Προϊόντα */}
         <div className="relative flex items-center gap-1.5 px-4 pt-4 pb-2">
-          <span className="text-[11px] font-semibold text-gray-600 tracking-wide">2 ΠΡΟΪΟΝΤΑ</span>
+          <span className="text-[11px] font-semibold text-gray-600 tracking-wide">ΠΡΟΪΟΝΤΑ</span>
           <Marker n={7} />
         </div>
-        <ProductRow name="Lungo" price="2,26" />
-        <ProductRow name="HAVANA 7 (Φ)" price="70,00" />
+        <ProductRow width="w-20" />
+        <ProductRow width="w-28" />
 
         {/* Σύνολο */}
         <div className="relative flex items-center gap-3 px-4 py-3" style={{ background: "#d3d3e6" }}>
@@ -111,7 +112,7 @@ export default function OrderDetailsMock() {
             <Lock size={9} className="absolute -top-1 -right-1 text-blue-600" />
           </span>
           <span className="flex-1 text-[15px] text-[#2b2146]">Σύνολο</span>
-          <span className="text-[16px] text-[#2b2146]">72,26 €</span>
+          <span className="flex items-center gap-1 text-[16px] text-[#2b2146]"><span className="block h-3 w-12 rounded bg-[#b8b8d4]" /> €</span>
           <Marker n={8} className="absolute -top-2 right-3" />
         </div>
 
