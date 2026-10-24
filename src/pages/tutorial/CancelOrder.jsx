@@ -36,7 +36,7 @@ export default function CancelOrder() {
       <StepCard number="1" title="Άνοιξε τις Παραγγελίες Βάρδιας">
         <p>
           Η κλειστή παραγγελία βρίσκεται στις <strong>Παραγγελίες Βάρδιας</strong> — η διαδικασία ξεκινά από εκεί, όπως στο{" "}
-          <Link to="/tutorial/shift" className="text-purple-600 underline">μάθημα 27 — Παραγγελίες Βάρδιας</Link>.
+          <Link to="/tutorial/shift" className="text-purple-600 underline">Παραγγελίες Βάρδιας</Link>.
         </p>
       </StepCard>
       <StepCard number="2" title="Επαναφορά παραγγελίας">

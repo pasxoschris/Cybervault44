@@ -39,7 +39,7 @@ export default function Shift() {
       <InfoBox icon="🔄" title="Ακύρωση κλειστής παραγγελίας" variant="info">
         <p>
           Μετά την <strong>Επαναφορά</strong> η παραγγελία ξανανοίγει. Για ακύρωση: σύρε ξανά την παραγγελία <strong>προς τα αριστερά (slide)</strong> → <strong>«Ακύρωση»</strong> → κωδικός διαχειριστή → αιτία ακύρωσης (
-          <Link to="/tutorial/cancel-order" className="text-purple-600 underline">μάθημα 23 — Ακύρωση Παραγγελίας</Link>).
+          <Link to="/tutorial/cancel-order" className="text-purple-600 underline">Ακύρωση Παραγγελίας</Link>).
         </p>
       </InfoBox>
       <StepCard number="5" title="Επανεκτύπωση Απόδειξης">
