@@ -49,7 +49,6 @@ export default function IssueReceipt() {
           <li>Επανεκτύπωση παραγγελίας</li>
         </ul>
       </InfoBox>
-
     </TutorialLayout>
   );
 }
