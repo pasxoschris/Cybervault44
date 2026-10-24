@@ -76,7 +76,7 @@ export default function Settings() {
           alt="Μενού ☰ — Ρυθμίσεις (όνομα χρήστη)"
           className="w-full max-w-sm h-auto rounded-2xl border border-gray-200"
         />
-        <p className="text-center text-xs text-gray-500 mt-2">Πάτα ☰ (πάνω αριστερά) και επίλεξε «Ρυθμίσεις (όνομα_χρήστη)»</p>
+        <p className="text-center text-xs text-gray-500 mt-2">Πάτα ☰ (πάνω αριστερά) και επίλεξε «Ρυθμίσεις (Όνομα Χρήστη)»</p>
       </div>
 
       <SectionTitle>Διαθέσιμες Ρυθμίσεις</SectionTitle>
