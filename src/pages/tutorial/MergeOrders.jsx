@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 
@@ -49,9 +50,9 @@ export default function MergeOrders() {
 
       <InfoBox icon="⚠️" title="Σημαντικό!" variant="warning">
         <ul className="list-disc pl-5 mt-1 space-y-1.5">
-          <li>Οι δύο παραγγελίες πρέπει να ανήκουν στον <strong>ίδιο σερβιτόρο</strong> για να συγχωνευτούν.</li>
+          <li>Οι δύο παραγγελίες πρέπει να ανήκουν στον <strong>ίδιο σερβιτόρο</strong> για να συγχωνευτούν (δες <Link to="/tutorial/transfer-order" className="underline font-semibold">Μεταφορά Παραγγελίας</Link>).</li>
           <li>Όλα τα είδη μεταφέρονται — δεν μπορείς να επιλέξεις μεμονωμένα είδη.</li>
-          <li>Η συγχώνευση <strong>δεν αναιρείται</strong>. Αν κάνεις λάθος, θα χρειαστεί επεξεργασία παραγγελίας για να το διορθώσεις.</li>
+          <li>Η συγχώνευση <strong>δεν αναιρείται</strong>. Αν κάνεις λάθος, θα χρειαστεί <Link to="/tutorial/edit-order" className="underline font-semibold">επεξεργασία παραγγελίας</Link> για να το διορθώσεις.</li>
           <li>Δεν μπορείς να συγχωνεύσεις παραγγελία που έχει ήδη πληρωθεί.</li>
         </ul>
       </InfoBox>
