@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import TutorialLayout from "@/components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "@/components/tutorial/StepCard";
 
@@ -12,6 +13,7 @@ export default function PaymentCard() {
       <SectionTitle>Πληρωμή με Κάρτα</SectionTitle>
       <StepCard number="1" title="Επίλεξε «Πληρωμή με Κάρτα»">
         <p>Στο μενού πληρωμής, επίλεξε <strong>«Πληρωμή με Κάρτα (όνομα τερματικού)»</strong>.</p>
+        <p className="mt-2">Το τερματικό επιλέγεται στις <Link to="/tutorial/settings" className="underline font-semibold">Ρυθμίσεις Χρήστη</Link> → <strong>Τερματικά POS</strong>.</p>
       </StepCard>
       <StepCard number="2" title="Χρέωσε στο τερματικό πληρωμών (POS)">
         <p>Το ποσό θα σταλεί αυτόματα στο τερματικό πληρωμών (POS). Ζήτα από τον πελάτη να πληρώσει στο τερματικό.</p>
