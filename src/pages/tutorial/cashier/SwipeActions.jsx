@@ -158,11 +158,9 @@ export default function SwipeActions() {
       {active === "other" && (
         <>
           <SectionTitle>Άλλες Εκπτώσεις</SectionTitle>
-          <InfoBox icon="🏷️" title="Τι είναι οι Άλλες Εκπτώσεις;" variant="info">
+          <InfoBox icon="ℹ️" title="Τι είναι οι Άλλες Εκπτώσεις;" variant="info">
             Είναι κατηγορίες εκπτώσεων που έχει δημιουργήσει ο διαχειριστής, για ειδικές περιπτώσεις (π.χ. προσωπικό, τακτικοί πελάτες, προσωπικές εκπτώσεις).
-          </InfoBox>
-          <InfoBox icon="⚙️" title="Προαπαιτούμενο" variant="warning">
-            Οι κατηγορίες δημιουργούνται από τον <strong>Διαχειριστή</strong> στο <strong>Secure (Διαχειριστικό) → Ρυθμίσεις → Προσαρμοσμένος Τύπος Έκπτωσης</strong>.
+            <span className="block mt-2">Οι κατηγορίες δημιουργούνται από τον <strong>Διαχειριστή</strong> στο <strong>Secure (Διαχειριστικό) → Ρυθμίσεις → Προσαρμοσμένος Τύπος Έκπτωσης</strong>.</span>
           </InfoBox>
           <StepCard number="1" title="Άνοιξε την έκπτωση">
             <p>Ίδια βήματα με τη Γενική Έκπτωση (<strong>τρεις τελείες (···) → Έκπτωση → Κωδικός Διαχειριστή</strong>).</p>
