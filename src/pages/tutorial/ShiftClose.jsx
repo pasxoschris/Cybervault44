@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 
@@ -15,7 +16,7 @@ export default function ShiftClose() {
         Το κλείσιμο βάρδιας είναι <strong>μη αναστρέψιμη ενέργεια</strong>. Βεβαιώσου ότι όλες οι παραγγελίες έχουν ολοκληρωθεί.
       </InfoBox>
       <StepCard number="1" title="Έλεγξε για ανεξόφλητες παραγγελίες">
-        <p>Αν υπάρχουν <strong>ανεξόφλητες</strong> παραγγελίες, δεν μπορείς να κλείσεις τη βάρδια. Πρέπει να τις σημειώσεις ως πληρωμένες.</p>
+        <p>Αν υπάρχουν <strong>ανεξόφλητες</strong> παραγγελίες, δεν μπορείς να κλείσεις τη βάρδια. Πρέπει να τις <Link to="/tutorial/payment" className="underline font-semibold">σημειώσεις ως πληρωμένες</Link>.</p>
         <p className="mt-2">Οι <strong>ανοιχτές</strong> παραγγελίες που έχουν ήδη πληρωθεί κλείνουν αυτόματα με το κλείσιμο της βάρδιας.</p>
       </StepCard>
       <StepCard number="2" title="Εκτύπωση Αναφοράς Βάρδιας">
