@@ -11,8 +11,8 @@ export default function DiscountOther() {
     <TutorialLayout title="Άλλες Εκπτώσεις" subtitle="Ειδικές κατηγορίες εκπτώσεων">
       <SectionTitle>Άλλες Εκπτώσεις</SectionTitle>
       <InfoBox icon="ℹ️" title="Τι είναι οι Άλλες Εκπτώσεις;" variant="info">
-        Είναι κατηγορίες εκπτώσεων που έχει δημιουργήσει ο <strong>Διαχειριστής</strong>, για ειδικές περιπτώσεις (πχ τακτικοί πελάτες, προσωπικές εκπτώσεις).
-        <span className="block mt-2">Οι κατηγορίες δημιουργούνται από τον <strong>Διαχειριστή</strong> στο <strong>Secure (Διαχειριστικό) → Ρυθμίσεις → Προσαρμοσμένος Τύπος Έκπτωσης</strong>.</span>
+        Είναι κατηγορίες εκπτώσεων που έχει δημιουργήσει ο <strong>Διαχειριστής</strong>, για ειδικές περιπτώσεις.
+        <span className="block mt-2">Οι κατηγορίες δημιουργούνται από τον <strong>Διαχειριστή</strong> στο <strong>Secure (Διαχειριστικό)</strong><br /><strong>Ρυθμίσεις → Προσαρμοσμένος Τύπος Έκπτωσης</strong>.</span>
       </InfoBox>
       <StepCard number="1" title="Άνοιξε την έκπτωση">
         <p>Ίδια βήματα με τη Γενική Έκπτωση (<strong>τρεις τελείες (···) → Έκπτωση → Κωδικός Διαχειριστή</strong>).</p>
