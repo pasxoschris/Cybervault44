@@ -19,7 +19,7 @@ export default function Shift() {
       <ScreenshotGallery images={["https://media.base44.com/images/public/69f588f4590b173a2970ddb4/ecc8a9261_20.JPG"]} caption="Παραγγελίες βάρδιας — ρύθμιση ενεργοποίησης" />
       <SectionTitle>Προβολή Παραγγελιών Βάρδιας</SectionTitle>
       <StepCard number="1" title="Άνοιξε την οθόνη Βάρδιας">
-        <p>Από το μενού της εφαρμογής, επίλεξε <strong>«Παραγγελίες Βάρδιας»</strong>.</p>
+        <p>Πάτα τις <strong>τρεις γραμμές (☰) πάνω αριστερά</strong> και επίλεξε <strong>«Παραγγελίες Βάρδιας»</strong>.</p>
       </StepCard>
       <StepCard number="2" title="Βλέπεις τις παραγγελίες">
         <p>Εμφανίζεται λίστα με όλες τις παραγγελίες της βάρδιας. Για κάθε παραγγελία βλέπεις:</p>
