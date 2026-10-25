@@ -22,7 +22,7 @@ export default function CloseCashier() {
 
       <SectionTitle>Άνοιγμα Ανάλυσης Βάρδιας</SectionTitle>
       <StepCard number="1" title="Άνοιξε το μενού Βάρδιας">
-        <p>Από το μενού της εφαρμογής, επίλεξε <strong>«Ανάλυση Βάρδιας»</strong>. Ανοίγει ένα modal με τη σύνοψη της βάρδιας του τρέχοντος χρήστη.</p>
+        <p>Πάτα τις <strong>τρεις γραμμές (☰) πάνω αριστερά</strong> → <strong>«Ρυθμίσεις (Όνομα Χρήστη)»</strong> → κουμπί <strong>«Ανάλυση Βάρδιας»</strong> στο κάτω μέρος της οθόνης. Ανοίγει ένα modal με τη σύνοψη της βάρδιας του τρέχοντος χρήστη.</p>
       </StepCard>
 
       <SectionTitle>Σύνοψη Βάρδιας</SectionTitle>
