@@ -61,7 +61,7 @@ export default function SwipeActions() {
             Επίλεξε το <strong>Είδος έκπτωσης</strong>:
             <div className="ml-6 mt-2 flex flex-col gap-2 items-start">
               <span className="rounded bg-gray-100 px-2 py-1 text-sm">Γενική Έκπτωση</span>
-              <span className="rounded bg-gray-100 px-2 py-1 text-sm">Ίδια Κατανάλωση</span>
+              <span className="rounded bg-gray-100 px-2 py-1 text-sm">Ιδιο Κατανάλωση</span>
               <span className="rounded bg-gray-100 px-2 py-1 text-sm">Άλλες Εκπτώσεις</span>
             </div>
           </li>
@@ -120,7 +120,7 @@ export default function SwipeActions() {
                 Επίλεξε το <strong>Είδος έκπτωσης</strong>:
                 <div className="ml-6 mt-2 flex flex-col gap-2 items-start">
                   <span className="rounded bg-gray-100 px-2 py-1 text-sm">Γενική Έκπτωση</span>
-                  <span className="rounded bg-gray-100 px-2 py-1 text-sm">Ίδια Κατανάλωση</span>
+                  <span className="rounded bg-gray-100 px-2 py-1 text-sm">Ιδιο Κατανάλωση</span>
                   <span className="rounded bg-gray-100 px-2 py-1 text-sm">Άλλες Εκπτώσεις</span>
                 </div>
               </li>
