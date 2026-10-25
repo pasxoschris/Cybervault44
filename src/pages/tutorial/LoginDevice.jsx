@@ -30,7 +30,7 @@ export default function LoginDevice() {
         Πριν συνδέσεις νέα συσκευή, ο διαχειριστής πρέπει να έχει κάνει τα εξής στο <strong>Secure (Διαχειριστικό)</strong>:
         <ul className="list-disc list-inside mt-2 space-y-1">
           <li>Δημιουργία χρηστών</li>
-          <li>Δημιουργία σημείων πώλησης/συσκευών (POS) των χρηστών</li>
+          <li>Δημιουργία Θέσεων/Συσκευών Χρηστών (POS)</li>
         </ul>
       </InfoBox>
 
@@ -54,12 +54,12 @@ export default function LoginDevice() {
         <p className="mt-2">Σκάναρε το <strong>QR Code του καταστήματος</strong> (το παρέχει ο διαχειριστής από το Secure (Διαχειριστικό) ή το βλέπεις από άλλη συνδεδεμένη συσκευή) για να συνδέσεις τη συσκευή σου με το κατάστημα.</p>
       </StepCard>
 
-      <StepCard number="3" title="Επίλεξε κατάστημα και συσκευή (POS) χρήστη">
-        <p>Μετά το σκάναρισμα θα εμφανιστεί η οθόνη επιλογής. Διάλεξε το <strong>Κατάστημα</strong> και τη <strong>Συσκευή (POS)</strong> που θα χρησιμοποιήσεις.</p>
+      <StepCard number="3" title="Επίλεξε Κατάστημα και Θέση/Συσκευή Χρήστη (POS)">
+        <p>Μετά το σκάναρισμα θα εμφανιστεί η οθόνη επιλογής. Διάλεξε το <strong>Κατάστημα</strong> και τη <strong>Θέση/Συσκευή Χρήστη (POS)</strong> που θα χρησιμοποιήσεις.</p>
         <div className="mt-3 flex justify-center">
           <img
             src="https://media.base44.com/images/public/69f588f4590b173a2970ddb4/9cf0016f5_image.png"
-            alt="Επιλογή καταστήματος και POS"
+            alt="Επιλογή Καταστήματος και Θέσης/Συσκευής Χρήστη (POS)"
             className="w-full max-w-sm rounded-2xl shadow-md border border-border cursor-zoom-in hover:opacity-90 transition-opacity"
             onClick={e => zoomOverlay(e.target.src)}
           />

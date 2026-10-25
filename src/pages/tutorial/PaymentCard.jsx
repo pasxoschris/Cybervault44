@@ -8,13 +8,13 @@ export default function PaymentCard() {
   }, []);
 
   return (
-    <TutorialLayout title="Πληρωμή με Κάρτα" subtitle="Χρέωση μέσω POS terminal">
+    <TutorialLayout title="Πληρωμή με Κάρτα" subtitle="Χρέωση μέσω τερματικού πληρωμών (POS)">
       <SectionTitle>Πληρωμή με Κάρτα</SectionTitle>
       <StepCard number="1" title="Επίλεξε «Πληρωμή με Κάρτα»">
-        <p>Στο μενού πληρωμής, επίλεξε <strong>«Πληρωμή με Κάρτα (POS που έχεις επιλέξει)»</strong>.</p>
+        <p>Στο μενού πληρωμής, επίλεξε <strong>«Πληρωμή με Κάρτα (όνομα τερματικού)»</strong>.</p>
       </StepCard>
-      <StepCard number="2" title="Χρέωσε στο POS terminal">
-        <p>Το ποσό θα σταλεί αυτόματα στο τερματικό POS. Ζήτα από τον πελάτη να πληρώσει στο τερματικό.</p>
+      <StepCard number="2" title="Χρέωσε στο τερματικό πληρωμών (POS)">
+        <p>Το ποσό θα σταλεί αυτόματα στο τερματικό πληρωμών (POS). Ζήτα από τον πελάτη να πληρώσει στο τερματικό.</p>
       </StepCard>
       <StepCard number="3" title="Αναμονή επιβεβαίωσης">
         <p>Μόλις η συναλλαγή εγκριθεί, η παραγγελία κλείνει αυτόματα και η απόδειξη εκτυπώνεται.</p>
@@ -34,7 +34,7 @@ export default function PaymentCard() {
           <li><strong>Πρόσβαση στην Τοποθεσία</strong> (Location) για την εφαρμογή Spotlight POS.</li>
           <li><strong>Αυτόματη Ζώνη Ώρας</strong> (Settings → General → Date &amp; Time → Automatic Time Zone = ON).</li>
         </ul>
-        <p className="mt-2">Χωρίς αυτά, το POS terminal δεν μπορεί να ξεκινήσει τη συναλλαγή.</p>
+        <p className="mt-2">Χωρίς αυτά, το τερματικό πληρωμών (POS) δεν μπορεί να ξεκινήσει τη συναλλαγή.</p>
       </InfoBox>
     </TutorialLayout>
   );

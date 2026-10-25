@@ -59,7 +59,7 @@ export default function Payments() {
           <li><strong>Πρόσβαση στην Τοποθεσία</strong> (Location) για την εφαρμογή Spotlight POS.</li>
           <li><strong>Αυτόματη Ζώνη Ώρας</strong> (Settings → General → Date &amp; Time → Automatic Time Zone = ON).</li>
         </ul>
-        <p className="mt-2">Χωρίς αυτά, το POS terminal δεν μπορεί να ξεκινήσει τη συναλλαγή.</p>
+        <p className="mt-2">Χωρίς αυτά, το τερματικό πληρωμών (POS) δεν μπορεί να ξεκινήσει τη συναλλαγή.</p>
       </InfoBox>
 
       <InfoBox icon="💡" title="Συνοπτικά" variant="info">
