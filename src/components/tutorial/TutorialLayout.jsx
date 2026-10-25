@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Coins, Split, Globe, QrCode, Edit3, Receipt, Layers, Monitor, ArrowLeft, ArrowLeftRight, GitMerge, Cloud, XCircle, Ban, CopyPlus, ReceiptText, Printer } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Coins, Split, Globe, QrCode, Edit3, Receipt, Layers, Monitor, ArrowLeft, ArrowLeftRight, GitMerge, Cloud, XCircle, Ban, CopyPlus, ReceiptText, Printer, FileBarChart } from "lucide-react";
 import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
@@ -35,6 +35,7 @@ const sections = [
   { title: "Μεταφορά Παραγγελίας", path: "/tutorial/transfer-order", icon: ArrowLeftRight },
   { title: "Συγχώνευση Παραγγελιών", path: "/tutorial/merge-orders", icon: GitMerge },
   { title: "Παραγγελίες Βάρδιας", path: "/tutorial/shift", icon: Layers },
+  { title: "Αναφορά Χ", path: "/tutorial/x-report", icon: FileBarChart },
   { title: "Ανάλυση Βάρδιας", path: "/tutorial/shift-analysis", icon: Monitor },
   { title: "Κλείσιμο Βάρδιας", path: "/tutorial/shift-close", icon: Layers },
 ];

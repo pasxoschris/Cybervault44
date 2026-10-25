@@ -29,6 +29,7 @@ import AddSimilar from './pages/tutorial/AddSimilar';
 import CancelReceipt from './pages/tutorial/CancelReceipt';
 import Shift from './pages/tutorial/Shift';
 import ShiftAnalysis from './pages/tutorial/ShiftAnalysis';
+import XReport from './pages/tutorial/XReport';
 import ShiftClose from './pages/tutorial/ShiftClose';
 import StartShift from './pages/tutorial/StartShift';
 import SyncStatus from './pages/tutorial/SyncStatus';
@@ -136,6 +137,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/payment-online" element={<PaymentOnline />} />
       <Route path="/tutorial/payment-iris" element={<PaymentIris />} />
       <Route path="/tutorial/shift" element={<Shift />} />
+      <Route path="/tutorial/x-report" element={<XReport />} />
       <Route path="/tutorial/shift-analysis" element={<ShiftAnalysis />} />
       <Route path="/tutorial/shift-close" element={<ShiftClose />} />
       <Route path="/academy/assistant" element={<Assistant />} />
