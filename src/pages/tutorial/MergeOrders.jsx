@@ -14,6 +14,7 @@ export default function MergeOrders() {
 
       <InfoBox icon="☰" title="Πώς να ανοίξεις τη Συγχώνευση" variant="info">
         <p>Η συγχώνευση γίνεται από το <strong>μενού</strong> που ανοίγει πατώντας τις <strong>τρεις γραμμές πάνω αριστερά</strong>. Εμφανίζεται λίστα με επιλογές — πάτα <strong>«Συγχώνευση παραγγελιών»</strong>.</p>
+        <p className="mt-2">Η επιλογή εμφανίζεται στο μενού μόνο όταν υπάρχουν <strong>τουλάχιστον δύο ανοιχτές παραγγελίες</strong>.</p>
       </InfoBox>
 
       <div className="flex justify-center">
