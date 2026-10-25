@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
@@ -42,7 +43,7 @@ export default function CreateOrder() {
 
       <StepCard number="6" title="Αποστολή παραγγελίας">
         <p>Αφού προσθέσεις όλα τα προϊόντα, πάτα <strong>εκτυπωτή ↑ </strong> (αποστολή) για να αποσταλεί η παραγγελία στους Εκτυπωτές που έχεις ορίσει.</p>
-        <p>Ανάλογα με τις ρυθμίσεις έχεις κάποιες επιλογές για την <strong> Έκδοση Παραστατικού </strong></p>
+        <p>Ανάλογα με τις ρυθμίσεις έχεις κάποιες επιλογές για την <Link to="/tutorial/issue-receipt" className="underline font-semibold">Έκδοση Παραστατικού</Link>:</p>
         <p> 1. Δελτίο παραγγελίας </p>
         <p> 2. Απόδειξη Λιανικής Πώλησης (σε περίπτωση που πληρώθηκες με την παραγγελία)</p>
         <p> 3. Αργότερα (αν έχει ενεργοποιηθεί)</p>
