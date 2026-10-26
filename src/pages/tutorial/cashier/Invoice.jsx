@@ -58,6 +58,14 @@ export default function Invoice() {
 
       <StepCard number="3" title="Έκδοση">
         <p>Αφού φτιάξεις την παραγγελία και πατήσεις <strong>«Έκδοση Τιμολογίου»</strong>, συμπλήρωσε τα στοιχεία πελάτη (ΑΦΜ, επωνυμία κτλ) και εκτύπωσε το τιμολόγιο.</p>
+        <p className="mt-2">Επίλεξε τον τρόπο πληρωμής του τιμολογίου:</p>
+        <ul className="list-disc pl-5 mt-2 space-y-1">
+          <li>Μετρητά</li>
+          <li>Κάρτα</li>
+          <li>Κατάθεση σε Τράπεζα</li>
+          <li>Επί Πιστώσει</li>
+          <li>IRIS</li>
+        </ul>
       </StepCard>
 
       <InfoBox icon="🌍" title="Ξένα ΑΦΜ — Πρόθεμα Χώρας" variant="info">
