@@ -17,6 +17,7 @@ export default function AddSimilar() {
       <SectionTitle>Προσθήκη Ομοίων</SectionTitle>
       <StepCard number="1" title="Άνοιξε την παραγγελία">
         <p>Μπες στα στοιχεία της παραγγελίας.</p>
+        <p className="mt-2">ℹ️ Η <strong>Προσθήκη Ομοίων</strong> εμφανίζεται μόνο σε <strong>Ανοιχτή</strong> παραγγελία.</p>
       </StepCard>
       <StepCard number="2" title="Πάτα το εικονίδιο Προσθήκης">
         <p>Στην <strong>κάτω μπάρα</strong> της οθόνης, πάτα το εικονίδιο <strong>«Προσθήκη ομοίων»</strong> (τρίτο από αριστερά):</p>
