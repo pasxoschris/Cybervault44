@@ -45,6 +45,10 @@ export default function Payment() {
         ))}
       </div>
 
+      <InfoBox icon="ℹ️" title="Μετά την πληρωμή" variant="info">
+        Μετά την πληρωμή η παραγγελία <strong>κλείνει αυτόματα</strong> και τη βρίσκεις στις <strong>Παραγγελίες Βάρδιας</strong>.
+      </InfoBox>
+
     </TutorialLayout>
   );
 }

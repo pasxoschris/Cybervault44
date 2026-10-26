@@ -58,6 +58,10 @@ export default function EditOrder() {
       <InfoBox icon="💡" title="Μερική Πληρωμή" variant="info">
         Επιλέγοντας συγκεκριμένα προϊόντα και πατώντας «Πληρωμή», μπορείς να πληρώσεις <strong>μέρος της παραγγελίας</strong> χωρίς να κλείσει ολόκληρο το τραπέζι.
       </InfoBox>
+
+      <InfoBox icon="ℹ️" title="Πληρωμή από την Επεξεργασία" variant="info">
+        Αν πληρώσεις από την Επεξεργασία Παραγγελίας, η παραγγελία <strong>δεν κλείνει αυτόματα</strong>: μένει στις <strong>Ανοικτές</strong> και κλείνει με το <strong>Κλείσιμο Βάρδιας</strong>.
+      </InfoBox>
     </TutorialLayout>
   );
 }
