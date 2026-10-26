@@ -19,6 +19,14 @@ export default function ShiftClose() {
         <p>Αν υπάρχουν <strong>ανεξόφλητες</strong> παραγγελίες, δεν μπορείς να κλείσεις τη βάρδια. Πρέπει να τις <Link to="/tutorial/payment" className="underline font-semibold">σημειώσεις ως πληρωμένες</Link>.</p>
         <p className="mt-2">Οι <strong>ανοιχτές</strong> παραγγελίες που έχουν ήδη πληρωθεί κλείνουν αυτόματα με το κλείσιμο της βάρδιας.</p>
       </StepCard>
+      <InfoBox icon="⚠️" title="Προσοχή: απλήρωτες παραγγελίες στο τέλος του ωραρίου" variant="warning">
+        <p>Με τη λήξη του ωραρίου του καταστήματος κλείνουν αυτόματα <strong>μόνο οι πληρωμένες</strong> παραγγελίες. Αν μείνει έστω και μία <strong>απλήρωτη</strong>, η βάρδια δεν κλείνει και <strong>δεν μπορείς να κάνεις login</strong>.</p>
+        <ul className="list-disc pl-5 mt-2 space-y-1">
+          <li>Πριν τελειώσει το ωράριο, σημείωσε όλες τις παραγγελίες ως πληρωμένες (<Link to="/tutorial/payment" className="underline font-semibold">Πληρωμή</Link>).</li>
+          <li>Αν μια παραγγελία δεν μπορεί να σημειωθεί ως πληρωμένη, είναι προτιμότερο να την <strong>ακυρώσεις</strong> (<Link to="/tutorial/cancel-order" className="underline font-semibold">Ακύρωση Παραγγελίας</Link>) και να τη <strong>δημιουργήσεις ξανά</strong>.</li>
+          <li>Αν έχει ήδη συμβεί και δεν μπορείς να συνδεθείς, <strong>επικοινώνησε με τη Spotlight</strong>.</li>
+        </ul>
+      </InfoBox>
       <StepCard number="2" title="Εκτύπωση Αναφοράς Βάρδιας">
         <p>Πάνω δεξιά στην οθόνη υπάρχει το εικονίδιο ενός <strong>εκτυπωτή</strong>. Πατώντας το, σου δίνεται η επιλογή να εκτυπώσεις τα <strong>«Προϊόντα Βάρδιας»</strong> ή την <strong>«Αναφορά Βάρδιας»</strong>.</p>
       </StepCard>
