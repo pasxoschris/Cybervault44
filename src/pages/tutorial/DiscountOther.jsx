@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import TutorialLayout from "@/components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "@/components/tutorial/StepCard";
 
@@ -16,6 +17,7 @@ export default function DiscountOther() {
       </InfoBox>
       <StepCard number="1" title="Άνοιξε την έκπτωση">
         <p>Ίδια βήματα με τη Γενική Έκπτωση (<strong>τρεις τελείες (···) → Έκπτωση → Κωδικός Διαχειριστή</strong>).</p>
+        <p className="mt-2">Δες και <Link to="/tutorial/discount" className="underline font-semibold">«Από πού ανοίγει η έκπτωση»</Link> στο μάθημα Γενική Έκπτωση.</p>
       </StepCard>
       <StepCard number="2" title="Επίλεξε «Άλλες Εκπτώσεις»">
         <p>Επίλεξε <strong>«Άλλες Εκπτώσεις»</strong> στο <strong>«Είδος έκπτωσης»</strong>. Ανοίγει η οθόνη «Άλλες Εκπτώσεις» με τις κατηγορίες και το ποσοστό τους.</p>

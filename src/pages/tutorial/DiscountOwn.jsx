@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import TutorialLayout from "@/components/tutorial/TutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "@/components/tutorial/StepCard";
 import { ScreenshotGallery } from "@/components/tutorial/ScreenshotGallery";
@@ -24,9 +25,11 @@ export default function DiscountOwn() {
       </InfoBox>
       <StepCard number="1" title="Άνοιξε έκπτωση">
         <p>Ακολούθησε τα ίδια βήματα με τη Γενική Έκπτωση (<strong>τρεις τελείες (···) → Έκπτωση</strong> → κωδικός διαχειριστή).</p>
+        <p className="mt-2">Δες και <Link to="/tutorial/discount" className="underline font-semibold">«Από πού ανοίγει η έκπτωση»</Link> στο μάθημα Γενική Έκπτωση.</p>
       </StepCard>
       <StepCard number="2" title="Επίλεξε «Ιδιο Κατανάλωση»">
         <p>Στο πεδίο <strong>«Είδος έκπτωσης»</strong> επίλεξε <strong>«Ιδιο Κατανάλωση»</strong>. Το ποσοστό θα συμπληρωθεί αυτόματα.</p>
+        <p className="mt-2">Αν μπήκες με <strong>Κωδικό Διαχειριστή</strong>, επιλέγεις και τον <strong>υπάλληλο</strong>.</p>
       </StepCard>
       <StepCard number="3" title="Επίλεξε προϊόντα και επιβεβαίωσε">
         <p>Επίλεξε τα προϊόντα και πάτα <strong>✓</strong>.</p>

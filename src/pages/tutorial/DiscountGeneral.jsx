@@ -53,6 +53,14 @@ export default function DiscountGeneral() {
       <InfoBox icon="💡" variant="info">
         Η τιμή δίπλα στο ποσοστό δείχνει τη νέα τιμή μετά την έκπτωση. Βεβαιώσου ότι είναι σωστή πριν επιβεβαιώσεις.
       </InfoBox>
+      <InfoBox icon="ℹ️" title="Από πού ανοίγει η έκπτωση" variant="info">
+        <ul className="list-disc pl-5 space-y-1">
+          <li><strong>Τρεις τελείες (···) → Έκπτωση</strong>: για όλη την παραγγελία.</li>
+          <li><strong>Εικονίδιο %</strong> δίπλα στο <strong>Σύνολο</strong>: για όλη την παραγγελία.</li>
+          <li><strong>Σύρε ένα προϊόν προς τα αριστερά (slide)</strong>: για ένα προϊόν.</li>
+          <li><strong>Επεξεργασία (✏️) → Σ%</strong>: για τα επιλεγμένα προϊόντα.</li>
+        </ul>
+      </InfoBox>
     </TutorialLayout>);
 
 }

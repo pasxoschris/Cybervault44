@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Home, ArrowLeft, Tablet, Cloud, LogIn, AlertTriangle } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, ArrowLeft, Tablet, Cloud, LogIn, AlertTriangle, ListPlus, ShoppingCart, Trash2, Clock, CreditCard, Split, Receipt, Settings, Bike, Layers } from "lucide-react";
 import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
@@ -11,18 +11,18 @@ import AssistantFloatingButton from "@/components/academy/AssistantFloatingButto
 // Cashier-mode lessons (extended as new pages are added)
 export const cashierSections = [
   { title: "Αρχική Οθόνη", path: "/tutorial/cashier/initial-screen", icon: Home },
-  { title: "Συνοδευτικά Προϊόντος", path: "/tutorial/cashier/accompaniments", icon: Home },
-  { title: "Προϊόντα Παραγγελίας", path: "/tutorial/cashier/order-items", icon: Home },
-  { title: "Διαγραφή & Έκπτωση", path: "/tutorial/cashier/swipe-actions", icon: Home },
+  { title: "Συνοδευτικά Προϊόντος", path: "/tutorial/cashier/accompaniments", icon: ListPlus },
+  { title: "Προϊόντα Παραγγελίας", path: "/tutorial/cashier/order-items", icon: ShoppingCart },
+  { title: "Διαγραφή & Έκπτωση", path: "/tutorial/cashier/swipe-actions", icon: Trash2 },
   { title: "Σύνδεση Χρήστη", path: "/tutorial/cashier/login", icon: LogIn },
   { title: "Δείκτης Σύνδεσης", path: "/tutorial/cashier/sync-status", icon: Cloud },
-  { title: "Έναρξη Βάρδιας", path: "/tutorial/cashier/open", icon: Home },
-  { title: "Πληρωμές", path: "/tutorial/cashier/payments", icon: Home },
-  { title: "Split Payments", path: "/tutorial/cashier/split", icon: Home },
-  { title: "Έκδοση Τιμολογίου", path: "/tutorial/cashier/invoice", icon: Home },
-  { title: "Ρυθμίσεις Χρήστη", path: "/tutorial/cashier/settings", icon: Home },
-  { title: "Παραγγελία Delivery", path: "/tutorial/cashier/delivery", icon: Home },
-  { title: "Κλείσιμο Βάρδιας", path: "/tutorial/cashier/close", icon: Home },
+  { title: "Έναρξη Βάρδιας", path: "/tutorial/cashier/open", icon: Clock },
+  { title: "Πληρωμές", path: "/tutorial/cashier/payments", icon: CreditCard },
+  { title: "Split Payments", path: "/tutorial/cashier/split", icon: Split },
+  { title: "Έκδοση Τιμολογίου", path: "/tutorial/cashier/invoice", icon: Receipt },
+  { title: "Ρυθμίσεις Χρήστη", path: "/tutorial/cashier/settings", icon: Settings },
+  { title: "Παραγγελία Delivery", path: "/tutorial/cashier/delivery", icon: Bike },
+  { title: "Κλείσιμο Βάρδιας", path: "/tutorial/cashier/close", icon: Layers },
   { title: "Προειδοποιητικό Τρίγωνο", path: "/tutorial/cashier/printer-warning", icon: AlertTriangle },
 ];
 
