@@ -43,7 +43,7 @@ export default function TransferOrder() {
       </InfoBox>
 
       <div className="flex justify-center">
-        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/b196f278d_.png" alt="Μενού από τις τρεις γραμμές — Μεταφορά παραγγελιών" className="w-52 h-auto rounded-lg border border-gray-200" />
+        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/aaa9b40c3_menu-transfer.webp" alt="Μενού από τις τρεις γραμμές — Μεταφορά παραγγελιών" className="w-52 h-auto rounded-lg border border-gray-200" />
       </div>
 
       <StepCard number="3" title="Εισήγαγε κωδικό διαχειριστή">
@@ -71,8 +71,8 @@ export default function TransferOrder() {
           Όταν μια μεταφορά <strong>δεν ολοκληρώνεται σωστά</strong> (π.χ. ο παραλήπτης δεν είχε ανοιχτή/active την εφαρμογή), καταγράφεται στο <strong>Secure (Διαχειριστικό)</strong> ως <strong>«χαμένη μεταφορά»</strong> και φαίνεται με <strong>κόκκινο χρώμα</strong>. Στο χρονολόγιο μεταφορών, οι χαμένες εμφανίζονται με <strong>κόκκινο</strong> δείκτη (όνομα σερβιτόρου με λουκέτο και βέλος από→προς σε κόκκινο), ενώ στο παράθυρο «Μετακινήσεις Παραγγελίας» η γραμμή φέρει <strong>κόκκινο Χ</strong> δεξιά.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-          <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/addf40367_Screenshot2026-07-29104534.png" alt="Μετακινήσεις Παραγγελίας — χαμένη μεταφορά με κόκκινο Χ" className="w-full h-auto rounded-lg border border-gray-200" />
-          <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/64923452b_Screenshot2026-07-29104754.png" alt="Χρονολόγιο — χαμένες μεταφορές με κόκκινο δείκτη" className="w-full h-auto rounded-lg border border-gray-200" />
+          <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/b844c4e23_transfer-moves-anon.webp" alt="Μετακινήσεις Παραγγελίας — χαμένη μεταφορά με κόκκινο Χ" className="w-full h-auto rounded-lg border border-gray-200" />
+          <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/cb6b8ea5d_transfer-timeline-anon.webp" alt="Χρονολόγιο — χαμένες μεταφορές με κόκκινο δείκτη" className="w-full h-auto rounded-lg border border-gray-200" />
         </div>
       </InfoBox>
 
