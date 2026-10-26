@@ -11,6 +11,34 @@ const methods = [
   { path: "/tutorial/split-payment", icon: "✂️", label: "Split Payments", desc: "Διαίρεση της παραγγελίας σε πολλαπλές πληρωμές." },
 ];
 
+// Αναπαράσταση του μενού πληρωμής της εφαρμογής (σειρά όπως στην οθόνη)
+const paymentMenu = [
+  { label: "Πληρωμή με Μετρητά", path: "/tutorial/payment-cash" },
+  { label: "Πληρωμή με Κάρτα (όνομα τερματικού)", path: "/tutorial/payment-card" },
+  { label: "Ηλεκτρονική Πληρωμή", path: "/tutorial/payment-online" },
+  { label: "Επί Πιστώσει" },
+  { label: "Split Payments", path: "/tutorial/split-payment" },
+  { label: "Πληρωμή με IRIS (όνομα τερματικού)", path: "/tutorial/payment-iris" },
+];
+
+function PaymentMenuMock() {
+  const row = "block w-full px-4 py-3.5 text-center text-[15px] text-[#2f6fde]";
+  return (
+    <div className="mx-auto w-full max-w-xs rounded-2xl bg-[#262645] p-2.5" aria-label="Μενού επιλογής τρόπου πληρωμής">
+      <div className="overflow-hidden rounded-xl bg-[#eef0f4] divide-y divide-gray-300/80">
+        {paymentMenu.map((m) =>
+          m.path ? (
+            <Link key={m.label} to={m.path} className={`${row} hover:bg-white/70`}>{m.label}</Link>
+          ) : (
+            <span key={m.label} className={row}>{m.label}</span>
+          )
+        )}
+      </div>
+      <div className="mt-2 rounded-xl bg-white py-3.5 text-center text-[15px] font-semibold text-[#2f6fde]">Ακύρωση</div>
+    </div>
+  );
+}
+
 export default function Payment() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,9 +51,8 @@ export default function Payment() {
         <p>Από τα στοιχεία παραγγελίας, πάτα το εικονίδιο <strong>Κέρματα</strong> στο κάτω μενού για να ανοίξει το μενού πληρωμής.</p>
       </StepCard>
 
-      <div className="flex justify-center">
-        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/195dd216c_Screenshot2026-07-14101523.png" alt="Μενού επιλογής τρόπου πληρωμής" className="w-40 h-auto rounded-lg border border-gray-200" />
-      </div>
+      <PaymentMenuMock />
+      <p className="text-center text-xs text-gray-500 -mt-2">Μενού πληρωμής — οι επιλογές που βλέπεις εξαρτώνται από τις ρυθμίσεις του καταστήματος</p>
 
       <SectionTitle>Τρόποι πληρωμής</SectionTitle>
       <p><strong>Κάθε τρόπος πληρωμής είναι ξεχωριστό μάθημα — διάλεξε αυτόν που θέλεις να δεις.</strong></p>
