@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
-import { StepCard, SectionTitle } from "../../components/tutorial/StepCard";
+import { StepCard, SectionTitle, InfoBox } from "../../components/tutorial/StepCard";
 
 const methods = [
   { path: "/tutorial/payment-cash", icon: "💵", label: "Πληρωμή με Μετρητά", desc: "Πληρωμή με μετρητά και υπολογισμός ρέστων." },
