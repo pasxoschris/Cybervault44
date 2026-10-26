@@ -60,6 +60,14 @@ export default function CreateOrder() {
         <p>Στο κάτω μέρος της οθόνης πρέπει να σου βγάζει το μήνυμα <strong> All synced </strong> </p>
       </InfoBox>
 
+      <InfoBox icon="ℹ️" title="Καταστάσεις παραγγελίας" variant="info">
+        <ul className="list-disc pl-5 space-y-1">
+          <li><strong>Νέα:</strong> τη στιγμή που τη δημιουργείς.</li>
+          <li><strong>Ανοιχτή:</strong> μόλις πατήσεις τον εκτυπωτή και επιλέξεις Δελτίο Παραγγελίας, Απόδειξη ή «Αργότερα».</li>
+          <li><strong>Κλειστή:</strong> έχει πάει στις Παραγγελίες Βάρδιας.</li>
+        </ul>
+      </InfoBox>
+
     </TutorialLayout>
   );
 }
