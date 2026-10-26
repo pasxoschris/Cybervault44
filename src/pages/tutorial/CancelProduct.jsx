@@ -65,9 +65,6 @@ export default function CancelProduct() {
       </InfoBox>
 
       <SectionTitle>3η περίπτωση — Έχει εκδοθεί Απόδειξη και η παραγγελία έχει κλείσει</SectionTitle>
-      <InfoBox icon="⚠️" title="Προαπαιτούμενο" variant="warning">
-        Η ακύρωση κλειστής παραγγελίας ή απόδειξης γίνεται <strong>μόνο</strong> από τις <strong>Παραγγελίες Βάρδιας</strong>. Αν δεν τις βλέπεις στο μενού (☰), πρέπει να τις ενεργοποιήσει ο Διαχειριστής στο <strong>Secure (Διαχειριστικό) → Κατάστημα → Άλλες Υπηρεσίες → Παραγγελίες Βάρδιας: ON</strong>.
-      </InfoBox>
       <StepCard number="1" title="Άνοιξε τις Παραγγελίες Βάρδιας">
         <p>Η παραγγελία έχει κλείσει, οπότε τη βρίσκεις στις <strong>Παραγγελίες Βάρδιας</strong>.</p>
       </StepCard>
@@ -86,7 +83,10 @@ export default function CancelProduct() {
         <p>Ξαναδημιούργησε ολόκληρη τη <strong>σωστή</strong> παραγγελία από την αρχή.</p>
       </StepCard>
 
-      
+      <InfoBox icon="ℹ️" title="Παραγγελίες Βάρδιας" variant="info">
+        Η ακύρωση κλειστής παραγγελίας ή απόδειξης γίνεται <strong>μόνο</strong> από τις <strong>Παραγγελίες Βάρδιας</strong>. Αν δεν τις βλέπεις στο μενού (☰), επικοινώνησε με τη <strong>Spotlight</strong> για να τις ενεργοποιήσει για το κατάστημα.
+      </InfoBox>
+
     </TutorialLayout>
   );
 }

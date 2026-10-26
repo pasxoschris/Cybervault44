@@ -26,7 +26,6 @@ export default function Open() {
 
       <StepCard number="3" title="Εισήγαγε αρχικό ποσό ταμείου">
         <p>Πληκτρολόγησε το αρχικό ποσό μετρητών που υπάρχει στο ταμείο. Αν δεν υπάρχει, πάτησε <strong>ΟΚ</strong>.</p>
-        <p className="mt-2">⚙️ Αυτή η επιλογή πρέπει να έχει ενεργοποιηθεί από τον <strong>Διαχειριστή</strong> στο <strong>Secure (Διαχειριστικό)</strong>.</p>
       </StepCard>
 
       <StepCard number="4" title="Έναρξη βάρδιας">
@@ -43,6 +42,10 @@ export default function Open() {
 
       <InfoBox icon="⚠️" title="Προσοχή" variant="warning">
         Κάνοντας αποσύνδεση δεν κλείνει η βάρδια.
+      </InfoBox>
+
+      <InfoBox icon="ℹ️" title="Αρχικό ποσό ταμείου" variant="info">
+        Η επιλογή <strong>«αρχικό ποσό ταμείου»</strong> εμφανίζεται μόνο αν έχει ενεργοποιηθεί για το κατάστημα. Την ενεργοποίηση την κάνει η <strong>Spotlight</strong>: αν τη χρειάζεσαι, επικοινώνησε μαζί της.
       </InfoBox>
 
     </CashierTutorialLayout>

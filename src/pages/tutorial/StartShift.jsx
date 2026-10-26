@@ -21,7 +21,6 @@ export default function StartShift() {
       </StepCard>
 
       <StepCard number="3" title="Εισήγαγε αρχικό ποσό ταμείου (optional)">
-        <p className="mt-2">⚙️ Αυτή η επιλογή πρέπει να έχει ενεργοποιηθεί από τον <strong>Διαχειριστή</strong> στο <strong>Secure (Διαχειριστικό)</strong>, διαφορετικά δεν εμφανίζεται.</p>
         <p>Πληκτρολόγησε το αρχικό ποσό μετρητών που υπάρχει στο ταμείο. Αν δεν υπάρχει, πάτησε <strong>ΟΚ</strong>.</p>
         
       </StepCard>
@@ -40,6 +39,10 @@ export default function StartShift() {
 
         <InfoBox icon="⚠️" title="Προσοχή" variant="warning">
         Κάνοντας αποσύνδεση δεν κλείνει η βάρδια. 
+      </InfoBox>
+
+      <InfoBox icon="ℹ️" title="Αρχικό ποσό ταμείου" variant="info">
+        Η επιλογή <strong>«αρχικό ποσό ταμείου»</strong> εμφανίζεται μόνο αν έχει ενεργοποιηθεί για το κατάστημα. Την ενεργοποίηση την κάνει η <strong>Spotlight</strong>: αν τη χρειάζεσαι, επικοινώνησε μαζί της.
       </InfoBox>
 
     </TutorialLayout>

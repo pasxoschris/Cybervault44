@@ -12,10 +12,6 @@ export default function Shift() {
   return (
     <TutorialLayout title="Παραγγελίες Βάρδιας" subtitle="Προβολή και διαχείριση των παραγγελιών βάρδιας">
 
-      <InfoBox icon="⚙️" title="Απαιτείται ενεργοποίηση" variant="warning">
-        Για να εμφανίζεται η λειτουργία <strong>Παραγγελίες Βάρδιας</strong>, πρέπει να είναι ενεργοποιημένη στις ρυθμίσεις του <strong>Secure (Διαχειριστικό)</strong>: <em>Διαχειριστής → Κατάστημα → Άλλες Υπηρεσίες → Παραγγελίες Βάρδιας: ON</em>
-      </InfoBox>
-
       <ScreenshotGallery images={["https://media.base44.com/images/public/69f588f4590b173a2970ddb4/ecc8a9261_20.JPG"]} caption="Παραγγελίες βάρδιας — ρύθμιση ενεργοποίησης" />
       <SectionTitle>Προβολή Παραγγελιών Βάρδιας</SectionTitle>
       <StepCard number="1" title="Άνοιξε την οθόνη Βάρδιας">
@@ -45,6 +41,9 @@ export default function Shift() {
       <StepCard number="5" title="Επανεκτύπωση Απόδειξης">
         <p>Με τον ίδιο τρόπο (slide προς τα αριστερά) εμφανίζεται το <strong>«Επανεκτύπωση Απόδειξης»</strong> για να ξαναεκτυπώσεις.</p>
       </StepCard>
+      <InfoBox icon="ℹ️" title="Ενεργοποίηση" variant="info">
+        Οι <strong>Παραγγελίες Βάρδιας</strong> εμφανίζονται μόνο αν έχουν ενεργοποιηθεί για το κατάστημα. Αν δεν τις βλέπεις στο μενού (☰), επικοινώνησε με τη <strong>Spotlight</strong> για να τις ενεργοποιήσει.
+      </InfoBox>
     </TutorialLayout>
   );
 }

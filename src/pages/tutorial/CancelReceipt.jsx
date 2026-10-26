@@ -16,9 +16,6 @@ export default function CancelReceipt() {
       </InfoBox>
 
       <SectionTitle>Ακύρωση Απόδειξης</SectionTitle>
-      <InfoBox icon="⚠️" title="Προαπαιτούμενο" variant="warning">
-        Η ακύρωση κλειστής παραγγελίας ή απόδειξης γίνεται <strong>μόνο</strong> από τις <strong>Παραγγελίες Βάρδιας</strong>. Αν δεν τις βλέπεις στο μενού (☰), πρέπει να τις ενεργοποιήσει ο Διαχειριστής στο <strong>Secure (Διαχειριστικό) → Κατάστημα → Άλλες Υπηρεσίες → Παραγγελίες Βάρδιας: ON</strong>.
-      </InfoBox>
       <StepCard number="1" title="Βρες την παραγγελία στις Παραγγελίες Βάρδιας">
         <p>Η παραγγελία <strong>έχει ήδη πληρωθεί</strong> και έχει εκδοθεί <strong>απόδειξη</strong>. Πήγαινε στις <strong>«Παραγγελίες Βάρδιας»</strong>.</p>
       </StepCard>
@@ -42,6 +39,10 @@ export default function CancelReceipt() {
       </StepCard>
       <InfoBox icon="🧾" title="Πότε χρειάζεται" variant="info">
         <p>Η ακύρωση απόδειξης χρειάζεται όταν έχεις εκδώσει <strong>απόδειξη</strong> και θέλεις να εκδώσεις <strong>τιμολόγιο</strong> για την ίδια παραγγελία — ώστε να μην αποδοθεί διπλό ΦΠΑ.</p>
+      </InfoBox>
+
+      <InfoBox icon="ℹ️" title="Παραγγελίες Βάρδιας" variant="info">
+        Η ακύρωση κλειστής παραγγελίας ή απόδειξης γίνεται <strong>μόνο</strong> από τις <strong>Παραγγελίες Βάρδιας</strong>. Αν δεν τις βλέπεις στο μενού (☰), επικοινώνησε με τη <strong>Spotlight</strong> για να τις ενεργοποιήσει για το κατάστημα.
       </InfoBox>
 
     </TutorialLayout>
