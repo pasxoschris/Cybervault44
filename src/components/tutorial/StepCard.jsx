@@ -1,6 +1,6 @@
 import React from "react";
 
-export function StepCard({ number, title, children, variant = "default" }) {
+export function StepCard({ number, title, children, variant = "default", admin = false }) {
   const variants = {
     default: "bg-white border-gray-100 shadow-sm",
     highlight: "bg-purple-50 border-purple-200",
@@ -20,7 +20,14 @@ export function StepCard({ number, title, children, variant = "default" }) {
           </div>
         }
         <div className="flex-1">
-          {title && <h3 className="font-semibold text-gray-900 text-base mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>{title}</h3>}
+          {title &&
+          <h3 className="font-semibold text-gray-900 text-base mb-2 flex flex-wrap items-center gap-2" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <span>{title}</span>
+              {admin &&
+            <span className="inline-flex items-center gap-1 rounded-full bg-purple-100 text-purple-700 px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap">🔑 Κωδικός Διαχειριστή</span>
+            }
+            </h3>
+          }
           <div className="text-gray-600 text-base leading-relaxed space-y-2 [&_strong]:text-gray-800 [&_strong]:font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
             {children}
           </div>

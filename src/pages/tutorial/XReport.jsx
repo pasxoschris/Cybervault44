@@ -20,7 +20,7 @@ export default function XReport() {
         <p>Πάτα τις <strong>τρεις γραμμές (☰) πάνω αριστερά</strong> και επίλεξε <strong>«Αναφορά Χ»</strong>.</p>
       </StepCard>
 
-      <StepCard number="2" title="Κωδικός Διαχειριστή">
+      <StepCard number="2" title="Κωδικός Διαχειριστή" admin>
         <p>Πληκτρολόγησε τον <strong>Κωδικό Διαχειριστή</strong> ή πάτα <strong>«Scan QR Code»</strong>.</p>
       </StepCard>
 

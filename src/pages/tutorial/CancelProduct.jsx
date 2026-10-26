@@ -44,7 +44,7 @@ export default function CancelProduct() {
       <StepCard number="3" title="Επίλεξε «Ακύρωση Προϊόντος»">
         <p>Ανοίγει μενού με τις επιλογές του προϊόντος (Σχόλια, Ακύρωση προϊόντος). Επίλεξε <strong>«Ακύρωση Προϊόντος»</strong>.</p>
       </StepCard>
-      <StepCard number="4" title="Κωδικός διαχειριστή">
+      <StepCard number="4" title="Κωδικός διαχειριστή" admin>
         <p>Σου ζητείται <strong>κωδικός διαχειριστή</strong> για επιβεβαίωση.</p>
       </StepCard>
       <StepCard number="5" title="Αιτία ακύρωσης">
@@ -71,7 +71,7 @@ export default function CancelProduct() {
       <StepCard number="2" title="Επαναφορά παραγγελίας">
         <p>Σύρε την παραγγελία <strong>προς τα αριστερά (slide)</strong> — δεν πατάς την παραγγελία — και πάτα <strong>«Επαναφορά παραγγελίας»</strong> για να ξανανοίξει.</p>
       </StepCard>
-      <StepCard number="3" title="Συνέχισε όπως στη 2η περίπτωση">
+      <StepCard number="3" title="Συνέχισε όπως στη 2η περίπτωση" admin>
         <p>Μετά την επαναφορά η παραγγελία είναι ξανά ανοιχτή. Συνέχισε τη διαδικασία <strong>όπως στη 2η περίπτωση</strong>: κράτα πατημένο το προϊόν → <strong>«Ακύρωση Προϊόντος»</strong> → κωδικός διαχειριστή → αιτία ακύρωσης.</p>
       </StepCard>
 

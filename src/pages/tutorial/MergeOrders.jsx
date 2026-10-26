@@ -21,7 +21,7 @@ export default function MergeOrders() {
         <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/16d53fc19_.png" alt="Μενού από τις τρεις γραμμές — Συγχώνευση παραγγελιών" className="w-52 h-auto rounded-lg border border-gray-200" />
       </div>
 
-      <StepCard number="1" title="Εισήγαγε κωδικό διαχειριστή">
+      <StepCard number="1" title="Εισήγαγε κωδικό διαχειριστή" admin>
         <p>Το σύστημα ζητάει <strong>κωδικό διαχειριστή</strong> για επιβεβαίωση. Εισήγαγε τον κωδικό και πάτα επιβεβαίωση.</p>
       </StepCard>
 

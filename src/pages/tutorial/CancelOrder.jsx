@@ -22,7 +22,7 @@ export default function CancelOrder() {
       <StepCard number="2" title="Slide προς τα αριστερά">
         <p>Κάνοντας <strong>slide προς τα αριστερά</strong> πάνω στην παραγγελία, εμφανίζεται η επιλογή <strong>«Ακύρωση»</strong>.</p>
       </StepCard>
-      <StepCard number="3" title="Κωδικός διαχειριστή">
+      <StepCard number="3" title="Κωδικός διαχειριστή" admin>
         <p>Απαιτείται <strong>κωδικός διαχειριστή</strong>.</p>
       </StepCard>
       <StepCard number="4" title="Αιτία Ακύρωσης">
@@ -44,7 +44,7 @@ export default function CancelOrder() {
           Σύρε την παραγγελία <strong>προς τα αριστερά (slide)</strong> — δεν πατάς την παραγγελία — και πάτα <strong>«Επαναφορά παραγγελίας»</strong> για να ξανανοίξει.
         </p>
       </StepCard>
-      <StepCard number="3" title="Slide → «Ακύρωση»">
+      <StepCard number="3" title="Slide → «Ακύρωση»" admin>
         <p>
           Μετά την επαναφορά, σύρε ξανά την παραγγελία <strong>προς τα αριστερά (slide)</strong> → <strong>«Ακύρωση»</strong> → κωδικός διαχειριστή → <strong>Αιτία Ακύρωσης</strong> → επιβεβαίωση.
         </p>

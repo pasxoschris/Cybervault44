@@ -23,7 +23,7 @@ export default function DiscountGeneral() {
       <StepCard number="2" title="Πάτα το εικονίδιο έκπτωσης">
         <p>Πάτησε πάνω δεξιά στις τρεις τελείες και επίλεξε <strong>Έκπτωση</strong>.</p>
       </StepCard>
-      <StepCard number="3" title="Εισήγαγε Κωδικό Διαχειριστή">
+      <StepCard number="3" title="Εισήγαγε Κωδικό Διαχειριστή" admin>
         <p>Για να εφαρμόσεις συνολική έκπτωση, θα σου ζητηθεί ο <strong>Κωδικός Διαχειριστή</strong>. Βάλε τον κωδικό ή σκάναρε QR.</p>
         <ul className="list-disc list-inside mt-2 space-y-1">
           <li>Πάτα <strong>Scan QR Code</strong> — ανοίγει η κάμερα της συσκευής.</li>
