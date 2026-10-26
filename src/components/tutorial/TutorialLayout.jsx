@@ -7,7 +7,7 @@ import { getRoleByPath } from "@/lib/roles";
 import SpotlightBrand from "@/components/SpotlightBrand";
 import AssistantFloatingButton from "@/components/academy/AssistantFloatingButton";
 
-const sections = [
+export const sections = [
   { title: "Εγκατάσταση", path: "/tutorial/installation", icon: Download },
   { title: "Σύνδεση από νέα συσκευή", path: "/tutorial/login-device", icon: LogIn },
   { title: "Σύνδεση", path: "/tutorial/login", icon: LogIn },

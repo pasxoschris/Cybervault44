@@ -8,6 +8,11 @@ import { ChevronRight, ArrowLeft } from 'lucide-react';
 import AssistantFloatingButton from '@/components/academy/AssistantFloatingButton';
 import ManualDownloadButton from '@/components/academy/ManualDownloadButton';
 import SpotlightBrand from '@/components/SpotlightBrand';
+import { sections as serviceSections } from '@/components/tutorial/TutorialLayout';
+import { cashierSections } from '@/components/tutorial/CashierTutorialLayout';
+
+// Εικονίδιο κάθε μαθήματος (ίδιο με την κεφαλίδα του μαθήματος)
+const lessonIcons = Object.fromEntries([...serviceSections, ...cashierSections].map((s) => [s.path, s.icon]));
 
 export default function RolePath() {
   const { roleId } = useParams();
@@ -127,6 +132,7 @@ export default function RolePath() {
         <div className="flex flex-col gap-3">
           {role.lessons.map((lesson, i) => {
             const done = visited[lesson.href];
+            const LessonIcon = lessonIcons[lesson.href];
             return (
               <Link
                 key={lesson.href}
@@ -137,6 +143,10 @@ export default function RolePath() {
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold ${done ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400 group-hover:bg-purple-100 group-hover:text-purple-600'} transition-colors`} style={{ fontFamily: 'Inter, sans-serif' }}>
                   {i + 1}
                 </div>
+                {/* Εικονίδιο μαθήματος */}
+                {LessonIcon && (
+                  <LessonIcon className={`w-5 h-5 flex-shrink-0 ${done ? 'text-green-500' : 'text-purple-500'} transition-colors`} />
+                )}
                 <span className={`flex-1 font-medium text-sm ${done ? 'text-gray-500' : 'text-gray-800 group-hover:text-purple-700'} transition-colors`} style={{ fontFamily: 'Inter, sans-serif' }}>
                   {lesson.title}
                 </span>
