@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Coins, Split, Globe, QrCode, Edit3, Receipt, Layers, Monitor, ArrowLeft, ArrowLeftRight, GitMerge, Cloud, XCircle, Ban, CopyPlus, ReceiptText, Printer, FileBarChart } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, Download, LogIn, Clock, Settings, Package, FileText, Tag, CreditCard, Coins, Split, Globe, QrCode, Edit3, Receipt, Layers, Monitor, ArrowLeft, ArrowLeftRight, GitMerge, Cloud, XCircle, Ban, CopyPlus, ReceiptText, Printer, FileBarChart, HandCoins } from "lucide-react";
 import { motion } from "framer-motion";
 import { markVisited } from "@/lib/tutorialProgress";
 import { getRoleByPath } from "@/lib/roles";
@@ -24,6 +24,7 @@ export const sections = [
   { title: "Πληρωμή με Μετρητά", path: "/tutorial/payment-cash", icon: Coins },
   { title: "Πληρωμή με Κάρτα", path: "/tutorial/payment-card", icon: CreditCard },
   { title: "Ηλεκτρονική Πληρωμή", path: "/tutorial/payment-online", icon: Globe },
+  { title: "Επί Πιστώσει", path: "/tutorial/payment-credit", icon: HandCoins },
   { title: "Πληρωμή με IRIS", path: "/tutorial/payment-iris", icon: QrCode },
   { title: "Split Payments", path: "/tutorial/split-payment", icon: Split },
   { title: "Επεξεργασία", path: "/tutorial/edit-order", icon: Edit3 },

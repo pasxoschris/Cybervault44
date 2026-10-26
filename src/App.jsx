@@ -59,6 +59,7 @@ import PaymentCash from './pages/tutorial/PaymentCash';
 import PaymentCard from './pages/tutorial/PaymentCard';
 import PaymentSplit from './pages/tutorial/PaymentSplit';
 import PaymentOnline from './pages/tutorial/PaymentOnline';
+import PaymentCredit from './pages/tutorial/PaymentCredit';
 import PaymentIris from './pages/tutorial/PaymentIris';
 import Assistant from './pages/academy/Assistant';
 import Stores from './pages/stores/Stores';
@@ -135,6 +136,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/payment-card" element={<PaymentCard />} />
       <Route path="/tutorial/split-payment" element={<PaymentSplit />} />
       <Route path="/tutorial/payment-online" element={<PaymentOnline />} />
+      <Route path="/tutorial/payment-credit" element={<PaymentCredit />} />
       <Route path="/tutorial/payment-iris" element={<PaymentIris />} />
       <Route path="/tutorial/shift" element={<Shift />} />
       <Route path="/tutorial/x-report" element={<XReport />} />

@@ -1,5 +1,7 @@
+import { getRoleById } from './roles';
+
 // Ο χάρτης της βάρδιας σε 6 βήματα — κοινή πηγή για τον online οδηγό και το PDF manual.
-// Οι αριθμοί κεφαλαίων αντιστοιχούν στη σειρά των κεφαλαίων του Service Mode manual.
+// Οι αριθμοί κεφαλαίων υπολογίζονται αυτόματα από τη σειρά των μαθημάτων του Service (src/lib/roles.js).
 // Το `icon` δείχνει στο STEP_ICONS (src/lib/shiftJourneyIcons.js).
 export const SHIFT_JOURNEY = {
   title: 'Η βάρδια σου σε 6 βήματα',
@@ -10,7 +12,6 @@ export const SHIFT_JOURNEY = {
       icon: 'start',
       title: 'Έναρξη Βάρδιας',
       hint: 'Άνοιξε τη βάρδια πριν δεχτείς παραγγελίες.',
-      chapter: 5,
       chapterTitle: 'Έναρξη Βάρδιας',
       lesson: '/tutorial/start-shift',
     },
@@ -19,7 +20,6 @@ export const SHIFT_JOURNEY = {
       icon: 'order',
       title: 'Δημιουργία Παραγγελίας',
       hint: 'Διάλεξε τραπέζι, πρόσθεσε προϊόντα και στείλε την παραγγελία.',
-      chapter: 7,
       chapterTitle: 'Δημιουργία Παραγγελίας',
       lesson: '/tutorial/create-order',
     },
@@ -28,7 +28,6 @@ export const SHIFT_JOURNEY = {
       icon: 'invoice',
       title: 'Έκδοση Παραστατικού',
       hint: 'Απόδειξη τώρα, δελτίο παραγγελίας ή αργότερα — διαλέγεις εσύ.',
-      chapter: 20,
       chapterTitle: 'Έκδοση Παραστατικού',
       lesson: '/tutorial/issue-receipt',
     },
@@ -37,7 +36,6 @@ export const SHIFT_JOURNEY = {
       icon: 'payment',
       title: 'Πληρωμή',
       hint: 'Μετρητά, κάρτα, IRIS, split payments — με απόδειξη.',
-      chapter: 13,
       chapterTitle: 'Πληρωμή',
       lesson: '/tutorial/payment',
     },
@@ -46,7 +44,6 @@ export const SHIFT_JOURNEY = {
       icon: 'close_order',
       title: 'Κλείσιμο Παραγγελίας',
       hint: 'Μετά την πληρωμή η παραγγελία κλείνει — δες τη στη βάρδια.',
-      chapter: 27,
       chapterTitle: 'Παραγγελίες Βάρδιας',
       lesson: '/tutorial/shift',
     },
@@ -55,13 +52,20 @@ export const SHIFT_JOURNEY = {
       icon: 'close_shift',
       title: 'Ανάλυση & Κλείσιμο Βάρδιας',
       hint: 'Έλεγξε τα σύνολα της βάρδιας και κλείσε τη μέρα.',
-      chapter: 29,
       chapterTitle: 'Ανάλυση Βάρδιας',
-      extraRefs: ['Κεφ. 30 Κλείσιμο Βάρδιας'],
+      extraLessons: [{ lesson: '/tutorial/shift-close', title: 'Κλείσιμο Βάρδιας' }],
       lesson: '/tutorial/shift-analysis',
     },
   ],
 };
+
+// Αριθμός κεφαλαίου = θέση του μαθήματος στη λίστα του Service (1-based)
+const serviceLessons = (getRoleById('service')?.lessons || []).map((l) => l.href);
+const chapterOf = (lesson) => serviceLessons.indexOf(lesson) + 1;
+SHIFT_JOURNEY.steps.forEach((step) => {
+  step.chapter = chapterOf(step.lesson);
+  if (step.extraLessons) step.extraRefs = step.extraLessons.map((x) => `Κεφ. ${chapterOf(x.lesson)} ${x.title}`);
+});
 
 // π.χ. «Κεφ. 7 · Δημιουργία Παραγγελίας (βήμα 2/6)»
 export const journeyChapterRef = (step) =>

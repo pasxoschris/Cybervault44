@@ -7,6 +7,7 @@ const methods = [
   { path: "/tutorial/payment-cash", icon: "💵", label: "Πληρωμή με Μετρητά", desc: "Πληρωμή με μετρητά και υπολογισμός ρέστων." },
   { path: "/tutorial/payment-card", icon: "💳", label: "Πληρωμή με Κάρτα", desc: "Χρέωση στο τερματικό πληρωμών (POS) και αντιμετώπιση προβλημάτων." },
   { path: "/tutorial/payment-online", icon: "🌐", label: "Ηλεκτρονική Πληρωμή", desc: "Ενεργοποίηση και ολοκλήρωση ηλεκτρονικής πληρωμής." },
+  { path: "/tutorial/payment-credit", icon: "🧾", label: "Πληρωμή Επί Πιστώσει", desc: "Η παραγγελία καταχωρείται ως οφειλή του πελάτη." },
   { path: "/tutorial/payment-iris", icon: "🔵", label: "Πληρωμή με IRIS", desc: "Άμεση πληρωμή με κωδικό IRIS από τον πελάτη." },
   { path: "/tutorial/split-payment", icon: "✂️", label: "Split Payments", desc: "Διαίρεση της παραγγελίας σε πολλαπλές πληρωμές." },
 ];
@@ -16,7 +17,7 @@ const paymentMenu = [
   { label: "Πληρωμή με Μετρητά", path: "/tutorial/payment-cash" },
   { label: "Πληρωμή με Κάρτα (όνομα τερματικού)", path: "/tutorial/payment-card" },
   { label: "Ηλεκτρονική Πληρωμή", path: "/tutorial/payment-online" },
-  { label: "Επί Πιστώσει" },
+  { label: "Επί Πιστώσει", path: "/tutorial/payment-credit" },
   { label: "Split Payments", path: "/tutorial/split-payment" },
   { label: "Πληρωμή με IRIS (όνομα τερματικού)", path: "/tutorial/payment-iris" },
 ];
@@ -52,7 +53,6 @@ export default function Payment() {
       </StepCard>
 
       <PaymentMenuMock />
-      <p className="text-center text-xs text-gray-500 -mt-2">Μενού πληρωμής — οι επιλογές που βλέπεις εξαρτώνται από τις ρυθμίσεις του καταστήματος</p>
 
       <SectionTitle>Τρόποι πληρωμής</SectionTitle>
       <p><strong>Κάθε τρόπος πληρωμής είναι ξεχωριστό μάθημα — διάλεξε αυτόν που θέλεις να δεις.</strong></p>
