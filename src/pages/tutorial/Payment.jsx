@@ -24,7 +24,7 @@ const paymentMenu = [
 function PaymentMenuMock() {
   const row = "block w-full px-4 py-3.5 text-center text-[15px] text-[#2f6fde]";
   return (
-    <div className="mx-auto w-full max-w-xs rounded-2xl bg-[#262645] p-2.5" aria-label="Μενού επιλογής τρόπου πληρωμής">
+    <div className="mx-auto w-full max-w-sm rounded-2xl bg-[#262645] p-2.5" aria-label="Μενού επιλογής τρόπου πληρωμής">
       <div className="overflow-hidden rounded-xl bg-[#eef0f4] divide-y divide-gray-300/80">
         {paymentMenu.map((m) =>
           m.path ? (
