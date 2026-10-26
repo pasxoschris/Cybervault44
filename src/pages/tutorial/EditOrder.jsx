@@ -60,7 +60,9 @@ export default function EditOrder() {
       </InfoBox>
 
       <InfoBox icon="ℹ️" title="Πληρωμή από την Επεξεργασία" variant="info">
-        Αν πληρώσεις από την Επεξεργασία Παραγγελίας, η παραγγελία <strong>δεν κλείνει αυτόματα</strong>: μένει στις <strong>Ανοικτές</strong> και κλείνει με το <strong>Κλείσιμο Βάρδιας</strong>.
+        <p>Αν πληρωθείς από την Επεξεργασία Παραγγελίας, η παραγγελία <strong>δεν κλείνει αυτόματα</strong>: μένει στις <strong>Ανοικτές</strong>.</p>
+        <p className="mt-2">Πατώντας ξανά τα <strong>κέρματα</strong>, επιλέγεις <strong>«Κλείσιμο Παραγγελίας»</strong>.</p>
+        <p className="mt-2">Πληρωμένες παραγγελίες που δεν έχουν κλείσει, κλείνουν αυτόματα με το <strong>Κλείσιμο Βάρδιας</strong>.</p>
       </InfoBox>
     </TutorialLayout>
   );
