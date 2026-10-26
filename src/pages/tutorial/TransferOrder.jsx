@@ -43,7 +43,7 @@ export default function TransferOrder() {
       </InfoBox>
 
       <div className="flex justify-center">
-        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/aaa9b40c3_menu-transfer.webp" alt="Μενού από τις τρεις γραμμές — Μεταφορά παραγγελιών" className="w-52 h-auto rounded-lg border border-gray-200" />
+        <img src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/9e96ca92d_menu-transfer-v2.webp" alt="Μενού από τις τρεις γραμμές — Μεταφορά παραγγελιών" className="w-52 h-auto rounded-lg border border-gray-200" />
       </div>
 
       <StepCard number="3" title="Εισήγαγε κωδικό διαχειριστή">
