@@ -39,6 +39,7 @@ export default function Invoice() {
 
       <StepCard number="4" title="Αναζήτηση στοιχείων πελάτη μέσω ΑΑΔΕ">
         <p>Για ελληνικά ΑΦΜ μπορείς να πατήσεις το βιβλιαράκι <strong>📖</strong> δίπλα στο πεδίο ΑΦΜ για αυτόματη αναζήτηση στην ΑΑΔΕ. Τα στοιχεία της εταιρείας θα συμπληρωθούν αυτόματα.</p>
+        <p className="mt-2">Συμπλήρωσε και το <strong>Email</strong> του πελάτη: είναι υποχρεωτικό (*).</p>
       </StepCard>
 
       <InfoBox icon="🌍" title="Ξένα ΑΦΜ — Πρόθεμα Χώρας" variant="info">
@@ -64,7 +65,16 @@ export default function Invoice() {
         </ul>
       </StepCard>
 
-      <StepCard number="6" title="Πάτα «Έκδοση»">
+      <StepCard number="6" title="Επίλεξε τύπο τιμολογίου">
+        <p>Στο πεδίο <strong>«Τύπος Τιμολογίου»</strong> επίλεξε:</p>
+        <ul className="list-disc pl-5 mt-2 space-y-1">
+          <li><strong>Τιμολόγιο Πώλησης</strong>: αν τιμολογείς προϊόντα.</li>
+          <li><strong>Τιμολόγιο Παροχής Υπηρεσιών</strong>: αν τιμολογείς υπηρεσίες.</li>
+        </ul>
+        <p className="mt-2">⚠️ Η προεπιλογή είναι <strong>Τιμολόγιο Πώλησης</strong>. Έλεγξε τον τύπο πριν πατήσεις «Έκδοση».</p>
+      </StepCard>
+
+      <StepCard number="7" title="Πάτα «Έκδοση»">
         <p>Μόλις συμπληρώσεις όλα τα υποχρεωτικά πεδία (*), πάτα <strong>«Έκδοση»</strong> και επιβεβαίωσε.</p>
       </StepCard>
 

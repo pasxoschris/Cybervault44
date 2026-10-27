@@ -62,6 +62,13 @@ export default function Invoice() {
           <li>Επί Πιστώσει</li>
           <li>IRIS</li>
         </ul>
+        <p className="mt-2">Συμπλήρωσε και το <strong>Email</strong> του πελάτη: είναι υποχρεωτικό (*).</p>
+        <p className="mt-2">Στο πεδίο <strong>«Τύπος Τιμολογίου»</strong> επίλεξε:</p>
+        <ul className="list-disc pl-5 mt-2 space-y-1">
+          <li><strong>Τιμολόγιο Πώλησης</strong>: αν τιμολογείς προϊόντα.</li>
+          <li><strong>Τιμολόγιο Παροχής Υπηρεσιών</strong>: αν τιμολογείς υπηρεσίες.</li>
+        </ul>
+        <p className="mt-2">⚠️ Η προεπιλογή είναι <strong>Τιμολόγιο Πώλησης</strong>. Έλεγξε τον τύπο πριν πατήσεις «Έκδοση».</p>
       </StepCard>
 
       <InfoBox icon="🌍" title="Ξένα ΑΦΜ — Πρόθεμα Χώρας" variant="info">
