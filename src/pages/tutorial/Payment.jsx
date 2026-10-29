@@ -76,6 +76,10 @@ export default function Payment() {
         Μετά την πληρωμή η παραγγελία <strong>κλείνει αυτόματα</strong> και τη βρίσκεις στις <strong>Παραγγελίες Βάρδιας</strong>.
       </InfoBox>
 
+      <InfoBox icon="ℹ️" title="Πληρώθηκε με λάθος τρόπο;" variant="info">
+        Δες <strong>«Λάθος τρόπος πληρωμής»</strong> στο μάθημα <Link to="/tutorial/cancel-order" className="underline font-semibold">Ακύρωση Παραγγελίας</Link>.
+      </InfoBox>
+
     </TutorialLayout>
   );
 }
