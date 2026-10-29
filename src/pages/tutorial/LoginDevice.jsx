@@ -54,10 +54,6 @@ export default function LoginDevice() {
         <p className="mt-2">Σκάναρε το <strong>QR Code του καταστήματος</strong> (το παρέχει ο διαχειριστής από το Secure (Διαχειριστικό) ή το βλέπεις από άλλη συνδεδεμένη συσκευή) για να συνδέσεις τη συσκευή σου με το κατάστημα.</p>
       </StepCard>
 
-      <InfoBox icon="ℹ️" title="Σφάλμα στο QR Code του καταστήματος" variant="info">
-        Αν στο Secure εμφανιστεί το μήνυμα <strong>«Error fetching QRcode for user from Store in API»</strong> και δεν φεύγει με ανανέωση της σελίδας, επικοινώνησε με τη <strong>Spotlight</strong>.
-      </InfoBox>
-
       <StepCard number="3" title="Επίλεξε Κατάστημα και Θέση/Συσκευή Χρήστη (POS)">
         <p>Μετά το σκάναρισμα θα εμφανιστεί η οθόνη επιλογής. Διάλεξε το <strong>Κατάστημα</strong> και τη <strong>Θέση/Συσκευή Χρήστη (POS)</strong> που θα χρησιμοποιήσεις.</p>
         <div className="mt-3 flex justify-center">
