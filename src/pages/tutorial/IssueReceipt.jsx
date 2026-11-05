@@ -27,7 +27,7 @@ export default function IssueReceipt() {
 
       <StepCard number="2" title="Δελτίο Παραγγελίας — πρώτα δελτίο, μετά παραστατικό">
         <p>Εκτυπώνεται <strong>Δελτίο παραγγελίας</strong>. 
-        Στο τέλος, εκδίδεις <strong>Απόδειξη Λιανικής</strong> ή <strong>Τιμολόγιο</strong> </p>
+        Στο τέλος, εκδίδεις <strong>Απόδειξη Λιανικής</strong> (με την <Link to="/tutorial/payment" className="text-purple-600 underline hover:text-purple-800 font-semibold">Πληρωμή</Link>) ή <strong>Τιμολόγιο</strong> (<Link to="/tutorial/invoice" className="text-purple-600 underline hover:text-purple-800 font-semibold">Έκδοση Τιμολογίου</Link>).</p>
       </StepCard>
 
       <InfoBox icon="ℹ️" title="Το Δελτίο Παραγγελίας δεν είναι απόδειξη" variant="info">
@@ -36,6 +36,7 @@ export default function IssueReceipt() {
 
       <StepCard number="3" title="Αργότερα — τίποτα προσωρινά">
         <p>Δεν εκτυπώνεται <strong>τίποτα</strong> αυτή τη στιγμή και η παραγγελία μένει ανοιχτή.</p>
+        <p className="mt-2">Η επιλογή εμφανίζεται μόνο αν έχει ενεργοποιηθεί.</p>
       </StepCard>
 
       <StepCard number="4" title="Ακύρωση">

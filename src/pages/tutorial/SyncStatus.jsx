@@ -24,7 +24,17 @@ export default function SyncStatus() {
         </p>
       </StepCard>
 
-      <StepCard number="3" title="Κόκκινη κουκίδα — Χωρίς σύνδεση">
+      <StepCard number="3" title="«Syncing… N items» — Συγχρονισμός σε εξέλιξη">
+        <div className="flex items-center gap-2.5 mb-2">
+          <span className="w-3 h-3 rounded-full bg-green-500 inline-block flex-shrink-0"></span>
+          <span className="font-semibold text-gray-800">«Syncing… 2 items»</span>
+        </div>
+        <p>
+          Η συσκευή στέλνει στο Cloud όσα εκκρεμούν. Ο αριθμός δείχνει πόσα απομένουν. Περίμενε να γίνει <strong>«All synced»</strong>.
+        </p>
+      </StepCard>
+
+      <StepCard number="4" title="Κόκκινη κουκίδα — Χωρίς σύνδεση">
         <div className="flex items-center gap-2.5 mb-2">
           <span className="w-3 h-3 rounded-full bg-red-500 inline-block flex-shrink-0 shadow-[0_0_6px_rgba(229,57,53,0.6)]"></span>
           <span className="font-semibold text-gray-800">Κόκκινη κουκίδα</span>

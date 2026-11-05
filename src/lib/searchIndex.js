@@ -81,7 +81,7 @@ const index = [
     title: "Πληρωμή με IRIS",
     path: "/tutorial/payment-iris",
     keywords: ["iris", "κωδικός", "qr", "τράπεζα", "πληρωμή"],
-    context: "Άμεση πληρωμή με κωδικό IRIS",
+    context: "Ο πελάτης σκανάρει QR στο τερματικό πληρωμών (POS)",
   },
   {
     title: "Επεξεργασία Παραγγελίας",

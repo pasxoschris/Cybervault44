@@ -8,8 +8,8 @@ const methods = [
   { path: "/tutorial/payment-card", icon: "💳", label: "Πληρωμή με Κάρτα", desc: "Χρέωση στο τερματικό πληρωμών (POS) και αντιμετώπιση προβλημάτων." },
   { path: "/tutorial/payment-online", icon: "🌐", label: "Ηλεκτρονική Πληρωμή", desc: "Ενεργοποίηση και ολοκλήρωση ηλεκτρονικής πληρωμής." },
   { path: "/tutorial/payment-credit", icon: "🧾", label: "Πληρωμή Επί Πιστώσει", desc: "Η παραγγελία καταχωρείται ως οφειλή του πελάτη." },
-  { path: "/tutorial/payment-iris", icon: "🔵", label: "Πληρωμή με IRIS", desc: "Άμεση πληρωμή με κωδικό IRIS από τον πελάτη." },
   { path: "/tutorial/split-payment", icon: "✂️", label: "Split Payments", desc: "Διαίρεση της παραγγελίας σε πολλαπλές πληρωμές." },
+  { path: "/tutorial/payment-iris", icon: "🔵", label: "Πληρωμή με IRIS", desc: "Ο πελάτης σκανάρει QR στο τερματικό πληρωμών (POS) της τράπεζας." },
 ];
 
 // Αναπαράσταση του μενού πληρωμής της εφαρμογής (σειρά όπως στην οθόνη)
@@ -73,7 +73,7 @@ export default function Payment() {
       </div>
 
       <InfoBox icon="ℹ️" title="Μετά την πληρωμή" variant="info">
-        Μετά την πληρωμή η παραγγελία <strong>κλείνει αυτόματα</strong> και τη βρίσκεις στις <strong>Παραγγελίες Βάρδιας</strong>.
+        Μετά την πληρωμή η παραγγελία <strong>κλείνει αυτόματα</strong> και τη βρίσκεις στις <strong>Παραγγελίες Βάρδιας</strong>, εκτός αν πληρώσεις από την <Link to="/tutorial/edit-order" className="underline font-semibold">Επεξεργασία Παραγγελίας</Link>.
       </InfoBox>
 
       <InfoBox icon="ℹ️" title="Πληρώθηκε με λάθος τρόπο;" variant="info">

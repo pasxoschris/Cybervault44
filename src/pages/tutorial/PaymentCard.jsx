@@ -11,14 +11,17 @@ export default function PaymentCard() {
   return (
     <TutorialLayout title="Πληρωμή με Κάρτα" subtitle="Χρέωση μέσω τερματικού πληρωμών (POS)">
       <SectionTitle>Πληρωμή με Κάρτα</SectionTitle>
-      <StepCard number="1" title="Επίλεξε «Πληρωμή με Κάρτα»">
+      <StepCard number="1" title="Άνοιξε το μενού πληρωμής">
+        <p>Από τα στοιχεία παραγγελίας, πάτα το εικονίδιο <strong>Κέρματα</strong> στο κάτω μενού.</p>
+      </StepCard>
+      <StepCard number="2" title="Επίλεξε «Πληρωμή με Κάρτα»">
         <p>Στο μενού πληρωμής, επίλεξε <strong>«Πληρωμή με Κάρτα (όνομα τερματικού)»</strong>.</p>
         <p className="mt-2">Το τερματικό επιλέγεται στις <Link to="/tutorial/settings" className="underline font-semibold">Ρυθμίσεις Χρήστη</Link> → <strong>Τερματικά POS</strong>.</p>
       </StepCard>
-      <StepCard number="2" title="Χρέωσε στο τερματικό πληρωμών (POS)">
+      <StepCard number="3" title="Χρέωσε στο τερματικό πληρωμών (POS)">
         <p>Το ποσό θα σταλεί αυτόματα στο τερματικό πληρωμών (POS). Ζήτα από τον πελάτη να πληρώσει στο τερματικό.</p>
       </StepCard>
-      <StepCard number="3" title="Αναμονή επιβεβαίωσης">
+      <StepCard number="4" title="Αναμονή επιβεβαίωσης">
         <p>Μόλις η συναλλαγή εγκριθεί, η παραγγελία κλείνει αυτόματα και η απόδειξη εκτυπώνεται.</p>
       </StepCard>
       <InfoBox icon="⚠️" title="Αν παγώσει η παραγγελία" variant="warning">

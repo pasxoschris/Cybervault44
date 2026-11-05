@@ -12,7 +12,7 @@ export default function Shift() {
   return (
     <TutorialLayout title="Παραγγελίες Βάρδιας" subtitle="Προβολή και διαχείριση των παραγγελιών βάρδιας">
 
-      <ScreenshotGallery images={["https://media.base44.com/images/public/69f588f4590b173a2970ddb4/ecc8a9261_20.JPG"]} caption="Παραγγελίες βάρδιας — ρύθμιση ενεργοποίησης" />
+      <ScreenshotGallery images={["https://media.base44.com/images/public/69f588f4590b173a2970ddb4/ecc8a9261_20.JPG"]} caption="Παραγγελίες Βάρδιας" />
       <SectionTitle>Προβολή Παραγγελιών Βάρδιας</SectionTitle>
       <StepCard number="1" title="Άνοιξε την οθόνη Βάρδιας">
         <p>Πάτα τις <strong>τρεις γραμμές (☰) πάνω αριστερά</strong> και επίλεξε <strong>«Παραγγελίες Βάρδιας»</strong>.</p>
@@ -23,14 +23,14 @@ export default function Shift() {
           <li>Τραπέζι &amp; αριθμός</li>
           <li>Ώρα παραγγελίας</li>
           <li>Αριθμός ατόμων &amp; προϊόντων</li>
-          <li>Κατάσταση (ολοκληρωμένη ✓ / ανοικτή)</li>
+          <li>Κατάσταση (Κλειστή ✓ / Ανοιχτή)</li>
         </ul>
       </StepCard>
       <StepCard number="3" title="Φιλτράρισμα">
         <p>Χρησιμοποίησε το εικονίδιο <strong>φίλτρου (▽)</strong> για να βλέπεις μόνο συγκεκριμένες παραγγελίες.</p>
       </StepCard>
       <StepCard number="4" title="Επαναφορά παραγγελίας">
-        <p>Σύρε την ολοκληρωμένη παραγγελία <strong>προς τα αριστερά (slide)</strong> — δεν πατάς την παραγγελία. Εμφανίζεται το κουμπί <strong>«Επαναφορά»</strong>.</p>
+        <p>Σύρε την κλειστή παραγγελία <strong>προς τα αριστερά (slide)</strong> — δεν πατάς την παραγγελία. Εμφανίζεται το κουμπί <strong>«Επαναφορά»</strong>.</p>
       </StepCard>
       <InfoBox icon="🔄" title="Ακύρωση κλειστής παραγγελίας" variant="info">
         <p>

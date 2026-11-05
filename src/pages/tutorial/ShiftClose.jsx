@@ -15,7 +15,11 @@ export default function ShiftClose() {
       <InfoBox icon="⚠️" title="Προσοχή" variant="warning">
         Το κλείσιμο βάρδιας είναι <strong>μη αναστρέψιμη ενέργεια</strong>. Βεβαιώσου ότι όλες οι παραγγελίες έχουν ολοκληρωθεί.
       </InfoBox>
-      <StepCard number="1" title="Έλεγξε για ανεξόφλητες παραγγελίες">
+      <StepCard number="1" title="Άνοιξε την Ανάλυση Βάρδιας" admin>
+        <p>Πάτα τις <strong>τρεις γραμμές (☰)</strong> πάνω αριστερά → <strong>«Ρυθμίσεις (Όνομα Χρήστη)»</strong> → κουμπί <strong>«Ανάλυση Βάρδιας»</strong> στο κάτω μέρος. Απαιτείται Κωδικός Διαχειριστή.</p>
+        <p className="mt-2">Δες το μάθημα <Link to="/tutorial/shift-analysis" className="underline font-semibold">Ανάλυση Βάρδιας</Link>.</p>
+      </StepCard>
+      <StepCard number="2" title="Έλεγξε για ανεξόφλητες παραγγελίες">
         <p>Αν υπάρχουν <strong>ανεξόφλητες</strong> παραγγελίες, δεν μπορείς να κλείσεις τη βάρδια. Πρέπει να τις <Link to="/tutorial/payment" className="underline font-semibold">σημειώσεις ως πληρωμένες</Link>.</p>
         <p className="mt-2">Οι <strong>ανοιχτές</strong> παραγγελίες που έχουν ήδη πληρωθεί κλείνουν αυτόματα με το κλείσιμο της βάρδιας.</p>
       </StepCard>
@@ -27,13 +31,13 @@ export default function ShiftClose() {
           <li>Αν έχει ήδη συμβεί και δεν μπορείς να συνδεθείς, <strong>επικοινώνησε με τη Spotlight</strong>.</li>
         </ul>
       </InfoBox>
-      <StepCard number="2" title="Εκτύπωση Αναφοράς Βάρδιας">
+      <StepCard number="3" title="Εκτύπωση Αναφοράς Βάρδιας">
         <p>Πάνω δεξιά στην οθόνη υπάρχει το εικονίδιο ενός <strong>εκτυπωτή</strong>. Πατώντας το, σου δίνεται η επιλογή να εκτυπώσεις τα <strong>«Προϊόντα Βάρδιας»</strong> ή την <strong>«Αναφορά Βάρδιας»</strong>.</p>
       </StepCard>
-      <StepCard number="3" title="Πάτα «Κλείσιμο Βάρδιας»">
+      <StepCard number="4" title="Πάτα «Κλείσιμο Βάρδιας»">
         <p>Από την Ανάλυση Βάρδιας, επίλεξε <strong>«Κλείσιμο Βάρδιας»</strong>.</p>
       </StepCard>
-      <StepCard number="4" title="Επιβεβαίωση">
+      <StepCard number="5" title="Επιβεβαίωση">
         <p>Επιβεβαίωσε το κλείσιμο. Η βάρδια κλείνει.</p>
       </StepCard>
       <InfoBox icon="💡" variant="info">

@@ -11,19 +11,22 @@ export default function PaymentSplit() {
   return (
     <TutorialLayout title="Split Payments" subtitle="Διαίρεση πληρωμής σε πολλαπλές χρεώσεις">
       <SectionTitle>Split Payments — Διαίρεση Πληρωμής</SectionTitle>
-      <StepCard number="1" title="Επίλεξε «Split Payments»">
+      <StepCard number="1" title="Άνοιξε το μενού πληρωμής">
+        <p>Από τα στοιχεία παραγγελίας, πάτα το εικονίδιο <strong>Κέρματα</strong> στο κάτω μενού.</p>
+      </StepCard>
+      <StepCard number="2" title="Επίλεξε «Split Payments»">
         <p>Στο μενού πληρωμής, πάτα <strong>«Split Payments»</strong>.</p>
       </StepCard>
-      <StepCard number="2" title="Ορισμός αριθμού πληρωμών">
+      <StepCard number="3" title="Ορισμός αριθμού πληρωμών">
         <p>Με τα κουμπιά <strong>«+»</strong> και <strong>«-»</strong> ρύθμισε τον αριθμό πληρωμών (π.χ. 3). Το σύστημα προτείνει αυτόματα ισόποσα ποσά, αλλά το ποσό κάθε πληρωμής το αλλάζεις ελεύθερα.</p>
       </StepCard>
-      <StepCard number="3" title="Ορισμός τρόπου πληρωμής και ποσού">
+      <StepCard number="4" title="Ορισμός τρόπου πληρωμής και ποσού">
         <p>Σε κάθε πληρωμή μπορείς να ορίσεις <strong>και τον τρόπο πληρωμής και το ποσό</strong>:</p>
         <p>• Πάτα <strong>«Τρόπος πληρωμής»</strong> δίπλα στη γραμμή και επίλεξε: Μετρητά, Κάρτα, Ηλεκτρονική Πληρωμή ή IRIS.</p>
         <p>• Στο πεδίο του ποσού γράψε το ποσό που θέλεις να χρεώσεις.</p>
         <p>Αυτόματα η εφαρμογή υπολογίζει το υπόλοιπο και το μοιράζει στις πληρωμές που απομένουν (προεπιλογή: ισόποσα) — το ποσό κάθε πληρωμής το αλλάζεις ελεύθερα.</p>
       </StepCard>
-      <StepCard number="4" title="Χρέωση μία-μία">
+      <StepCard number="5" title="Χρέωση μία-μία">
         <p>Πάτα <strong>«Χρέωση»</strong> για κάθε πληρωμή ξεχωριστά. Ολοκλήρωσε την πρώτη πριν πας στη δεύτερη.</p>
       </StepCard>
       <InfoBox icon="⚠️" title="Σημαντικό!" variant="warning">
