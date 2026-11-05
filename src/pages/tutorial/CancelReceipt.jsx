@@ -12,7 +12,7 @@ export default function CancelReceipt() {
   return (
     <TutorialLayout title="Ακύρωση Απόδειξης" subtitle="Πώς να ακυρώσεις απόδειξη ώστε να μην αποδοθεί διπλό ΦΠΑ">
       <InfoBox icon="🧾" title="Ακύρωση Απόδειξης" variant="purple">
-        <p><strong>Ακύρωση Απόδειξης</strong> (αυτό το μάθημα): η παραγγελία <strong>έχει ήδη πληρωθεί</strong> και έχει εκδοθεί <strong>απόδειξη</strong>. Χρειάζεται πρώτα επαναφορά. Βλέπε μάθημα: <Link to="/tutorial/shift" className="font-semibold text-purple-700 underline underline-offset-2 hover:text-purple-900">Παραγγελίες Βάρδιας</Link>.</p>
+        <p><strong>Ακύρωση Απόδειξης</strong> (αυτό το μάθημα): η παραγγελία <strong>έχει ήδη πληρωθεί</strong> και έχει εκδοθεί <strong>απόδειξη</strong>. Αν η παραγγελία έχει κλείσει, χρειάζεται πρώτα επαναφορά. Βλέπε μάθημα: <Link to="/tutorial/shift" className="font-semibold text-purple-700 underline underline-offset-2 hover:text-purple-900">Παραγγελίες Βάρδιας</Link>.</p>
       </InfoBox>
 
       <SectionTitle>Ακύρωση Απόδειξης</SectionTitle>
@@ -37,6 +37,10 @@ export default function CancelReceipt() {
         </p>
         <p className="mt-2">Πάτα <strong>ΟΚ</strong>. Η απόδειξη ακυρώνεται με έκδοση <strong>Πιστωτικού Στοιχείου Λιανικής</strong>.</p>
       </StepCard>
+      <InfoBox icon="ℹ️" title="Αν η παραγγελία είναι ακόμα ανοιχτή" variant="info">
+        <p>Αν η απόδειξη έχει εκδοθεί αλλά η παραγγελία είναι ακόμα <strong>ανοιχτή</strong> (δεν έχει πάει στις Παραγγελίες Βάρδιας), δεν χρειάζεται επαναφορά: πήγαινε <strong>κατευθείαν</strong> στο ✏️ Επεξεργασία (βήμα 3) και συνέχισε από εκεί.</p>
+      </InfoBox>
+
       <InfoBox icon="🧾" title="Πότε χρειάζεται" variant="info">
         <p>Η ακύρωση απόδειξης χρειάζεται όταν έχεις εκδώσει <strong>απόδειξη</strong> και θέλεις να εκδώσεις <strong>τιμολόγιο</strong> για την ίδια παραγγελία — ώστε να μην αποδοθεί διπλό ΦΠΑ.</p>
         <p className="mt-2">Ακυρώνει <strong>μόνο την απόδειξη</strong> και κρατά την παραγγελία, για να εκδώσεις μετά τιμολόγιο.</p>
