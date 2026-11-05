@@ -39,6 +39,8 @@ export default function CancelReceipt() {
       </StepCard>
       <InfoBox icon="🧾" title="Πότε χρειάζεται" variant="info">
         <p>Η ακύρωση απόδειξης χρειάζεται όταν έχεις εκδώσει <strong>απόδειξη</strong> και θέλεις να εκδώσεις <strong>τιμολόγιο</strong> για την ίδια παραγγελία — ώστε να μην αποδοθεί διπλό ΦΠΑ.</p>
+        <p className="mt-2">Ακυρώνει <strong>μόνο την απόδειξη</strong> και κρατά την παραγγελία, για να εκδώσεις μετά τιμολόγιο.</p>
+        <p className="mt-2">Αν θέλεις να ακυρώσεις <strong>όλη</strong> την παραγγελία, χρησιμοποίησε την <Link to="/tutorial/cancel-order" className="underline font-semibold">Ακύρωση Παραγγελίας</Link>: βγάζει αυτόματα Πιστωτικό Στοιχείο Λιανικής.</p>
       </InfoBox>
 
       <InfoBox icon="ℹ️" title="Παραγγελίες Βάρδιας" variant="info">
