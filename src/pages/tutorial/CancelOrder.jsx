@@ -62,6 +62,13 @@ export default function CancelOrder() {
         </ol>
       </InfoBox>
 
+      <InfoBox icon="ℹ️" title="Αν η παραγγελία έχει τιμολόγιο" variant="info">
+        <p>Η ακύρωση της παραγγελίας ακυρώνει <strong>μόνο την παραγγελία</strong>, όχι το τιμολόγιο.</p>
+        <p className="mt-2">Το τιμολόγιο αντιλογίζεται με <strong>έκδοση Πιστωτικού Τιμολογίου</strong>, που γίνεται <strong>μόνο από το Secure (Διαχειριστικό)</strong>: απευθύνσου στον <strong>Διαχειριστή</strong>. Αλλιώς το τιμολόγιο μένει «ανοιχτό» στην ΑΑΔΕ.</p>
+        <p className="mt-2">Στην <strong>απόδειξη</strong> δεν χρειάζεται κάτι άλλο: η ακύρωση της παραγγελίας βγάζει αυτόματα <strong>Πιστωτικό Στοιχείο Λιανικής</strong>.</p>
+        <p className="mt-2">Δες και το μάθημα <Link to="/tutorial/invoice" className="underline font-semibold">Έκδοση Τιμολογίου</Link>.</p>
+      </InfoBox>
+
     </TutorialLayout>
   );
 }
