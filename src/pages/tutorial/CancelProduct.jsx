@@ -77,7 +77,8 @@ export default function CancelProduct() {
 
       <SectionTitle>4η περίπτωση — Έχει εκδοθεί Τιμολόγιο</SectionTitle>
       <StepCard number="1" title="Ακύρωσε ολόκληρη την παραγγελία">
-        <p>Όταν έχει εκδοθεί <strong>Τιμολόγιο</strong>, η ακύρωση γίνεται για <strong>ολόκληρη την παραγγελία</strong> — η ακύρωση ολόκληρης της παραγγελίας <strong>ακυρώνει και το τιμολόγιο</strong>. Ακολούθησε το μάθημα <Link to="/tutorial/cancel-order" className="text-purple-600 underline hover:text-purple-800 font-semibold">Ακύρωση Παραγγελίας</Link>.</p>
+        <p>Όταν έχει εκδοθεί <strong>Τιμολόγιο</strong>, η ακύρωση γίνεται για <strong>ολόκληρη την παραγγελία</strong>. Ακολούθησε το μάθημα <Link to="/tutorial/cancel-order" className="text-purple-600 underline hover:text-purple-800 font-semibold">Ακύρωση Παραγγελίας</Link>.</p>
+        <p className="mt-2">Η ακύρωση της παραγγελίας ακυρώνει <strong>μόνο την παραγγελία</strong>. Το τιμολόγιο αντιλογίζεται με <strong>Πιστωτικό Τιμολόγιο</strong>, που εκδίδεται <strong>μόνο από το Secure (Διαχειριστικό)</strong>: απευθύνσου στον <strong>Διαχειριστή</strong>. Αλλιώς το τιμολόγιο μένει «ανοιχτό» στην ΑΑΔΕ.</p>
       </StepCard>
       <StepCard number="2" title="Καταχώρισε ξανά την παραγγελία">
         <p>Ξαναδημιούργησε ολόκληρη τη <strong>σωστή</strong> παραγγελία από την αρχή.</p>
