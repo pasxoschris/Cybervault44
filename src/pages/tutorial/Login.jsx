@@ -37,6 +37,18 @@ export default function Login() {
       <StepCard number="3" title="Πάτα Login">
         <p>Θα δεις κάτω αριστερά το <strong>κατάστημα – συσκευή</strong> (π.χ. «Spotlight Demo - pos 1»).</p>
       </StepCard>
+      <SectionTitle>Σύνδεση με QR Code</SectionTitle>
+      <StepCard number="1" title="Πάτα «QR Code»">
+        <p>Στην οθόνη σύνδεσης χρήστη, αντί για όνομα χρήστη και κωδικό, πάτα το κουμπί <strong>«QR Code»</strong>.</p>
+      </StepCard>
+      <StepCard number="2" title="Σκάναρε το QR σου">
+        <p>Ανοίγει η κάμερα με το μήνυμα <strong>«Σκανάρετε το QR του Χρήστη»</strong>. Σκάναρε το προσωπικό σου QR και συνδέεσαι.</p>
+      </StepCard>
+      <InfoBox icon="ℹ️" title="Πού βρίσκεις το QR σου" variant="info">
+        <p>Κάθε χρήστης έχει το <strong>δικό του QR</strong>. Το δίνει ο <strong>Διαχειριστής</strong> από το <strong>Secure (Διαχειριστικό)</strong> ή σου το στέλνει με <strong>email</strong> («Spotlight POS - [όνομα] QR code»).</p>
+        <p className="mt-2">Είναι το ίδιο QR που χρησιμοποιείται και στην <strong>Ιδιοκατανάλωση</strong>. Δεν είναι το QR του καταστήματος, που χρησιμοποιείται για τη σύνδεση νέας συσκευής.</p>
+      </InfoBox>
+
       <InfoBox icon="📊" title="Πολλοί χρήστες / Άδειες" variant="info">
         Μπορούν να δημιουργηθούν πολλοί χρήστες και πολλές Θέσεις/Συσκευές Χρηστών (POS). Ο αριθμός των <strong>χρηστών που συνδέονται ταυτόχρονα</strong> εξαρτάται από τις άδειες που διαθέτει το κατάστημα.
       </InfoBox>
