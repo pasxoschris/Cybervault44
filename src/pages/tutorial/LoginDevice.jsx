@@ -66,7 +66,7 @@ export default function LoginDevice() {
         </div>
       </StepCard>
 
-      <StepCard number="4" title="Βλέπεις την οθόνη Σύνδεση Χρήστη (User Sign in)">
+      <StepCard number="4" title="Βλέπεις την οθόνη «Σύνδεση Χρήστη»">
         <p>Μετά τη σύνδεση με το κατάστημα, θα σου ζητηθεί να συνδεθείς με όνομα χρήστη και τον κωδικό που σου έχει φτιάξει ο διαχειριστής:</p>
         <div className="mt-3 flex justify-center mb-3">
           <img

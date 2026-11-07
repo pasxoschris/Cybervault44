@@ -23,19 +23,19 @@ export default function Login() {
         </ul>
       </InfoBox>
 
-      <ScreenshotGallery images={["https://media.base44.com/images/public/69f588f4590b173a2970ddb4/3eb8334c2_4.JPG"]} caption="Οθόνη User Sign in" />
-      <SectionTitle>Σύνδεση νέου χρήστη</SectionTitle>
-      <StepCard number="1" title="Βλέπεις την οθόνη User Sign in">
-        <p>Εφόσον η συσκευή έχει ήδη συνδεθεί με κατάστημα, θα εμφανιστεί απευθείας η οθόνη <strong>«User Sign in»</strong>.</p>
+      <ScreenshotGallery images={["https://media.base44.com/images/public/69f588f4590b173a2970ddb4/3eb8334c2_4.JPG"]} caption="Οθόνη «Σύνδεση Χρήστη»" />
+      <SectionTitle>Σύνδεση με όνομα χρήστη και κωδικό</SectionTitle>
+      <StepCard number="1" title="Βλέπεις την οθόνη «Σύνδεση Χρήστη»">
+        <p>Εφόσον η συσκευή έχει ήδη συνδεθεί με κατάστημα, θα εμφανιστεί απευθείας η οθόνη <strong>«Σύνδεση Χρήστη»</strong>.</p>
       </StepCard>
       <StepCard number="2" title="Εισήγαγε στοιχεία χρήστη">
         <div className="border border-[#00D4FF]/10 bg-[#080c20]/60 rounded-sm overflow-hidden mt-2">
-          <FieldRow label="Username" value="Το όνομα χρήστη σου" />
-          <FieldRow label="Password" value="Ο κωδικός σου" />
+          <FieldRow label="Όνομα Χρήστη" value="Το όνομα χρήστη σου" />
+          <FieldRow label="Κωδικός Πρόσβασης" value="Ο κωδικός σου" />
         </div>
       </StepCard>
-      <StepCard number="3" title="Πάτα Login">
-        <p>Θα δεις κάτω αριστερά το <strong>κατάστημα – συσκευή</strong> (π.χ. «Spotlight Demo - pos 1»).</p>
+      <StepCard number="3" title="Πάτα «Σύνδεση»">
+        <p>Στο κάτω μέρος της οθόνης βλέπεις το <strong>κατάστημα – συσκευή</strong> (π.χ. «LS DEMO - chris-1»).</p>
       </StepCard>
       <SectionTitle>Σύνδεση με QR Code</SectionTitle>
       <StepCard number="1" title="Πάτα «QR Code»">
