@@ -44,6 +44,22 @@ export default function SyncStatus() {
         </p>
       </StepCard>
 
+      <InfoBox icon="ℹ️" title="Μήνυμα «Συγχρονισμός...»" variant="info">
+        <p>
+          Όταν ο Διαχειριστής κάνει αλλαγές στο <strong>Secure (Διαχειριστικό)</strong>, π.χ. σε προϊόντα, τιμές ή ρυθμίσεις, και πατήσει <strong>Συγχρονισμός</strong>, οι αλλαγές περνούν αυτόματα στη συσκευή σου. Για λίγα δευτερόλεπτα η οθόνη σκουραίνει και εμφανίζεται το μήνυμα <strong>«Συγχρονισμός...»</strong>.
+        </p>
+        <p className="mt-2">
+          Δεν χρειάζεται να πατήσεις τίποτα. <strong>Περίμενε να εξαφανιστεί</strong> και συνέχισε κανονικά.
+        </p>
+        <div className="mt-3 flex justify-center">
+          <img
+            src="https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/90df3e3a3_sync-message.webp"
+            alt="Μήνυμα «Συγχρονισμός...» στην εφαρμογή"
+            className="w-full max-w-xs h-auto rounded-2xl border border-gray-200"
+          />
+        </div>
+      </InfoBox>
+
       <InfoBox icon="💡" title="Γιατί έχει σημασία" variant="info">
         <p>
           Πριν προχωρήσεις σε πληρωμή ή κλείσιμο βάρδιας, έλεγξε πάντα ότι ο δείκτης είναι <strong>πράσινος</strong>. Αν είναι κόκκινος, περίμενε να επανέλθει το δίκτυο για να διασφαλίσεις ότι καμία παραγγελία δεν θα χαθεί.
