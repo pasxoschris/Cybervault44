@@ -53,7 +53,7 @@ export default function Login() {
       <StepCard number="1" title="Δες το κατάστημα – θέση">
         <p>Στο κάτω μέρος της οθόνης <strong>«Σύνδεση Χρήστη»</strong> βλέπεις το <strong>κατάστημα – θέση</strong> (π.χ. «LS DEMO - chris-1»).</p>
       </StepCard>
-      <StepCard number="2" title="Πάτα το">
+      <StepCard number="2" title="Πάτα το κατάστημα – θέση">
         <p>Ανοίγει η λίστα <strong>«Συσκευές για [κατάστημα]»</strong>.</p>
       </StepCard>
       <StepCard number="3" title="Επίλεξε θέση">
