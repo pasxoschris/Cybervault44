@@ -62,7 +62,7 @@ export default function B2GInvoices() {
       </StepCard>
 
       <InfoBox icon="ℹ️" title="Τι είναι ο «Τύπος» πελάτη" variant="info">
-        <p>Ο Τύπος είναι μία από τις κατηγορίες πελατών του καταστήματος. Τις βλέπεις και προσθέτεις νέες στο <Link to="/tutorial/secure/g-customers" className="underline">Ζ.1 Λίστα Πελατών</Link>.</p>
+        <p>Ο Τύπος είναι μία από τις κατηγορίες πελατών του καταστήματος. Τις βλέπεις και προσθέτεις νέες στο <Link to="/tutorial/secure/g-customers" className="underline">7.1 Λίστα Πελατών</Link>.</p>
       </InfoBox>
 
       <StepCard number="8" title="B2G Details">

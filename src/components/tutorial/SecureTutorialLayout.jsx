@@ -8,7 +8,7 @@ import SpotlightBrand from "@/components/SpotlightBrand";
 import AssistantFloatingButton from "@/components/academy/AssistantFloatingButton";
 
 // Layout για τα μαθήματα του Secure (Διαχειριστικό).
-// Αρίθμηση και σειρά από το SECURE_LESSONS (π.χ. «Η.4»).
+// Αρίθμηση και σειρά από το SECURE_LESSONS (π.χ. «8.4»).
 export default function SecureTutorialLayout({ children, title, subtitle }) {
   const location = useLocation();
   const index = SECURE_LESSONS.findIndex((l) => l.href === location.pathname);
