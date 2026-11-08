@@ -185,9 +185,11 @@ export default function RolePath() {
                   )}
                 </section>);
             })}
+            {role.lessons.some((l) => l.mark) && (
             <p className="text-xs text-gray-400" style={{ fontFamily: 'Inter, sans-serif' }}>
               🔓 την ενεργοποιεί η Spotlight, τη ρυθμίζει ο Διαχειριστής · 🔒 τη ρυθμίζει μόνο η Spotlight · 🔄 θέλει Συγχρονισμό · ⚠️ προσοχή
             </p>
+            )}
           </div>
         ) : (
         <div className="flex flex-col gap-3">
