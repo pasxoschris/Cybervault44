@@ -129,6 +129,7 @@ const AuthenticatedApp = () => {
       <Route path="/admin/whitelist" element={<Whitelist />} />
       {/* Academy / Role-based learning */}
       <Route path="/spotlight-pos-guide/roles" element={<RoleSelection />} />
+      <Route path="/academy/backoffice" element={<Navigate to="/academy/secure" replace />} />
       <Route path="/academy/:roleId" element={<RolePath />} />
       {/* Payment & Shift (were missing) */}
       <Route path="/tutorial/payment" element={<Payment />} />
@@ -173,7 +174,8 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/cashier/close" element={<CloseCashier />} />
       <Route path="/tutorial/cashier/printer-warning" element={<PrinterWarningCashier />} />
       <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
-      <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
+      <Route path="/tutorial/secure/*" element={<PlaceholderLesson />} />
+      <Route path="/tutorial/backoffice/*" element={<Navigate to="/academy/secure" replace />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
