@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
@@ -129,7 +129,6 @@ const AuthenticatedApp = () => {
       <Route path="/admin/whitelist" element={<Whitelist />} />
       {/* Academy / Role-based learning */}
       <Route path="/spotlight-pos-guide/roles" element={<RoleSelection />} />
-      <Route path="/academy/backoffice" element={<Navigate to="/academy/secure" replace />} />
       <Route path="/academy/:roleId" element={<RolePath />} />
       {/* Payment & Shift (were missing) */}
       <Route path="/tutorial/payment" element={<Payment />} />
@@ -175,7 +174,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/cashier/printer-warning" element={<PrinterWarningCashier />} />
       <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/secure/*" element={<PlaceholderLesson />} />
-      <Route path="/tutorial/backoffice/*" element={<Navigate to="/academy/secure" replace />} />
+      <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import Navbar from '@/components/layout/Navbar';
-import { getRoleById } from '@/lib/roles';
+import { getRoleById, canAccessRole } from '@/lib/roles';
 import { getCompletedCount, isVisited } from '@/lib/tutorialProgress';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
 import AssistantFloatingButton from '@/components/academy/AssistantFloatingButton';
@@ -28,9 +28,7 @@ export default function RolePath() {
       if (u.role === 'admin') { setAccess(true); return; }
       const list = await base44.entities.AllowedUserGuide.filter({ email: u.email.toLowerCase() });
       if (list.length === 0) { setAccess(false); return; }
-      const modes = list[0].modes || '';
-      if (!modes.trim()) { setAccess(true); return; }
-      setAccess(modes.split(',').map(m => m.trim()).includes(roleId));
+      setAccess(canAccessRole(role, list[0].modes || ''));
     };
     check();
   }, [role, roleId]);

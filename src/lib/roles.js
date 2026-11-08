@@ -118,7 +118,39 @@ export const ROLES = [
       { title: 'Παραμετροποίηση', href: '/tutorial/secure/config' },
     ],
   },
+  {
+    id: 'backoffice',
+    emoji: '🛠️',
+    title: 'Backoffice',
+    subtitle: 'Για το προσωπικό της Spotlight και συνεργάτες/τεχνικούς',
+    color: '#0F766E',
+    colorLight: 'rgba(15,118,110,0.12)',
+    colorBorder: 'rgba(15,118,110,0.3)',
+    // Εμφανίζεται ΜΟΝΟ σε όσους έχουν ρητά το mode «backoffice» (και στους admin της εφαρμογής).
+    restricted: true,
+    lessons: [
+      { title: 'Ωράριο Καταστήματος & Βάρδια', href: '/tutorial/backoffice/store-hours' },
+      { title: 'Ρυθμίσεις Βάρδιας & Εξόφλησης', href: '/tutorial/backoffice/shift-settings' },
+      { title: 'Αποδείξεις & Τιμολόγια', href: '/tutorial/backoffice/receipts-invoices' },
+      { title: 'Ιδιοκατανάλωση', href: '/tutorial/backoffice/own-consumption' },
+      { title: 'Πληρωμές με Κάρτα (EFTPOS)', href: '/tutorial/backoffice/card-payments' },
+      { title: 'Maitre Mode, Τιμοκατάλογοι & Προωθήσεις', href: '/tutorial/backoffice/features' },
+      { title: 'Οθόνες Κουζίνας & Περιφερειακά', href: '/tutorial/backoffice/peripherals' },
+      { title: 'Δωμάτια & IHost', href: '/tutorial/backoffice/hotel' },
+      { title: 'Λοιπές Ρυθμίσεις', href: '/tutorial/backoffice/other' },
+    ],
+  },
 ];
+
+// Ορατότητα ρόλου βάσει του πεδίου modes (AllowedUserGuide).
+// Κενό modes = όλοι οι ρόλοι ΕΚΤΟΣ από τους restricted (π.χ. Backoffice), που θέλουν ρητή εξουσιοδότηση.
+export function canAccessRole(role, modes, isAdmin = false) {
+  if (!role) return false;
+  if (isAdmin) return true;
+  const list = (modes || '').split(',').map(m => m.trim()).filter(Boolean);
+  if (role.restricted) return list.includes(role.id);
+  return list.length === 0 || list.includes(role.id);
+}
 
 export function getRoleById(id) {
   return ROLES.find(r => r.id === id);
