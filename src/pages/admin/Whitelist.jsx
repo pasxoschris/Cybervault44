@@ -62,6 +62,15 @@ function WhitelistSection({ entityName, title, description, modeOptions, storeOp
     setAllowed(prev => prev.map(a => a.id === record.id ? updated : a));
   };
 
+  // «Περιορισμός»: από «όλα» σε ρητή λίστα με όλα τα κανονικά modes (τα restricted, π.χ. Backoffice, μένουν όπως είναι).
+  const handleRestrict = async (record) => {
+    const current = parseModes(record.modes);
+    const normal = (modeOptions || []).filter(m => !m.restricted).map(m => m.id);
+    const next = [...normal, ...current.filter(id => !normal.includes(id))];
+    const updated = await base44.entities[entityName].update(record.id, { modes: next.join(',') });
+    setAllowed(prev => prev.map(a => a.id === record.id ? updated : a));
+  };
+
   if (loading) {
     return <div className="text-center py-12 font-mono-cyber text-[#00CFFF]/40 text-sm tracking-widest">ΦΟΡΤΩΣΗ...</div>;
   }
@@ -110,7 +119,7 @@ function WhitelistSection({ entityName, title, description, modeOptions, storeOp
         {modeOptions && (
           <div>
             <label className="block font-mono-cyber text-[10px] tracking-widest text-[#00CFFF]/60 mb-2 uppercase">
-              Εξουσιοδοτημένα Modes <span className="text-white/30 normal-case tracking-normal">(κενό = όλα)</span>
+              Εξουσιοδοτημένα Modes <span className="text-white/30 normal-case tracking-normal">(κενό = όλα εκτός Backoffice)</span>
             </label>
             <div className="flex flex-wrap gap-2">
               {modeOptions.map(m => {
@@ -143,7 +152,8 @@ function WhitelistSection({ entityName, title, description, modeOptions, storeOp
         )}
         {allowed.map(a => {
           const userModes = parseModes(a.modes);
-          const hasAllModes = modeOptions && userModes.length === 0;
+          const restrictedIds = (modeOptions || []).filter(m => m.restricted).map(m => m.id);
+          const hasAllModes = modeOptions && userModes.filter(id => !restrictedIds.includes(id)).length === 0;
           return (
             <div key={a.id} className="border border-[#00CFFF]/15 bg-[#131840]/60 px-4 py-3">
               <div className="flex items-center justify-between">
@@ -175,9 +185,22 @@ function WhitelistSection({ entityName, title, description, modeOptions, storeOp
                   <div className="font-mono-cyber text-[9px] tracking-widest text-[#00CFFF]/40 mb-2 uppercase">Modes</div>
                   {hasAllModes ? (
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-green-400/80" style={{ fontFamily: 'Inter, sans-serif' }}>Όλα τα modes (πλήρη πρόσβαση)</span>
+                      <span className="text-xs text-green-400/80" style={{ fontFamily: 'Inter, sans-serif' }}>Όλα τα modes{restrictedIds.length > 0 ? ' (εκτός Backoffice)' : ''}</span>
+                      {modeOptions.filter(m => m.restricted).map(m => {
+                        const active = userModes.includes(m.id);
+                        return (
+                          <button
+                            key={m.id}
+                            onClick={() => handleToggleMode(a, m.id)}
+                            className={`px-2.5 py-1 text-xs border transition-all ${active ? 'bg-[#00CFFF]/15 text-[#00CFFF] border-[#00CFFF]/50' : 'text-white/30 border-white/10 hover:border-white/25'}`}
+                            style={{ fontFamily: 'Inter, sans-serif' }}
+                          >
+                            {m.emoji} {m.title}
+                          </button>
+                        );
+                      })}
                       <button
-                        onClick={() => modeOptions.forEach(m => handleToggleMode(a, m.id))}
+                        onClick={() => handleRestrict(a)}
                         className="font-mono-cyber text-[9px] text-[#00CFFF]/60 hover:text-[#00CFFF] border border-[#00CFFF]/20 hover:border-[#00CFFF]/50 px-2 py-0.5 transition-all tracking-widest"
                       >
                         ΠΕΡΙΟΡΙΣΜΟΣ
@@ -212,7 +235,7 @@ function WhitelistSection({ entityName, title, description, modeOptions, storeOp
 
 const TABS = [
   { key: 'AllowedUser', label: 'Service Desk', description: 'Διαχείριση πρόσβασης στο Service Desk' },
-  { key: 'AllowedUserGuide', label: 'SpotlightPOS Guide', description: 'Διαχείριση πρόσβασης στον Οδηγό Εκπαίδευσης. Εξουσιοδότησε κάθε χρήστη για συγκεκριμένα modes (κενό = όλα).' },
+  { key: 'AllowedUserGuide', label: 'SpotlightPOS Guide', description: 'Διαχείριση πρόσβασης στον Οδηγό Εκπαίδευσης. Εξουσιοδότησε κάθε χρήστη για συγκεκριμένα modes (κενό = όλα εκτός Backoffice).' },
   { key: 'AllowedUserReseller', label: 'Reseller Console', description: 'Διαχείριση πρόσβασης στο Reseller Console' },
 ];
 
