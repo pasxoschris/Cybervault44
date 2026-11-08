@@ -67,7 +67,7 @@ export default function B2GInvoices() {
 
       <StepCard number="8" title="B2G Details">
         <ul className="list-disc pl-5 space-y-2">
-          <li><strong>Αριθμός αναφοράς B2G (BT-11)</strong>.</li>
+          <li><strong>Αριθμός αναφοράς B2G (BT-11)</strong>: ο αριθμός χρηματοδότησης. Ξεκινά με το είδος του προϋπολογισμού: <strong>1|</strong>, <strong>2|</strong> ή <strong>3|</strong>.</li>
           <li>
             <strong>Αριθμός Σύμβασης – ΑΔΑΜ (BT-12)</strong>: ο ΑΔΑΜ της σύμβασης από το ΚΗΜΔΗΣ.
             <ul className="list-[circle] pl-5 mt-1 space-y-1">
@@ -76,15 +76,20 @@ export default function B2GInvoices() {
               <li>Σύμβαση πάνω από 30.000 €: ο ΑΔΑΜ της <strong>Εντολής Αγοράς</strong>.</li>
             </ul>
           </li>
-          <li><strong>Αριθμός Αναθέτουσας Αρχής (BT-46)</strong>: όπως είναι στο μητρώο.</li>
+          <li><strong>Αριθμός Αναθέτουσας Αρχής (BT-46)</strong>: όπως είναι στο μητρώο. Πρέπει να αντιστοιχεί στον ΑΦΜ του φορέα.</li>
+          <li><strong>Περιοχή Παράδοσης Προϊόντων (BT-70)</strong>: προαιρετικό. Είναι τα στοιχεία παράδοσης, δηλαδή ποιος παραλαμβάνει, όταν το τιμολόγιο αφορά προϊόντα.</li>
         </ul>
       </StepCard>
+
+      <InfoBox icon="ℹ️" title="Από πού βρίσκεις τα στοιχεία B2G" variant="info">
+        <p>Τα BT-11, BT-12, BT-46 και τα στοιχεία παράδοσης σού τα δίνει ο <strong>Δημόσιος φορέας</strong> που παραλαμβάνει το τιμολόγιο. Ζήτα τα από αυτόν πριν ξεκινήσεις.</p>
+      </InfoBox>
 
       <StepCard number="9" title="Line Items">
         <ul className="list-disc pl-5 space-y-1">
           <li><strong>Προϊόν</strong>: αναζήτησε το προϊόν που έφτιαξες για το τιμολόγιο.</li>
           <li><strong>Ποσότητα</strong> και <strong>Τύπος Μονάδας</strong>.</li>
-          <li><strong>CPV Προϊόντος</strong>: ο κωδικός CPV, σύμφωνα με τις οδηγίες της ΕΕ.</li>
+          <li><strong>CPV Προϊόντος</strong>: ο κωδικός κατηγορίας αγαθού ή υπηρεσίας που χρησιμοποιείται στις δημόσιες συμβάσεις της ΕΕ. Όλους τους κωδικούς τούς βρίσκεις στη <a href="https://ted.europa.eu/el/simap/cpv" target="_blank" rel="noopener noreferrer" className="text-purple-700 underline">λίστα CPV</a>.</li>
           <li><strong>Price (€)</strong>: η <strong>συνολική αξία μαζί με ΦΠΑ</strong>.</li>
           <li><strong>Vat %</strong> και <strong>Φορολογικό Είδος</strong>.</li>
         </ul>
