@@ -122,8 +122,21 @@ export default function Login() {
             </div>
           </StepCard>
           <StepCard number="3" title="Πάτα Login">
-            <p>Θα δεις κάτω αριστερά το <strong>κατάστημα – συσκευή</strong> (π.χ. «Spotlight Demo - pos 1»).</p>
+            <p>Συνδέεσαι στην εφαρμογή με τον χρήστη σου.</p>
           </StepCard>
+          <SectionTitle>Αλλαγή Θέσης/Συσκευής Χρήστη (POS)</SectionTitle>
+          <StepCard number="1" title="Δες το κατάστημα – θέση">
+            <p>Στο κάτω μέρος της οθόνης <strong>«Σύνδεση Χρήστη»</strong> βλέπεις το <strong>κατάστημα – θέση</strong> (π.χ. «LS DEMO - chris-1»).</p>
+          </StepCard>
+          <StepCard number="2" title="Πάτα το">
+            <p>Ανοίγει η λίστα <strong>«Συσκευές για [κατάστημα]»</strong>.</p>
+          </StepCard>
+          <StepCard number="3" title="Επίλεξε θέση">
+            <p>Επίλεξε τη θέση που θέλεις. Η τρέχουσα θέση έχει <strong>✓</strong>.</p>
+          </StepCard>
+          <InfoBox icon="ℹ️" title="Πού φαίνεται η θέση" variant="info">
+            Η επιλεγμένη θέση φαίνεται μετά στις <strong>Ρυθμίσεις → Συσκευή POS</strong>.
+          </InfoBox>
           <InfoBox icon="📊" title="Πολλοί χρήστες / Άδειες" variant="info">
             Μπορούν να δημιουργηθούν πολλοί χρήστες και πολλές Θέσεις/Συσκευές Χρηστών (POS). Ο αριθμός των <strong>χρηστών που συνδέονται ταυτόχρονα</strong> εξαρτάται από τις άδειες που διαθέτει το κατάστημα.
           </InfoBox>
