@@ -13,6 +13,7 @@ export default function B2GInvoices() {
 
       <InfoBox icon="⚙️" title="Πριν ξεκινήσεις" variant="warning">
         <ul className="list-disc pl-5 space-y-1">
+          <li>Η <strong>Spotlight</strong> πρέπει να έχει ενεργοποιήσει τα <strong>B2G Invoices</strong> για το κατάστημα. Αν δεν βλέπεις το B2G Invoices στο μενού Τιμολόγια, ζήτησέ το από τη Spotlight.</li>
           <li>Φτιάξε στον <Link to="/tutorial/secure/e-products" className="underline">Κατάλογο</Link> ένα <strong>προϊόν που περιγράφει τι αφορά το τιμολόγιο</strong>. Αυτό το προϊόν θα μπει ως γραμμή στο τιμολόγιο B2G.</li>
         </ul>
       </InfoBox>
