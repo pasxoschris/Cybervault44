@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import Navbar from '@/components/layout/Navbar';
 import { getRoleById, canAccessRole } from '@/lib/roles';
 import { getCompletedCount, isVisited } from '@/lib/tutorialProgress';
-import { ChevronRight, ArrowLeft } from 'lucide-react';
+import { ChevronRight, ChevronDown, ArrowLeft } from 'lucide-react';
 import AssistantFloatingButton from '@/components/academy/AssistantFloatingButton';
 import ManualDownloadButton from '@/components/academy/ManualDownloadButton';
 import SpotlightBrand from '@/components/SpotlightBrand';
@@ -19,6 +19,18 @@ export default function RolePath() {
   const role = getRoleById(roleId);
   const [visited, setVisited] = useState({});
   const [access, setAccess] = useState(null); // null=loading, true=allowed, false=denied
+  // Ανοιχτά μέρη (μόνο για ρόλους με parts, π.χ. Secure). Αποθηκεύεται ανά ρόλο στον browser.
+  const openKey = `rolepath-open-${roleId}`;
+  const [openParts, setOpenParts] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(`rolepath-open-${roleId}`) || '[]'); } catch { return []; }
+  });
+  const togglePart = (id) => {
+    setOpenParts((prev) => {
+      const next = prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id];
+      try { localStorage.setItem(openKey, JSON.stringify(next)); } catch { /* ignore */ }
+      return next;
+    });
+  };
 
   useEffect(() => {
     const check = async () => {
@@ -128,18 +140,30 @@ export default function RolePath() {
         </Link>
 
         {role.parts ? (
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-3">
             {role.parts.map((part) => {
               const partLessons = role.lessons.filter((l) => l.part === part.id);
               if (partLessons.length === 0) return null;
+              const isOpen = openParts.includes(part.id);
+              const partDone = partLessons.filter((l) => visited[l.href]).length;
               return (
                 <section key={part.id}>
-                  <h2 className="flex items-baseline gap-2 mb-3 text-gray-900 font-bold text-base" style={{ fontFamily: 'Inter, sans-serif' }}>
-                    <span className="text-purple-600">{part.id}</span>
-                    <span>{part.title}</span>
-                    <span className="text-xs font-normal text-gray-400">· {partLessons.length} μαθήματα</span>
-                  </h2>
-                  <div className="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={() => togglePart(part.id)}
+                    aria-expanded={isOpen}
+                    className="w-full flex items-center gap-2 px-4 py-3 rounded-xl bg-white border border-gray-100 hover:border-purple-200 hover:shadow-sm transition-all text-left text-gray-900 font-bold text-base"
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
+                    <span className="text-purple-600 min-w-[1.75rem]">{part.id}</span>
+                    <span className="flex-1">{part.title}</span>
+                    <span className="text-xs font-normal text-gray-400 whitespace-nowrap">
+                      {partDone > 0 ? `${partDone}/${partLessons.length}` : `${partLessons.length} μαθήματα`}
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {isOpen && (
+                  <div className="flex flex-col gap-2 mt-2 pl-2">
                     {partLessons.map((lesson) => {
                       const done = visited[lesson.href];
                       return (
@@ -158,6 +182,7 @@ export default function RolePath() {
                         </Link>);
                     })}
                   </div>
+                  )}
                 </section>);
             })}
             <p className="text-xs text-gray-400" style={{ fontFamily: 'Inter, sans-serif' }}>
