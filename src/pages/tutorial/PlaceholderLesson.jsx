@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, ChevronRight, Construction } from 'lucide-react';
 import { getRoleByPath } from '@/lib/roles';
+import { InfoBox } from '@/components/tutorial/StepCard';
 
 export default function PlaceholderLesson() {
   const location = useLocation();
@@ -64,6 +65,16 @@ export default function PlaceholderLesson() {
             Θα είναι σύντομα διαθέσιμο.
           </p>
         </div>
+
+        {lesson?.notes?.length > 0 && (
+          <div className="mt-6 flex flex-col gap-4">
+            {lesson.notes.map((n, i) => (
+              <InfoBox key={i} icon={n.icon} title={n.title} variant={n.variant}>
+                <p>{n.text}</p>
+              </InfoBox>
+            ))}
+          </div>
+        )}
 
         {role && (
           <Link

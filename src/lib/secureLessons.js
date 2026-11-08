@@ -93,7 +93,7 @@ export const SECURE_LESSONS = [
   { num: "12.2", part: "12", title: "Έκδοση από το Secure (μόνο σε ακραία περίπτωση)", href: '/tutorial/secure/h-issue-from-secure', mark: "⚠️" },
   { num: "12.3", part: "12", title: "Δελτία Αποστολής", href: '/tutorial/secure/h-delivery-notes' },
   { num: "12.4", part: "12", title: "B2G Invoices", href: '/tutorial/secure/h-b2g' },
-  { num: "13.1", part: "13", title: "Χρήστες", href: '/tutorial/secure/i-users' },
+  { num: "13.1", part: "13", title: "Χρήστες", href: '/tutorial/secure/i-users', notes: [{ icon: "⚠️", variant: "warning", title: "Απενεργοποίηση χρήστη που είναι συνδεδεμένος", text: "Αν απενεργοποιήσεις (Ενεργός: off) χρήστη ενώ είναι συνδεδεμένος, η συσκευή του σταματά να συγχρονίζει και ο χρήστης βλέπει «Sync failed». Για να συγχρονίσει ξανά, ο χρήστης πρέπει να είναι Ενεργός." }] },
   { num: "13.2", part: "13", title: "Δικαιώματα Διαχειριστικού Κωδικού", href: '/tutorial/secure/i-admin-code-rights' },
   { num: "13.3", part: "13", title: "Ρυθμίσεις Χρήστη", href: '/tutorial/secure/i-user-settings' },
   { num: "13.4", part: "13", title: "Ετικέτες Χρηστών", href: '/tutorial/secure/i-user-tags' },
@@ -107,5 +107,5 @@ export const SECURE_LESSONS = [
   { num: "13.12", part: "13", title: "QR Code", href: '/tutorial/secure/i-qr-code' },
   { num: "14.1", part: "14", title: "«Έκανα αλλαγή και δεν φαίνεται»", href: '/tutorial/secure/k-not-visible', mark: "🔄" },
   { num: "14.2", part: "14", title: "«Ο σερβιτόρος δεν βλέπει…»", href: '/tutorial/secure/k-waiter-cannot-see' },
-  { num: "14.3", part: "14", title: "Συχνά σφάλματα", href: '/tutorial/secure/k-common-errors' },
+  { num: "14.3", part: "14", title: "Συχνά σφάλματα", href: '/tutorial/secure/k-common-errors', notes: [{ icon: "⚠️", variant: "warning", title: "«Sync failed» στη συσκευή του σερβιτόρου", text: "Αν ο σερβιτόρος βλέπει «Sync failed» ενώ έχει δίκτυο, έλεγξε στο Secure → Χρήστες ότι ο χρήστης του είναι Ενεργός. Ένας χρήστης που απενεργοποιείται ενώ είναι συνδεδεμένος σταματά να συγχρονίζει." }] },
 ];
