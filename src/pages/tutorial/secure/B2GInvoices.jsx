@@ -8,24 +8,24 @@ export default function B2GInvoices() {
     <SecureTutorialLayout title="B2G Invoices" subtitle="Τιμολόγιο προς φορέα του Δημοσίου">
 
       <p className="text-gray-600 text-base leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
-        Το τιμολόγιο B2G είναι το τιμολόγιο που εκδίδεις προς φορέα του Δημοσίου. Οι παραγγελίες χτυπιούνται κανονικά στην εφαρμογή και το τιμολόγιο εκδίδεται στο τέλος από το Secure.
+        Το τιμολόγιο B2G είναι το τιμολόγιο που εκδίδεις προς φορέα του Δημοσίου. Οι παραγγελίες χτυπιούνται και κλείνουν κανονικά στην εφαρμογή, και το τιμολόγιο εκδίδεται στο τέλος από το Secure.
       </p>
 
       <InfoBox icon="⚙️" title="Πριν ξεκινήσεις" variant="warning">
         <ul className="list-disc pl-5 space-y-1">
-          <li>Στο κατάστημα πρέπει να είναι ενεργά τα <strong>Δελτία Παραγγελίας</strong>.</li>
           <li>Φτιάξε στον <Link to="/tutorial/secure/e-products" className="underline">Κατάλογο</Link> ένα <strong>προϊόν που περιγράφει τι αφορά το τιμολόγιο</strong>. Αυτό το προϊόν θα μπει ως γραμμή στο τιμολόγιο B2G.</li>
         </ul>
       </InfoBox>
 
       <SectionTitle>Στην εφαρμογή</SectionTitle>
 
-      <StepCard number="1" title="Χτύπα τις παραγγελίες με Δελτίο Παραγγελίας">
-        <p>Χτύπα κανονικά τις παραγγελίες. Για κάθε παραγγελία εκτυπώνεται <strong>Δελτίο Παραγγελίας</strong> (δες <Link to="/tutorial/issue-receipt" className="text-purple-700 underline">Έκδοση Παραστατικού</Link>).</p>
+      <StepCard number="1" title="Χτύπα τις παραγγελίες">
+        <p>Χτύπα κανονικά τις παραγγελίες στην εφαρμογή.</p>
       </StepCard>
 
       <StepCard number="2" title="Κλείσε τις παραγγελίες με απόδειξη">
-        <p>Κλείσε τις παραγγελίες και έκδωσε <strong>απόδειξη</strong>.</p>
+        <p>Κλείσε τις παραγγελίες και έκδωσε <strong>απόδειξη</strong> (δες <Link to="/tutorial/issue-receipt" className="text-purple-700 underline">Έκδοση Παραστατικού</Link>).</p>
+        <p>Οι παραγγελίες πρέπει να είναι <strong>κλειστές</strong> πριν προχωρήσεις.</p>
       </StepCard>
 
       <StepCard number="3" title="Ακύρωσε τις αποδείξεις">
