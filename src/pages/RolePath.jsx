@@ -127,6 +127,44 @@ export default function RolePath() {
           <ArrowLeft className="w-4 h-4" /> Επιστροφή στους Ρόλους
         </Link>
 
+        {role.parts ? (
+          <div className="flex flex-col gap-8">
+            {role.parts.map((part) => {
+              const partLessons = role.lessons.filter((l) => l.part === part.id);
+              if (partLessons.length === 0) return null;
+              return (
+                <section key={part.id}>
+                  <h2 className="flex items-baseline gap-2 mb-3 text-gray-900 font-bold text-base" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <span className="text-purple-600">{part.id}</span>
+                    <span>{part.title}</span>
+                    <span className="text-xs font-normal text-gray-400">· {partLessons.length} μαθήματα</span>
+                  </h2>
+                  <div className="flex flex-col gap-2">
+                    {partLessons.map((lesson) => {
+                      const done = visited[lesson.href];
+                      return (
+                        <Link
+                          key={lesson.href}
+                          to={lesson.href}
+                          className={`group bg-white rounded-xl border px-4 py-3 flex items-center gap-3 hover:shadow-md transition-all duration-200 ${done ? 'border-green-200' : 'border-gray-100 hover:border-purple-200'}`}>
+                          <span className={`min-w-[3rem] h-7 px-2 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold ${done ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500 group-hover:bg-purple-100 group-hover:text-purple-600'} transition-colors`} style={{ fontFamily: 'Inter, sans-serif' }}>
+                            {lesson.num}
+                          </span>
+                          <span className={`flex-1 font-medium text-sm ${done ? 'text-gray-500' : 'text-gray-800 group-hover:text-purple-700'} transition-colors`} style={{ fontFamily: 'Inter, sans-serif' }}>
+                            {lesson.title}
+                          </span>
+                          {lesson.mark && <span className="text-sm flex-shrink-0">{lesson.mark}</span>}
+                          <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-purple-400 transition-colors" />
+                        </Link>);
+                    })}
+                  </div>
+                </section>);
+            })}
+            <p className="text-xs text-gray-400" style={{ fontFamily: 'Inter, sans-serif' }}>
+              🔓 την ενεργοποιεί η Spotlight, τη ρυθμίζει ο Διαχειριστής · 🔒 τη ρυθμίζει μόνο η Spotlight · 🔄 θέλει Συγχρονισμό · ⚠️ προσοχή
+            </p>
+          </div>
+        ) : (
         <div className="flex flex-col gap-3">
           {role.lessons.map((lesson, i) => {
             const done = visited[lesson.href];
@@ -153,6 +191,7 @@ export default function RolePath() {
 
           })}
         </div>
+        )}
       </div>
       <AssistantFloatingButton />
     </div>);

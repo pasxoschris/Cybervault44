@@ -1,3 +1,5 @@
+import { SECURE_PARTS, SECURE_LESSONS } from './secureLessons';
+
 export const ROLES = [
   {
     id: 'service',
@@ -107,16 +109,8 @@ export const ROLES = [
     color: '#DC2626',
     colorLight: 'rgba(220,38,38,0.12)',
     colorBorder: 'rgba(220,38,38,0.3)',
-    lessons: [
-      { title: 'Χρήστες', href: '/tutorial/secure/users' },
-      { title: 'Ρόλοι', href: '/tutorial/secure/roles' },
-      { title: 'Εκτυπωτές', href: '/tutorial/secure/printers' },
-      { title: 'Κατάλογοι', href: '/tutorial/secure/catalogs' },
-      { title: 'Τιμοκατάλογοι', href: '/tutorial/secure/pricelists' },
-      { title: 'Τραπέζια', href: '/tutorial/secure/tables' },
-      { title: 'Αναφορές', href: '/tutorial/secure/reports' },
-      { title: 'Παραμετροποίηση', href: '/tutorial/secure/config' },
-    ],
+    parts: SECURE_PARTS,
+    lessons: SECURE_LESSONS,
   },
   {
     id: 'backoffice',
