@@ -35,7 +35,7 @@ export default function Login() {
         </div>
       </StepCard>
       <StepCard number="3" title="Πάτα «Σύνδεση»">
-        <p>Στο κάτω μέρος της οθόνης βλέπεις το <strong>κατάστημα – συσκευή</strong> (π.χ. «LS DEMO - chris-1»).</p>
+        <p>Συνδέεσαι στην εφαρμογή με τον χρήστη σου.</p>
       </StepCard>
       <SectionTitle>Σύνδεση με QR Code</SectionTitle>
       <StepCard number="1" title="Πάτα «QR Code»">
@@ -47,6 +47,20 @@ export default function Login() {
       <InfoBox icon="ℹ️" title="Πού βρίσκεις το QR σου" variant="info">
         <p>Κάθε χρήστης έχει το <strong>δικό του QR</strong>. Το δίνει ο <strong>Διαχειριστής</strong> από το <strong>Secure (Διαχειριστικό)</strong> ή σου το στέλνει με <strong>email</strong> («Spotlight POS - [όνομα] QR code»).</p>
         <p className="mt-2">Είναι το ίδιο QR που χρησιμοποιείται και στην <strong>Ιδιοκατανάλωση</strong>. Δεν είναι το QR του καταστήματος, που χρησιμοποιείται για τη σύνδεση νέας συσκευής.</p>
+      </InfoBox>
+
+      <SectionTitle>Αλλαγή Θέσης/Συσκευής Χρήστη (POS)</SectionTitle>
+      <StepCard number="1" title="Δες το κατάστημα – θέση">
+        <p>Στο κάτω μέρος της οθόνης <strong>«Σύνδεση Χρήστη»</strong> βλέπεις το <strong>κατάστημα – θέση</strong> (π.χ. «LS DEMO - chris-1»).</p>
+      </StepCard>
+      <StepCard number="2" title="Πάτα το">
+        <p>Ανοίγει η λίστα <strong>«Συσκευές για [κατάστημα]»</strong>.</p>
+      </StepCard>
+      <StepCard number="3" title="Επίλεξε θέση">
+        <p>Επίλεξε τη θέση που θέλεις. Η τρέχουσα θέση έχει <strong>✓</strong>.</p>
+      </StepCard>
+      <InfoBox icon="ℹ️" title="Πού φαίνεται η θέση" variant="info">
+        Η επιλεγμένη θέση φαίνεται μετά στις <strong>Ρυθμίσεις → Συσκευή POS</strong> (μάθημα «Ρυθμίσεις Χρήστη»).
       </InfoBox>
 
       <InfoBox icon="📊" title="Πολλοί χρήστες / Άδειες" variant="info">
