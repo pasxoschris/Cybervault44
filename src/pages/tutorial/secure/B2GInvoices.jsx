@@ -13,7 +13,7 @@ export default function B2GInvoices() {
 
       <InfoBox icon="⚙️" title="Πριν ξεκινήσεις" variant="warning">
         <ul className="list-disc pl-5 space-y-1">
-          <li>Η <strong>Spotlight</strong> πρέπει να έχει ενεργοποιήσει τα <strong>B2G Invoices</strong> για το κατάστημα. Αν δεν βλέπεις το B2G Invoices στο μενού Τιμολόγια, ζήτησέ το από τη Spotlight.</li>
+          <li>Η <strong>Spotlight</strong> πρέπει να έχει ενεργοποιήσει τα <strong>B2G Invoices</strong> για το κατάστημα. Αν δεν βλέπεις το πράσινο εικονίδιο <strong>Issue B2G Invoice</strong> στα Στοιχεία Παραγγελίας, ζήτησέ το από τη Spotlight.</li>
           <li>Φτιάξε στον <Link to="/tutorial/secure/e-products" className="underline">Κατάλογο</Link> ένα <strong>προϊόν που περιγράφει τι αφορά το τιμολόγιο</strong>. Αυτό το προϊόν θα μπει ως γραμμή στο τιμολόγιο B2G.</li>
         </ul>
       </InfoBox>
@@ -39,8 +39,9 @@ export default function B2GInvoices() {
 
       <SectionTitle>Στο Secure</SectionTitle>
 
-      <StepCard number="4" title="Άνοιξε την Έκδοση Τιμολογίου">
-        <p>Από το μενού <strong>Τιμολόγια → B2G Invoices</strong>, άνοιξε την <strong>Έκδοση Τιμολογίου</strong>.</p>
+      <StepCard number="4" title="Άνοιξε την Έκδοση Τιμολογίου από τη Ροή Παραγγελιών">
+        <p>Από το μενού αριστερά, πάτα <strong>Ροή Παραγγελιών</strong> και βρες την κλειστή παραγγελία. Πάτα την κάρτα της για να ανοίξουν τα <strong>Στοιχεία Παραγγελίας</strong> και πάτα το <strong>πράσινο εικονίδιο εγγράφου</strong> (Issue B2G Invoice). Ανοίγει η <strong>Έκδοση Τιμολογίου</strong>.</p>
+        <p>Η έκδοση τιμολογίου B2G γίνεται <strong>μόνο από τη <Link to="/tutorial/secure/c-order-flow" className="text-purple-700 underline">Ροή Παραγγελιών</Link></strong>.</p>
         <p>Τα πεδία με <strong>*</strong> είναι υποχρεωτικά.</p>
       </StepCard>
 
