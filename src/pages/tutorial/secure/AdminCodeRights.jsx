@@ -18,7 +18,7 @@ export default function AdminCodeRights() {
       <StepCard number="2" title="Άνοιξε ή κλείσε τους διακόπτες">
         <p>ON (πράσινο) για όσα θέλεις να επιτρέπονται:</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li><strong>Αναφορά Βάρδιας</strong> (<S to="/tutorial/shift-report">Αναφορά Βάρδιας</S>).</li>
+          <li><strong>Αναφορά Βάρδιας</strong>.</li>
           <li><strong>Εκπτώσεις</strong> (<S to="/tutorial/discount">Έκπτωση</S>).</li>
           <li><strong>Διαγραφή Παραγγελίας ή Προϊόντος</strong> (<S to="/tutorial/cancel-order">Ακύρωση Παραγγελίας</S>, <S to="/tutorial/cancel-product">Ακύρωση Προϊόντος</S>).</li>
           <li><strong>Μεταφορά Παραγγελιών</strong> (<S to="/tutorial/transfer-order">Μεταφορά Παραγγελίας</S>).</li>
