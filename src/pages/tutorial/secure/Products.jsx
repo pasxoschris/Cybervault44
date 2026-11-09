@@ -1,7 +1,7 @@
 import React from "react";
 import SecureTutorialLayout from "../../../components/tutorial/SecureTutorialLayout";
 import { StepCard, InfoBox, SectionTitle } from "../../../components/tutorial/StepCard";
-import { S, Intro } from "../../../components/tutorial/SecureShot";
+import { Shot, S, Intro } from "../../../components/tutorial/SecureShot";
 
 export default function Products() {
   return (
@@ -17,6 +17,41 @@ export default function Products() {
 
       <InfoBox icon="⚠️" title="Πριν από τα προϊόντα" variant="warning">
         <p>Ο <strong>Εκτυπωτής</strong> είναι υποχρεωτικός σε κάθε προϊόν. Φτιάξε πρώτα τους <S to="/tutorial/secure/f-printers">Εκτυπωτές</S> (και τις <S to="/tutorial/secure/f-kitchen-displays">Οθόνες Κουζίνας</S>, αν υπάρχουν).</p>
+      </InfoBox>
+
+      <SectionTitle>Κατηγορίες</SectionTitle>
+
+      <StepCard title="Η στήλη Κατηγορίες">
+        <p>Στη σελίδα <strong>Κατάλογος → Προϊόντα</strong>, αριστερά, είναι η στήλη <strong>Κατηγορίες</strong>. Πάτα μια κατηγορία για να δεις τα προϊόντα της, ή το ✏️ δίπλα της για να την επεξεργαστείς.</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Οι <strong>υποκατηγορίες</strong> εμφανίζονται με εσοχή κάτω από την κύρια, π.χ. FOOD → ΣΑΛΑΤΕΣ, BRUNCH.</li>
+          <li>Κατηγορία με <strong>κόκκινα γράμματα</strong> = <strong>ανενεργή</strong>.</li>
+        </ul>
+      </StepCard>
+
+      <StepCard title="Νέα κατηγορία">
+        <p>Πάτα το κουμπί <strong>Νέα Κατηγορία</strong> πάνω από τη στήλη και συμπλήρωσε:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li><strong>Όνομα*</strong> και <strong>Περιγραφή</strong>.</li>
+          <li><strong>Κύρια Κατηγορία</strong>: για υποκατηγορία, διάλεξε την κύρια (π.χ. FOOD). Για κύρια κατηγορία, άφησέ το κενό.</li>
+          <li><strong>Separator</strong>, <strong>Χρώμα</strong>, <strong>Σύντομος Κωδικός</strong>.</li>
+          <li><strong>Ενεργή: ON</strong> και <strong>Διαθέσιμη στον Online Κατάλογο</strong>.</li>
+          <li><strong>Ορατό στους</strong> (π.χ. Service, Cashier POS, Take-Out &amp; Delivery, Maitre).</li>
+          <li><strong>Ενεργοποίηση στο Spotit</strong> και κουμπί <strong>Publish all items</strong>.</li>
+          <li><strong>Σειρά Σερβιρίσματος</strong>, <strong>Έκπτωση Ιδιοκατανάλωσης</strong>, <strong>Χρόνος Προετοιμασίας</strong>, <strong>Όνομα Φορ. Εκτύπωσης</strong>.</li>
+          <li><strong>Εκτυπωτές*</strong> (υποχρεωτικό) και <strong>Οθόνες Κουζίνας</strong>.</li>
+        </ul>
+        <p>Πάτα <strong>Δημιουργία</strong>.</p>
+      </StepCard>
+
+      <Shot src="edcdece5f_category-new.webp" alt="Φόρμα Νέα Κατηγορία" caption="Νέα Κατηγορία · αριστερά οι κατηγορίες (με κόκκινο οι ανενεργές)" max="max-w-xl" />
+
+      <InfoBox icon="⚠️" title="Άνοιξε το «Ενεργή»" variant="warning">
+        <p>Στη νέα κατηγορία, το <strong>Ενεργή</strong> είναι από προεπιλογή <strong>OFF</strong>. Άνοιξέ το, αλλιώς η κατηγορία μένει ανενεργή (με κόκκινα γράμματα).</p>
+      </InfoBox>
+
+      <InfoBox icon="ℹ️" title="Product Creation Rules" variant="info">
+        <p>Στο τέλος της φόρμας, η ενότητα <strong>Product Creation Rules</strong> έχει Τύπο Φ.Π.Α., Φορολογικό Είδος, Ετικέτες Προϊόντων, Τύπους Φαγητού και Group Type, για τα προϊόντα που φτιάχνεις σε αυτή την κατηγορία.</p>
       </InfoBox>
 
       <SectionTitle>Βασικά</SectionTitle>
