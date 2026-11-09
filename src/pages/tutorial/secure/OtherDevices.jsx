@@ -8,7 +8,7 @@ export default function OtherDevices() {
     <SecureTutorialLayout title="Other Devices" subtitle="Τερματικά καρτών, Caller ID, οθόνη πελάτη και συρτάρι μετρητών">
 
       <Intro>
-        Στα <strong>Other Devices</strong> δηλώνονται οι συσκευές του καταστήματος που δεν είναι εκτυπωτές ή οθόνες κουζίνας. Εδώ βρίσκονται και τα <strong>τερματικά POS της τράπεζας</strong> (EFTPOS).
+        Στα <strong>Other Devices</strong> δηλώνονται οι υπόλοιπες συσκευές του καταστήματος, εκτός από εκτυπωτές και οθόνες κουζίνας. Εδώ βρίσκονται και τα <strong>τερματικά POS της τράπεζας</strong> (EFTPOS).
       </Intro>
 
       <StepCard number="1" title="Άνοιξε τη λίστα">
@@ -25,11 +25,11 @@ export default function OtherDevices() {
       </StepCard>
 
       <StepCard title="Οι στήλες">
-        <p><strong>Όνομα</strong>, <strong>Τύπος</strong>, <strong>Διεύθυνση IP</strong> και <strong>Port</strong>. Κάποια τερματικά έχουν IP και Port (συνδέονται στο τοπικό δίκτυο), ενώ άλλα δεν έχουν.</p>
+        <p><strong>Όνομα</strong>, <strong>Τύπος</strong>, <strong>Διεύθυνση IP</strong> και <strong>Port</strong>. Σε κάποια τερματικά τα πεδία IP και Port είναι κενά.</p>
       </StepCard>
 
       <InfoBox icon="ℹ️" title="Ενεργοποίηση από τη Spotlight" variant="info">
-        <p>Η ενότητα εμφανίζεται όταν την έχει ενεργοποιήσει η Spotlight για το κατάστημα. Για τη σύνδεση ενός νέου τερματικού, ζήτησε από τη Spotlight.</p>
+        <p>Η ενότητα εμφανίζεται όταν την έχει ενεργοποιήσει η Spotlight για το κατάστημα.</p>
       </InfoBox>
 
       <InfoBox icon="🔄" title="Κάνε Συγχρονισμό" variant="info">
