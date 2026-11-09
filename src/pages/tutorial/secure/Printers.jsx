@@ -44,7 +44,7 @@ export default function Printers() {
       </InfoBox>
 
       <InfoBox icon="⚠️" title="Port: πάντα 9100" variant="warning">
-        <p>Αν το Port είναι κενό ή διαφορετικό από <strong>9100</strong>, ο εκτυπωτής δεν θα τυπώνει.</p>
+        <p>Σε κάθε εκτυπωτή, το Port είναι πάντα <strong>9100</strong>. Έλεγξέ το σε κάθε νέο εκτυπωτή.</p>
       </InfoBox>
 
       <StepCard number="4" title="Ομάδες">
