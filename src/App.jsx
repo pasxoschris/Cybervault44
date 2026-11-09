@@ -52,6 +52,7 @@ import SecureUsers from './pages/tutorial/secure/Users';
 import SecureAdminCodeRights from './pages/tutorial/secure/AdminCodeRights';
 import SecureRoles from './pages/tutorial/secure/Roles';
 import SecureProducts from './pages/tutorial/secure/Products';
+import SecurePrinters from './pages/tutorial/secure/Printers';
 import InitialScreenCashier from './pages/tutorial/cashier/InitialScreen';
 import AccompanimentsCashier from './pages/tutorial/cashier/Accompaniments';
 import OrderItemsCashier from './pages/tutorial/cashier/OrderItems';
@@ -199,6 +200,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/secure/i-admin-code-rights" element={<SecureAdminCodeRights />} />
       <Route path="/tutorial/secure/i-roles" element={<SecureRoles />} />
       <Route path="/tutorial/secure/e-products" element={<SecureProducts />} />
+      <Route path="/tutorial/secure/f-printers" element={<SecurePrinters />} />
       <Route path="/tutorial/secure/c-order-flow" element={<OrderFlow />} />
       <Route path="/tutorial/secure/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
