@@ -42,8 +42,19 @@ export default function TablesList() {
       <SectionTitle>Τραπέζια</SectionTitle>
 
       <StepCard number="4" title="Νέο τραπέζι">
-        <p>Διάλεξε την ομάδα αριστερά και πάτα <strong>Νέο Τραπέζι</strong> (κόκκινο κουμπί πάνω δεξιά). Δώσε <strong>Όνομα</strong> (π.χ. A1) και <strong>Θέσεις Ατόμων</strong>.</p>
+        <p>Διάλεξε την ομάδα αριστερά και πάτα <strong>Νέο Τραπέζι</strong> (κόκκινο κουμπί πάνω δεξιά). Συμπλήρωσε:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li><strong>Όνομα*</strong>, π.χ. A1.</li>
+          <li><strong>Ομάδα Τραπεζιών/Πόστων*</strong>: έρχεται συμπληρωμένη με την ομάδα που είχες επιλέξει.</li>
+          <li><strong>Θέσεις Ατόμων</strong> με τα − / +.</li>
+          <li><strong>Ενεργό: ON.</strong></li>
+        </ul>
+        <p>Πάτα <strong>Δημιουργία</strong>.</p>
       </StepCard>
+
+      <InfoBox icon="⚠️" title="Άνοιξε το «Ενεργό»" variant="warning">
+        <p>Στη φόρμα Νέο Τραπέζι, το <strong>Ενεργό</strong> είναι από προεπιλογή <strong>OFF</strong>. Άνοιξέ το, αλλιώς το τραπέζι δεν θα είναι διαθέσιμο.</p>
+      </InfoBox>
 
       <StepCard title="Τι βλέπεις στη λίστα">
         <ul className="list-disc pl-5 space-y-1">
