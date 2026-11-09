@@ -23,6 +23,7 @@ export default function B2GInvoices() {
 
       <StepCard number="1" title="Χτύπα τις παραγγελίες">
         <p>Χτύπα κανονικά τις παραγγελίες στην εφαρμογή.</p>
+        <p>Αν το τιμολόγιο αφορά <strong>πολλές παραγγελίες</strong>, πέρασέ τις <strong>όλες σε μία</strong> με <Link to="/tutorial/merge-orders" className="text-purple-700 underline">Συγχώνευση Παραγγελιών</Link>, πριν τις κλείσεις. Το B2G εκδίδεται από μία παραγγελία.</p>
       </StepCard>
 
       <StepCard number="2" title="Κλείσε τις παραγγελίες με απόδειξη">
@@ -107,6 +108,10 @@ export default function B2GInvoices() {
 
       <InfoBox icon="ℹ️" title="Αποθήκευση Στοιχείων" variant="info">
         <p>Το πράσινο κουμπί <strong>Αποθήκευση Στοιχείων</strong> κρατά τα στοιχεία του φορέα. Την επόμενη φορά τον βρίσκεις από την αναζήτηση (βήμα 5).</p>
+      </InfoBox>
+
+      <InfoBox icon="ℹ️" title="Η λίστα των B2G" variant="info">
+        <p>Στο μενού <strong>Τιμολόγια → B2G Invoices</strong> βλέπεις τη λίστα με τα τιμολόγια B2G που έχουν εκδοθεί.</p>
       </InfoBox>
 
     </SecureTutorialLayout>
