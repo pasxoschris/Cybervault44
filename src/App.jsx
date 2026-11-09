@@ -42,6 +42,16 @@ import PlaceholderLesson from './pages/tutorial/PlaceholderLesson';
 import B2GInvoices from './pages/tutorial/secure/B2GInvoices';
 import OrderFlow from './pages/tutorial/secure/OrderFlow';
 import Now from './pages/tutorial/secure/Now';
+import SecureOverview from './pages/tutorial/secure/Overview';
+import SecureTablesList from './pages/tutorial/secure/TablesList';
+import SecureFloorPlan from './pages/tutorial/secure/FloorPlan';
+import SecureSync from './pages/tutorial/secure/Sync';
+import SecurePosDevices from './pages/tutorial/secure/PosDevices';
+import SecureOtherDevices from './pages/tutorial/secure/OtherDevices';
+import SecureUsers from './pages/tutorial/secure/Users';
+import SecureAdminCodeRights from './pages/tutorial/secure/AdminCodeRights';
+import SecureRoles from './pages/tutorial/secure/Roles';
+import SecureProducts from './pages/tutorial/secure/Products';
 import InitialScreenCashier from './pages/tutorial/cashier/InitialScreen';
 import AccompanimentsCashier from './pages/tutorial/cashier/Accompaniments';
 import OrderItemsCashier from './pages/tutorial/cashier/OrderItems';
@@ -178,6 +188,17 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/secure/h-b2g" element={<B2GInvoices />} />
       <Route path="/tutorial/secure/c-now" element={<Now />} />
+      <Route path="/tutorial/secure/d-overview" element={<SecureOverview />} />
+      <Route path="/tutorial/secure/f-tables-list" element={<SecureTablesList />} />
+      <Route path="/tutorial/secure/f-floor-plan" element={<SecureFloorPlan />} />
+      <Route path="/tutorial/secure/a-sync" element={<SecureSync />} />
+      <Route path="/tutorial/secure/i-sync" element={<SecureSync />} />
+      <Route path="/tutorial/secure/f-pos-devices" element={<SecurePosDevices />} />
+      <Route path="/tutorial/secure/f-other-devices" element={<SecureOtherDevices />} />
+      <Route path="/tutorial/secure/i-users" element={<SecureUsers />} />
+      <Route path="/tutorial/secure/i-admin-code-rights" element={<SecureAdminCodeRights />} />
+      <Route path="/tutorial/secure/i-roles" element={<SecureRoles />} />
+      <Route path="/tutorial/secure/e-products" element={<SecureProducts />} />
       <Route path="/tutorial/secure/c-order-flow" element={<OrderFlow />} />
       <Route path="/tutorial/secure/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
