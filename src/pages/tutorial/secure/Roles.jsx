@@ -28,7 +28,7 @@ export default function Roles() {
       </StepCard>
 
       <InfoBox icon="ℹ️" title="Ο Υπεύθυνος είναι ρόλος" variant="info">
-        <p>Στα <S to="/tutorial/secure/d-managers">Στατιστικά → Υπεύθυνοι</S> και στο φίλτρο «Υπεύθυνος» της <S to="/tutorial/secure/c-order-flow">Ροής Παραγγελιών</S> εμφανίζονται οι χρήστες με ρόλο Υπεύθυνος.</p>
+        <p>Ο «Υπεύθυνος» που βλέπεις στα <S to="/tutorial/secure/d-staff">Στατιστικά → Υπεύθυνοι</S> και στα φίλτρα της <S to="/tutorial/secure/c-order-flow">Ροής Παραγγελιών</S> είναι ρόλος χρήστη.</p>
       </InfoBox>
 
       <InfoBox icon="ℹ️" title="Ο ρόλος κάθε χρήστη" variant="info">
