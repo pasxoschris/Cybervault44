@@ -55,7 +55,7 @@ export default function DiscountOwn() {
       </InfoBox>
 
       <InfoBox icon="ℹ️" title="Σφάλμα Vat Amount ή λάθος ποσό Αυτοπαράδοσης" variant="info">
-        <p>Αν βγει σφάλμα <strong>Vat Amount</strong> ή λάθος ποσό στο Στοιχείο Αυτοπαράδοσης, ζήτησε από τον <strong>Διαχειριστή</strong> να συμπληρώσει το <strong>Κόστος Αγαθού</strong> του προϊόντος στο Secure.</p>
+        <p>Αν βγει σφάλμα <strong>Vat Amount</strong> ή λάθος ποσό στο Στοιχείο Αυτοπαράδοσης, ζήτησε από τον <strong>Διαχειριστή</strong> να ελέγξει το <strong>Κόστος Αγαθού</strong> του προϊόντος στο Secure (να μην είναι κενό ή πολύ μικρό).</p>
       </InfoBox>
     </TutorialLayout>
   );
