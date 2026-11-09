@@ -42,6 +42,10 @@ import PlaceholderLesson from './pages/tutorial/PlaceholderLesson';
 import B2GInvoices from './pages/tutorial/secure/B2GInvoices';
 import OrderFlow from './pages/tutorial/secure/OrderFlow';
 import Now from './pages/tutorial/secure/Now';
+import SecureNavigation from './pages/tutorial/secure/Navigation';
+import SecureChecklist from './pages/tutorial/secure/Checklist';
+import SecurePrintNames from './pages/tutorial/secure/PrintNames';
+import SecureInvoices from './pages/tutorial/secure/Invoices';
 import SecureOverview from './pages/tutorial/secure/Overview';
 import SecureTablesList from './pages/tutorial/secure/TablesList';
 import SecureFloorPlan from './pages/tutorial/secure/FloorPlan';
@@ -189,6 +193,11 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/secure/h-b2g" element={<B2GInvoices />} />
       <Route path="/tutorial/secure/c-now" element={<Now />} />
+      <Route path="/tutorial/secure/a-navigation" element={<SecureNavigation />} />
+      <Route path="/tutorial/secure/b-checklist" element={<SecureChecklist />} />
+      <Route path="/tutorial/secure/b-sync-check" element={<SecureSync />} />
+      <Route path="/tutorial/secure/e-print-names" element={<SecurePrintNames />} />
+      <Route path="/tutorial/secure/h-invoices" element={<SecureInvoices />} />
       <Route path="/tutorial/secure/d-overview" element={<SecureOverview />} />
       <Route path="/tutorial/secure/f-tables-list" element={<SecureTablesList />} />
       <Route path="/tutorial/secure/f-floor-plan" element={<SecureFloorPlan />} />
