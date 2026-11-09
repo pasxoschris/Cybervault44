@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SecureTutorialLayout from "../../../components/tutorial/SecureTutorialLayout";
+import { Shot } from "../../../components/tutorial/SecureShot";
 import { StepCard, InfoBox, SectionTitle } from "../../../components/tutorial/StepCard";
 
 export default function B2GInvoices() {
@@ -44,6 +45,8 @@ export default function B2GInvoices() {
         <p>Η έκδοση τιμολογίου B2G γίνεται <strong>μόνο από τη <Link to="/tutorial/secure/c-order-flow" className="text-purple-700 underline">Ροή Παραγγελιών</Link></strong>.</p>
         <p>Τα πεδία με <strong>*</strong> είναι υποχρεωτικά.</p>
       </StepCard>
+
+      <Shot src="4d7a9611b_b2g-icon.webp" alt="Στοιχεία Παραγγελίας με το πράσινο εικονίδιο Issue B2G Invoice" caption="Στοιχεία Παραγγελίας: το πράσινο εικονίδιο εγγράφου είναι το Issue B2G Invoice" max="max-w-xs" />
 
       <StepCard number="5" title="Βρες ή συμπλήρωσε τον φορέα">
         <p>Αν έχεις ξανακόψει τιμολόγιο στον ίδιο φορέα, γράψε στην <strong>αναζήτηση</strong> πάνω αριστερά τα στοιχεία του και επίλεξέ τον. Τα στοιχεία συμπληρώνονται μόνα τους.</p>
