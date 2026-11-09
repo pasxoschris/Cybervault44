@@ -34,7 +34,8 @@ export default function Printers() {
           <li><strong>Όνομα*</strong>: π.χ. BAR, ΚΟΥΖΙΝΑ.</li>
           <li><strong>Διεύθυνση IP*</strong>: η διεύθυνση του εκτυπωτή στο δίκτυο του καταστήματος.</li>
           <li><strong>Port</strong>: πάντα <strong>9100</strong>.</li>
-          <li><strong>Κωδικοποίηση</strong> (π.χ. Greek (Windows)), <strong>CodeTable*</strong> (π.χ. 47), <strong>Manufacturer</strong> (π.χ. EPSON).</li>
+          <li><strong>Κωδικοποίηση</strong> (π.χ. Greek (Windows)) και <strong>Manufacturer</strong> (π.χ. EPSON).</li>
+          <li><strong>CodeTable*</strong>: για εκτυπωτές <strong>EPSON</strong>, <strong>47</strong>.</li>
           <li><strong>Εκτύπωση Πρόσθετων Γραμμών</strong> με τα − / +, και <strong>Skip Dynamic Codetable</strong>.</li>
         </ul>
       </StepCard>
