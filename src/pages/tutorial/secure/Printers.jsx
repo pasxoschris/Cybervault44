@@ -35,7 +35,7 @@ export default function Printers() {
           <li><strong>Διεύθυνση IP*</strong>: η διεύθυνση του εκτυπωτή στο δίκτυο του καταστήματος.</li>
           <li><strong>Port</strong>: πάντα <strong>9100</strong>.</li>
           <li><strong>Κωδικοποίηση</strong> (π.χ. Greek (Windows)) και <strong>Manufacturer</strong> (π.χ. EPSON).</li>
-          <li><strong>CodeTable*</strong>: για εκτυπωτές <strong>EPSON</strong> και <strong>SAM4S</strong>, <strong>47</strong>.</li>
+          <li><strong>CodeTable*</strong>: για εκτυπωτές <strong>EPSON</strong> και <strong>SAM4S</strong> συνήθως <strong>47</strong>. Ανάλογα με το μοντέλο μπορεί να είναι άλλο, π.χ. <strong>24</strong> σε κάποιους EPSON.</li>
           <li><strong>Εκτύπωση Πρόσθετων Γραμμών</strong> με τα − / +, και <strong>Skip Dynamic Codetable</strong>.</li>
         </ul>
       </StepCard>
