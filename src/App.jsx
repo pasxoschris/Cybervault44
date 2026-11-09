@@ -40,6 +40,7 @@ import RoleSelection from './pages/RoleSelection';
 import RolePath from './pages/RolePath';
 import PlaceholderLesson from './pages/tutorial/PlaceholderLesson';
 import B2GInvoices from './pages/tutorial/secure/B2GInvoices';
+import OrderFlow from './pages/tutorial/secure/OrderFlow';
 import InitialScreenCashier from './pages/tutorial/cashier/InitialScreen';
 import AccompanimentsCashier from './pages/tutorial/cashier/Accompaniments';
 import OrderItemsCashier from './pages/tutorial/cashier/OrderItems';
@@ -175,6 +176,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/cashier/printer-warning" element={<PrinterWarningCashier />} />
       <Route path="/tutorial/cashier/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/secure/h-b2g" element={<B2GInvoices />} />
+      <Route path="/tutorial/secure/c-order-flow" element={<OrderFlow />} />
       <Route path="/tutorial/secure/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
       <Route path="*" element={<PageNotFound />} />
