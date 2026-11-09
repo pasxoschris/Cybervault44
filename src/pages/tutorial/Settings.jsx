@@ -82,7 +82,7 @@ export default function Settings() {
       <SectionTitle>Διαθέσιμες Ρυθμίσεις</SectionTitle>
 
       <InfoBox icon="🔒" title="Δεν βλέπεις κάποια ρύθμιση;" variant="warning">
-        Αν κάποια ρύθμιση δεν εμφανίζεται στην εφαρμογή σου, πρέπει να την ενεργοποιήσει ο <strong>Διαχειριστής</strong> μέσα από το <strong>Secure (Διαχειριστικό)</strong>.
+        Τις ρυθμίσεις σου τις ορίζει ο <strong>Διαχειριστής</strong> από το <strong>Secure (Διαχειριστικό)</strong>. Αν κάποια δεν εμφανίζεται ή χρειάζεται αλλαγή, ζήτησέ το από τον <strong>Διαχειριστή</strong>.
       </InfoBox>
 
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>

@@ -29,8 +29,8 @@ export default function Shift() {
       <StepCard number="3" title="Φιλτράρισμα">
         <p>Χρησιμοποίησε το εικονίδιο <strong>φίλτρου (▽)</strong> για να βλέπεις μόνο συγκεκριμένες παραγγελίες.</p>
       </StepCard>
-      <StepCard number="4" title="Επαναφορά παραγγελίας">
-        <p>Σύρε την κλειστή παραγγελία <strong>προς τα αριστερά (slide)</strong> — δεν πατάς την παραγγελία. Εμφανίζεται το κουμπί <strong>«Επαναφορά»</strong>.</p>
+      <StepCard number="4" title="Επαναφορά παραγγελίας" admin>
+        <p>Σύρε την κλειστή παραγγελία <strong>προς τα αριστερά (slide)</strong> — δεν πατάς την παραγγελία. Εμφανίζεται το κουμπί <strong>«Επαναφορά»</strong>. Πάτα το και δώσε <strong>Κωδικό Διαχειριστή</strong>.</p>
       </StepCard>
       <InfoBox icon="🔄" title="Ακύρωση κλειστής παραγγελίας" variant="info">
         <p>

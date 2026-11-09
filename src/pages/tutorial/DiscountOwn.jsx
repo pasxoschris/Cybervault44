@@ -53,6 +53,10 @@ export default function DiscountOwn() {
         <p className="mt-2">Π.χ. ένας Double Espresso των 5,00 € με κόστος 1,00 € δείχνει Σύνολο 0,00 € και βγάζει Στοιχείο Αυτοπαράδοσης 1,00 €.</p>
         <p className="mt-2">Το κόστος του αγαθού το ορίζει ο <strong>Διαχειριστής</strong>.</p>
       </InfoBox>
+
+      <InfoBox icon="ℹ️" title="Σφάλμα Vat Amount ή λάθος ποσό Αυτοπαράδοσης" variant="info">
+        <p>Αν βγει σφάλμα <strong>Vat Amount</strong> ή λάθος ποσό στο Στοιχείο Αυτοπαράδοσης, ζήτησε από τον <strong>Διαχειριστή</strong> να συμπληρώσει το <strong>Κόστος Αγαθού</strong> του προϊόντος στο Secure.</p>
+      </InfoBox>
     </TutorialLayout>
   );
 }

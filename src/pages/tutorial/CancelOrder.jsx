@@ -39,9 +39,9 @@ export default function CancelOrder() {
           <Link to="/tutorial/shift" className="text-purple-600 underline">Παραγγελίες Βάρδιας</Link>.
         </p>
       </StepCard>
-      <StepCard number="2" title="Επαναφορά παραγγελίας">
+      <StepCard number="2" title="Επαναφορά παραγγελίας" admin>
         <p>
-          Σύρε την παραγγελία <strong>προς τα αριστερά (slide)</strong> — δεν πατάς την παραγγελία — και πάτα <strong>«Επαναφορά παραγγελίας»</strong> για να ξανανοίξει.
+          Σύρε την παραγγελία <strong>προς τα αριστερά (slide)</strong> — δεν πατάς την παραγγελία — και πάτα <strong>«Επαναφορά παραγγελίας»</strong> για να ξανανοίξει. Θα σου ζητηθεί <strong>Κωδικός Διαχειριστή</strong>.
         </p>
       </StepCard>
       <StepCard number="3" title="Slide → «Ακύρωση»" admin>
