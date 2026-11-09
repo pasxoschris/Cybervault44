@@ -32,11 +32,20 @@ export default function Printers() {
       <StepCard number="3" title="Στοιχεία σύνδεσης">
         <ul className="list-disc pl-5 space-y-1">
           <li><strong>Όνομα*</strong>: π.χ. BAR, ΚΟΥΖΙΝΑ.</li>
-          <li><strong>Διεύθυνση IP*</strong> και <strong>Port</strong> (π.χ. 9100): η διεύθυνση του εκτυπωτή στο δίκτυο του καταστήματος.</li>
+          <li><strong>Διεύθυνση IP*</strong>: η διεύθυνση του εκτυπωτή στο δίκτυο του καταστήματος.</li>
+          <li><strong>Port</strong>: πάντα <strong>9100</strong>.</li>
           <li><strong>Κωδικοποίηση</strong> (π.χ. Greek (Windows)), <strong>CodeTable*</strong> (π.χ. 47), <strong>Manufacturer</strong> (π.χ. EPSON).</li>
           <li><strong>Εκτύπωση Πρόσθετων Γραμμών</strong> με τα − / +, και <strong>Skip Dynamic Codetable</strong>.</li>
         </ul>
       </StepCard>
+
+      <InfoBox icon="ℹ️" title="Ποιος τα συμπληρώνει" variant="info">
+        <p>Τα τεχνικά πεδία (IP, Port, Κωδικοποίηση, CodeTable, Manufacturer) τα συμπληρώνει συνήθως η <strong>Spotlight ή ο τεχνικός</strong> κατά την εγκατάσταση. Μπορεί να τα συμπληρώσει και ο Διαχειριστής.</p>
+      </InfoBox>
+
+      <InfoBox icon="⚠️" title="Port: πάντα 9100" variant="warning">
+        <p>Αν το Port είναι κενό ή διαφορετικό από <strong>9100</strong>, ο εκτυπωτής δεν θα τυπώνει.</p>
+      </InfoBox>
 
       <StepCard number="4" title="Ομάδες">
         <p><strong>Ομάδες*</strong> (υποχρεωτικό): διάλεξε σε ποια ομάδα ή ομάδες εκτυπωτών ανήκει ο εκτυπωτής.</p>
