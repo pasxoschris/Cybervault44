@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import TutorialLayout from "../../components/tutorial/TutorialLayout";
-import { InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
+import { StepCard, InfoBox, SectionTitle } from "../../components/tutorial/StepCard";
 import { ScreenshotGallery } from "../../components/tutorial/ScreenshotGallery";
 import { Tag, Clock, Users, LayoutGrid, Palette, MessageSquare, ShoppingBasket, Euro } from "lucide-react";
 import OrderDetailsMock, { Marker } from "../../components/tutorial/OrderDetailsMock";
@@ -69,6 +69,20 @@ export default function OrderDetails() {
           <li><Link to="/tutorial/invoice" className="underline font-semibold">Έκδοση Τιμολογίου</Link> (εφόσον έχει ενεργοποιηθεί για αυτή τη συσκευή)</li>
         </ul>
       </InfoBox>
+
+      <SectionTitle>Αποστολή Μηνύματος</SectionTitle>
+      <StepCard number="1" title="Πάτα Αποστολή Μηνύματος">
+        <p>Στα Στοιχεία Παραγγελίας, κάτω από το σχόλιο, πάτα <strong>«Αποστολή Μηνύματος»</strong>.</p>
+      </StepCard>
+      <StepCard number="2" title="Γράψε ή διάλεξε μήνυμα">
+        <p>Πληκτρολόγησε το μήνυμά σου ή <strong>διάλεξε ένα έτοιμο</strong> από τη λίστα (π.χ. «πάσο», «βγάλε 1»). Τα έτοιμα μηνύματα τα ορίζει ο Διαχειριστής στο Secure.</p>
+      </StepCard>
+      <StepCard number="3" title="Διάλεξε εκτυπωτές">
+        <p>Στην <strong>επιλογή εκτυπωτών</strong> διάλεξε πού θα πάει το μήνυμα, π.χ. στην κουζίνα.</p>
+      </StepCard>
+      <StepCard number="4" title="Αποστολή">
+        <p>Πάτα <strong>Αποστολή</strong>. Το μήνυμα τυπώνεται στους εκτυπωτές που διάλεξες.</p>
+      </StepCard>
     </TutorialLayout>
   );
 }
