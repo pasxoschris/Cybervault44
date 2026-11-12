@@ -1,17 +1,107 @@
 {
   "name": "ResellerOffer",
-  "type": "object",
   "properties": {
-    "reference_number": {
-      "type": "string",
-      "description": "Unique offer reference, e.g. CYV-SPOT-20240605-001"
+    "accepted_at": {
+      "description": "Acceptance timestamp",
+      "type": "string"
+    },
+    "accepted_pdf_url": {
+      "description": "URL of accepted PDF with certificate",
+      "type": "string"
+    },
+    "address": {
+      "description": "\u0394\u03b9\u03b5\u03cd\u03b8\u03c5\u03bd\u03c3\u03b7",
+      "type": "string"
+    },
+    "audit_log": {
+      "description": "JSON array of {action, timestamp, actor, details}",
+      "type": "string"
+    },
+    "company_legal_name": {
+      "description": "\u0395\u03c0\u03c9\u03bd\u03c5\u03bc\u03af\u03b1",
+      "type": "string"
+    },
+    "contact_person": {
+      "description": "\u03a5\u03c0\u03b5\u03cd\u03b8\u03c5\u03bd\u03bf\u03c2",
+      "type": "string"
+    },
+    "email": {
+      "description": "Email",
+      "type": "string"
+    },
+    "email_history": {
+      "description": "JSON array of sent email log entries",
+      "type": "string"
+    },
+    "expires_at": {
+      "description": "\u0397\u03bc\u03b5\u03c1\u03bf\u03bc\u03b7\u03bd\u03af\u03b1 \u03bb\u03ae\u03be\u03b7\u03c2",
+      "format": "date",
+      "type": "string"
+    },
+    "final_total": {
+      "description": "\u03a4\u03b5\u03bb\u03b9\u03ba\u03cc \u03c3\u03cd\u03bd\u03bf\u03bb\u03bf",
+      "type": "number"
+    },
+    "items": {
+      "description": "JSON array of offer line items (snapshot)",
+      "type": "string"
+    },
+    "last_sent_at": {
+      "description": "\u03a4\u03b5\u03bb\u03b5\u03c5\u03c4\u03b1\u03af\u03b1 \u03b1\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae",
+      "type": "string"
+    },
+    "last_sent_to": {
+      "description": "\u03a3\u03c4\u03ac\u03bb\u03b8\u03b7\u03ba\u03b5 \u03c3\u03b5",
+      "type": "string"
+    },
+    "notes": {
+      "description": "\u03a3\u03b7\u03bc\u03b5\u03b9\u03ce\u03c3\u03b5\u03b9\u03c2",
+      "type": "string"
+    },
+    "otp_attempts": {
+      "default": 0,
+      "description": "Number of OTP verification attempts",
+      "type": "number"
+    },
+    "otp_expires_at": {
+      "description": "OTP expiry datetime",
+      "type": "string"
+    },
+    "otp_hash": {
+      "description": "SHA-256 hash of the OTP (never store plain text)",
+      "type": "string"
+    },
+    "otp_last_sent_at": {
+      "description": "Last OTP send datetime (for cooldown)",
+      "type": "string"
+    },
+    "pdf_generated_at": {
+      "description": "PDF generation datetime",
+      "type": "string"
+    },
+    "pdf_url": {
+      "description": "URL of generated PDF",
+      "type": "string"
+    },
+    "phone": {
+      "description": "\u03a4\u03b7\u03bb\u03ad\u03c6\u03c9\u03bd\u03bf",
+      "type": "string"
     },
     "public_token": {
-      "type": "string",
-      "description": "Secure non-sequential public token for /offers/:publicToken URL"
+      "description": "Secure non-sequential public token for /offers/:publicToken URL",
+      "type": "string"
+    },
+    "reference_number": {
+      "description": "Unique offer reference, e.g. CYV-SPOT-20240605-001",
+      "type": "string"
+    },
+    "rejected_at": {
+      "description": "Rejection timestamp",
+      "type": "string"
     },
     "status": {
-      "type": "string",
+      "default": "draft",
+      "description": "Offer status",
       "enum": [
         "draft",
         "sent",
@@ -20,135 +110,44 @@
         "rejected",
         "expired"
       ],
-      "default": "draft",
-      "description": "Offer status"
+      "type": "string"
     },
     "store_name": {
-      "type": "string",
-      "description": "Κατάστημα"
-    },
-    "company_legal_name": {
-      "type": "string",
-      "description": "Επωνυμία"
-    },
-    "vat_number": {
-      "type": "string",
-      "description": "ΑΦΜ"
-    },
-    "address": {
-      "type": "string",
-      "description": "Διεύθυνση"
-    },
-    "contact_person": {
-      "type": "string",
-      "description": "Υπεύθυνος"
-    },
-    "email": {
-      "type": "string",
-      "description": "Email"
-    },
-    "phone": {
-      "type": "string",
-      "description": "Τηλέφωνο"
-    },
-    "notes": {
-      "type": "string",
-      "description": "Σημειώσεις"
-    },
-    "items": {
-      "type": "string",
-      "description": "JSON array of offer line items (snapshot)"
-    },
-    "subtotal_before_discount": {
-      "type": "number",
-      "description": "Σύνολο πριν έκπτωση"
-    },
-    "total_discount": {
-      "type": "number",
-      "description": "Συνολική έκπτωση"
+      "description": "\u039a\u03b1\u03c4\u03ac\u03c3\u03c4\u03b7\u03bc\u03b1",
+      "type": "string"
     },
     "subtotal_after_discount": {
-      "type": "number",
-      "description": "Σύνολο μετά έκπτωση"
+      "description": "\u03a3\u03cd\u03bd\u03bf\u03bb\u03bf \u03bc\u03b5\u03c4\u03ac \u03ad\u03ba\u03c0\u03c4\u03c9\u03c3\u03b7",
+      "type": "number"
     },
-    "vat_rate": {
-      "type": "number",
-      "default": 24,
-      "description": "ΦΠΑ %"
+    "subtotal_before_discount": {
+      "description": "\u03a3\u03cd\u03bd\u03bf\u03bb\u03bf \u03c0\u03c1\u03b9\u03bd \u03ad\u03ba\u03c0\u03c4\u03c9\u03c3\u03b7",
+      "type": "number"
+    },
+    "total_discount": {
+      "description": "\u03a3\u03c5\u03bd\u03bf\u03bb\u03b9\u03ba\u03ae \u03ad\u03ba\u03c0\u03c4\u03c9\u03c3\u03b7",
+      "type": "number"
     },
     "vat_amount": {
-      "type": "number",
-      "description": "Ποσό ΦΠΑ"
+      "description": "\u03a0\u03bf\u03c3\u03cc \u03a6\u03a0\u0391",
+      "type": "number"
     },
-    "final_total": {
-      "type": "number",
-      "description": "Τελικό σύνολο"
+    "vat_number": {
+      "description": "\u0391\u03a6\u039c",
+      "type": "string"
     },
-    "pdf_url": {
-      "type": "string",
-      "description": "URL of generated PDF"
-    },
-    "accepted_pdf_url": {
-      "type": "string",
-      "description": "URL of accepted PDF with certificate"
-    },
-    "pdf_generated_at": {
-      "type": "string",
-      "description": "PDF generation datetime"
-    },
-    "expires_at": {
-      "type": "string",
-      "format": "date",
-      "description": "Ημερομηνία λήξης"
-    },
-    "last_sent_at": {
-      "type": "string",
-      "description": "Τελευταία αποστολή"
-    },
-    "last_sent_to": {
-      "type": "string",
-      "description": "Στάλθηκε σε"
-    },
-    "email_history": {
-      "type": "string",
-      "description": "JSON array of sent email log entries"
-    },
-    "viewed_at": {
-      "type": "string",
-      "description": "First view timestamp"
-    },
-    "accepted_at": {
-      "type": "string",
-      "description": "Acceptance timestamp"
-    },
-    "rejected_at": {
-      "type": "string",
-      "description": "Rejection timestamp"
-    },
-    "otp_hash": {
-      "type": "string",
-      "description": "SHA-256 hash of the OTP (never store plain text)"
-    },
-    "otp_expires_at": {
-      "type": "string",
-      "description": "OTP expiry datetime"
-    },
-    "otp_attempts": {
-      "type": "number",
-      "default": 0,
-      "description": "Number of OTP verification attempts"
-    },
-    "otp_last_sent_at": {
-      "type": "string",
-      "description": "Last OTP send datetime (for cooldown)"
+    "vat_rate": {
+      "default": 24,
+      "description": "\u03a6\u03a0\u0391 %",
+      "type": "number"
     },
     "verification_details": {
-      "type": "string",
-      "description": "JSON: {method, verified_email, verified_at, ip, user_agent, otp_success, otp_attempts}"
+      "description": "JSON: {method, verified_email, verified_at, ip, user_agent, otp_success, otp_attempts}",
+      "type": "string"
     },
-    "audit_log": {
-      "type": "string",
-      "description": "JSON array of {action, timestamp, actor, details}"
+    "viewed_at": {
+      "description": "First view timestamp",
+      "type": "string"
     }
   },
   "required": [
@@ -168,6 +167,11 @@
           }
         }
       ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
     },
     "read": {
       "$or": [
@@ -196,11 +200,7 @@
           }
         }
       ]
-    },
-    "delete": {
-      "user_condition": {
-        "role": "admin"
-      }
     }
-  }
+  },
+  "type": "object"
 }
