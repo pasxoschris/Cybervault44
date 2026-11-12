@@ -27,6 +27,10 @@ export default function CallerId() {
         <p>Κάνε <S to="/tutorial/secure/a-sync">Συγχρονισμό</S>.</p>
       </StepCard>
 
+      <InfoBox icon="ℹ️" title="Δεν βλέπεις τον τύπο στη λίστα;" variant="info">
+        <p>Αν στον <strong>Τύπο Συσκευής</strong> δεν υπάρχει το Caller ID, ζήτησε από τη <strong>Spotlight</strong> να το ενεργοποιήσει.</p>
+      </InfoBox>
+
       <InfoBox icon="ℹ️" title="Ποιος το κάνει" variant="info">
         <p>Το Caller ID το ρυθμίζουν συνήθως οι <strong>τεχνικοί της Spotlight</strong>.</p>
       </InfoBox>
