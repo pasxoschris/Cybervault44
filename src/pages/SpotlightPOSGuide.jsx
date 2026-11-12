@@ -49,6 +49,7 @@ export default function SpotlightPOSGuide() {
       const authed = await base44.auth.isAuthenticated();
       if (!authed) { setStatus('guest'); return; }
       const u = await base44.auth.me();
+      await syncMyAccess();
       if (u.role === 'admin') { setStatus('allowed'); return; }
       const list = await base44.entities.AllowedUserGuide.filter({ email: u.email.toLowerCase() });
       setStatus(list.length > 0 ? 'allowed' : 'denied');
