@@ -59,6 +59,7 @@ import SecureModifiers from './pages/tutorial/secure/Modifiers';
 import SecurePriceLists from './pages/tutorial/secure/PriceLists';
 import SecureVatTypes from './pages/tutorial/secure/VatTypes';
 import SecureFoodTypes from './pages/tutorial/secure/FoodTypes';
+import SecureCourses from './pages/tutorial/secure/Courses';
 import SecureUsers from './pages/tutorial/secure/Users';
 import SecureAdminCodeRights from './pages/tutorial/secure/AdminCodeRights';
 import SecureRoles from './pages/tutorial/secure/Roles';
@@ -226,6 +227,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/secure/e-pricelists" element={<SecurePriceLists />} />
       <Route path="/tutorial/secure/e-vat" element={<SecureVatTypes />} />
       <Route path="/tutorial/secure/e-food-types" element={<SecureFoodTypes />} />
+      <Route path="/tutorial/secure/e-courses" element={<SecureCourses />} />
       <Route path="/tutorial/secure/i-users" element={<SecureUsers />} />
       <Route path="/tutorial/secure/i-admin-code-rights" element={<SecureAdminCodeRights />} />
       <Route path="/tutorial/secure/i-roles" element={<SecureRoles />} />
