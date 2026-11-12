@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Globe, Satellite, Tablet, Cctv, Phone } from 'lucide-react';
+import { ArrowUpRight, Globe, Satellite, Tablet, Cctv } from 'lucide-react';
 
 // Υπηρεσίες ομαδοποιημένες με βάση το τι κρατούν σε λειτουργία μέσα στην επιχείρηση.
 const groups = [
@@ -140,6 +140,7 @@ const IMG = {
   u7outdoor: 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/b6f8611b0_u7-outdoor.webp',
   unifi5g: 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/e6741206d_unifi-5g.webp',
   switch: 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/45e3dea5a_usw-lite-16-poe.webp',
+  phone: 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/e1d0d7a20_yealink-t5.webp',
 };
 
 const inputs = [
@@ -153,15 +154,18 @@ const inputs = [
 
 const endpoints = [
   {
-    id: 'wifi', label: 'WiFi', role: 'U7 Lite & U7 Outdoor', x: 70, group: 'syndesi',
+    id: 'wifi', label: 'WiFi', role: 'U7 Pro & U7 Outdoor', x: 70, group: 'syndesi',
     photos: [
       { href: IMG.u7lite, w: 45, h: 50, dx: -24 },
       { href: IMG.u7outdoor, w: 37, h: 50, dx: 24 },
     ],
   },
-  { id: 'pos', icon: Tablet, label: 'Παραγγελιοληψία', role: 'POS & PDA', x: 210, group: 'tameio' },
-  { id: 'cam', icon: Cctv, label: 'Κάμερες', role: 'UniFi Protect', x: 350, group: 'asfaleia' },
-  { id: 'voip', icon: Phone, label: 'Τηλέφωνο', role: 'VoIP', x: 490, group: 'ypostirixi' },
+  { id: 'pos', icon: Tablet, label: 'Παραγγελιοληψία', role: 'iPhone & iPad', x: 210, group: 'tameio' },
+  { id: 'cam', icon: Cctv, label: 'Κάμερες', role: '', x: 350, group: 'asfaleia' },
+  {
+    id: 'voip', label: 'Τηλέφωνο', role: 'VoIP', x: 490, group: 'ypostirixi',
+    photos: [{ href: IMG.phone, w: 70, h: 50, dx: 0 }],
+  },
 ];
 
 const IN_Y = 52;
@@ -199,7 +203,7 @@ function NetworkMap() {
       viewBox="0 0 560 632"
       className="w-full h-auto max-w-[560px] mx-auto"
       role="img"
-      aria-label="Παράδειγμα εγκατάστασης: κύρια γραμμή, Starlink ως εφεδρική και UniFi 5G ως προσωρινή σύνδεση καταλήγουν σε UniFi Cloud Gateway Ultra. Από εκεί ένα UniFi Switch Lite 16 PoE τροφοδοτεί WiFi (U7 Lite και U7 Outdoor), παραγγελιοληψία, κάμερες και τηλέφωνο."
+      aria-label="Παράδειγμα εγκατάστασης: κύρια γραμμή, Starlink ως εφεδρική και UniFi 5G ως προσωρινή σύνδεση καταλήγουν σε UniFi Cloud Gateway Ultra. Από εκεί ένα UniFi Switch Lite 16 PoE τροφοδοτεί WiFi (U7 Pro και U7 Outdoor), παραγγελιοληψία, κάμερες και τηλέφωνο."
     >
       {inputs.map((n) => (
         <path
