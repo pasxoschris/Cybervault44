@@ -22,6 +22,7 @@ export default function RoleSelection() {
         return;
       }
       const u = await base44.auth.me();
+      await syncMyAccess();
       if (u.role === 'admin') {
         setAllowed(true);
         setIsAdmin(true);
