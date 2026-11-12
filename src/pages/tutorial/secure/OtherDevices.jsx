@@ -39,7 +39,7 @@ export default function OtherDevices() {
         <p className="mt-1">Πού βρίσκονται εξαρτάται από τον πάροχο. Δες παρακάτω, στο «Πού βρίσκεις το TID και τον κωδικό WebECR».</p>
       </InfoBox>
 
-      <StepCard number="2" title="Νέα συσκευή">
+      <StepCard number="1" title="Νέα συσκευή">
         <p>Στα <strong>Other Devices</strong> πρόσθεσε νέα συσκευή και συμπλήρωσε:</p>
         <ul className="list-disc pl-5 space-y-1 mt-1">
           <li><strong>Όνομα</strong>*: π.χ. «POS Ταμείο».</li>
@@ -52,7 +52,7 @@ export default function OtherDevices() {
         <p className="mt-2">Πάτα <strong>Αποθήκευση</strong>.</p>
       </StepCard>
 
-      <StepCard number="3" title="Register Device">
+      <StepCard number="2" title="Register Device">
         <p>Στο κάτω μέρος, στην ενότητα <strong>Register Device</strong>, συμπλήρωσε:</p>
         <ul className="list-disc pl-5 space-y-1 mt-1">
           <li><strong>Registration ID</strong>*: τον κωδικό WebECR.</li>
@@ -60,7 +60,7 @@ export default function OtherDevices() {
         </ul>
       </StepCard>
 
-      <StepCard number="4" title="Συγχρονισμός 🔄">
+      <StepCard number="3" title="Συγχρονισμός 🔄">
         <p>Κάνε <S to="/tutorial/secure/a-sync">Συγχρονισμό</S>.</p>
       </StepCard>
 
