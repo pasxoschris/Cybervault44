@@ -21,9 +21,19 @@ export default function Favorites() {
         </ul>
       </StepCard>
 
+      <SectionTitle>Νέα λίστα</SectionTitle>
+
+      <StepCard number="2" title="Προσθήκη Λίστας Αγαπημένων">
+        <p>Πάτα <strong>+</strong> πάνω από τις Λίστες. Συμπλήρωσε <strong>Όνομα</strong>*, άνοιξε την <strong>Ενεργή</strong> και πάτα <strong>Δημιουργία</strong>.</p>
+      </StepCard>
+
+      <InfoBox icon="⚠️" title="Η Ενεργή είναι κλειστή" variant="warning">
+        <p>Στη νέα λίστα η <strong>Ενεργή</strong> είναι από προεπιλογή <strong>OFF</strong>. Άνοιξέ την.</p>
+      </InfoBox>
+
       <SectionTitle>Προσθήκη προϊόντος</SectionTitle>
 
-      <StepCard number="2" title="Από τη σελίδα Αγαπημένα">
+      <StepCard number="3" title="Από τη σελίδα Αγαπημένα">
         <p>Πάτα <strong>Προσθήκη προϊόντος στα Αγαπημένα</strong>. Στο παράθυρο:</p>
         <ul className="list-disc pl-5 space-y-1 mt-1">
           <li><strong>Προϊόν</strong>: γράψε λίγα γράμματα (π.χ. «fr») και διάλεξε το προϊόν.</li>
@@ -32,11 +42,11 @@ export default function Favorites() {
         <p className="mt-2">Πάτα <strong>OK</strong>.</p>
       </StepCard>
 
-      <StepCard number="3" title="Ή από το ίδιο το προϊόν">
+      <StepCard number="4" title="Ή από το ίδιο το προϊόν">
         <p>Στη φόρμα του προϊόντος, στο πεδίο <strong>★ Λίστα Αγαπημένων</strong>, διάλεξε τη λίστα. Δες το <S to="/tutorial/secure/e-products">μάθημα 5.1</S>.</p>
       </StepCard>
 
-      <StepCard number="4" title="Συγχρονισμός 🔄">
+      <StepCard number="5" title="Συγχρονισμός 🔄">
         <p>Κάνε <S to="/tutorial/secure/a-sync">Συγχρονισμό</S>.</p>
       </StepCard>
 
