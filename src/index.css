@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -300,3 +300,23 @@
   box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
   opacity: 0.92;
 }
+/* ── Σελίδα Υπηρεσιών ── */
+.font-plex { font-family: 'IBM Plex Sans', 'Inter', system-ui, sans-serif; }
+.svc-link { stroke: #2C3D78; stroke-width: 1.5; }
+.svc-link--backup { stroke-dasharray: 5 6; }
+.svc-node { cursor: pointer; }
+.svc-node__dot { fill: #0A0E1A; stroke: #00D4FF; stroke-width: 2; transition: fill .15s; }
+.svc-node__core { fill: #00D4FF; }
+.svc-node__label { fill: #D5DEEE; font-size: 17px; font-weight: 500; }
+.svc-node:hover .svc-node__dot, .svc-node:focus-visible .svc-node__dot { fill: #00D4FF; }
+.svc-node:hover .svc-node__label, .svc-node:focus-visible .svc-node__label { fill: #00D4FF; }
+.svc-node:focus-visible { outline: none; }
+.svc-node:focus-visible .svc-node__label { text-decoration: underline; }
+/* Μία κίνηση: το σήμα «ανάβει» από τη γραμμή προς τις συσκευές στο άνοιγμα της σελίδας */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.svc) { scroll-behavior: smooth; }
+  .svc-link:not(.svc-link--backup) { stroke-dasharray: 1; stroke-dashoffset: 1; animation: svc-draw 1.1s cubic-bezier(.4,0,.2,1) .2s forwards; }
+  .svc-link--backup { opacity: 0; animation: svc-fade .6s ease 1.1s forwards; }
+}
+@keyframes svc-draw { to { stroke-dashoffset: 0; } }
+@keyframes svc-fade { to { opacity: 1; } }
