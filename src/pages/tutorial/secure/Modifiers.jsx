@@ -29,7 +29,7 @@ export default function Modifiers() {
         <ul className="list-disc pl-5 space-y-1 mt-1">
           <li><strong>Όνομα</strong>*: π.χ. Ζάχαρη.</li>
           <li><strong>Περιγραφή</strong>.</li>
-          <li><strong>Πολλαπλή Επιλογή</strong>: αν ο πελάτης μπορεί να διαλέξει περισσότερα από ένα συνοδευτικά της ομάδας. Όταν είναι ON, εμφανίζονται τα <strong>Multiple selection Min</strong> και <strong>Max</strong>.</li>
+          <li><strong>Πολλαπλή Επιλογή</strong>: όταν είναι ON, στην εφαρμογή ο σερβιτόρος μπορεί να τσεκάρει <strong>περισσότερα από ένα</strong> συνοδευτικά της ομάδας (π.χ. Άσπρη ζάχαρη και Λίγη ζάχαρη μαζί, με ✓). Όταν είναι ON, εμφανίζονται και τα <strong>Multiple selection Min</strong> και <strong>Max</strong>.</li>
           <li><strong>Ποσοτική επιλογή</strong>.</li>
           <li><strong>Group Type</strong>: Καμία, Φαγητά, Ποτά ή Άλλο.</li>
           <li><strong>Ενεργή</strong>.</li>
@@ -57,7 +57,7 @@ export default function Modifiers() {
         <ul className="list-disc pl-5 space-y-1">
           <li><strong>Όνομα</strong>*: π.χ. Μέτριο.</li>
           <li><strong>Περιγραφή</strong>.</li>
-          <li><strong>Τιμή</strong> (€): η χρέωση του συνοδευτικού. Αν είναι δωρεάν, άφησε 0,00.</li>
+          <li><strong>Τιμή</strong> (€): η χρέωση του συνοδευτικού. Αν είναι δωρεάν, άφησε 0,00. Στην εφαρμογή, όσα έχουν χρέωση δείχνουν την τιμή κάτω από το όνομα.</li>
           <li><strong>Ομάδα</strong>*: έρχεται συμπληρωμένη με την ομάδα που είχες επιλέξει.</li>
           <li><strong>Τύπος Φ.Π.Α.</strong>*: Μηδενικός Συντελεστής ΦΠΑ 0%, ΦΠΑ 13% ή ΦΠΑ 24%.</li>
           <li><strong>Τύπος Μονάδας</strong>*: Τεμάχια ή Κιλά.</li>
