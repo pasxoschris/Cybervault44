@@ -34,7 +34,8 @@ export default function Products() {
         <ul className="list-disc pl-5 space-y-1">
           <li><strong>Όνομα*</strong> και <strong>Περιγραφή</strong>.</li>
           <li><strong>Κύρια Κατηγορία</strong>: για υποκατηγορία, διάλεξε την κύρια (π.χ. FOOD). Για κύρια κατηγορία, άφησέ το κενό.</li>
-          <li><strong>Separator</strong>, <strong>Χρώμα</strong>, <strong>Σύντομος Κωδικός</strong>.</li>
+          <li><strong>Separator</strong> (Διαχωριστικό): η κατηγορία λειτουργεί ως διαχωριστικό. Μια κατηγορία-διαχωριστικό <strong>δεν πρέπει να περιέχει προϊόντα</strong>.</li>
+          <li><strong>Χρώμα</strong>, <strong>Σύντομος Κωδικός</strong>.</li>
           <li><strong>Ενεργή: ON</strong> και <strong>Διαθέσιμη στον Online Κατάλογο</strong>.</li>
           <li><strong>Ορατό στους</strong> (π.χ. Service, Cashier POS, Take-Out &amp; Delivery, Maitre).</li>
           <li><strong>Ενεργοποίηση στο Spotit</strong> και κουμπί <strong>Publish all items</strong>.</li>
