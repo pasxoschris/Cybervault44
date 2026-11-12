@@ -205,6 +205,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/secure/i-sync" element={<SecureSync />} />
       <Route path="/tutorial/secure/f-pos-devices" element={<SecurePosDevices />} />
       <Route path="/tutorial/secure/f-other-devices" element={<SecureOtherDevices />} />
+      <Route path="/tutorial/secure/b-terminals" element={<SecureOtherDevices />} />
       <Route path="/tutorial/secure/i-users" element={<SecureUsers />} />
       <Route path="/tutorial/secure/i-admin-code-rights" element={<SecureAdminCodeRights />} />
       <Route path="/tutorial/secure/i-roles" element={<SecureRoles />} />
