@@ -62,6 +62,7 @@ import SecureFoodTypes from './pages/tutorial/secure/FoodTypes';
 import SecureCourses from './pages/tutorial/secure/Courses';
 import SecureBrands from './pages/tutorial/secure/Brands';
 import SecureFavorites from './pages/tutorial/secure/Favorites';
+import SecureCombos from './pages/tutorial/secure/Combos';
 import SecureUsers from './pages/tutorial/secure/Users';
 import SecureAdminCodeRights from './pages/tutorial/secure/AdminCodeRights';
 import SecureRoles from './pages/tutorial/secure/Roles';
@@ -232,6 +233,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/secure/e-courses" element={<SecureCourses />} />
       <Route path="/tutorial/secure/e-brands" element={<SecureBrands />} />
       <Route path="/tutorial/secure/e-favorites" element={<SecureFavorites />} />
+      <Route path="/tutorial/secure/e-combos" element={<SecureCombos />} />
       <Route path="/tutorial/secure/i-users" element={<SecureUsers />} />
       <Route path="/tutorial/secure/i-admin-code-rights" element={<SecureAdminCodeRights />} />
       <Route path="/tutorial/secure/i-roles" element={<SecureRoles />} />
