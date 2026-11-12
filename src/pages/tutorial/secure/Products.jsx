@@ -95,7 +95,7 @@ export default function Products() {
           <li><strong>Περιγραφή</strong>, <strong>Διαθέσιμη Ποσότητα</strong>, <strong>Barcode</strong>, <strong>PLU</strong>.</li>
           <li><strong>Σειρά Σερβιρίσματος</strong> (π.χ. Starters): ορίζεται ανά προϊόν. Δες <S to="/tutorial/secure/e-courses">Σειρές Σερβιρίσματος</S>.</li>
           <li><strong>Χρώμα</strong> και <strong>Φωτογραφία</strong>.</li>
-          <li><strong>Έκπτωση Ιδιοκατανάλωσης</strong> (ποσοστό ή ποσό).</li>
+          <li><strong>Έκπτωση Ιδιοκατανάλωσης</strong>: ορίζεται ανά προϊόν. Διαλέγεις τύπο (<strong>Ποσοστιαία Έκπτωση</strong>, <strong>Προκαθορισμένη Τιμή</strong> ή <strong>Μείωση Τιμής</strong>) και την τιμή με τα − / +.</li>
         </ul>
       </StepCard>
 
