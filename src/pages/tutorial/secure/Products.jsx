@@ -117,7 +117,7 @@ export default function Products() {
       <SectionTitle>Delivery</SectionTitle>
 
       <StepCard title="Αντιστοίχιση με τις πλατφόρμες">
-        <p><strong>Προϊόν Wolt</strong>, <strong>Delivery Manager Product</strong>, <strong>Efood Product</strong>: εδώ αντιστοιχίζεις το προϊόν σου με το αντίστοιχο της πλατφόρμας.</p>
+        <p><strong>Προϊόν Wolt</strong>, <strong>Delivery Manager Product</strong>, <strong>Efood Product</strong>: εδώ αντιστοιχίζεις το προϊόν σου με το αντίστοιχο της πλατφόρμας. Πληκτρολόγησε το όνομα του προϊόντος <strong>όπως είναι περασμένο στο Wolt / efood / Delivery Manager</strong> και διάλεξέ το, ώστε οι παραγγελίες από την πλατφόρμα να περνούν στο σωστό προϊόν.</p>
       </StepCard>
 
       <InfoBox icon="ℹ️" title="Συστατικά συνταγής και Σύστημα Επιβράβευσης" variant="info">

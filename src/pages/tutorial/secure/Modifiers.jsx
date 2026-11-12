@@ -64,7 +64,7 @@ export default function Modifiers() {
           <li><strong>Φορολογικό Είδος</strong>*: Εμπόρευμα, Προϊόν, Υπηρεσία ή Λοιπά Στοιχεία Εσόδων.</li>
           <li><strong>Χρόνος Προετοιμασίας</strong> (λεπτά), <strong>Τύποι Φαγητού</strong> και <strong>Τύπος</strong> (Καμία, Φαγητά, Ποτά, Άλλο).</li>
           <li><strong>Κόστος Συνοδευτικού</strong> (€).</li>
-          <li><strong>Wolt</strong>, <strong>Delivery Manager</strong> και <strong>Efood Modifier</strong>: η αντιστοίχιση με τις πλατφόρμες, αν το κατάστημα τις έχει.</li>
+          <li><strong>Wolt</strong>, <strong>Delivery Manager</strong> και <strong>Efood Modifier</strong>: η αντιστοίχιση με τις πλατφόρμες, αν το κατάστημα τις έχει. Πληκτρολογείς το όνομα όπως είναι περασμένο στην πλατφόρμα και το διαλέγεις.</li>
           <li><strong>Ενεργό</strong>.</li>
         </ul>
       </StepCard>

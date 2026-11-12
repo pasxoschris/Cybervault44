@@ -27,7 +27,7 @@ export default function Combos() {
           <li><strong>Φωτογραφία</strong>: με το <strong>Ανεβάστε μια εικόνα</strong>.</li>
           <li><strong>Τιμή</strong> (€).</li>
           <li><strong>Προϊόν</strong>: το προϊόν του καταλόγου με το οποίο συνδέεται ο συνδυασμός.</li>
-          <li><strong>Wolt Combo</strong>, <strong>Efood Combo</strong>, <strong>Delivery Manager Combo</strong>: το combo της πλατφόρμας με το οποίο αντιστοιχίζεται ο συνδυασμός.</li>
+          <li><strong>Wolt Combo</strong>, <strong>Efood Combo</strong>, <strong>Delivery Manager Combo</strong>: το combo της πλατφόρμας με το οποίο αντιστοιχίζεται ο συνδυασμός. Πληκτρολογείς το όνομα όπως είναι περασμένο στην πλατφόρμα και το διαλέγεις.</li>
         </ul>
       </StepCard>
 
