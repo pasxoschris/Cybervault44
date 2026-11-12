@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { ShieldX } from 'lucide-react';
+import { syncMyAccess } from '@/lib/syncAccess';
 
 export default function ResellerAccessGuard({ children }) {
   const [status, setStatus] = useState('loading');
@@ -13,6 +14,7 @@ export default function ResellerAccessGuard({ children }) {
         return;
       }
       const u = await base44.auth.me();
+      await syncMyAccess();
       if (u.role === 'admin') { setStatus('ok'); return; }
       try {
         const list = await base44.entities.AllowedUserReseller.filter({ email: u.email.toLowerCase() });
