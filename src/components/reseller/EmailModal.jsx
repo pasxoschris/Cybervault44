@@ -5,7 +5,9 @@ import { X, Send } from 'lucide-react';
 
 export default function EmailModal({ offer, customer, defaultSettings, onClose, onCloseAfterSent }) {
   const qc = useQueryClient();
-  const [to, setTo] = useState(customer?.email || offer?.email || '');
+  // Ο παραλήπτης είναι πάντα το email πελάτη της αποθηκευμένης προσφοράς.
+  const to = offer?.email || '';
+  const unsavedEmail = Boolean(customer?.email && customer.email !== offer?.email);
   const [cc, setCc] = useState('');
   const [subject, setSubject] = useState(defaultSettings?.default_email_subject || 'Προσφορά Spotlight POS – CyberVault');
   const [body, setBody] = useState(defaultSettings?.default_email_body || '');
@@ -15,13 +17,13 @@ export default function EmailModal({ offer, customer, defaultSettings, onClose, 
   const [error, setError] = useState('');
 
   const handleSend = async () => {
-    if (!to) { setError('Εισάγετε email παραλήπτη.'); return; }
+    if (!to) { setError('Η προσφορά δεν έχει email πελάτη. Συμπλήρωσέ το στα στοιχεία πελάτη και αποθήκευσε την προσφορά.'); return; }
     if (!offer?.id) { setError('Αποθηκεύστε πρώτα την προσφορά.'); return; }
     setSending(true);
     setError('');
     try {
       const res = await base44.functions.invoke('sendResellerEmail', {
-        to, cc, subject,
+        cc, subject,
         offer_id: offer.id,
         custom_body: body,
       });
@@ -59,8 +61,11 @@ export default function EmailModal({ offer, customer, defaultSettings, onClose, 
         ) : (
           <div className="p-5 space-y-3">
             <div>
-              <label className="text-white/40 text-xs block mb-1">Παραλήπτης *</label>
-              <input value={to} onChange={e=>setTo(e.target.value)} className={inputCls} placeholder="email@example.com" />
+              <label className="text-white/40 text-xs block mb-1">Παραλήπτης <span className="text-white/25">(email πελάτη της προσφοράς)</span></label>
+              <input value={to} readOnly className={inputCls + ' opacity-70 cursor-not-allowed'} placeholder="—" />
+              {unsavedEmail && (
+                <p className="text-amber-300/80 text-[10px] mt-1">Άλλαξες το email πελάτη; Αποθήκευσε πρώτα την προσφορά για να σταλεί στο νέο email.</p>
+              )}
             </div>
             <div>
               <label className="text-white/40 text-xs block mb-1">CC <span className="text-white/25">(διαχωρίστε με κόμμα για πολλαπλά)</span></label>

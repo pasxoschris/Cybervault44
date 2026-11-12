@@ -3,6 +3,10 @@ import { escapeHtml, isResellerUser, isValidEmail } from '../../shared/access.ts
 
 const MAX_CC = 5;
 
+// Οι μόνες διευθύνσεις που επιτρέπεται να μπουν στο κουμπί «Προβολή Προσφοράς».
+const ALLOWED_ORIGINS = ['https://cybervault.gr', 'https://www.cybervault.gr', 'https://cybervault.base44.app'];
+const DEFAULT_ORIGIN = 'https://cybervault.base44.app';
+
 // Σύντομο email ειδοποίησης: μήνυμα + κουμπί προβολής της προσφοράς.
 // Χωρίς πίνακα γραμμών / σύνολα / όρους και χωρίς συνημμένο PDF — ο πελάτης
 // πρέπει να ανοίξει την προσφορά, ώστε να καταγράφεται η προβολή (viewed_at).
@@ -51,15 +55,12 @@ Deno.serve(async (req) => {
 
     const body = await req.json();
     const { offer_id, custom_body } = body;
-    const to = typeof body.to === 'string' ? body.to.trim() : '';
+    // Ο παραλήπτης είναι ΠΑΝΤΑ το email του πελάτη της προσφοράς (όχι ό,τι στείλει ο browser).
     const subject = typeof body.subject === 'string' ? body.subject.replace(/[\r\n]+/g, ' ').trim().slice(0, 200) : '';
     const cc = typeof body.cc === 'string' ? body.cc : '';
 
-    if (!to || !subject) {
-      return Response.json({ error: 'Missing required fields: to, subject' }, { status: 400 });
-    }
-    if (!isValidEmail(to)) {
-      return Response.json({ error: 'Μη έγκυρο email παραλήπτη.' }, { status: 400 });
+    if (!subject) {
+      return Response.json({ error: 'Λείπει το θέμα του email.' }, { status: 400 });
     }
     if (custom_body !== undefined && custom_body !== null && (typeof custom_body !== 'string' || custom_body.length > 5000)) {
       return Response.json({ error: 'Μη έγκυρο κείμενο μηνύματος.' }, { status: 400 });
@@ -75,6 +76,10 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Offer not found' }, { status: 404 });
     }
     const offer = offers[0];
+    const to = typeof offer.email === 'string' ? offer.email.trim() : '';
+    if (!isValidEmail(to)) {
+      return Response.json({ error: 'Η προσφορά δεν έχει έγκυρο email πελάτη. Συμπλήρωσέ το στα στοιχεία πελάτη και αποθήκευσε την προσφορά.' }, { status: 400 });
+    }
 
     // ─── Fetch settings from DB ───
     const settingsList = await base44.asServiceRole.entities.ResellerSettings.list();
@@ -83,8 +88,9 @@ Deno.serve(async (req) => {
     // ─── Build short notification body on backend ───
     // Ο σύνδεσμος δείχνει στη δημόσια σελίδα προσφοράς, ώστε ο πελάτης να την
     // ανοίγει χωρίς σύνδεση στην εφαρμογή.
-    const appOrigin = req.headers.get('X-Base44-App-Url') || 'https://cybervault.base44.app';
-    const offerLink = offer.public_token ? `${appOrigin}/functions/publicOffer?token=${offer.public_token}` : '';
+    const requestedOrigin = (req.headers.get('X-Base44-App-Url') || '').trim().replace(/\/+$/, '');
+    const appOrigin = ALLOWED_ORIGINS.includes(requestedOrigin) ? requestedOrigin : DEFAULT_ORIGIN;
+    const offerLink = offer.public_token ? `${appOrigin}/functions/publicOffer?token=${encodeURIComponent(offer.public_token)}` : '';
     const htmlBody = buildHtmlBody(offer, settings, offerLink, custom_body);
 
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');

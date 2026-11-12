@@ -15,6 +15,9 @@ import {
 } from '../../shared/offerAcceptance.ts';
 import { formatAthensDate, formatAthensDateTime } from '../../shared/offerNotifications.ts';
 
+// Τα tokens φτιάχνονται από το σύστημα (UUID ή 32 hex). Ό,τι άλλο απορρίπτεται.
+const TOKEN_RE = /^[A-Za-z0-9-]{16,64}$/;
+
 const FINAL_STATUSES = ['accepted', 'rejected', 'expired'];
 
 const STATUS_LABELS = {
@@ -211,7 +214,7 @@ function actionCard(token) {
     </div>
   </div>
   <script>
-  var TOKEN = ${JSON.stringify(token)};
+  var TOKEN = ${JSON.stringify(token).replace(/</g, '\\u003c')};
   var msgBox = document.getElementById('msg');
   var acceptBtn = document.getElementById('acceptBtn');
   var rejectBtn = document.getElementById('rejectBtn');
@@ -360,7 +363,7 @@ export default async function (req: Request): Promise<Response> {
       const token = String(body.token || '').trim();
       const action = String(body.action || '');
 
-      if (!token) return Response.json({ error: 'Λείπει ο σύνδεσμος της προσφοράς.' }, { status: 400 });
+      if (!token || !TOKEN_RE.test(token)) return Response.json({ error: 'Λείπει ο σύνδεσμος της προσφοράς.' }, { status: 400 });
 
       const offer = await findOfferByToken(base44, token);
       if (!offer) return Response.json({ error: 'Η προσφορά δεν βρέθηκε.' }, { status: 404 });
@@ -377,7 +380,7 @@ export default async function (req: Request): Promise<Response> {
 
     // ─── Προβολή σελίδας προσφοράς ───
     const token = (url.searchParams.get('token') || '').trim();
-    if (!token) {
+    if (!token || !TOKEN_RE.test(token)) {
       return new Response(renderMessagePage({
         title: 'Προσφορά — CyberVault',
         heading: 'Ο σύνδεσμος δεν είναι έγκυρος',
