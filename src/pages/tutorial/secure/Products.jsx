@@ -51,8 +51,9 @@ export default function Products() {
         <p>Στη νέα κατηγορία, το <strong>Ενεργή</strong> είναι από προεπιλογή <strong>OFF</strong>. Άνοιξέ το, αλλιώς η κατηγορία μένει ανενεργή (με κόκκινα γράμματα).</p>
       </InfoBox>
 
-      <InfoBox icon="ℹ️" title="Product Creation Rules" variant="info">
-        <p>Στο τέλος της φόρμας, η ενότητα <strong>Product Creation Rules</strong> έχει Τύπο Φ.Π.Α., Φορολογικό Είδος, Ετικέτες Προϊόντων, Τύπους Φαγητού και Group Type, για τα προϊόντα που φτιάχνεις σε αυτή την κατηγορία.</p>
+      <InfoBox icon="⚠️" title="Product Creation Rules: ισχύουν για όλα τα προϊόντα" variant="warning">
+        <p>Στο τέλος της φόρμας της κατηγορίας, η ενότητα <strong>Product Creation Rules</strong> έχει: <strong>Τύπο Φ.Π.Α.</strong>, <strong>Φορολογικό Είδος</strong>, <strong>Ετικέτες Προϊόντων</strong>, <strong>Τύπους Φαγητού</strong>, <strong>Ποσοστό Κόστους Προϊόντος</strong> (ποσοστό επί της τιμής του προϊόντος) και <strong>Product Group Type</strong> (Καμία, Φαγητά, Ποτά, Άλλο).</p>
+        <p className="mt-2">Ό,τι διαλέξεις εδώ εφαρμόζεται σε <strong>όλα τα προϊόντα της κατηγορίας</strong>, και στα υπάρχοντα. Το Φορολογικό Είδος <strong>αντικαθιστά</strong> αυτό που έχουν ήδη. Έλεγξε πριν αποθηκεύσεις.</p>
       </InfoBox>
 
       <SectionTitle>Βασικά</SectionTitle>
