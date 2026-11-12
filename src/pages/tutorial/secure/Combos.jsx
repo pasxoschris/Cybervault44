@@ -31,6 +31,10 @@ export default function Combos() {
         </ul>
       </StepCard>
 
+      <InfoBox icon="⚠️" title="Το Ενεργό είναι κλειστό" variant="warning">
+        <p>Στον νέο συνδυασμό το <strong>Ενεργό</strong> είναι από προεπιλογή <strong>OFF</strong>. Άνοιξέ το.</p>
+      </InfoBox>
+
       <InfoBox icon="⚠️" title="Η Τιμή αφορά μόνο το delivery" variant="warning">
         <p>Η <strong>Τιμή</strong> του συνδυασμού χρησιμοποιείται <strong>μόνο στις υπηρεσίες delivery</strong>, όπως γράφει και η σημείωση κάτω από το πεδίο.</p>
       </InfoBox>
