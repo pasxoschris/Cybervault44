@@ -134,8 +134,8 @@ const groups = [
 // Κόμβοι του διαγράμματος: κάθε συσκευή οδηγεί στην ομάδα υπηρεσιών που τη στηρίζει.
 const nodes = [
   { id: 'line', label: 'Γραμμή', x: 70, y: 36, group: 'syndesi' },
-  { id: 'sat', label: 'Starlink', x: 70, y: 124, group: 'syndesi' },
-  { id: 'mobile', label: '4G / 5G', x: 70, y: 212, group: 'syndesi' },
+  { id: 'sat', label: 'Starlink', x: 70, y: 130, group: 'syndesi' },
+  { id: 'mobile', label: '4G / 5G', x: 70, y: 224, group: 'syndesi' },
   { id: 'router', label: 'Router', x: 230, y: 130, group: 'syndesi', core: true },
   { id: 'wifi', label: 'WiFi', x: 400, y: 34, group: 'syndesi' },
   { id: 'pos', label: 'Παραγγελιοληψία', x: 420, y: 102, group: 'tameio' },
