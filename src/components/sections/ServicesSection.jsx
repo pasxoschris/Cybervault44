@@ -160,7 +160,7 @@ const endpoints = [
       { href: IMG.u7outdoor, w: 37, h: 50, dx: 24 },
     ],
   },
-  { id: 'pos', icon: Tablet, label: 'Παραγγελιοληψία', role: 'iPhone & iPad', x: 210, group: 'tameio' },
+  { id: 'pos', icon: Tablet, label: 'Παραγγελιοληψία', role: 'iPhone & iPad', role2: 'θερμικοί εκτυπωτές', x: 210, group: 'tameio' },
   { id: 'cam', icon: Cctv, label: 'Κάμερες', role: '', x: 350, group: 'asfaleia' },
   {
     id: 'voip', label: 'Τηλέφωνο', role: 'VoIP', x: 490, group: 'ypostirixi',
@@ -174,7 +174,7 @@ const SW = { y: 352 };
 const END_Y = 540;
 const CX = 280;
 
-function Node({ x, y, icon: Icon, photos, label, role, href, dashed }) {
+function Node({ x, y, icon: Icon, photos, label, role, role2, href, dashed }) {
   return (
     <a href={href} className="svc-node">
       {photos ? (
@@ -189,6 +189,7 @@ function Node({ x, y, icon: Icon, photos, label, role, href, dashed }) {
       )}
       <text x={x} y={y + 50} textAnchor="middle" className="svc-node__label">{label}</text>
       <text x={x} y={y + 70} textAnchor="middle" className="svc-node__role">{role}</text>
+      {role2 && <text x={x} y={y + 88} textAnchor="middle" className="svc-node__role">& {role2}</text>}
     </a>
   );
 }
@@ -200,7 +201,7 @@ function NetworkMap() {
   };
   return (
     <svg
-      viewBox="0 0 560 632"
+      viewBox="0 0 560 640"
       className="w-full h-auto max-w-[560px] mx-auto"
       role="img"
       aria-label="Παράδειγμα εγκατάστασης: κύρια γραμμή, Starlink ως εφεδρική και UniFi 5G ως προσωρινή σύνδεση καταλήγουν σε UniFi Cloud Gateway Ultra. Από εκεί ένα UniFi Switch Lite 16 PoE τροφοδοτεί WiFi (U7 Pro και U7 Outdoor), παραγγελιοληψία, κάμερες και τηλέφωνο."
