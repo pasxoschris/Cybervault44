@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { syncAccessFor } from '@/lib/syncAccess';
+
+// Οι whitelists που ενημερώνουν τα πεδία πρόσβασης του χρήστη (reseller_access / guide_access).
+const SYNCED_LISTS = ['AllowedUserReseller', 'AllowedUserGuide'];
 import Navbar from '@/components/layout/Navbar';
 import { ROLES } from '@/lib/roles';
 import SearchableStoreSelect from '@/components/admin/SearchableStoreSelect';
@@ -33,6 +37,7 @@ function WhitelistSection({ entityName, title, description, modeOptions, storeOp
       payload.store_name = store ? (store.store_name || store.business_name || '') : '';
     }
     const created = await base44.entities[entityName].create(payload);
+    if (SYNCED_LISTS.includes(entityName)) await syncAccessFor(payload.email);
     setAllowed(prev => [...prev, created]);
     setEmail('');
     setName('');
@@ -49,7 +54,9 @@ function WhitelistSection({ entityName, title, description, modeOptions, storeOp
   };
 
   const handleDelete = async (id) => {
+    const record = allowed.find(a => a.id === id);
     await base44.entities[entityName].delete(id);
+    if (record && SYNCED_LISTS.includes(entityName)) await syncAccessFor(record.email);
     setAllowed(prev => prev.filter(a => a.id !== id));
   };
 
