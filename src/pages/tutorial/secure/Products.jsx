@@ -68,8 +68,12 @@ export default function Products() {
       <SectionTitle>Τιμές</SectionTitle>
 
       <StepCard title="Τιμή και τιμοκατάλογοι">
-        <p><strong>Τιμή*</strong>: η τιμή με ΦΠΑ. Από κάτω υπάρχει μία τιμή για κάθε <S to="/tutorial/secure/e-pricelists">τιμοκατάλογο</S> (π.χ. TAKE AWAY, HAPPY HOUR, Wolt). Οι τιμοκατάλογοι είναι εναλλακτικές τιμές του ίδιου προϊόντος.</p>
+        <p><strong>Τιμή*</strong>: η τιμή με ΦΠΑ. Από κάτω υπάρχει μία τιμή για κάθε <S to="/tutorial/secure/e-pricelists">τιμοκατάλογο</S> (π.χ. TAKE AWAY, HAPPY HOUR, Wolt). Οι τιμοκατάλογοι είναι εναλλακτικές τιμές του ίδιου προϊόντος. Δίπλα σε κάθε τιμή διαλέγεις και τον Τύπο Φ.Π.Α.</p>
       </StepCard>
+
+      <InfoBox icon="⚠️" title="Δεκαδικά με τελεία" variant="warning">
+        <p>Στις τιμές, τα δεκαδικά γράφονται με <strong>τελεία</strong>, όχι με κόμμα: <strong>12.50</strong>, όχι 12,50.</p>
+      </InfoBox>
 
       <SectionTitle>Φορολογικά</SectionTitle>
 
