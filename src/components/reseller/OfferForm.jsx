@@ -185,7 +185,7 @@ export default function OfferForm({ editOffer, onSaved }) {
         </div>
       )}
 
-      <CustomerForm customer={customer} onChange={handleCustomerChange} />
+      <CustomerForm customer={customer} onChange={handleCustomerChange} locked={priceLocked} />
 
       {!priceLocked && (
         <EquipmentSelector

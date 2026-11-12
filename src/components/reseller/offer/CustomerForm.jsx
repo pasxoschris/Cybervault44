@@ -2,13 +2,16 @@ const EMPTY_CUSTOMER = { store_name: '', company_legal_name: '', vat_number: '',
 
 export { EMPTY_CUSTOMER };
 
-export default function CustomerForm({ customer, onChange }) {
-  const inputCls = "w-full bg-[#0E1235] border border-[#2A3580] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20";
+export default function CustomerForm({ customer, onChange, locked = false }) {
+  const inputCls = `w-full bg-[#0E1235] border border-[#2A3580] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#00CFFF]/50 placeholder-white/20 ${locked ? 'opacity-60 cursor-not-allowed' : ''}`;
   const set = (k, v) => onChange(k, v);
 
   return (
     <div className="bg-[#131840] border border-[#2A3580] rounded-2xl p-5">
-      <h3 className="text-xs font-semibold text-[#00CFFF] mb-4 uppercase tracking-widest">Στοιχεία Πελάτη</h3>
+      <div className="flex items-center gap-2 mb-4">
+        <h3 className="text-xs font-semibold text-[#00CFFF] uppercase tracking-widest">Στοιχεία Πελάτη</h3>
+        {locked && <span className="text-[10px] text-amber-300/70">κλειδωμένα</span>}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {[
           ['store_name', 'Κατάστημα', 'text'], ['company_legal_name', 'Επωνυμία', 'text'],
@@ -18,12 +21,12 @@ export default function CustomerForm({ customer, onChange }) {
         ].map(([key, label, type]) => (
           <div key={key}>
             <label className="block text-white/40 text-xs mb-1">{label}</label>
-            <input type={type} value={customer[key]} onChange={e => set(key, e.target.value)} className={inputCls} />
+            <input type={type} value={customer[key]} onChange={e => set(key, e.target.value)} disabled={locked} className={inputCls} />
           </div>
         ))}
         <div className="md:col-span-2">
           <label className="block text-white/40 text-xs mb-1">Σημειώσεις</label>
-          <textarea value={customer.notes} onChange={e => set('notes', e.target.value)} rows={2} className={inputCls} />
+          <textarea value={customer.notes} onChange={e => set('notes', e.target.value)} rows={2} disabled={locked} className={inputCls} />
         </div>
       </div>
     </div>
