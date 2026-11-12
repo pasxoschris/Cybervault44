@@ -128,10 +128,11 @@ const AuthenticatedApp = () => {
       <Route path="/services" element={<Services />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/about" element={<About />} />
+      {/* Δημόσια σελίδα παρουσίασης του Οδηγού — τα μαθήματα θέλουν σύνδεση */}
+      <Route path="/spotlight-pos-guide" element={<SpotlightPOSGuide />} />
 
       {/* Everything else requires login */}
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
-      <Route path="/spotlight-pos-guide" element={<SpotlightPOSGuide />} />
       <Route path="/tutorial/create-order" element={<CreateOrder />} />
       <Route path="/tutorial/discount" element={<DiscountGeneral />} />
       <Route path="/tutorial/discount-own" element={<DiscountOwn />} />
