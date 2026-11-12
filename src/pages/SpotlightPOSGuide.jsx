@@ -115,7 +115,7 @@ export default function SpotlightPOSGuide() {
       {status === 'denied' && (
         <div className="max-w-4xl mx-auto px-6 -mt-6">
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-800" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Είστε συνδεδεμένος αλλά το email σας δεν βρίσκεται στη λίστα εξουσιοδοτημένων χρηστών. Για αίτημα πρόσβασης στείλτε email στο <a href="mailto:support@cybervault.gr" className="font-semibold underline">support@cybervault.gr</a>.
+            Είστε συνδεδεμένος αλλά το email σας δεν βρίσκεται στη λίστα εξουσιοδοτημένων χρηστών. Για αίτημα πρόσβασης στείλτε email στο <a href="mailto:support@cybervault.gr" className="font-semibold underline">support@CyberVault.gr</a>.
           </div>
         </div>
       )}

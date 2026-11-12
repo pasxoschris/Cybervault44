@@ -34,7 +34,7 @@ export default function Login() {
           <span className="block">
             Θέλεις πρόσβαση στο εκπαιδευτικό υλικό; Στείλε email στο{" "}
             <a href="mailto:support@cybervault.gr" className="text-primary font-medium hover:underline">
-              support@cybervault.gr
+              support@CyberVault.gr
             </a>
           </span>
         </>

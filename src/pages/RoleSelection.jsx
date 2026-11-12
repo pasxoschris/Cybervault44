@@ -58,7 +58,7 @@ export default function RoleSelection() {
           <h2 className="font-orbitron text-white text-xl mb-2">Δεν έχεις πρόσβαση</h2>
           <p className="font-rajdhani text-white/40 text-sm">Το email σου δεν βρίσκεται στη λίστα εξουσιοδοτημένων χρηστών.</p>
           <p className="font-rajdhani text-white/50 text-sm mt-4">Για αίτημα πρόσβασης στείλε email στο:</p>
-          <a href="mailto:support@cybervault.gr" className="text-[#00CFFF] hover:underline font-mono-cyber text-sm">support@cybervault.gr</a>
+          <a href="mailto:support@cybervault.gr" className="text-[#00CFFF] hover:underline font-mono-cyber text-sm">support@CyberVault.gr</a>
         </div>
       </div>
     );
