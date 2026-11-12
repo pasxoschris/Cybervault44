@@ -37,6 +37,7 @@ export default function RolePath() {
       if (!role) { setAccess(true); return; }
       const u = await base44.auth.me().catch(() => null);
       if (!u) { setAccess(false); return; }
+      await syncMyAccess();
       if (u.role === 'admin') { setAccess(true); return; }
       const list = await base44.entities.AllowedUserGuide.filter({ email: u.email.toLowerCase() });
       if (list.length === 0) { setAccess(false); return; }
