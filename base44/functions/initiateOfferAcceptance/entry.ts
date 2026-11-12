@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
+import { secureOtp } from '../../shared/access.ts';
 
 async function sha256(text) {
   const encoder = new TextEncoder();
@@ -12,17 +13,19 @@ Deno.serve(async (req) => {
   const base44 = createClientFromRequest(req);
 
   const body = await req.json();
-  const { offer_id } = body;
-  if (!offer_id) return Response.json({ error: 'Missing offer_id' }, { status: 400 });
+  // Πρόσβαση μόνο με το μυστικό token του συνδέσμου της προσφοράς (όχι με το id).
+  const { token } = body;
+  if (typeof token !== 'string' || !token) return Response.json({ error: 'Missing token' }, { status: 400 });
 
   const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
   const userAgent = req.headers.get('user-agent') || 'unknown';
   const now = new Date();
 
-  const offers = await base44.asServiceRole.entities.ResellerOffer.filter({ id: offer_id });
+  const offers = await base44.asServiceRole.entities.ResellerOffer.filter({ public_token: token });
   if (!offers || offers.length === 0) return Response.json({ error: 'Offer not found' }, { status: 404 });
 
   const offer = offers[0];
+  const offer_id = offer.id;
 
   // Guard: final states
   if (['accepted', 'rejected', 'expired'].includes(offer.status)) {
@@ -45,7 +48,7 @@ Deno.serve(async (req) => {
   }
 
   // Generate 6-digit OTP
-  const otp = String(Math.floor(100000 + Math.random() * 900000));
+  const otp = secureOtp();
   const otpHash = await sha256(otp);
   const otpExpiresAt = new Date(now.getTime() + 15 * 60 * 1000).toISOString();
 
