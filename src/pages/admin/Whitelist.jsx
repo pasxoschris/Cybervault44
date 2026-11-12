@@ -5,8 +5,8 @@ import Navbar from '@/components/layout/Navbar';
 import { ROLES } from '@/lib/roles';
 import SearchableStoreSelect from '@/components/admin/SearchableStoreSelect';
 
-// Οι whitelists που ενημερώνουν τα πεδία πρόσβασης του χρήστη (reseller_access / guide_access).
-const SYNCED_LISTS = ['AllowedUserReseller', 'AllowedUserGuide'];
+// Οι whitelists που ενημερώνουν τα πεδία πρόσβασης του χρήστη (reseller_access / guide_access / servicedesk_access).
+const SYNCED_LISTS = ['AllowedUserReseller', 'AllowedUserGuide', 'AllowedUser'];
 
 const parseModes = (modes) => (modes ? modes.split(',').map(m => m.trim()).filter(Boolean) : []);
 

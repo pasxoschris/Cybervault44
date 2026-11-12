@@ -4,7 +4,9 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
-    if (!user) return Response.json({ error: 'Unauthorized' });
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    // Μαζική διαγραφή: μόνο admin.
+    if (user.role !== 'admin') return Response.json({ error: 'Μόνο ο διαχειριστής μπορεί να διαγράψει όλα τα tickets.' }, { status: 403 });
 
     // Fetch all tickets and delete in sequence to avoid rate limits
     const tickets = await base44.asServiceRole.entities.Ticket.list();

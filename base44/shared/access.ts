@@ -1,5 +1,5 @@
-// Κοινοί έλεγχοι πρόσβασης βάσει των whitelists (AllowedUserReseller, AllowedUserGuide).
-// Οι whitelists είναι η πηγή αλήθειας. Τα πεδία reseller_access / guide_access του
+// Κοινοί έλεγχοι πρόσβασης βάσει των whitelists (AllowedUserReseller, AllowedUserGuide, AllowedUser).
+// Οι whitelists είναι η πηγή αλήθειας. Τα πεδία reseller_access / guide_access / servicedesk_access του
 // χρήστη είναι αυτόματο αντίγραφό τους, ώστε να τα ελέγχουν οι κανόνες RLS.
 // Τα πεδία αυτά τα γράφει μόνο ο server (asServiceRole) — ο χρήστης δεν μπορεί.
 
@@ -10,11 +10,12 @@ async function isListed(base44, entityName, email) {
 }
 
 export async function computeAccess(base44, email) {
-  const [reseller, guide] = await Promise.all([
+  const [reseller, guide, servicedesk] = await Promise.all([
     isListed(base44, 'AllowedUserReseller', email),
     isListed(base44, 'AllowedUserGuide', email),
+    isListed(base44, 'AllowedUser', email),
   ]);
-  return { reseller_access: reseller, guide_access: guide };
+  return { reseller_access: reseller, guide_access: guide, servicedesk_access: servicedesk };
 }
 
 /** Admin ή χρήστης στη whitelist του Reseller Console. */

@@ -1,17 +1,23 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 import * as XLSX from 'npm:xlsx@0.18.5';
+import { isAllowedServiceDeskUser } from '../../shared/serviceDeskAccess.ts';
+import { isSafePublicUrl } from '../../shared/access.ts';
 
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
-    if (!user) return Response.json({ error: 'Unauthorized' });
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!(await isAllowedServiceDeskUser(base44, user))) return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const { file_url, sheet_name } = await req.json();
     if (!file_url) return Response.json({ error: 'Missing file_url' });
 
     // Fetch the uploaded Excel file
+    // Μόνο δημόσια https αρχεία (όχι localhost / IP / εσωτερικά δίκτυα).
+    if (!isSafePublicUrl(file_url)) return Response.json({ error: 'Μη επιτρεπτό αρχείο.' });
     const fileRes = await fetch(file_url);
+    if (fileRes.url && !isSafePublicUrl(fileRes.url)) return Response.json({ error: 'Μη επιτρεπτό αρχείο.' });
     if (!fileRes.ok) return Response.json({ error: `Αδυναμία λήψης αρχείου (HTTP ${fileRes.status})` });
     const arrayBuffer = await fileRes.arrayBuffer();
     const data = new Uint8Array(arrayBuffer);

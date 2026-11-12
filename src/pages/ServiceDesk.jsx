@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import TicketForm from '@/components/servicedesk/TicketForm';
 import TicketList from '@/components/servicedesk/TicketList';
 import ImportTickets from '@/components/servicedesk/ImportTickets';
+import { syncMyAccess } from '@/lib/syncAccess';
 
 export default function ServiceDesk() {
   const [user, setUser] = useState(null);
@@ -19,6 +20,8 @@ export default function ServiceDesk() {
         return;
       }
       const u = await base44.auth.me();
+      // Ενημερώνει την πρόσβαση Service Desk (servicedesk_access) από τη whitelist.
+      await syncMyAccess();
       setUser(u);
       if (u.role === 'admin') {
         setAllowed(true);
