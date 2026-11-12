@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Globe, Satellite, Smartphone, Wifi, Tablet, Cctv, Phone } from 'lucide-react';
+import { ArrowUpRight, Globe, Satellite, Tablet, Cctv, Phone } from 'lucide-react';
 
 // Υπηρεσίες ομαδοποιημένες με βάση το τι κρατούν σε λειτουργία μέσα στην επιχείρηση.
 const groups = [
@@ -133,42 +133,58 @@ const groups = [
 
 // Παράδειγμα εγκατάστασης: τρεις συνδέσεις → gateway → switch → συσκευές.
 // Κάθε συσκευή οδηγεί στην ομάδα υπηρεσιών που τη στηρίζει.
+// Φωτογραφίες: επίσημες εικόνες προϊόντων Ubiquiti (επίσημοι συνεργάτες).
+const IMG = {
+  gateway: 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/261460c5f_ucg-ultra.webp',
+  u7lite: 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/591096a1c_u7-lite.webp',
+  u7outdoor: 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/b6f8611b0_u7-outdoor.webp',
+  unifi5g: 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/e6741206d_unifi-5g.webp',
+  switch: 'https://media.base44.com/images/public/6a06d65e120e7e74497bab7a/45e3dea5a_usw-lite-16-poe.webp',
+};
+
 const inputs = [
   { id: 'line', icon: Globe, label: 'Γραμμή', role: 'Κύρια', x: 90, kind: 'primary' },
   { id: 'sat', icon: Satellite, label: 'Starlink', role: 'Εφεδρική', x: 280, kind: 'backup' },
-  { id: 'mobile', icon: Smartphone, label: '4G / 5G', role: 'Προσωρινή', x: 470, kind: 'temp' },
+  {
+    id: 'mobile', label: 'UniFi 5G', role: 'Προσωρινή', x: 470, kind: 'temp',
+    photos: [{ href: IMG.unifi5g, w: 18, h: 86, dx: 0 }],
+  },
 ];
 
 const endpoints = [
-  { id: 'wifi', icon: Wifi, label: 'WiFi', role: 'Σάλα & έξω', x: 70, group: 'syndesi' },
+  {
+    id: 'wifi', label: 'WiFi', role: 'U7 Lite & U7 Outdoor', x: 70, group: 'syndesi',
+    photos: [
+      { href: IMG.u7lite, w: 45, h: 50, dx: -24 },
+      { href: IMG.u7outdoor, w: 37, h: 50, dx: 24 },
+    ],
+  },
   { id: 'pos', icon: Tablet, label: 'Παραγγελιοληψία', role: 'POS & PDA', x: 210, group: 'tameio' },
   { id: 'cam', icon: Cctv, label: 'Κάμερες', role: 'UniFi Protect', x: 350, group: 'asfaleia' },
   { id: 'voip', icon: Phone, label: 'Τηλέφωνο', role: 'VoIP', x: 490, group: 'ypostirixi' },
 ];
 
-const IN_Y = 48;
-const GW = { y: 210, h: 60 };
-const SW = { y: 330, h: 60 };
-const END_Y = 480;
+const IN_Y = 52;
+const GW = { y: 196 };
+const SW = { y: 352 };
+const END_Y = 540;
 const CX = 280;
 
-function Node({ x, y, icon: Icon, label, role, href, dashed }) {
+function Node({ x, y, icon: Icon, photos, label, role, href, dashed }) {
   return (
     <a href={href} className="svc-node">
-      <circle cx={x} cy={y} r={24} className={dashed ? 'svc-node__dot svc-node__dot--temp' : 'svc-node__dot'} />
-      <Icon x={x - 11} y={y - 11} width={22} height={22} className="svc-node__icon" strokeWidth={1.75} aria-hidden="true" />
-      <text x={x} y={y + 46} textAnchor="middle" className="svc-node__label">{label}</text>
-      <text x={x} y={y + 66} textAnchor="middle" className="svc-node__role">{role}</text>
-    </a>
-  );
-}
-
-function Box({ y, h, title, sub, href }) {
-  return (
-    <a href={href} className="svc-node">
-      <rect x={CX - 95} y={y} width={190} height={h} rx={6} className="svc-box" />
-      <text x={CX} y={y + 26} textAnchor="middle" className="svc-node__label">{title}</text>
-      <text x={CX} y={y + 46} textAnchor="middle" className="svc-node__role">{sub}</text>
+      {photos ? (
+        photos.map((p) => (
+          <image key={p.href} href={p.href} x={x + p.dx - p.w / 2} y={y + 26 - p.h} width={p.w} height={p.h} />
+        ))
+      ) : (
+        <>
+          <circle cx={x} cy={y} r={24} className={dashed ? 'svc-node__dot svc-node__dot--temp' : 'svc-node__dot'} />
+          <Icon x={x - 11} y={y - 11} width={22} height={22} className="svc-node__icon" strokeWidth={1.75} aria-hidden="true" />
+        </>
+      )}
+      <text x={x} y={y + 50} textAnchor="middle" className="svc-node__label">{label}</text>
+      <text x={x} y={y + 70} textAnchor="middle" className="svc-node__role">{role}</text>
     </a>
   );
 }
@@ -180,24 +196,24 @@ function NetworkMap() {
   };
   return (
     <svg
-      viewBox="0 0 560 572"
+      viewBox="0 0 560 632"
       className="w-full h-auto max-w-[560px] mx-auto"
       role="img"
-      aria-label="Παράδειγμα εγκατάστασης: κύρια γραμμή, Starlink ως εφεδρική και 4G/5G ως προσωρινή σύνδεση καταλήγουν σε UniFi Cloud Gateway. Από εκεί ένα UniFi switch τροφοδοτεί WiFi, παραγγελιοληψία, κάμερες και τηλέφωνο."
+      aria-label="Παράδειγμα εγκατάστασης: κύρια γραμμή, Starlink ως εφεδρική και UniFi 5G ως προσωρινή σύνδεση καταλήγουν σε UniFi Cloud Gateway Ultra. Από εκεί ένα UniFi Switch Lite 16 PoE τροφοδοτεί WiFi (U7 Lite και U7 Outdoor), παραγγελιοληψία, κάμερες και τηλέφωνο."
     >
       {inputs.map((n) => (
         <path
           key={n.id}
-          d={curve(n.x, IN_Y + 80, CX + (n.x - CX) * 0.25, GW.y)}
+          d={curve(n.x, IN_Y + 84, CX + (n.x - CX) * 0.3, GW.y + 8)}
           className={`svc-link svc-link--${n.kind}`}
           fill="none"
         />
       ))}
-      <path d={`M${CX} ${GW.y + GW.h} V${SW.y}`} className="svc-link svc-link--down" fill="none" pathLength={1} />
+      <path d={`M${CX} ${GW.y + 118} V${SW.y}`} className="svc-link svc-link--down" fill="none" pathLength={1} />
       {endpoints.map((n) => (
         <path
           key={n.id}
-          d={curve(CX + (n.x - CX) * 0.2, SW.y + SW.h, n.x, END_Y - 24)}
+          d={curve(CX + (n.x - CX) * 0.2, SW.y + 116, n.x, END_Y - 34)}
           className="svc-link svc-link--down"
           fill="none"
           pathLength={1}
@@ -207,8 +223,19 @@ function NetworkMap() {
       {inputs.map((n) => (
         <Node key={n.id} {...n} y={IN_Y} href="#syndesi" dashed={n.kind === 'temp'} />
       ))}
-      <Box y={GW.y} h={GW.h} title="UniFi Cloud Gateway" sub="Router, firewall, failover" href="#syndesi" />
-      <Box y={SW.y} h={SW.h} title="UniFi Switch PoE" sub="Κεντρικό switch" href="#syndesi" />
+
+      <a href="#syndesi" className="svc-node">
+        <image href={IMG.gateway} x={CX - 90} y={GW.y} width={180} height={60} />
+        <text x={CX} y={GW.y + 90} textAnchor="middle" className="svc-node__label">UniFi Cloud Gateway Ultra</text>
+        <text x={CX} y={GW.y + 110} textAnchor="middle" className="svc-node__role">Router, firewall, failover</text>
+      </a>
+
+      <a href="#syndesi" className="svc-node">
+        <image href={IMG.switch} x={CX - 85} y={SW.y} width={170} height={58} />
+        <text x={CX} y={SW.y + 86} textAnchor="middle" className="svc-node__label">UniFi Switch Lite 16 PoE</text>
+        <text x={CX} y={SW.y + 106} textAnchor="middle" className="svc-node__role">Κεντρικό switch</text>
+      </a>
+
       {endpoints.map((n) => (
         <Node key={n.id} {...n} y={END_Y} href={`#${n.group}`} />
       ))}
