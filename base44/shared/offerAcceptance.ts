@@ -1,7 +1,6 @@
 // Κοινή λογική για την προσφορά πελάτη: καταγραφή προβολής, αποδοχή και απόρριψη.
-// Τη χρησιμοποιούν οι συναρτήσεις της εφαρμογής (logOfferView, acceptOffer,
-// rejectOffer) και η δημόσια σελίδα προσφοράς (publicOffer), ώστε η συμπεριφορά
-// και τα έγγραφα να είναι παντού τα ίδια.
+// Τη χρησιμοποιεί η δημόσια σελίδα προσφοράς (publicOffer), που ανοίγει μόνο με το
+// μυστικό token του συνδέσμου (χωρίς σύνδεση και χωρίς OTP).
 import { PDFDocument, rgb, StandardFonts } from 'npm:pdf-lib@1.17.1';
 import fontkit from 'npm:@pdf-lib/fontkit@1.1.1';
 import { sendAcceptedNotifications, formatAthensDate, formatAthensDateTime } from './offerNotifications.ts';
