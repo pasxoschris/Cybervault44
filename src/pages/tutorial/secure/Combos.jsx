@@ -5,10 +5,10 @@ import { S, Intro } from "../../../components/tutorial/SecureShot";
 
 export default function Combos() {
   return (
-    <SecureTutorialLayout title="Συνδυασμοί Προϊόντων" subtitle="Combo και μενού, π.χ. «1 καφές της επιλογής σας & 1 σφολιάτα»">
+    <SecureTutorialLayout title="Συνδυασμοί Προϊόντων" subtitle="Τα combo που έρχονται από το efood και το Wolt">
 
       <Intro>
-        Ο <strong>Συνδυασμός Προϊόντων</strong> (combo) είναι ένα πακέτο προϊόντων, π.χ. «1 Καφές της επιλογής σας &amp; 1 σφολιάτα» ή «Με 1 καφέ της επιλογής σας, δώρο ακόμη 1». Έχει σταθερά προϊόντα ή/και <strong>μενού επιλογών</strong>, από τα οποία ο πελάτης διαλέγει.
+        Οι <strong>Συνδυασμοί Προϊόντων</strong> είναι τα <strong>combo που έρχονται από τις πλατφόρμες delivery</strong> (efood, Wolt), π.χ. «1 Καφές της επιλογής σας &amp; 1 σφολιάτα» ή «Με 1 καφέ της επιλογής σας, δώρο ακόμη 1». Κάθε συνδυασμός έχει σταθερά προϊόντα ή/και <strong>μενού επιλογών</strong>, από τα οποία ο πελάτης διαλέγει στην πλατφόρμα.
       </Intro>
 
       <SectionTitle>Η λίστα</SectionTitle>
@@ -27,7 +27,7 @@ export default function Combos() {
           <li><strong>Φωτογραφία</strong>: με το <strong>Ανεβάστε μια εικόνα</strong>.</li>
           <li><strong>Τιμή</strong> (€).</li>
           <li><strong>Προϊόν</strong>: το προϊόν του καταλόγου με το οποίο συνδέεται ο συνδυασμός.</li>
-          <li><strong>Wolt Combo</strong>, <strong>Efood Combo</strong>, <strong>Delivery Manager Combo</strong>: η αντιστοίχιση με τις πλατφόρμες, αν το κατάστημα τις έχει.</li>
+          <li><strong>Wolt Combo</strong>, <strong>Efood Combo</strong>, <strong>Delivery Manager Combo</strong>: το combo της πλατφόρμας με το οποίο αντιστοιχίζεται ο συνδυασμός.</li>
         </ul>
       </StepCard>
 
