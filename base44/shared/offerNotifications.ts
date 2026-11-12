@@ -1,3 +1,4 @@
+import { escapeHtml } from './access.ts';
 // Κοινή ειδοποίηση αποδοχής προσφοράς.
 // Χρησιμοποιείται από τις συναρτήσεις που καταγράφουν αποδοχή από τον πελάτη
 // (acceptOffer, verifyOfferOtp) ώστε να στέλνεται πάντα η ίδια ειδοποίηση
@@ -25,14 +26,14 @@ export function buildAcceptedNotificationHtml(offer, { acceptedAt, ip, method })
   </div>
   <div style="background:#f9f9f9;padding:24px 30px;border:1px solid #eee;border-radius:0 0 8px 8px;">
     <div style="display:inline-block;background:#e8f5e9;color:#2e7d32;padding:8px 18px;border-radius:20px;font-weight:bold;font-size:13px;margin-bottom:16px;">✓ ΑΠΟΔΕΚΤΗ</div>
-    <p style="font-size:14px;">Η προσφορά <strong>${offer.reference_number || ''}</strong> έγινε αποδεκτή από τον πελάτη.</p>
+    <p style="font-size:14px;">Η προσφορά <strong>${escapeHtml(offer.reference_number || '')}</strong> έγινε αποδεκτή από τον πελάτη.</p>
     <table style="width:100%;font-size:13px;margin-top:12px;">
-      <tr><td style="color:#888;padding:4px 0;">Αρ. Αναφοράς Προσφοράς:</td><td><strong>${offer.reference_number || '—'}</strong></td></tr>
-      <tr><td style="color:#888;padding:4px 0;">Πελάτης:</td><td>${offer.company_legal_name || offer.store_name || '—'}</td></tr>
-      <tr><td style="color:#888;padding:4px 0;">Email:</td><td>${offer.email || '—'}</td></tr>
+      <tr><td style="color:#888;padding:4px 0;">Αρ. Αναφοράς Προσφοράς:</td><td><strong>${escapeHtml(offer.reference_number || '—')}</strong></td></tr>
+      <tr><td style="color:#888;padding:4px 0;">Πελάτης:</td><td>${escapeHtml(offer.company_legal_name || offer.store_name || '—')}</td></tr>
+      <tr><td style="color:#888;padding:4px 0;">Email:</td><td>${escapeHtml(offer.email || '—')}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">Ημ/νία Αποδοχής:</td><td>${formatAthensDateTime(acceptedAt)}</td></tr>
-      <tr><td style="color:#888;padding:4px 0;">IP:</td><td style="font-family:monospace;">${ip || '—'}</td></tr>
-      <tr><td style="color:#888;padding:4px 0;">Μέθοδος:</td><td>${method || '—'}</td></tr>
+      <tr><td style="color:#888;padding:4px 0;">IP:</td><td style="font-family:monospace;">${escapeHtml(ip || '—')}</td></tr>
+      <tr><td style="color:#888;padding:4px 0;">Μέθοδος:</td><td>${escapeHtml(method || '—')}</td></tr>
     </table>
   </div>
 </body></html>`;

@@ -5,6 +5,7 @@
 import { PDFDocument, rgb, StandardFonts } from 'npm:pdf-lib@1.17.1';
 import fontkit from 'npm:@pdf-lib/fontkit@1.1.1';
 import { sendAcceptedNotifications, formatAthensDate, formatAthensDateTime } from './offerNotifications.ts';
+import { escapeHtml } from './access.ts';
 
 const FINAL_STATUSES = ['accepted', 'rejected', 'expired'];
 
@@ -95,7 +96,7 @@ export async function acceptOfferCore(base44, offerId, meta) {
   const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 
   const buildConfirmHtml = () => {
-    const heading = `Η αποδοχή σας καταγράφηκε με επιτυχία για την προσφορά <strong>${offer.reference_number}</strong>.`;
+    const heading = `Η αποδοχή σας καταγράφηκε με επιτυχία για την προσφορά <strong>${escapeHtml(offer.reference_number)}</strong>.`;
     return `<!DOCTYPE html>
 <html><body style="font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto;padding:20px;">
   <div style="background:#0E1235;padding:20px 30px;border-radius:8px 8px 0 0;">
@@ -105,11 +106,11 @@ export async function acceptOfferCore(base44, offerId, meta) {
     <div style="display:inline-block;background:#e8f5e9;color:#2e7d32;padding:8px 18px;border-radius:20px;font-weight:bold;font-size:13px;margin-bottom:16px;">✓ ΑΠΟΔΕΚΤΗ</div>
     <p style="font-size:14px;">${heading}</p>
     <table style="width:100%;font-size:13px;margin-top:12px;">
-      <tr><td style="color:#888;padding:4px 0;">Αρ. Αναφοράς:</td><td><strong>${offer.reference_number || '—'}</strong></td></tr>
-      <tr><td style="color:#888;padding:4px 0;">Πελάτης:</td><td>${offer.company_legal_name || offer.store_name || '—'}</td></tr>
-      <tr><td style="color:#888;padding:4px 0;">Email:</td><td>${offer.email || '—'}</td></tr>
+      <tr><td style="color:#888;padding:4px 0;">Αρ. Αναφοράς:</td><td><strong>${escapeHtml(offer.reference_number || '—')}</strong></td></tr>
+      <tr><td style="color:#888;padding:4px 0;">Πελάτης:</td><td>${escapeHtml(offer.company_legal_name || offer.store_name || '—')}</td></tr>
+      <tr><td style="color:#888;padding:4px 0;">Email:</td><td>${escapeHtml(offer.email || '—')}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">Ημ/νία Αποδοχής:</td><td>${formatAthensDateTime(now)}</td></tr>
-      <tr><td style="color:#888;padding:4px 0;">IP:</td><td style="font-family:monospace;">${ip}</td></tr>
+      <tr><td style="color:#888;padding:4px 0;">IP:</td><td style="font-family:monospace;">${escapeHtml(ip)}</td></tr>
       <tr><td style="color:#888;padding:4px 0;">Μέθοδος:</td><td>Direct Acceptance</td></tr>
     </table>
   </div>
