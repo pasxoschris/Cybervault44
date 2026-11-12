@@ -37,7 +37,7 @@ export default function Products() {
           <li><strong>Separator</strong> (Διαχωριστικό): η κατηγορία λειτουργεί ως διαχωριστικό. Μια κατηγορία-διαχωριστικό <strong>δεν πρέπει να περιέχει προϊόντα</strong>.</li>
           <li><strong>Χρώμα</strong>, <strong>Σύντομος Κωδικός</strong>.</li>
           <li><strong>Ενεργή: ON</strong> και <strong>Διαθέσιμη στον Online Κατάλογο</strong>.</li>
-          <li><strong>Ορατό στους</strong> (π.χ. Service, Cashier POS, Take-Out &amp; Delivery, Maitre).</li>
+          <li><strong>Ορατό στους</strong>: σε ποια περιβάλλοντα της εφαρμογής εμφανίζεται η κατηγορία (Service, Cashier POS, Take-Out &amp; Delivery, Maitre).</li>
           <li><strong>Ενεργοποίηση στο Spotit</strong> και κουμπί <strong>Publish all items</strong>.</li>
           <li><strong>Σειρά Σερβιρίσματος</strong>, <strong>Έκπτωση Ιδιοκατανάλωσης</strong>, <strong>Χρόνος Προετοιμασίας</strong>, <strong>Όνομα Φορ. Εκτύπωσης</strong>.</li>
           <li><strong>Εκτυπωτές*</strong> (υποχρεωτικό) και <strong>Οθόνες Κουζίνας</strong>.</li>
