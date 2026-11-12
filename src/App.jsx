@@ -123,12 +123,14 @@ const AuthenticatedApp = () => {
       {/* MCP OAuth consent — must stay outside any auth guard */}
       <Route path="/oauth/consent" element={<OAuthConsent />} />
 
-      {/* Every other page requires login */}
-      <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+      {/* Public corporate pages — no login required */}
       <Route path="/" element={<Home />} />
       <Route path="/services" element={<Services />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/about" element={<About />} />
+
+      {/* Everything else requires login */}
+      <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
       <Route path="/spotlight-pos-guide" element={<SpotlightPOSGuide />} />
       <Route path="/tutorial/create-order" element={<CreateOrder />} />
       <Route path="/tutorial/discount" element={<DiscountGeneral />} />
@@ -238,8 +240,8 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/secure/c-order-flow" element={<OrderFlow />} />
       <Route path="/tutorial/secure/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/backoffice/*" element={<PlaceholderLesson />} />
-      <Route path="*" element={<PageNotFound />} />
       </Route>
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };
