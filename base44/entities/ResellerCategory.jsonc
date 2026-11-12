@@ -1,24 +1,23 @@
 {
   "name": "ResellerCategory",
-  "type": "object",
   "properties": {
-    "name": {
-      "type": "string",
-      "description": "Όνομα κατηγορίας"
+    "description": {
+      "description": "\u03a0\u03c1\u03bf\u03b1\u03b9\u03c1\u03b5\u03c4\u03b9\u03ba\u03ae \u03c0\u03b5\u03c1\u03b9\u03b3\u03c1\u03b1\u03c6\u03ae (\u03ad\u03c9\u03c2 1000 \u03c7\u03b1\u03c1\u03b1\u03ba\u03c4\u03ae\u03c1\u03b5\u03c2)",
+      "type": "string"
     },
     "display_order": {
-      "type": "number",
       "default": 0,
-      "description": "Σειρά εμφάνισης"
+      "description": "\u03a3\u03b5\u03b9\u03c1\u03ac \u03b5\u03bc\u03c6\u03ac\u03bd\u03b9\u03c3\u03b7\u03c2",
+      "type": "number"
     },
     "is_active": {
-      "type": "boolean",
       "default": true,
-      "description": "Ενεργή"
+      "description": "\u0395\u03bd\u03b5\u03c1\u03b3\u03ae",
+      "type": "boolean"
     },
-    "description": {
-      "type": "string",
-      "description": "Προαιρετική περιγραφή (έως 1000 χαρακτήρες)"
+    "name": {
+      "description": "\u038c\u03bd\u03bf\u03bc\u03b1 \u03ba\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1\u03c2",
+      "type": "string"
     }
   },
   "required": [
@@ -38,6 +37,11 @@
           }
         }
       ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
     },
     "read": {
       "$or": [
@@ -66,11 +70,7 @@
           }
         }
       ]
-    },
-    "delete": {
-      "user_condition": {
-        "role": "admin"
-      }
     }
-  }
+  },
+  "type": "object"
 }
