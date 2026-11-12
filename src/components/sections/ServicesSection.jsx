@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Globe, Satellite, Smartphone, Wifi, Tablet, Cctv, Phone } from 'lucide-react';
 
 // Υπηρεσίες ομαδοποιημένες με βάση το τι κρατούν σε λειτουργία μέσα στην επιχείρηση.
 const groups = [
@@ -131,64 +131,86 @@ const groups = [
   },
 ];
 
-// Κόμβοι του διαγράμματος: κάθε συσκευή οδηγεί στην ομάδα υπηρεσιών που τη στηρίζει.
-const nodes = [
-  { id: 'line', label: 'Γραμμή', x: 70, y: 36, group: 'syndesi' },
-  { id: 'sat', label: 'Starlink', x: 70, y: 130, group: 'syndesi' },
-  { id: 'mobile', label: '4G / 5G', x: 70, y: 224, group: 'syndesi' },
-  { id: 'router', label: 'Router', x: 230, y: 130, group: 'syndesi', core: true },
-  { id: 'wifi', label: 'WiFi', x: 400, y: 34, group: 'syndesi' },
-  { id: 'pos', label: 'Παραγγελιοληψία', x: 420, y: 102, group: 'tameio' },
-  { id: 'cam', label: 'Κάμερες', x: 420, y: 170, group: 'asfaleia' },
-  { id: 'voip', label: 'Τηλέφωνο', x: 400, y: 238, group: 'ypostirixi' },
+// Παράδειγμα εγκατάστασης: τρεις συνδέσεις → gateway → switch → συσκευές.
+// Κάθε συσκευή οδηγεί στην ομάδα υπηρεσιών που τη στηρίζει.
+const inputs = [
+  { id: 'line', icon: Globe, label: 'Γραμμή', role: 'Κύρια', x: 90, kind: 'primary' },
+  { id: 'sat', icon: Satellite, label: 'Starlink', role: 'Εφεδρική', x: 280, kind: 'backup' },
+  { id: 'mobile', icon: Smartphone, label: '4G / 5G', role: 'Προσωρινή', x: 470, kind: 'temp' },
 ];
 
-const links = [
-  ['line', 'router'],
-  ['sat', 'router'],
-  ['mobile', 'router'],
-  ['router', 'wifi'],
-  ['router', 'pos'],
-  ['router', 'cam'],
-  ['router', 'voip'],
+const endpoints = [
+  { id: 'wifi', icon: Wifi, label: 'WiFi', role: 'Σάλα & έξω', x: 70, group: 'syndesi' },
+  { id: 'pos', icon: Tablet, label: 'Παραγγελιοληψία', role: 'POS & PDA', x: 210, group: 'tameio' },
+  { id: 'cam', icon: Cctv, label: 'Κάμερες', role: 'UniFi Protect', x: 350, group: 'asfaleia' },
+  { id: 'voip', icon: Phone, label: 'Τηλέφωνο', role: 'VoIP', x: 490, group: 'ypostirixi' },
 ];
 
-const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
+const IN_Y = 48;
+const GW = { y: 210, h: 60 };
+const SW = { y: 330, h: 60 };
+const END_Y = 480;
+const CX = 280;
+
+function Node({ x, y, icon: Icon, label, role, href, dashed }) {
+  return (
+    <a href={href} className="svc-node">
+      <circle cx={x} cy={y} r={24} className={dashed ? 'svc-node__dot svc-node__dot--temp' : 'svc-node__dot'} />
+      <Icon x={x - 11} y={y - 11} width={22} height={22} className="svc-node__icon" strokeWidth={1.75} aria-hidden="true" />
+      <text x={x} y={y + 46} textAnchor="middle" className="svc-node__label">{label}</text>
+      <text x={x} y={y + 66} textAnchor="middle" className="svc-node__role">{role}</text>
+    </a>
+  );
+}
+
+function Box({ y, h, title, sub, href }) {
+  return (
+    <a href={href} className="svc-node">
+      <rect x={CX - 95} y={y} width={190} height={h} rx={6} className="svc-box" />
+      <text x={CX} y={y + 26} textAnchor="middle" className="svc-node__label">{title}</text>
+      <text x={CX} y={y + 46} textAnchor="middle" className="svc-node__role">{sub}</text>
+    </a>
+  );
+}
 
 function NetworkMap() {
+  const curve = (x1, y1, x2, y2) => {
+    const my = (y1 + y2) / 2;
+    return `M${x1} ${y1} C${x1} ${my}, ${x2} ${my}, ${x2} ${y2}`;
+  };
   return (
     <svg
-      viewBox="0 0 580 272"
-      className="w-full h-auto"
+      viewBox="0 0 560 572"
+      className="w-full h-auto max-w-[560px] mx-auto"
       role="img"
-      aria-label="Διάγραμμα: γραμμή, Starlink και 4G/5G συνδέονται στο router, που τροφοδοτεί WiFi, παραγγελιοληψία, κάμερες και τηλέφωνο"
+      aria-label="Παράδειγμα εγκατάστασης: κύρια γραμμή, Starlink ως εφεδρική και 4G/5G ως προσωρινή σύνδεση καταλήγουν σε UniFi Cloud Gateway. Από εκεί ένα UniFi switch τροφοδοτεί WiFi, παραγγελιοληψία, κάμερες και τηλέφωνο."
     >
-      {links.map(([a, b, backup]) => {
-        const p = byId[a];
-        const q = byId[b];
-        const mx = (p.x + q.x) / 2;
-        return (
-          <path
-            key={a + b}
-            d={`M${p.x} ${p.y} C${mx} ${p.y}, ${mx} ${q.y}, ${q.x} ${q.y}`}
-            className={backup ? 'svc-link svc-link--backup' : 'svc-link'}
-            fill="none"
-            pathLength={backup ? undefined : 1}
-          />
-        );
-      })}
-      {nodes.map((n) => (
-        <a key={n.id} href={`#${n.group}`} className="svc-node">
-          <circle cx={n.x} cy={n.y} r={n.core ? 11 : 6} className={n.core ? 'svc-node__core' : 'svc-node__dot'} />
-          <text
-            x={n.x + (n.x > 300 ? 16 : 0)}
-            y={n.x > 300 ? n.y + 5 : n.y + (n.core ? 32 : 26)}
-            textAnchor={n.x > 300 ? 'start' : 'middle'}
-            className="svc-node__label"
-          >
-            {n.label}
-          </text>
-        </a>
+      {inputs.map((n) => (
+        <path
+          key={n.id}
+          d={curve(n.x, IN_Y + 80, CX + (n.x - CX) * 0.25, GW.y)}
+          className={`svc-link svc-link--${n.kind}`}
+          fill="none"
+        />
+      ))}
+      <path d={`M${CX} ${GW.y + GW.h} V${SW.y}`} className="svc-link svc-link--down" fill="none" pathLength={1} />
+      {endpoints.map((n) => (
+        <path
+          key={n.id}
+          d={curve(CX + (n.x - CX) * 0.2, SW.y + SW.h, n.x, END_Y - 24)}
+          className="svc-link svc-link--down"
+          fill="none"
+          pathLength={1}
+        />
+      ))}
+
+      {inputs.map((n) => (
+        <Node key={n.id} {...n} y={IN_Y} href="#syndesi" dashed={n.kind === 'temp'} />
+      ))}
+      <Box y={GW.y} h={GW.h} title="UniFi Cloud Gateway" sub="Router, firewall, failover" href="#syndesi" />
+      <Box y={SW.y} h={SW.h} title="UniFi Switch PoE" sub="Κεντρικό switch" href="#syndesi" />
+      {endpoints.map((n) => (
+        <Node key={n.id} {...n} y={END_Y} href={`#${n.group}`} />
       ))}
     </svg>
   );
@@ -249,7 +271,7 @@ export default function ServicesSection() {
           <figure className="lg:pl-6">
             <NetworkMap />
             <figcaption className="mt-3 text-sm text-[#6F7FA3]">
-              Πατήστε μια συσκευή για να δείτε πώς τη στηρίζουμε.
+              Παράδειγμα εγκατάστασης σε εστιατόριο. Πατήστε μια συσκευή για να δείτε πώς τη στηρίζουμε.
             </figcaption>
           </figure>
         </div>
