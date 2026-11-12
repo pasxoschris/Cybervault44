@@ -1,22 +1,26 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
+import { escapeHtml, isResellerUser, isValidEmail } from '../../shared/access.ts';
+
+const MAX_CC = 5;
 
 // Σύντομο email ειδοποίησης: μήνυμα + κουμπί προβολής της προσφοράς.
 // Χωρίς πίνακα γραμμών / σύνολα / όρους και χωρίς συνημμένο PDF — ο πελάτης
 // πρέπει να ανοίξει την προσφορά, ώστε να καταγράφεται η προβολή (viewed_at).
 function buildHtmlBody(offer, settings, offerLink, customBody) {
   const introSource = customBody || settings?.default_email_body || '';
+  // Το κείμενο εμφανίζεται ως κείμενο (όχι HTML), ώστε να μην μπορούν να μπουν κρυφά links/κώδικας.
   const intro = introSource
-    ? introSource.replace(/\n/g, '<br>')
-    : `Αγαπητέ/ή ${offer?.contact_person || ''},<br><br>Σας αποστέλλουμε την προσφορά μας για το σύστημα Spotlight POS.`;
+    ? escapeHtml(introSource).replace(/\n/g, '<br>')
+    : `Αγαπητέ/ή ${escapeHtml(offer?.contact_person || '')},<br><br>Σας αποστέλλουμε την προσφορά μας για το σύστημα Spotlight POS.`;
 
-  const ref = offer?.reference_number || '';
+  const ref = escapeHtml(offer?.reference_number || '');
   const expires = offer?.expires_at ? new Date(offer.expires_at).toLocaleDateString('el-GR') : '';
-  const link = offerLink || '';
+  const link = escapeHtml(offerLink || '');
 
   return `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto;padding:20px;">
     <div style="background:#0E1235;padding:20px 30px;">
       <h1 style="margin:0;font-size:22px;color:#fff;"><span style="color:#fff;">CYBER</span><span style="color:#0099cc;">VAULT</span></h1>
-      ${settings?.company_name ? `<p style="margin:4px 0 0;color:#aaa;font-size:13px;">${settings.company_name}</p>` : ''}
+      ${settings?.company_name ? `<p style="margin:4px 0 0;color:#aaa;font-size:13px;">${escapeHtml(settings.company_name)}</p>` : ''}
     </div>
     <div style="background:#f9f9f9;padding:24px 30px;border:1px solid #eee;">
       <p style="margin:0 0 16px;font-size:14px;">${intro}</p>
@@ -29,8 +33,8 @@ function buildHtmlBody(offer, settings, offerLink, customBody) {
       </div>` : ''}
     </div>
     <div style="margin-top:20px;padding:16px;border-top:2px solid #0099cc;font-size:12px;color:#888;">
-      ${settings?.public_phone ? `Τηλ: ${settings.public_phone} &nbsp;|&nbsp; ` : ''}
-      ${settings?.public_email ? `Email: ${settings.public_email}` : ''}
+      ${settings?.public_phone ? `Τηλ: ${escapeHtml(settings.public_phone)} &nbsp;|&nbsp; ` : ''}
+      ${settings?.public_email ? `Email: ${escapeHtml(settings.public_email)}` : ''}
     </div>
   </body></html>`;
 }
@@ -40,12 +44,25 @@ Deno.serve(async (req) => {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    // Μόνο admin ή χρήστες της whitelist Reseller Console.
+    if (!(await isResellerUser(base44, user))) {
+      return Response.json({ error: 'Forbidden' }, { status: 403 });
+    }
 
     const body = await req.json();
-    const { to, cc, subject, offer_id, custom_body } = body;
+    const { offer_id, custom_body } = body;
+    const to = typeof body.to === 'string' ? body.to.trim() : '';
+    const subject = typeof body.subject === 'string' ? body.subject.replace(/[\r\n]+/g, ' ').trim().slice(0, 200) : '';
+    const cc = typeof body.cc === 'string' ? body.cc : '';
 
     if (!to || !subject) {
       return Response.json({ error: 'Missing required fields: to, subject' }, { status: 400 });
+    }
+    if (!isValidEmail(to)) {
+      return Response.json({ error: 'Μη έγκυρο email παραλήπτη.' }, { status: 400 });
+    }
+    if (custom_body !== undefined && custom_body !== null && (typeof custom_body !== 'string' || custom_body.length > 5000)) {
+      return Response.json({ error: 'Μη έγκυρο κείμενο μηνύματος.' }, { status: 400 });
     }
 
     if (!offer_id) {
@@ -95,7 +112,9 @@ Deno.serve(async (req) => {
     };
 
     const sendResult = await sendViaResend(to);
-    const ccList = cc ? String(cc).split(',').map(e => e.trim()).filter(Boolean) : [];
+    const ccList = (cc ? String(cc).split(',').map(e => e.trim()).filter(Boolean) : [])
+      .filter(isValidEmail)
+      .slice(0, MAX_CC);
     for (const ccAddr of ccList) {
       try { await sendViaResend(ccAddr); } catch (e) { console.error('CC send failed:', ccAddr, e.message); }
     }
