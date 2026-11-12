@@ -73,7 +73,9 @@ export default function OfferLinesTable({
                           </td>
                           <td className="py-2 px-2 text-[#00CFFF] font-mono text-sm">€{formatCurrency(lineTotal(l))}</td>
                           <td className="py-2 px-2">
-                            <button onClick={() => onRemoveLine(l.id)} className="text-white/30 hover:text-red-400 transition-colors"><Trash2 size={14} /></button>
+                            <button onClick={() => onRemoveLine(l.id)} disabled={priceLocked}
+                              title={priceLocked ? 'Δεν μπορείτε να αφαιρέσετε προϊόν (η προσφορά έχει σταλεί)' : undefined}
+                              className={`transition-colors ${priceLocked ? 'text-white/15 cursor-not-allowed' : 'text-white/30 hover:text-red-400'}`}><Trash2 size={14} /></button>
                           </td>
                         </tr>
                       )}

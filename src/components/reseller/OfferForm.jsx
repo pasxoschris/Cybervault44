@@ -180,21 +180,23 @@ export default function OfferForm({ editOffer, onSaved }) {
         <div className="flex items-start gap-3 bg-amber-500/5 border border-amber-500/30 rounded-xl px-4 py-3 text-amber-300/90 text-xs leading-relaxed">
           <Lock size={14} className="flex-shrink-0 mt-0.5" />
           <span>
-            Η προσφορά έχει σταλεί στον πελάτη — οι ποσότητες, οι τιμές, οι εκπτώσεις και η απαλλαγή ΦΠΑ είναι κλειδωμένες.
+            Η προσφορά έχει σταλεί στον πελάτη — οι ποσότητες, οι τιμές, οι εκπτώσεις και η απαλλαγή ΦΠΑ είναι κλειδωμένες και δεν μπορείτε να προσθέσετε ή να αφαιρέσετε προϊόντα.
           </span>
         </div>
       )}
 
       <CustomerForm customer={customer} onChange={handleCustomerChange} />
 
-      <EquipmentSelector
-        pricingItems={pricingItems}
-        categories={categories}
-        openCategories={openCategories}
-        onToggleCategory={toggleCategory}
-        onAddItem={addLine}
-        onReorderItems={handleCatalogDragEnd}
-      />
+      {!priceLocked && (
+        <EquipmentSelector
+          pricingItems={pricingItems}
+          categories={categories}
+          openCategories={openCategories}
+          onToggleCategory={toggleCategory}
+          onAddItem={addLine}
+          onReorderItems={handleCatalogDragEnd}
+        />
+      )}
 
       {lines.length > 0 && (
         <OfferLinesTable
