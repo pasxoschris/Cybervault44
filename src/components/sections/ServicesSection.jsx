@@ -147,7 +147,7 @@ const inputs = [
   { id: 'line', icon: Globe, label: 'Γραμμή', role: 'Κύρια', x: 90, kind: 'primary' },
   { id: 'sat', icon: Satellite, label: 'Starlink', role: 'Εφεδρική', x: 280, kind: 'backup' },
   {
-    id: 'mobile', label: 'UniFi 5G', role: 'Προσωρινή', x: 470, kind: 'temp',
+    id: 'mobile', label: 'UniFi 5G', role: '2η Εφεδρική', x: 470, kind: 'temp',
     photos: [{ href: IMG.unifi5g, w: 18, h: 86, dx: 0 }],
   },
 ];
@@ -204,7 +204,7 @@ function NetworkMap() {
       viewBox="0 0 560 640"
       className="w-full h-auto max-w-[560px] mx-auto"
       role="img"
-      aria-label="Παράδειγμα εγκατάστασης: κύρια γραμμή, Starlink ως εφεδρική και UniFi 5G ως προσωρινή σύνδεση καταλήγουν σε UniFi Cloud Gateway Ultra. Από εκεί ένα UniFi Switch Lite 16 PoE τροφοδοτεί WiFi (U7 Pro και U7 Outdoor), παραγγελιοληψία, κάμερες και τηλέφωνο."
+      aria-label="Παράδειγμα εγκατάστασης: κύρια γραμμή, Starlink ως εφεδρική και UniFi 5G ως δεύτερη εφεδρική σύνδεση καταλήγουν σε UniFi Cloud Gateway Ultra. Από εκεί ένα UniFi Switch Lite 16 PoE τροφοδοτεί WiFi (U7 Pro και U7 Outdoor), παραγγελιοληψία, κάμερες και τηλέφωνο."
     >
       {inputs.map((n) => (
         <path
