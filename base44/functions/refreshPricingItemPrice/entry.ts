@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.49';
+import { isResellerUser, isSafePublicUrl } from '../../shared/access.ts';
 
 /**
  * Parses a European-format price string like "166,94 €" or "1.234,56 €" into a number.
@@ -52,6 +53,7 @@ export default async function(req) {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!(await isResellerUser(base44, user))) return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json().catch(() => ({}));
     const { item_id } = body || {};
@@ -76,6 +78,11 @@ export default async function(req) {
         results.push({ id: item.id, name: item.name, status: 'skipped', reason: 'No source URL' });
         continue;
       }
+      // Μόνο δημόσιες https σελίδες (όχι localhost / IP / εσωτερικά δίκτυα).
+      if (!isSafePublicUrl(item.source_url)) {
+        results.push({ id: item.id, name: item.name, status: 'skipped', reason: 'Μη επιτρεπτό URL (μόνο https δημόσιες σελίδες)' });
+        continue;
+      }
       try {
         const resp = await fetch(item.source_url, {
           headers: {
@@ -85,6 +92,10 @@ export default async function(req) {
           },
           redirect: 'follow',
         });
+        if (resp.url && !isSafePublicUrl(resp.url)) {
+          results.push({ id: item.id, name: item.name, status: 'skipped', reason: 'Μη επιτρεπτή ανακατεύθυνση' });
+          continue;
+        }
         if (!resp.ok) {
           results.push({ id: item.id, name: item.name, status: 'error', reason: `HTTP ${resp.status}` });
           continue;
