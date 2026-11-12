@@ -1,7 +1,7 @@
 import { escapeHtml } from './access.ts';
 // Κοινή ειδοποίηση αποδοχής προσφοράς.
 // Χρησιμοποιείται από τις συναρτήσεις που καταγράφουν αποδοχή από τον πελάτη
-// (acceptOffer, verifyOfferOtp) ώστε να στέλνεται πάντα η ίδια ειδοποίηση
+// (η δημόσια σελίδα προσφοράς publicOffer, μέσω offerAcceptance.ts) ώστε να στέλνεται πάντα η ίδια ειδοποίηση
 // στις σταθερές διευθύνσεις του γραφείου.
 
 export const ACCEPTED_NOTIFICATION_EMAILS = [
