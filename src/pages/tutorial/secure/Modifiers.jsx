@@ -37,8 +37,12 @@ export default function Modifiers() {
         <p className="mt-2">Πάτα <strong>Αποθήκευση</strong>.</p>
       </StepCard>
 
+      <InfoBox icon="⚠️" title="Η Ενεργή είναι κλειστή" variant="warning">
+        <p>Στη νέα ομάδα η <strong>Ενεργή</strong> είναι από προεπιλογή <strong>OFF</strong>. Άνοιξέ την.</p>
+      </InfoBox>
+
       <InfoBox icon="⚠️" title="Modifier Group Type" variant="warning">
-        <p>Στην επεξεργασία της ομάδας υπάρχει και το <strong>Modifier Group Type</strong>. Ο τύπος που θα διαλέξεις εφαρμόζεται σε <strong>όλα τα συνοδευτικά της ομάδας</strong>.</p>
+        <p>Στην επεξεργασία της ομάδας υπάρχει και το <strong>Modifier Group Type</strong> (Καμία, Φαγητά, Ποτά, Άλλο). Ο τύπος που θα διαλέξεις εφαρμόζεται σε <strong>όλα τα συνοδευτικά της ομάδας</strong>.</p>
       </InfoBox>
 
       <SectionTitle>Νέο συνοδευτικό</SectionTitle>
