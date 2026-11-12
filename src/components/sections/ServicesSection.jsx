@@ -6,7 +6,7 @@ const groups = [
   {
     id: 'syndesi',
     name: 'Σύνδεση',
-    intro: 'Το δίκτυο είναι η βάση. Αν πέσει, σταματούν μαζί του ταμείο, κάμερες και παραγγελίες.',
+    intro: 'Το δίκτυο είναι η βάση. Αν πέσει, σταματούν μαζί του παραγγελιοληψία, πληρωμές και κάμερες.',
     services: [
       {
         title: 'Δικτύωση & WiFi επαγγελματικού επιπέδου',
@@ -15,7 +15,7 @@ const groups = [
           'Δίκτυα αποκλειστικά με εξοπλισμό Ubiquiti UniFi: κεντρική διαχείριση, σταθερό WiFi και παρακολούθηση από απόσταση',
           'Ξεχωριστά δίκτυα για προσωπικό, πελάτες και συστήματα (VLAN), για ασφάλεια και τάξη',
           'Τοποθέτηση Access Points για πλήρη κάλυψη σε κάθε γωνιά του χώρου',
-          'Ρυθμίσεις QoS ώστε ταμεία, κάμερες και κρίσιμες συσκευές να έχουν πάντα προτεραιότητα',
+          'Ρυθμίσεις QoS ώστε παραγγελιοληψία, κάμερες και κρίσιμες συσκευές να έχουν πάντα προτεραιότητα',
           'Αναβάθμιση σε WiFi 6 / 6E: περισσότερες συσκευές, μεγαλύτερη ταχύτητα, λιγότερα προβλήματα',
         ],
       },
@@ -36,7 +36,7 @@ const groups = [
   },
   {
     id: 'tameio',
-    name: 'Ταμείο & πληρωμές',
+    name: 'Παραγγελιοληψία & πληρωμές',
     intro: 'Ό,τι χρειάζεται για να παίρνετε παραγγελίες και να πληρώνεστε χωρίς καθυστέρηση.',
     services: [
       {
@@ -136,10 +136,10 @@ const nodes = [
   { id: 'line', label: 'Γραμμή', x: 70, y: 70, group: 'syndesi' },
   { id: 'sat', label: 'Starlink / 5G', x: 70, y: 190, group: 'syndesi' },
   { id: 'router', label: 'Router', x: 230, y: 130, group: 'syndesi', core: true },
-  { id: 'wifi', label: 'WiFi', x: 420, y: 34, group: 'syndesi' },
-  { id: 'pos', label: 'Ταμείο', x: 440, y: 102, group: 'tameio' },
-  { id: 'cam', label: 'Κάμερες', x: 440, y: 170, group: 'asfaleia' },
-  { id: 'voip', label: 'Τηλέφωνο', x: 420, y: 238, group: 'ypostirixi' },
+  { id: 'wifi', label: 'WiFi', x: 400, y: 34, group: 'syndesi' },
+  { id: 'pos', label: 'Παραγγελιοληψία', x: 420, y: 102, group: 'tameio' },
+  { id: 'cam', label: 'Κάμερες', x: 420, y: 170, group: 'asfaleia' },
+  { id: 'voip', label: 'Τηλέφωνο', x: 400, y: 238, group: 'ypostirixi' },
 ];
 
 const links = [
@@ -156,10 +156,10 @@ const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
 function NetworkMap() {
   return (
     <svg
-      viewBox="0 0 545 272"
+      viewBox="0 0 580 272"
       className="w-full h-auto"
       role="img"
-      aria-label="Διάγραμμα: γραμμή και Starlink συνδέονται στο router, που τροφοδοτεί WiFi, ταμείο, κάμερες και τηλέφωνο"
+      aria-label="Διάγραμμα: γραμμή και Starlink συνδέονται στο router, που τροφοδοτεί WiFi, παραγγελιοληψία, κάμερες και τηλέφωνο"
     >
       {links.map(([a, b, backup]) => {
         const p = byId[a];
@@ -232,7 +232,7 @@ export default function ServicesSection() {
               Τεχνολογία που κρατά την επιχείρησή σας σε λειτουργία
             </h1>
             <p className="mt-6 text-[1.125rem] leading-relaxed text-[#9FB0D0] max-w-[48ch]">
-              Δίκτυα, ταμεία, κάμερες και τηλεφωνία για εστιατόρια, καφέ, καταστήματα και ξενοδοχεία. Από την
+              Δίκτυα, παραγγελιοληψία, κάμερες και τηλεφωνία για εστιατόρια, καφέ, καταστήματα και ξενοδοχεία. Από την
               εγκατάσταση μέχρι την καθημερινή υποστήριξη.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
