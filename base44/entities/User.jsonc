@@ -1,17 +1,39 @@
 {
+  "name": "User",
   "properties": {
+    "guide_access": {
+      "description": "\u0391\u03c5\u03c4\u03cc\u03bc\u03b1\u03c4\u03bf \u03b1\u03bd\u03c4\u03af\u03b3\u03c1\u03b1\u03c6\u03bf \u03c4\u03b7\u03c2 whitelist SpotlightPOS Guide. \u03a4\u03bf \u03b3\u03c1\u03ac\u03c6\u03b5\u03b9 \u03bc\u03cc\u03bd\u03bf \u03bf server (syncAccess).",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "type": "boolean"
+    },
+    "reseller_access": {
+      "description": "\u0391\u03c5\u03c4\u03cc\u03bc\u03b1\u03c4\u03bf \u03b1\u03bd\u03c4\u03af\u03b3\u03c1\u03b1\u03c6\u03bf \u03c4\u03b7\u03c2 whitelist Reseller Console. \u03a4\u03bf \u03b3\u03c1\u03ac\u03c6\u03b5\u03b9 \u03bc\u03cc\u03bd\u03bf \u03bf server (syncAccess).",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "type": "boolean"
+    },
     "role": {
-      "type": "string",
       "description": "The role of the user in the app",
       "enum": [
         "admin",
         "user"
-      ]
+      ],
+      "type": "string"
     }
   },
   "required": [
     "role"
   ],
-  "name": "User",
   "type": "object"
 }
