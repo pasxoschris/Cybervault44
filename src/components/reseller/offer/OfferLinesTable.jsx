@@ -47,8 +47,10 @@ export default function OfferLinesTable({
                             <input value={l.description} onChange={e => onUpdateLine(l.id, 'description', e.target.value)} className="bg-transparent text-white/50 text-xs focus:outline-none w-28 border-b border-transparent focus:border-[#00CFFF]/30" />
                           </td>
                           <td className="py-2 px-2">
-                            <input type="number" min={1} value={l.quantity} onChange={e => onUpdateLine(l.id, 'quantity', parseFloat(e.target.value) || 1)}
-                              className={`${inputCls} w-16`} />
+                            <input type="number" min={1} value={l.quantity} disabled={priceLocked}
+                              onChange={e => onUpdateLine(l.id, 'quantity', parseFloat(e.target.value) || 1)}
+                              title={priceLocked ? 'Η ποσότητα είναι κλειδωμένη (η προσφορά έχει σταλεί)' : undefined}
+                              className={`${inputCls} w-16 ${lockedCls}`} />
                           </td>
                           <td className="py-2 px-2">
                             <input type="number" min={0} step={0.01} value={l.unit_price} disabled={priceLocked}
