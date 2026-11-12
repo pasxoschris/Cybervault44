@@ -87,6 +87,7 @@ export const SECURE_LESSONS = [
   { num: "7.1", part: "7", title: "Εκτυπωτές", href: '/tutorial/secure/f-printers' },
   { num: "7.2", part: "7", title: "Οθόνες Κουζίνας", href: '/tutorial/secure/f-kitchen-displays', mark: "🔓" },
   { num: "7.3", part: "7", title: "Other Devices", href: '/tutorial/secure/f-other-devices', mark: "🔓" },
+  { num: "7.3.1", part: "7", title: "Τερματικά POS τράπεζας (EFTPOS)", href: '/tutorial/secure/f-eftpos', mark: "🔓" },
   { num: "7.4", part: "7", title: "Σημεία Πώλησης / Συσκευές Χρηστών", href: '/tutorial/secure/f-pos-devices' },
   { num: "8.1", part: "8", title: "Λίστα Τραπεζιών και ομάδες", href: '/tutorial/secure/f-tables-list' },
   { num: "8.2", part: "8", title: "Κάτοψη Τραπεζιών", href: '/tutorial/secure/f-floor-plan' },
