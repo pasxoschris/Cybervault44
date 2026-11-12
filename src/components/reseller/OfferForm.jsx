@@ -213,6 +213,7 @@ export default function OfferForm({ editOffer, onSaved }) {
         saving={saving}
         linesCount={lines.length}
         hasSavedOffer={!!savedOffer}
+        priceLocked={priceLocked}
         onSaveDraft={() => handleSave('draft')}
         onPreview={() => setShowPreview(true)}
         onSendEmail={async () => {

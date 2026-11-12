@@ -4,6 +4,7 @@ export default function OfferActions({
   saving,
   linesCount,
   hasSavedOffer,
+  priceLocked = false,
   onSaveDraft,
   onPreview,
   onSendEmail,
@@ -23,8 +24,9 @@ export default function OfferActions({
         className="flex items-center gap-2 px-5 py-2.5 bg-[#131840] border border-[#2A3580] rounded-xl text-white text-sm hover:border-[#00CFFF]/40 transition-colors disabled:opacity-40">
         <Mail size={15} /> Αποστολή Email
       </button>
-      <button onClick={onClear}
-        className="flex items-center gap-2 px-5 py-2.5 bg-[#131840] border border-red-500/20 rounded-xl text-red-400/70 text-sm hover:border-red-400/50 transition-colors">
+      <button onClick={onClear} disabled={priceLocked}
+        title={priceLocked ? 'Ο καθαρισμός δεν είναι διαθέσιμος σε απεσταλμένη προσφορά' : undefined}
+        className="flex items-center gap-2 px-5 py-2.5 bg-[#131840] border border-red-500/20 rounded-xl text-red-400/70 text-sm hover:border-red-400/50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-red-500/20">
         <RotateCcw size={15} /> Καθαρισμός
       </button>
     </div>
