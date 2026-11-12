@@ -6,6 +6,7 @@ import SpotlightBrand from '@/components/SpotlightBrand';
 import { ChevronLeft, Bot, ChevronRight, RotateCcw, ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import AssistantInput from '@/components/academy/AssistantInput';
+import { syncMyAccess } from '@/lib/syncAccess';
 
 const CATEGORY_LABELS = {
   general: 'Γενικά',
@@ -131,6 +132,8 @@ export default function Assistant() {
     const start = async () => {
       const authed = await base44.auth.isAuthenticated();
       if (!authed) { base44.auth.redirectToLogin(window.location.href); return; }
+      // Ενημερώνει την πρόσβαση Οδηγού, ώστε ο βοηθός να βρίσκει το υλικό (KnowledgeArticle).
+      await syncMyAccess();
       try {
         const list = await base44.entities.AssistantSuggestedQuestion.list('display_order', 200);
         const active = list
