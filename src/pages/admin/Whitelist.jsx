@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { syncAccessFor } from '@/lib/syncAccess';
-
-// Οι whitelists που ενημερώνουν τα πεδία πρόσβασης του χρήστη (reseller_access / guide_access).
-const SYNCED_LISTS = ['AllowedUserReseller', 'AllowedUserGuide'];
 import Navbar from '@/components/layout/Navbar';
 import { ROLES } from '@/lib/roles';
 import SearchableStoreSelect from '@/components/admin/SearchableStoreSelect';
+
+// Οι whitelists που ενημερώνουν τα πεδία πρόσβασης του χρήστη (reseller_access / guide_access).
+const SYNCED_LISTS = ['AllowedUserReseller', 'AllowedUserGuide'];
 
 const parseModes = (modes) => (modes ? modes.split(',').map(m => m.trim()).filter(Boolean) : []);
 
