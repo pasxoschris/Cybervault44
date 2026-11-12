@@ -133,8 +133,9 @@ const groups = [
 
 // Κόμβοι του διαγράμματος: κάθε συσκευή οδηγεί στην ομάδα υπηρεσιών που τη στηρίζει.
 const nodes = [
-  { id: 'line', label: 'Γραμμή', x: 70, y: 70, group: 'syndesi' },
-  { id: 'sat', label: 'Starlink / 5G', x: 70, y: 190, group: 'syndesi' },
+  { id: 'line', label: 'Γραμμή', x: 70, y: 36, group: 'syndesi' },
+  { id: 'sat', label: 'Starlink', x: 70, y: 124, group: 'syndesi' },
+  { id: 'mobile', label: '4G / 5G', x: 70, y: 212, group: 'syndesi' },
   { id: 'router', label: 'Router', x: 230, y: 130, group: 'syndesi', core: true },
   { id: 'wifi', label: 'WiFi', x: 400, y: 34, group: 'syndesi' },
   { id: 'pos', label: 'Παραγγελιοληψία', x: 420, y: 102, group: 'tameio' },
@@ -143,8 +144,9 @@ const nodes = [
 ];
 
 const links = [
-  ['line', 'router', false],
-  ['sat', 'router', true],
+  ['line', 'router'],
+  ['sat', 'router'],
+  ['mobile', 'router'],
   ['router', 'wifi'],
   ['router', 'pos'],
   ['router', 'cam'],
@@ -159,7 +161,7 @@ function NetworkMap() {
       viewBox="0 0 580 272"
       className="w-full h-auto"
       role="img"
-      aria-label="Διάγραμμα: γραμμή και Starlink συνδέονται στο router, που τροφοδοτεί WiFi, παραγγελιοληψία, κάμερες και τηλέφωνο"
+      aria-label="Διάγραμμα: γραμμή, Starlink και 4G/5G συνδέονται στο router, που τροφοδοτεί WiFi, παραγγελιοληψία, κάμερες και τηλέφωνο"
     >
       {links.map(([a, b, backup]) => {
         const p = byId[a];
