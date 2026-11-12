@@ -130,6 +130,8 @@ const AuthenticatedApp = () => {
       <Route path="/about" element={<About />} />
       {/* Δημόσια σελίδα παρουσίασης του Οδηγού — τα μαθήματα θέλουν σύνδεση */}
       <Route path="/spotlight-pos-guide" element={<SpotlightPOSGuide />} />
+      {/* Δημόσιες οδηγίες σύνδεσης AI client (MCP) — η ίδια η πρόσβαση θέλει σύνδεση & whitelist */}
+      <Route path="/connect" element={<Connect />} />
 
       {/* Everything else requires login */}
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
@@ -180,7 +182,6 @@ const AuthenticatedApp = () => {
       <Route path="/reseller-console" element={<ResellerConsole />} />
       <Route path="/admin/service-desk-admin" element={<ServiceDeskAdmin />} />
       <Route path="/admin/assistant-questions" element={<AssistantQuestions />} />
-      <Route path="/connect" element={<Connect />} />
       {/* Placeholder lessons for all other roles */}
       <Route path="/tutorial/maitre-service/*" element={<PlaceholderLesson />} />
       <Route path="/tutorial/maitre-mode/*" element={<PlaceholderLesson />} />
