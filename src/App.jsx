@@ -209,6 +209,12 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/secure/f-pos-devices" element={<SecurePosDevices />} />
       <Route path="/tutorial/secure/f-other-devices" element={<SecureOtherDevices />} />
       <Route path="/tutorial/secure/b-terminals" element={<SecureEftpos />} />
+      <Route path="/tutorial/secure/b-tables" element={<SecureTablesList />} />
+      <Route path="/tutorial/secure/b-printers" element={<SecurePrinters />} />
+      <Route path="/tutorial/secure/b-other-devices" element={<SecureOtherDevices />} />
+      <Route path="/tutorial/secure/b-catalog" element={<SecureProducts />} />
+      <Route path="/tutorial/secure/b-workstations" element={<SecurePosDevices />} />
+      <Route path="/tutorial/secure/b-roles-users" element={<SecureUsers />} />
       <Route path="/tutorial/secure/f-eftpos" element={<SecureEftpos />} />
       <Route path="/tutorial/secure/f-caller-id" element={<SecureCallerId />} />
       <Route path="/tutorial/secure/f-customer-display" element={<SecureCustomerDisplay />} />
