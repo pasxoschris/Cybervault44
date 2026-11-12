@@ -20,7 +20,7 @@ const channels = [
   {
     icon: Mail,
     tag: 'Email',
-    label: 'info@cybervault.gr',
+    label: 'info@CyberVault.gr',
     sublabel: '',
     href: 'mailto:info@cybervault.gr',
     live: false,
