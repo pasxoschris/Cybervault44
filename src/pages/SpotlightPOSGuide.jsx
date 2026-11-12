@@ -96,7 +96,7 @@ export default function SpotlightPOSGuide() {
                 Έναρξη Εκπαίδευσης <ArrowRight size={16} />
               </button>
             ) : status === 'denied' ? (
-              <a href="mailto:support@cyber-vault.gr" className="inline-flex items-center gap-2 bg-white text-purple-700 font-semibold rounded-xl px-6 py-3 hover:shadow-lg transition-all text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <a href="mailto:support@cybervault.gr" className="inline-flex items-center gap-2 bg-white text-purple-700 font-semibold rounded-xl px-6 py-3 hover:shadow-lg transition-all text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
                 Αίτημα πρόσβασης <ArrowRight size={16} />
               </a>
             ) : (
@@ -115,7 +115,7 @@ export default function SpotlightPOSGuide() {
       {status === 'denied' && (
         <div className="max-w-4xl mx-auto px-6 -mt-6">
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-800" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Είστε συνδεδεμένος αλλά το email σας δεν βρίσκεται στη λίστα εξουσιοδοτημένων χρηστών. Για αίτημα πρόσβασης στείλτε email στο <a href="mailto:support@cyber-vault.gr" className="font-semibold underline">support@cyber-vault.gr</a>.
+            Είστε συνδεδεμένος αλλά το email σας δεν βρίσκεται στη λίστα εξουσιοδοτημένων χρηστών. Για αίτημα πρόσβασης στείλτε email στο <a href="mailto:support@cybervault.gr" className="font-semibold underline">support@cybervault.gr</a>.
           </div>
         </div>
       )}
@@ -194,7 +194,7 @@ export default function SpotlightPOSGuide() {
               Έναρξη Εκπαίδευσης <ArrowRight size={16} />
             </button>
           ) : status === 'denied' ? (
-            <a href="mailto:support@cyber-vault.gr" className="inline-flex items-center gap-2 bg-white text-purple-700 font-semibold rounded-xl px-6 py-3 hover:shadow-lg transition-all text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <a href="mailto:support@cybervault.gr" className="inline-flex items-center gap-2 bg-white text-purple-700 font-semibold rounded-xl px-6 py-3 hover:shadow-lg transition-all text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
               Αίτημα πρόσβασης <ArrowRight size={16} />
             </a>
           ) : (
