@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { syncMyAccess } from '@/lib/syncAccess';
 import Navbar from '@/components/layout/Navbar';
 import { getRoleById, canAccessRole } from '@/lib/roles';
 import { getCompletedCount, isVisited } from '@/lib/tutorialProgress';
