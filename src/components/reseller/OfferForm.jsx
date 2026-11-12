@@ -1,4 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
+import { Lock } from 'lucide-react';
 import { usePricingItems } from '@/hooks/usePricingItems';
 import { usePricingCategories } from '@/hooks/usePricingCategories';
 import { useResellerSettings } from '@/hooks/useResellerSettings';
@@ -22,6 +23,8 @@ const EmailModal = lazy(() => import('./EmailModal'));
 const OfferPreviewModal = lazy(() => import('./OfferPreviewModal'));
 
 export default function OfferForm({ editOffer, onSaved }) {
+  // Απεσταλμένη προσφορά: οι τιμές δεν αλλάζουν μετά την αποστολή στον πελάτη
+  const priceLocked = editOffer?.status === 'sent';
   const [customer, setCustomer] = useState(EMPTY_CUSTOMER);
   const [lines, setLines] = useState([]);
   const [saving, setSaving] = useState(false);
@@ -119,9 +122,12 @@ export default function OfferForm({ editOffer, onSaved }) {
       const validityDays = settings.offer_validity_days || 30;
       const expiresAt = addDays(validityDays);
 
+      // Απεσταλμένη προσφορά: η αποθήκευση δεν την επαναφέρει σε draft (και δεν ξεκλειδώνει τις τιμές)
+      const saveStatus = editOffer?.status === 'sent' ? 'sent' : status;
+
       const offerData = {
         ...customer,
-        status,
+        status: saveStatus,
         items: lines,
         expires_at: expiresAt,
         subtotal_before_discount: totals.subtotalBefore,
@@ -133,7 +139,7 @@ export default function OfferForm({ editOffer, onSaved }) {
       };
 
       // Validate
-      const { success, errors } = validateOffer(offerData, { allowEmptyLines: true, isDraft: status === 'draft' });
+      const { success, errors } = validateOffer(offerData, { allowEmptyLines: true, isDraft: saveStatus === 'draft' });
       if (!success) {
         console.error('Validation errors:', errors);
         setSaving(false);
@@ -146,7 +152,7 @@ export default function OfferForm({ editOffer, onSaved }) {
           id: editOffer.id,
           data: offerData,
           auditAction: 'updated',
-          auditDetails: { status },
+          auditDetails: { status: saveStatus },
         });
       } else {
         saved = await createOffer.mutateAsync(offerData);
@@ -170,6 +176,15 @@ export default function OfferForm({ editOffer, onSaved }) {
 
   return (
     <div className="space-y-6">
+      {priceLocked && (
+        <div className="flex items-start gap-3 bg-amber-500/5 border border-amber-500/30 rounded-xl px-4 py-3 text-amber-300/90 text-xs leading-relaxed">
+          <Lock size={14} className="flex-shrink-0 mt-0.5" />
+          <span>
+            Η προσφορά έχει σταλεί στον πελάτη — οι τιμές, οι εκπτώσεις και η απαλλαγή ΦΠΑ είναι κλειδωμένες.
+          </span>
+        </div>
+      )}
+
       <CustomerForm customer={customer} onChange={handleCustomerChange} />
 
       <EquipmentSelector
@@ -188,6 +203,7 @@ export default function OfferForm({ editOffer, onSaved }) {
           onRemoveLine={removeLine}
           onReorderLines={handleLineDragEnd}
           totals={totals}
+          priceLocked={priceLocked}
         />
       )}
 

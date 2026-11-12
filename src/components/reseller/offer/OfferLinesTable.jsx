@@ -8,9 +8,11 @@ export default function OfferLinesTable({
   onRemoveLine,
   onReorderLines,
   totals,
+  priceLocked = false,
 }) {
   const { subtotalBefore, subtotalAfter, totalDiscount, vatRate, vatAmount, finalTotal, exemptBase } = totals;
   const inputCls = "bg-[#0E1235] border border-[#2A3580] rounded px-2 py-1 text-white text-sm focus:outline-none focus:border-[#00CFFF]/40";
+  const lockedCls = priceLocked ? 'opacity-50 cursor-not-allowed' : '';
 
   if (lines.length === 0) return null;
 
@@ -49,16 +51,21 @@ export default function OfferLinesTable({
                               className={`${inputCls} w-16`} />
                           </td>
                           <td className="py-2 px-2">
-                            <input type="number" min={0} step={0.01} value={l.unit_price} onChange={e => onUpdateLine(l.id, 'unit_price', parseFloat(e.target.value) || 0)}
-                              className={`${inputCls} w-24`} />
+                            <input type="number" min={0} step={0.01} value={l.unit_price} disabled={priceLocked}
+                              onChange={e => onUpdateLine(l.id, 'unit_price', parseFloat(e.target.value) || 0)}
+                              title={priceLocked ? 'Η τιμή είναι κλειδωμένη (η προσφορά έχει σταλεί)' : undefined}
+                              className={`${inputCls} w-24 ${lockedCls}`} />
                           </td>
                           <td className="py-2 px-2">
-                            <input type="number" min={0} max={100} step={0.5} value={l.discount_pct} onChange={e => onUpdateLine(l.id, 'discount_pct', parseFloat(e.target.value) || 0)}
-                              className={`${inputCls} w-16`} />
+                            <input type="number" min={0} max={100} step={0.5} value={l.discount_pct} disabled={priceLocked}
+                              onChange={e => onUpdateLine(l.id, 'discount_pct', parseFloat(e.target.value) || 0)}
+                              title={priceLocked ? 'Η έκπτωση είναι κλειδωμένη (η προσφορά έχει σταλεί)' : undefined}
+                              className={`${inputCls} w-16 ${lockedCls}`} />
                           </td>
                           <td className="py-2 px-2">
-                            <button type="button" onClick={() => onUpdateLine(l.id, 'is_vat_exempt', !l.is_vat_exempt)}
-                              className={`px-2 py-0.5 rounded text-xs border whitespace-nowrap transition-colors ${l.is_vat_exempt ? 'bg-amber-500/10 border-amber-500/40 text-amber-300' : 'bg-[#0E1235] border-[#2A3580] text-white/50 hover:border-[#00CFFF]/40'}`}>
+                            <button type="button" disabled={priceLocked} onClick={() => onUpdateLine(l.id, 'is_vat_exempt', !l.is_vat_exempt)}
+                              title={priceLocked ? 'Η απαλλαγή ΦΠΑ είναι κλειδωμένη (η προσφορά έχει σταλεί)' : undefined}
+                              className={`px-2 py-0.5 rounded text-xs border whitespace-nowrap transition-colors ${lockedCls} ${l.is_vat_exempt ? 'bg-amber-500/10 border-amber-500/40 text-amber-300' : 'bg-[#0E1235] border-[#2A3580] text-white/50 hover:border-[#00CFFF]/40'}`}>
                               {l.is_vat_exempt ? 'Απαλλαγή' : `${vatRate}%`}
                             </button>
                           </td>
