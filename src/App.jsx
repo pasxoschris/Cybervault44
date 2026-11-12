@@ -55,6 +55,7 @@ import SecureOtherDevices from './pages/tutorial/secure/OtherDevices';
 import SecureEftpos from './pages/tutorial/secure/EftposTerminals';
 import SecureCallerId from './pages/tutorial/secure/CallerId';
 import SecureCustomerDisplay from './pages/tutorial/secure/CustomerDisplay';
+import SecureModifiers from './pages/tutorial/secure/Modifiers';
 import SecureUsers from './pages/tutorial/secure/Users';
 import SecureAdminCodeRights from './pages/tutorial/secure/AdminCodeRights';
 import SecureRoles from './pages/tutorial/secure/Roles';
@@ -218,6 +219,7 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/secure/f-eftpos" element={<SecureEftpos />} />
       <Route path="/tutorial/secure/f-caller-id" element={<SecureCallerId />} />
       <Route path="/tutorial/secure/f-customer-display" element={<SecureCustomerDisplay />} />
+      <Route path="/tutorial/secure/e-modifiers" element={<SecureModifiers />} />
       <Route path="/tutorial/secure/i-users" element={<SecureUsers />} />
       <Route path="/tutorial/secure/i-admin-code-rights" element={<SecureAdminCodeRights />} />
       <Route path="/tutorial/secure/i-roles" element={<SecureRoles />} />
