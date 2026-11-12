@@ -46,7 +46,9 @@ export default function Combos() {
         <ul className="list-disc pl-5 space-y-1 mt-1">
           <li><strong>Όνομα Menu Επιλογών</strong>*, <strong>Min Επιλογές</strong> και <strong>Max Επιλογές</strong>.</li>
           <li>Με τα <strong>↑ ↓</strong> αλλάζεις τη σειρά των μενού. Το <strong>Αφαίρεση Menu</strong> σβήνει το μενού.</li>
-          <li>Στο <strong>Menu Επιλογών</strong>, κάθε γραμμή είναι μία επιλογή: <strong>Τύπος</strong> (π.χ. Product), <strong>Product / Category</strong>, <strong>Προϊόν Wolt</strong>, <strong>Efood Product</strong> και <strong>Τιμή</strong>.</li>
+          <li>Στο <strong>Menu Επιλογών</strong>, κάθε γραμμή είναι μία επιλογή: <strong>Τύπος</strong>, <strong>Product / Category</strong>, <strong>Προϊόν Wolt</strong>, <strong>Efood Product</strong> και <strong>Τιμή</strong>.</li>
+          <li><strong>Τύπος</strong>: <strong>Product</strong> για ένα συγκεκριμένο προϊόν ή <strong>Category</strong> για ολόκληρη κατηγορία (π.χ. ΣΑΛΑΤΕΣ).</li>
+          <li><strong>Τιμή</strong>: το πεδίο είναι γκρι και δείχνει την τιμή του προϊόντος στον κατάλογο. Στον συνδυασμό ισχύει η τιμή της προσφοράς.</li>
           <li>Με το <strong>+ Add another option</strong> προσθέτεις επιλογή, με τα ↑ ↓ αλλάζεις τη σειρά της και με το ⊖ τη βγάζεις.</li>
         </ul>
       </StepCard>
