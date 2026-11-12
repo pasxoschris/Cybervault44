@@ -5,7 +5,7 @@ import { S, Intro } from "../../../components/tutorial/SecureShot";
 
 export default function OtherDevices() {
   return (
-    <SecureTutorialLayout title="Other Devices" subtitle="Τερματικά καρτών, Caller ID, οθόνη πελάτη και συρτάρι μετρητών">
+    <SecureTutorialLayout title="Other Devices" subtitle="Τερματικά καρτών, Caller ID και οθόνη πελάτη">
 
       <Intro>
         Στα <strong>Other Devices</strong> δηλώνονται οι υπόλοιπες συσκευές του καταστήματος, εκτός από εκτυπωτές και οθόνες κουζίνας. Εδώ βρίσκονται και τα <strong>τερματικά POS της τράπεζας</strong> (EFTPOS).
@@ -18,9 +18,8 @@ export default function OtherDevices() {
       <StepCard title="Οι τύποι">
         <ul className="list-disc pl-5 space-y-1">
           <li><strong>EFTPOS:</strong> τα τερματικά καρτών της τράπεζας, π.χ. Cardlink, EDPS, Epay, Mellon, Mypay, Nexi, Viva, Worldline. Πώς προσθέτεις τερματικό: δες το <S to="/tutorial/secure/f-eftpos">μάθημα 7.3.1</S>.</li>
-          <li><strong>Caller ID:</strong> αναγνώριση κλήσεων για τηλεφωνικές παραγγελίες.</li>
+          <li><strong>Caller ID:</strong> αναγνώριση κλήσεων για τηλεφωνικές παραγγελίες. Δες το <S to="/tutorial/secure/f-caller-id">μάθημα 7.3.2</S>.</li>
           <li><strong>Customer Display:</strong> οθόνη πελάτη.</li>
-          <li><strong>Cash Drawer:</strong> συρτάρι μετρητών.</li>
         </ul>
       </StepCard>
 
