@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { signInWithProvider } from "@/lib/authMfaFlow";
 import { Button } from "@/components/ui/button";
 import { LogIn, Loader2 } from "lucide-react";
@@ -32,14 +31,7 @@ export default function Login() {
       subtitle="Log in to your account"
       footer={
         <>
-          Don't have an account?{" "}
-          <Link
-            to={"/register" + (returnTo !== "/" ? "?returnTo=" + encodeURIComponent(returnTo) : "")}
-            className="text-primary font-medium hover:underline"
-          >
-            Create one
-          </Link>
-          <span className="block mt-4">
+          <span className="block">
             Θέλεις πρόσβαση στο εκπαιδευτικό υλικό; Στείλε email στο{" "}
             <a href="mailto:support@cybervault.gr" className="text-primary font-medium hover:underline">
               support@cybervault.gr
