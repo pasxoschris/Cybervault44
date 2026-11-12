@@ -152,6 +152,17 @@ export default function OrderFlow() {
 
       <Shot src="164df352e_flow-merged-history.webp" alt="Merged Orders" caption="Ιστορικό: οι δύο αρχικές παραγγελίες που συγχωνεύτηκαν" max="max-w-sm" />
 
+      <SectionTitle>Παραγγελίες από πλατφόρμες</SectionTitle>
+
+      <InfoBox icon="ℹ️" title="Παραγγελίες από Wolt και efood" variant="info">
+        <p>Οι παραγγελίες από Wolt και efood περνούν αυτόματα στη Ροή μέσω γέφυρας (την ενεργοποιεί η Spotlight, με άδεια για κάθε γέφυρα). Τις αναγνωρίζεις έτσι:</p>
+        <ul className="list-disc pl-5 space-y-1 mt-1">
+          <li>Η κάρτα γράφει <strong>Wolt Delivery</strong> ή <strong>E-Food Go</strong> και <strong>Delivery</strong> με το όνομα της πλατφόρμας.</li>
+          <li>Στο σχόλιο φαίνεται ο αριθμός της πλατφόρμας, π.χ. <strong>«Wolt: #362»</strong>, μαζί με το μήνυμα του πελάτη.</li>
+          <li>Στα Στοιχεία Παραγγελίας, ο Πελάτης είναι π.χ. «Wolt Delivery», το Τραπέζι «Delivery», και στα προϊόντα υπάρχει το εικονίδιο <strong>Ηλεκτρονική πληρωμή</strong>.</li>
+        </ul>
+      </InfoBox>
+
       <SectionTitle>Επαναφορά παραγγελίας</SectionTitle>
 
       <InfoBox icon="ℹ️" title="Πώς φαίνεται μια επαναφορά" variant="info">

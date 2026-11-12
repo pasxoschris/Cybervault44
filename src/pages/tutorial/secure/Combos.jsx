@@ -65,6 +65,10 @@ export default function Combos() {
         <p>Ο συνδυασμός «Με 1 καφέ της επιλογής σας, δώρο ακόμη 1» έχει δύο μενού επιλογών, «Επίλεξε καφέ» και «Καφέ 2», με τους ίδιους καφέδες (Espresso, Freddo Espresso, Freddo Cappuccino κ.λπ.). Ο πελάτης διαλέγει έναν καφέ από κάθε μενού.</p>
       </InfoBox>
 
+      <InfoBox icon="ℹ️" title="Η γέφυρα με Wolt και efood" variant="info">
+        <p>Οι παραγγελίες από Wolt και efood περνούν στη Spotlight μέσω <strong>γέφυρας</strong>. Κάθε γέφυρα απαιτεί <strong>άδεια</strong>. Τη γέφυρα και την άδεια τις ενεργοποιεί η Spotlight· αν τις χρειάζεσαι, ζήτησέ τες από τη Spotlight. Με την αντιστοίχιση (<strong>Wolt Combo</strong>, <strong>Efood Combo</strong>) τα combo της πλατφόρμας περνούν ως συνδυασμοί.</p>
+      </InfoBox>
+
       <InfoBox icon="ℹ️" title="Ενεργοποίηση από τη Spotlight" variant="info">
         <p>Οι Συνδυασμοί Προϊόντων εμφανίζονται όταν τους έχει ενεργοποιήσει η Spotlight για το κατάστημα. Αν δεν βλέπεις την ενότητα, ζήτησέ την από τη Spotlight.</p>
       </InfoBox>
