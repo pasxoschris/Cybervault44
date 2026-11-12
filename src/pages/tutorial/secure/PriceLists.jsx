@@ -33,7 +33,7 @@ export default function PriceLists() {
       </StepCard>
 
       <StepCard number="4" title="Βάλε τις τιμές στα προϊόντα">
-        <p>Στη φόρμα κάθε προϊόντος, κάτω από την <strong>Τιμή</strong>, υπάρχει μία τιμή για κάθε τιμοκατάλογο. Δες το <S to="/tutorial/secure/e-products">μάθημα 5.1</S>.</p>
+        <p>Για κάθε τιμοκατάλογο που φτιάχνεις, στη φόρμα κάθε προϊόντος εμφανίζεται πεδίο <strong>«Τιμή για [όνομα τιμοκαταλόγου]»</strong> (π.χ. Τιμή για TAKE AWAY). Βάλε εκεί την αντίστοιχη τιμή, με τελεία στα δεκαδικά. Δες το <S to="/tutorial/secure/e-products">μάθημα 5.1</S>.</p>
       </StepCard>
 
       <StepCard number="5" title="Συγχρονισμός 🔄">
