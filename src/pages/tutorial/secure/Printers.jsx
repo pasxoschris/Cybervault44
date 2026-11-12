@@ -40,6 +40,10 @@ export default function Printers() {
         </ul>
       </StepCard>
 
+      <InfoBox icon="ℹ️" title="Πού ορίζεται η IP του εκτυπωτή" variant="info">
+        <p>Τη <strong>Διεύθυνση IP</strong> τη βάζεις πρώτα <strong>στον ίδιο τον εκτυπωτή</strong>, από το περιβάλλον ρυθμίσεών του (interface). Ο τρόπος διαφέρει ανάλογα με το μοντέλο. Μετά γράφεις την ίδια IP εδώ.</p>
+      </InfoBox>
+
       <InfoBox icon="ℹ️" title="Ποιος τα συμπληρώνει" variant="info">
         <p>Τα τεχνικά πεδία (IP, Port, Κωδικοποίηση, CodeTable, Manufacturer) τα συμπληρώνει συνήθως η <strong>Spotlight ή ο τεχνικός</strong> κατά την εγκατάσταση. Μπορεί να τα συμπληρώσει και ο Διαχειριστής.</p>
       </InfoBox>
