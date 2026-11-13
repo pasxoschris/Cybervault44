@@ -60,6 +60,8 @@ import SecurePriceLists from './pages/tutorial/secure/PriceLists';
 import SecureVatTypes from './pages/tutorial/secure/VatTypes';
 import SecureFoodTypes from './pages/tutorial/secure/FoodTypes';
 import SecureCourses from './pages/tutorial/secure/Courses';
+import SecureTimeZonesStats from './pages/tutorial/secure/TimeZonesStats';
+import SecureStoreSettings from './pages/tutorial/secure/StoreSettings';
 import SecureBrands from './pages/tutorial/secure/Brands';
 import SecureFavorites from './pages/tutorial/secure/Favorites';
 import SecureCombos from './pages/tutorial/secure/Combos';
@@ -229,6 +231,8 @@ const AuthenticatedApp = () => {
       <Route path="/tutorial/secure/e-vat" element={<SecureVatTypes />} />
       <Route path="/tutorial/secure/e-food-types" element={<SecureFoodTypes />} />
       <Route path="/tutorial/secure/e-courses" element={<SecureCourses />} />
+      <Route path="/tutorial/secure/d-time-zones" element={<SecureTimeZonesStats />} />
+      <Route path="/tutorial/secure/i-settings" element={<SecureStoreSettings />} />
       <Route path="/tutorial/secure/e-brands" element={<SecureBrands />} />
       <Route path="/tutorial/secure/e-favorites" element={<SecureFavorites />} />
       <Route path="/tutorial/secure/e-combos" element={<SecureCombos />} />
