@@ -25,6 +25,10 @@ export default function StoreSettings() {
         </ul>
       </StepCard>
 
+      <InfoBox icon="⚠️" title="Μην αλλάζεις όνομα σε δικό σου τύπο κάρτας" variant="warning">
+        <p>Αν αλλάξεις το όνομα ενός τύπου που έχεις προσθέσει εσύ, μπορεί να επηρεαστούν τα στατιστικά. Διάλεξε σωστά όνομα από την αρχή.</p>
+      </InfoBox>
+
       <SectionTitle>Ζώνες Ώρας</SectionTitle>
 
       <StepCard number="3" title="Όρισε τις ζώνες της μέρας">
