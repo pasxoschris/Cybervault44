@@ -163,14 +163,18 @@ export default function OrderFlow() {
         </ul>
       </InfoBox>
 
-      <InfoBox icon="⚠️" title="Προπαραγγελίες Wolt (σήμερα για αύριο)" variant="warning">
-        <p>Η Wolt επιτρέπει στον πελάτη να κάνει σήμερα παραγγελία για αύριο. Η Spotlight δεν το υποστηρίζει: βγάζει παραστατικό τη στιγμή που έρχεται η παραγγελία. Γι' αυτό ο χρήστης με ρόλο <strong>Take-Out &amp; Delivery</strong> κάνει τα εξής στην εφαρμογή:</p>
+      <InfoBox icon="⚠️" title="Χρειάζεται ανοιχτή βάρδια" variant="warning">
+        <p>Αν δεν είναι ανοιχτή βάρδια, οι παραγγελίες από τις πλατφόρμες (Wolt, efood, Delivery Manager) <strong>δεν περνούν</strong> στη Spotlight.</p>
+      </InfoBox>
+
+      <InfoBox icon="⚠️" title="Προπαραγγελίες από πλατφόρμες (σήμερα για αύριο)" variant="warning">
+        <p>Οι πλατφόρμες (π.χ. Wolt) επιτρέπουν στον πελάτη να κάνει σήμερα παραγγελία για αύριο. Η Spotlight δεν το υποστηρίζει: βγάζει παραστατικό τη στιγμή που έρχεται η παραγγελία. Γι' αυτό ο χρήστης με ρόλο <strong>Take-Out &amp; Delivery</strong> κάνει τα εξής στην εφαρμογή:</p>
         <ol className="list-decimal pl-5 space-y-1 mt-1">
           <li><strong>Εκτυπώνει</strong> την προπαραγγελία και κρατάει τα προϊόντα που θα παραδοθούν.</li>
           <li><strong>Ακυρώνει ολόκληρη την παραγγελία στη Spotlight.</strong> Αν έχει βγει απόδειξη, βγαίνει Πιστωτικό Στοιχείο. Αν δεν έχει βγει, ακυρώνεται μόνο η πληρωμή.</li>
-          <li>Την επόμενη μέρα <strong>δημιουργεί ξανά την παραγγελία</strong> στη Spotlight ως <strong>Wolt Delivery</strong> και την κλείνει με <strong>Ηλεκτρονική πληρωμή</strong>.</li>
+          <li>Την επόμενη μέρα <strong>δημιουργεί ξανά την παραγγελία</strong> στη Spotlight ως παραγγελία της πλατφόρμας (π.χ. <strong>Wolt Delivery</strong>) και την κλείνει με <strong>Ηλεκτρονική πληρωμή</strong>.</li>
         </ol>
-        <p className="mt-2"><strong>Μην ακυρώνεις την παραγγελία στη Wolt.</strong> Η ακύρωση γίνεται μόνο στη Spotlight· στη Wolt η παραγγελία του πελάτη μένει ενεργή.</p>
+        <p className="mt-2"><strong>Μην ακυρώνεις την παραγγελία στην πλατφόρμα.</strong> Η ακύρωση γίνεται μόνο στη Spotlight· στην πλατφόρμα η παραγγελία του πελάτη μένει ενεργή.</p>
       </InfoBox>
 
       <SectionTitle>Επαναφορά παραγγελίας</SectionTitle>
