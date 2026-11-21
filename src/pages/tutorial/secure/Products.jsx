@@ -120,6 +120,10 @@ export default function Products() {
         <p><strong>Προϊόν Wolt</strong>, <strong>Delivery Manager Product</strong>, <strong>Efood Product</strong>: εδώ αντιστοιχίζεις το προϊόν σου με το αντίστοιχο της πλατφόρμας. Πληκτρολόγησε το όνομα του προϊόντος <strong>όπως είναι περασμένο στο Wolt / efood / Delivery Manager</strong> και διάλεξέ το, ώστε οι παραγγελίες από την πλατφόρμα να περνούν στο σωστό προϊόν.</p>
       </StepCard>
 
+      <InfoBox icon="⚠️" title="Προϊόν με το κιλό" variant="warning">
+        <p>Αν το προϊόν έχει <strong>Τύπο Μονάδας «Κιλά»</strong>, μην κάνεις εκεί την αντιστοίχιση. Φτιάξε <strong>δεύτερο προϊόν με Τύπο Μονάδας «Τεμάχια»</strong> και κάνε την αντιστοίχιση με το προϊόν της πλατφόρμας (Wolt, efood, Delivery Manager) σε αυτό.</p>
+      </InfoBox>
+
       <InfoBox icon="ℹ️" title="Συστατικά συνταγής και Σύστημα Επιβράβευσης" variant="info">
         <p><strong>Συστατικά συνταγής</strong> (Προϊόν, Ποσότητα, Τύπος Μονάδας, Μεζούρα, Include Only at): η σύνδεση με την <S to="/tutorial/secure/g-inv-stocktake">Αποθήκη</S>.</p>
         <p><strong>Σύστημα Επιβράβευσης</strong>: κανόνες ανά προϊόν (Τύπος Πελάτη, Τύπος Έκπτωσης, Τιμή, Πρώτη Παραγγελία), με δικό τους κουμπί αποθήκευσης.</p>
